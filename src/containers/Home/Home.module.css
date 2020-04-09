@@ -1,0 +1,102 @@
+.wellCategory {
+    min-height: 20px;
+    padding: 19px;
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    border: 1px solid #e3e3e3;
+    border-radius: 10px;
+    text-align: center;
+    height: 120px;
+    box-sizing: border-box;
+}
+
+.wellCategory p {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    color: #000000;
+}
+
+.wellCategory img {
+    margin-bottom: 10px;
+}
+
+.headingTitle{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 29px;
+    color: #000000;
+    margin: 0;
+}
+
+.btnGreenStyle{
+    padding: 8px 13px;
+    border: none;
+    background: linear-gradient(180deg, #2BDBC0 0%, #13B58C 100%);
+    border-radius: 24px;
+
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    /* identical to box height */
+
+
+    color: #FFFFFF;
+
+}
+
+
+.btnGreenFollow{
+    padding: 8px 13px;
+    border: none;
+    background: linear-gradient(180deg, #2BDBC0 0%, #13B58C 100%);
+    border-radius: 24px;
+    width: 100%;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    /* identical to box height */
+
+
+    color: #FFFFFF;
+
+}
+
+
+.wellStore {
+    min-height: 20px;
+    padding: 19px;
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    border: 1px solid #e3e3e3;
+    border-radius: 10px;
+    text-align: center;
+
+    box-sizing: border-box;
+}
+
+.wellStore div{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+
+    /* Neutral/Black */
+
+    color: #000000;
+}
+
+.wellStore p {
+    font-size: 18px;
+    line-height: 22px;
+    margin-top: 1em;
+    color: #4A4A4A;
+}
+
+.wellStore img {
+    margin-bottom: 15px;
+}

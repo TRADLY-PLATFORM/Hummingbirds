@@ -1,0 +1,25 @@
+.BeforeAuth{
+    margin:0;
+}
+
+.BeforeAuth .leftDiv{
+    height: 100%;   
+    z-index: 1;
+    top: 0;
+    overflow: hidden;
+    padding-top: 8%;
+    left: 0;
+    position: absolute;
+}
+
+.BeforeAuth .rightDiv{
+    height: 100%;  
+    z-index: 1;
+    top: 0;
+    overflow: hidden;
+    padding: 10em 8%;
+    color: white;
+    right: 0;
+    background: linear-gradient(180deg, #2BDBC0 0%, #13B58C 100%);
+    position: absolute;
+}

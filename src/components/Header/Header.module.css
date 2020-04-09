@@ -1,0 +1,91 @@
+.header {
+    clear: both;
+    display: inline-block;
+    /* padding: 15px 20px 13px 20px; */
+    width: 100%;
+}
+
+
+.userArea {
+    float: right;
+    padding-right: 0;
+    position: relative;
+}
+
+.userAvatar {
+    margin-top: 4px;
+    width: 42px;
+
+    border-radius: 50%!important;
+}
+
+
+.dropdownMenu {   
+  
+    border: none;
+    left: inherit !important;
+    right: 74px;
+    top: 55px !important;
+    margin: 0;
+    max-width: 150px;
+    padding: 5px 10px;
+    position: absolute;
+
+}
+
+
+.navLink {
+    color: #272c33;
+    display: block;
+    font-size: 14px;
+    line-height: 22px;
+    padding: 5px 0;
+}
+
+.spanName{
+    font-size: 18px;
+    line-height: 22px;
+    color: #4A4A4A;
+    mix-blend-mode: normal;
+    opacity: 0.5;
+    padding-left: 20px;
+    top: 5px;
+    position: relative;
+    
+}
+
+.countCart {
+    border-radius: 50%;
+      color: #fff;
+      font-size: 11px;
+      height: 20px;
+      width: 20px;
+      line-height: 15px;
+      right: -12px;
+      top: -12px;
+      position: absolute;
+      text-align: center;
+      padding-top: 3px;
+      font-weight: bold;
+      background-color: #dc3545!important;
+  }
+  
+
+.cartName{
+    font-size: 18px;
+    line-height: 22px;
+    color: #4A4A4A;
+    mix-blend-mode: normal;
+    opacity: 0.5;
+    padding-left: 20px;
+    top: 5px;
+    position: relative;
+}
+
+.cartArea{
+    float: right;
+    right: 90px;
+    top: 15px;
+    position: relative;
+
+}
