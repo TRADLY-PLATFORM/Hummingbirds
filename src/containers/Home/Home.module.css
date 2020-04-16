@@ -18,7 +18,7 @@
     color: #000000;
 }
 
-.wellCategory img {
+.wellCategory img { 
     margin-bottom: 10px;
 }
 
@@ -29,6 +29,7 @@
     line-height: 29px;
     color: #000000;
     margin: 0;
+    float: left;
 }
 
 .btnGreenStyle{
@@ -36,16 +37,12 @@
     border: none;
     background: linear-gradient(180deg, #2BDBC0 0%, #13B58C 100%);
     border-radius: 24px;
-
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
     line-height: 17px;
     /* identical to box height */
-
-
     color: #FFFFFF;
-
 }
 
 
@@ -60,22 +57,18 @@
     font-size: 14px;
     line-height: 17px;
     /* identical to box height */
-
-
     color: #FFFFFF;
-
 }
 
 
 .wellStore {
-    min-height: 20px;
-    padding: 19px;
+    min-height: 18.5em;
+    padding: 30px 15px 15px 15px;
     margin-bottom: 20px;
     background-color: #ffffff;
     border: 1px solid #e3e3e3;
     border-radius: 10px;
     text-align: center;
-
     box-sizing: border-box;
 }
 
@@ -84,9 +77,7 @@
     font-weight: 600;
     font-size: 14px;
     line-height: 17px;
-
     /* Neutral/Black */
-
     color: #000000;
 }
 
@@ -99,4 +90,60 @@
 
 .wellStore img {
     margin-bottom: 15px;
+}
+
+
+
+.latestTrend {
+    margin-bottom: 5px;
+    background-color: #ffffff;
+    border: 1px solid #e3e3e3;
+    border-radius: 10px;
+    box-sizing: border-box;
+    min-height: 235px;
+}
+
+.latestTrend p {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #4A4A4A;
+    padding-left:10px;
+}
+.bottomDesc{
+    margin-bottom: 10px;
+}
+.bottomDesc img {
+    width: 15%;
+    margin-left: 10px;
+}
+
+.bottomDesc span {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #4A4A4A;
+    opacity: 0.5;
+    position: relative;
+    left: 3px;
+    top: 3px;
+}
+
+.storeImage{
+    margin-bottom: 15px;
+    width:100%;
+}
+
+.amountTitle{
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+
+    float: right;
+        padding: 8px;
+
+    color: #13B58C;
 }

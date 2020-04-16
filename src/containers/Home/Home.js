@@ -2,7 +2,7 @@ import React , { Component } from 'react';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
 import HomeBanner from '../../components/HomeBanner/HomeBanner';
 import classes from './Home.module.css';
-
+import { Link } from 'react-router-dom';
 import WomanAccesoriesLogo from '../../assets/images/home/category/womanaccesories.svg';
 import WomanClothLogo from '../../assets/images/home/category/womancloth.svg';
 import BookLogo from '../../assets/images/home/category/book.svg';
@@ -13,10 +13,34 @@ import GamesLogo from '../../assets/images/home/category/games.svg';
 import MoreLogo from '../../assets/images/home/category/more.svg';
 
 import AllenSollyLogo from '../../assets/images/home/store/allenSolly.svg';
+import NoIamgeLogo from '../../assets/images/home/store/noImage.svg';
+
+import StoreLogo from '../../assets/images/home/store/store1.svg';
+import StoreLogo2 from '../../assets/images/home/store/store2.svg';
+
+import Select from 'react-select';
+
+const options = [
+  { value: 'chocolate', label: 'Chocolate' },
+  { value: 'strawberry', label: 'Strawberry' },
+  { value: 'vanilla', label: 'Vanilla' },
+];
 
 class Home extends Component{
 
+    state = {
+        selectedOption: null,
+      };
+      handleChange = selectedOption => {
+        this.setState(
+          { selectedOption },
+          () => console.log(`Option selected:`, this.state.selectedOption)
+        );
+      };
+
     render(){
+        const { selectedOption } = this.state;
+
         return (
            <Aux>
                 <HomeBanner/>
@@ -78,37 +102,47 @@ class Home extends Component{
                             </div>
                         </div>
                </div>
-                <div class="container-fluid mt-5">
+                <div className="container-fluid mt-5">
                     <div className="row">
-                        <div class="col-md-5th-1 col-sm-4 col-md-offset-0 col-sm-offset-2 nopadding">
-                        <select class="form-control">
-                            <option>1</option>
-                            <option>2</option>
-                        </select>
+                        <div className="col-md-5th-1 col-sm-4 col-md-offset-0 col-sm-offset-2 nopadding">
+                        <Select
+                                value={selectedOption}
+                                onChange={this.handleChange}
+                                options={options}
+                                placeholder="All Categories"
+                            />
                         </div>
-                        <div class="col-md-5th-1 col-sm-4 nopadding">
-                            <select class="form-control">
-                                <option>1</option>
-                                <option>2</option>
-                            </select>
+                        <div className="col-md-5th-1 col-sm-4 nopadding">
+                        <Select
+                                value={selectedOption}
+                                onChange={this.handleChange}
+                                options={options}
+                                placeholder="Price Filter"
+                            />
                         </div>
-                        <div class="col-md-5th-1 col-sm-4 nopadding">
-                            <select class="form-control">
-                                <option>1</option>
-                                <option>2</option>
-                            </select>
+                        <div className="col-md-5th-1 col-sm-4 nopadding">
+                        <Select
+                                value={selectedOption}
+                                onChange={this.handleChange}
+                                options={options}
+                                placeholder="Select Location"
+                            />
                         </div>
-                        <div class="col-md-5th-1 col-sm-4 nopadding">
-                            <select class="form-control">
-                                <option>1</option>
-                                <option>2</option>
-                            </select>
+                        <div className="col-md-5th-1 col-sm-4 nopadding">
+                        <Select
+                                value={selectedOption}
+                                onChange={this.handleChange}
+                                options={options}
+                                placeholder="Select Supplier"
+                            />
                         </div>
-                        <div class="col-md-5th-1 col-sm-4 nopadding">
-                            <select class="form-control">
-                                <option>1</option>
-                                <option>2</option>
-                            </select>
+                        <div className="col-md-5th-1 col-sm-4 nopadding">
+                        <Select
+                                value={selectedOption}
+                                onChange={this.handleChange}
+                                options={options}
+                                placeholder="Sort By"
+                            />
                         </div>
                     </div>
                 </div>
@@ -120,35 +154,53 @@ class Home extends Component{
                         </div>
 
                         <div className="col-lg-6 nopaddingRight">
-                            <button className={classes.btnGreenStyle+ " pull-right"}>View All</button>
+                            <Link to="/product-details"><button className={"btnGreenStyle pull-right"}>View All</button></Link>
                         </div>
                     </div>
                 </div>
 
 
-                <div class="container-fluid mt-5">
+                <div className="container-fluid mt-5">
                     <div className="row">
-                        <div class={classes.wellStore + " col-md-5th-1 col-sm-4 col-md-offset-0 col-sm-offset-2 "}>                    
-                            <img src={AllenSollyLogo} alt="Woman accesories" title="Woman accesories"/>
-                            <div>allensolly</div>
-                            <p>Allen Solly</p> 
-                            <button className={classes.btnGreenFollow}>View All</button>
+                        <div className={"col-md-5th-1 col-sm-4 col-md-offset-0 col-sm-offset-2 nopaddingLeft "}> 
+                            <div className={classes.wellStore +" col-lg-12"}>
+                                <img src={AllenSollyLogo} alt="Woman accesories" title="Woman accesories"/>
+                                <div>allensolly</div>
+                                <p>Allen Solly</p> 
+                                <button className={classes.btnGreenFollow + " mt-5"}>View All</button>
+                            </div>                  
                         </div>
-                        <div class={classes.wellStore + " col-md-5th-1 col-sm-4 "}>
-                        <img src={AllenSollyLogo} alt="Woman accesories" title="Woman accesories"/>
-                            <p>Woman accesories</p> 
+                        <div className={"col-md-5th-1 col-sm-4"}> 
+                            <div className={classes.wellStore +" col-lg-12"}>
+                                <img src={NoIamgeLogo} alt="Woman accesories" title="Woman accesories"/>
+                                <div>allensolly</div>
+                                <p>Allen Solly</p> 
+                                <button className={classes.btnGreenFollow + " mt-5"}>View All</button>
+                            </div>
                         </div>
-                        <div class={classes.wellStore + " col-md-5th-1 col-sm-4  "}>
-                        <img src={AllenSollyLogo} alt="Woman accesories" title="Woman accesories"/>
-                            <p>Woman accesories</p> 
+                        <div className={"col-md-5th-1 col-sm-4"}> 
+                            <div className={classes.wellStore +" col-lg-12"}>
+                                <img src={AllenSollyLogo} alt="Woman accesories" title="Woman accesories"/>
+                                <div>allensolly</div>
+                                <p>Allen Solly</p>  
+                                <button className={classes.btnGreenFollow + " mt-5"}>View All</button>
+                            </div>
                         </div>
-                        <div class={classes.wellStore + " col-md-5th-1 col-sm-4"}>
-                        <img src={AllenSollyLogo} alt="Woman accesories" title="Woman accesories"/>
-                            <p>Woman accesories</p> 
+                        <div className={"col-md-5th-1 col-sm-4"}> 
+                            <div className={classes.wellStore +" col-lg-12"}>
+                                <img src={NoIamgeLogo} alt="Woman accesories" title="Woman accesories"/>
+                                <div>allensolly</div>
+                                <p>Allen Solly</p>  
+                                <button className={classes.btnGreenFollow + " mt-5"}>View All</button>
+                            </div>    
                         </div>
-                        <div class={classes.wellStore + " col-md-5th-1 col-sm-4"}>
-                        <img src={AllenSollyLogo} alt="Woman accesories" title="Woman accesories"/>
-                            <p>Woman accesories</p> 
+                        <div className={"col-md-5th-1 col-sm-4 nopaddingRight"}> 
+                            <div className={classes.wellStore +" col-lg-12"}>
+                                <img src={AllenSollyLogo} alt="Woman accesories" title="Woman accesories"/>
+                                <div>allensolly</div>
+                                <p>Allen Solly</p> 
+                                <button className={classes.btnGreenFollow + " mt-5"}>View All</button>
+                            </div>    
                         </div>
                     </div>
                 </div>
@@ -157,82 +209,142 @@ class Home extends Component{
                 <div className="container-fluid mt-5">
                     <div className="row">
                         <div className="col-lg-6 nopaddingLeft">
-                            <h3 className={classes.headingTitle}>Stores to follow</h3>
+                            <h3 className={classes.headingTitle}>Latest trend store</h3>
                         </div>
 
                         <div className="col-lg-6 nopaddingRight">
-                            <button className={classes.btnGreenStyle+ " pull-right"}>View All</button>
+                        <Link to="/product-details"><button className={"btnGreenStyle pull-right"}>View All</button></Link>
                         </div>
                     </div>
                 </div>
 
 
-                <div class="container-fluid mt-5">
+                <div className="container-fluid mt-5">
                     <div className="row">
-                        <div class={classes.wellStore + " col-md-5th-1 col-sm-4 col-md-offset-0 col-sm-offset-2 "}>
-                    
-                            <img src={WomanAccesoriesLogo} alt="Woman accesories" title="Woman accesories"/>
-                            <p>Woman accesories</p> 
+                        <div className={"col-md-5th-1 col-sm-4 col-md-offset-0 col-sm-offset-2 "}> 
+                            <div className={classes.latestTrend}>
+                                <img src={StoreLogo} className={classes.storeImage} alt="Woman accesories" title="Woman accesories"/>
+                                <p>White Full Slive Top</p>
+                                <div className={classes.bottomDesc}>
+                                    <img src={AllenSollyLogo} alt="Woman accesories" title="Woman accesories"/> <span>Rahul</span>
+                                    <div className={classes.amountTitle}>$25</div>
+                                </div>                                 
+                            </div>                  
                         </div>
-                        <div class={classes.wellStore + " col-md-5th-1 col-sm-4 "}>
-                        <img src={WomanAccesoriesLogo} alt="Woman accesories" title="Woman accesories"/>
-                            <p>Woman accesories</p> 
+                        <div className={"col-md-5th-1 col-sm-4"}> 
+                            <div className={classes.latestTrend}>
+                            <img src={StoreLogo2} className={classes.storeImage} alt="Woman accesories" title="Woman accesories"/>
+                            <p>White Full Slive Top</p> 
+                            <div className={classes.bottomDesc}>
+                                    <img src={AllenSollyLogo} alt="Woman accesories" title="Woman accesories"/> <span>Rahul</span>
+                                    <div className={classes.amountTitle}>$25</div>
+                                </div>    
+                            </div>
                         </div>
-                        <div class={classes.wellStore + " col-md-5th-1 col-sm-4  "}>
-                        <img src={WomanAccesoriesLogo} alt="Woman accesories" title="Woman accesories"/>
-                            <p>Woman accesories</p> 
+                        <div className={"col-md-5th-1 col-sm-4"}> 
+                            <div className={classes.latestTrend }>
+                                <img src={StoreLogo} className={classes.storeImage} alt="Woman accesories" title="Woman accesories"/>
+                                <p>White Full Slive Top</p> 
+                                <div className={classes.bottomDesc}>
+                                    <img src={AllenSollyLogo} alt="Woman accesories" title="Woman accesories"/> <span>Rahul</span>
+                                    <div className={classes.amountTitle}>$25</div>
+                                </div>   
+                            </div>
                         </div>
-                        <div class={classes.wellStore + " col-md-5th-1 col-sm-4"}>
-                        <img src={WomanAccesoriesLogo} alt="Woman accesories" title="Woman accesories"/>
-                            <p>Woman accesories</p> 
+                        <div className={"col-md-5th-1 col-sm-4"}> 
+                            <div className={classes.latestTrend}>
+                                <img src={StoreLogo2} className={classes.storeImage} alt="Woman accesories" title="Woman accesories"/>
+                                <p>White Full Slive Top</p>   
+                                <div className={classes.bottomDesc}>
+                                    <img src={AllenSollyLogo} alt="Woman accesories" title="Woman accesories"/> <span>Rahul</span>
+                                    <div className={classes.amountTitle}>$25</div>
+                                </div>   
+                            </div>    
                         </div>
-                        <div class={classes.wellStore + " col-md-5th-1 col-sm-4"}>
-                        <img src={WomanAccesoriesLogo} alt="Woman accesories" title="Woman accesories"/>
-                            <p>Woman accesories</p> 
+                        <div className={"col-md-5th-1 col-sm-4 "}> 
+                            <div className={classes.latestTrend}>
+                                <img src={StoreLogo} className={classes.storeImage} alt="Woman accesories" title="Woman accesories"/>
+                                <p>White Full Slive Top</p> 
+                                <div className={classes.bottomDesc}>
+                                    <img src={AllenSollyLogo} alt="Woman accesories" title="Woman accesories"/> <span>Rahul</span>
+                                    <div className={classes.amountTitle}>$25</div>
+                                </div>   
+                            </div>    
                         </div>
                     </div>
                 </div>
+            
             
                 <div className="container-fluid mt-5">
                     <div className="row">
                         <div className="col-lg-6 nopaddingLeft">
-                            <h3 className={classes.headingTitle}>Stores to follow</h3>
+                            <h3 className={classes.headingTitle}>Recent items</h3>
                         </div>
 
                         <div className="col-lg-6 nopaddingRight">
-                            <button className={classes.btnGreenStyle+ " pull-right"}>View All</button>
+                            <button className={"btnGreenStyle pull-right"}>View All</button>
                         </div>
                     </div>
                 </div>
 
 
-                <div class="container-fluid mt-5">
+                <div className="container-fluid mt-5">
                     <div className="row">
-                        <div class={classes.wellCategory + " col-md-5th-1 col-sm-4 col-md-offset-0 col-sm-offset-2 "}>
-                    
-                            <img src={WomanAccesoriesLogo} alt="Woman accesories" title="Woman accesories"/>
-                            <p>Woman accesories</p> 
+                        <div className={"col-md-5th-1 col-sm-4 col-md-offset-0 col-sm-offset-2 "}> 
+                            <div className={classes.latestTrend}>
+                                <img src={StoreLogo} className={classes.storeImage} alt="Woman accesories" title="Woman accesories"/>
+                                <p>White Full Slive Top</p>
+                                <div className={classes.bottomDesc}>
+                                    <img src={AllenSollyLogo} alt="Woman accesories" title="Woman accesories"/> <span>Rahul</span>
+                                    <div className={classes.amountTitle}>$25</div>
+                                </div>                                 
+                            </div>                  
                         </div>
-                        <div class={classes.wellCategory + " col-md-5th-1 col-sm-4 "}>
-                        <img src={WomanAccesoriesLogo} alt="Woman accesories" title="Woman accesories"/>
-                            <p>Woman accesories</p> 
+                        <div className={"col-md-5th-1 col-sm-4"}> 
+                            <div className={classes.latestTrend}>
+                            <img src={StoreLogo2} className={classes.storeImage} alt="Woman accesories" title="Woman accesories"/>
+                            <p>White Full Slive Top</p> 
+                            <div className={classes.bottomDesc}>
+                                    <img src={AllenSollyLogo} alt="Woman accesories" title="Woman accesories"/> <span>Rahul</span>
+                                    <div className={classes.amountTitle}>$25</div>
+                                </div>    
+                            </div>
                         </div>
-                        <div class={classes.wellCategory + " col-md-5th-1 col-sm-4  "}>
-                        <img src={WomanAccesoriesLogo} alt="Woman accesories" title="Woman accesories"/>
-                            <p>Woman accesories</p> 
+                        <div className={"col-md-5th-1 col-sm-4"}> 
+                            <div className={classes.latestTrend }>
+                                <img src={StoreLogo} className={classes.storeImage} alt="Woman accesories" title="Woman accesories"/>
+                                <p>White Full Slive Top</p> 
+                                <div className={classes.bottomDesc}>
+                                    <img src={AllenSollyLogo} alt="Woman accesories" title="Woman accesories"/> <span>Rahul</span>
+                                    <div className={classes.amountTitle}>$25</div>
+                                </div>   
+                            </div>
                         </div>
-                        <div class={classes.wellCategory + " col-md-5th-1 col-sm-4"}>
-                        <img src={WomanAccesoriesLogo} alt="Woman accesories" title="Woman accesories"/>
-                            <p>Woman accesories</p> 
+                        <div className={"col-md-5th-1 col-sm-4"}> 
+                            <div className={classes.latestTrend}>
+                                <img src={StoreLogo2} className={classes.storeImage} alt="Woman accesories" title="Woman accesories"/>
+                                <p>White Full Slive Top</p>   
+                                <div className={classes.bottomDesc}>
+                                    <img src={AllenSollyLogo} alt="Woman accesories" title="Woman accesories"/> <span>Rahul</span>
+                                    <div className={classes.amountTitle}>$25</div>
+                                </div>   
+                            </div>    
                         </div>
-                        <div class={classes.wellCategory + " col-md-5th-1 col-sm-4"}>
-                        <img src={WomanAccesoriesLogo} alt="Woman accesories" title="Woman accesories"/>
-                            <p>Woman accesories</p> 
+                        <div className={"col-md-5th-1 col-sm-4 "}> 
+                            <div className={classes.latestTrend}>
+                                <img src={StoreLogo} className={classes.storeImage} alt="Woman accesories" title="Woman accesories"/>
+                                <p>White Full Slive Top</p> 
+                                <div className={classes.bottomDesc}>
+                                    <img src={AllenSollyLogo} alt="Woman accesories" title="Woman accesories"/> <span>Rahul</span>
+                                    <div className={classes.amountTitle}>$25</div>
+                                </div>   
+                            </div>    
                         </div>
                     </div>
                 </div>
-            
-
+                <br/>
+                <br/>
+                <br/>
             
             
             

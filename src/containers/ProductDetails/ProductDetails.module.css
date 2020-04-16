@@ -1,0 +1,101 @@
+.breadCrumb {
+    padding: 0px 8px 15px;
+    margin-bottom: 8px;
+    list-style: none;
+    
+}
+
+.breadCrumb li a{
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: -0.385882px;
+    color: #13B58C;
+    opacity: 0.7;
+}
+
+.Details{
+    background: white;
+    padding-top: 1em;
+    padding-bottom: 2em;
+}
+
+.Details h4{
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    margin-top: 0;
+    color: #4A4A4A;
+}
+
+.Details div{
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 22px;
+
+    color: #4A4A4A;
+}
+
+.Details span{
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #4A4A4A;
+    opacity: 0.4;
+    margin-top: 1em;
+    display: block;
+}
+
+.Details p{
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #4A4A4A;
+    text-align: justify;
+    margin-top: 1em;
+    padding-bottom: 2em;
+}
+
+
+.itemImg img{
+    width: 100%;
+}
+
+
+.fashionStore h3{
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 17px;
+    color: #13B58C;
+    margin-top: 0px;
+}
+
+.fashionStore p{
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #4A4A4A;
+    opacity: 0.5;
+}
+
+hr{
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.DeatilsLeft{
+    font-size: 14px;
+    line-height: 15px;
+    color: #4A4A4A;
+    mix-blend-mode: normal;
+    opacity: 0.5;
+    margin-bottom: 20px;
+    clear: both;
+}
+
+
+.DeatilsRight{
+    font-size: 12px;
+    line-height: 15px;
+    color: #4A4A4A;
+}

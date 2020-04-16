@@ -1,0 +1,93 @@
+.fashionStore h3{
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 10px;
+    display: flex;
+    align-items: center;
+    letter-spacing: -0.385882px;
+    color: #000000;
+}
+
+.fashionStore img{
+    float: left;
+    padding-right: 20px;
+}
+
+.fashionStore p{
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #4A4A4A;
+    opacity: 0.5;
+}
+
+.bannerText{
+    background: #FFFFFF;
+box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.0523656);
+border-radius: 10px;
+padding: 20px 0px;
+margin-top: -65px;
+
+}
+
+.bannerimage{
+    background-image: url(/static/media/store.e5a4d495.svg);
+    background-repeat: no-repeat;
+    background-position: inherit;
+    background-size: cover;
+    height: 217px;
+}
+
+.latestTrend {
+    margin-bottom: 5px;
+    background-color: #ffffff;
+    border: 1px solid #e3e3e3;
+    border-radius: 10px;
+    box-sizing: border-box;
+    min-height: 235px;
+}
+
+.latestTrend p {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #4A4A4A;
+    padding-left:10px;
+}
+.bottomDesc{
+    margin-bottom: 10px;
+}
+.bottomDesc img {
+    width: 15%;
+    margin-left: 10px;
+}
+
+.bottomDesc span {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #4A4A4A;
+    opacity: 0.5;
+    position: relative;
+    left: 3px;
+    top: 3px;
+}
+
+.storeImage{
+    margin-bottom: 15px;
+    width:100%;
+}
+
+.amountTitle{
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+
+    float: right;
+        padding: 8px;
+
+    color: #13B58C;
+}

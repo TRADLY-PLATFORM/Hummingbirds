@@ -15,3 +15,17 @@
     color: #13B58C;
 }
 
+
+.item img{
+    width: 75%; 
+}
+
+.carousel {
+    top: 10%;
+}
+
+.carouselCaption {
+    position: relative;
+    left: auto;
+    right: auto;
+}

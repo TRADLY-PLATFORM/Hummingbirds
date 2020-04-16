@@ -19,3 +19,21 @@
 .bgColor{
   background-color: #f6f9ff;
 }
+
+.rightPanel{
+    margin-left: 16.66666667%;
+}
+
+@media (max-width: 767px){
+  .rightPanel{
+    margin-left: 0%;
+  }
+
+}
+
+@media (min-width: 767px) and (max-width: 1199px){
+  .rightPanel{
+    margin-left: 24%;
+  }
+
+}

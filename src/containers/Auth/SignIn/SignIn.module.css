@@ -36,6 +36,7 @@ input::placeholder {
 }
 
 
+
 .button{
     background: #FFFFFF;
 width: 100%;
@@ -44,4 +45,17 @@ box-sizing: border-box;
 border-radius: 24px;
 padding: 10px;
 color: #13B58C;
+}
+
+.inputGroup{
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
+    color: #555;
+    border-radius: 4px;
+    width: 11%;
+    white-space: nowrap;
+    vertical-align: middle;
+    display: table-cell;
+    border-right: 0;
 }

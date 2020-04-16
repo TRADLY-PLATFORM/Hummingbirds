@@ -1,12 +1,73 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
 
+$primaryColor: #13B58C;
+$primaryBgColor : #FFFFFF;
+
 * {
   box-sizing: border-box;
   font-family: Montserrat, sans-serif;
 }
 
 .whiteColor{
-  color:white;
+  color:$primaryBgColor
+}
+
+.bgColor{
+  background-color: $primaryBgColor;
+}
+
+.btnGreenStyle{
+  padding: 8px 20px;
+  border: none;
+  background: linear-gradient(180deg, #2BDBC0 0%, #13B58C 100%);
+  border-radius: 24px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: $primaryBgColor;
+}
+
+.h1Headings{
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 17px;
+  color: #4F4F4F;
+  margin-bottom: 20px;
+}
+
+.btn-outline-success {
+  color: $primaryColor;
+  background-color: transparent;
+  background-image: none;
+  border-color: $primaryColor;
+}
+
+.btn-success {
+  color: #fff;
+  background-color: $primaryColor;
+  border-color: $primaryColor;
+}
+
+.btn-success:hover ,.btn-success:focus,.btn-success:active:focus {
+  color: #fff;
+  background-color: #53C9AB;
+  border-color: #53C9AB;
+}
+
+
+.btn-addtocart{
+  background: #FFFFFF;
+  box-shadow: 0px 21px 43px rgba(58, 76, 130, 0.0722656);
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 17px;
+  color: #13B58C;
+  border: 1px solid;
+}
+
+.height70{
+  height: 70px;
 }
 
 
@@ -47,9 +108,20 @@
 }
 
 
-.carousel-indicators {
-  bottom: 0px !important;
+.react-tel-input .country-list {
+  color: $primaryColor;
+  
 }
+
+.react-tel-input .form-control {
+  background: inherit !important;
+  border: 1px solid #FFFFFF !important;
+  border-radius: 24px !important;
+  width: 100% !important;
+  color: #FFFFFF !important;
+  height: 45px !important;
+}
+
 .nav-pills li a span {
     left: 20px;
     position: relative;
@@ -76,7 +148,7 @@
 
 span.glyphicon.glyphicon-search.form-control-feedback {
   left: 20px;
-  color: #13B58C;
+  color: $primaryColor;
   top: 6px;
   font-size: 15px;
 }
@@ -91,7 +163,6 @@ span.glyphicon.glyphicon-search.form-control-feedback {
   color: #212121;
   border: none;
 }
-
 
 
 .col-xs-5th-1, .col-xs-5th-2, .col-xs-5th-3, .col-xs-5th-4 {
@@ -117,6 +188,7 @@ span.glyphicon.glyphicon-search.form-control-feedback {
 
 .col-xs-5th-1 {
   width: 20%;
+  margin-bottom: 8px;
 }
 
 .col-xs-5th-pull-5 {
@@ -484,4 +556,15 @@ span.glyphicon.glyphicon-search.form-control-feedback {
   .col-lg-5th-offset-0 {
     margin-left: 0%;
   }
+}
+
+@media (max-width: 767px){
+  .nopaddingLeft{
+    padding-left: 15px;
+  }
+
+  .nopaddingRight{
+    padding-right: 15px;
+  }
+
 }

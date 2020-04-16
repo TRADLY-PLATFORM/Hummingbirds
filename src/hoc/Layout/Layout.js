@@ -35,7 +35,7 @@ class Layout extends Component {
                   <div className="row content">
                     <Sidebar/>
                     
-                    <div className="col-lg-10">
+                    <div className={classes.rightPanel + " col-lg-10"}>
                         <Header/>
                         <main className={classes.rightTopMargin + " col-lg-12"}>
                             {this.props.children}

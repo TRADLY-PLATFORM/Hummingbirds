@@ -11,8 +11,8 @@ const header = () => {
 
             <div className="header-menu">
                 <div className="col-sm-6">
-                    <span class="glyphicon glyphicon-search form-control-feedback"></span>
-                    <input type="text" class="form-control input-lg" placeholder="Search Product"/>                      
+                    <span className="glyphicon glyphicon-search form-control-feedback"></span>
+                    <input type="text" className="form-control input-lg" placeholder="Search Product"/>                      
                 </div>
 
                 <div className="col-sm-6">
@@ -27,7 +27,7 @@ const header = () => {
 
                                 <Link className={classes.navLink} to="#"><i className="fa fa -cog"></i>Settings</Link> 
 
-                                <Link className={classes.navLink} to="http://localhost/tradly-admin/welcome/logout"><i className="fa fa-power -off"></i>Logout</Link>
+                                <Link className={classes.navLink} to="/logout"><i className="fa fa-power -off"></i>Logout</Link>
                         </div>
                     </div>
 

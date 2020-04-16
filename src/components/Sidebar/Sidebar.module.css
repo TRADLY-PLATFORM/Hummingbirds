@@ -1,5 +1,8 @@
 .bgSidebar{
     background-color: #ffffff;
+    position: fixed;
+    height: 100%;
+    
 }
 
 .logoImage{
@@ -11,4 +14,8 @@ a {
     color: #000000;
     
 }
-
+@media (min-width: 767px) and (max-width: 1199px){  
+    .bgSidebar{
+        width: 24%;
+    }
+}
