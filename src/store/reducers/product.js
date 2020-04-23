@@ -1,0 +1,71 @@
+import * as actionTypes from '../actions/actionTypes';
+import { updateObject } from '../../shared/utility';
+
+
+const initialState = {
+    loading : false,
+    productDetails: [],
+    error:false,
+    message: null,
+    listings: [],
+    page : 1,
+    total_records: 0
+}
+
+const initProductDeatils= ( state, action ) => {
+    return updateObject( state, {
+        loading: true
+    } );
+};
+
+const setProductDeatils= ( state, action ) => {
+    return updateObject( state, {
+        productDetails: action.productDetails,
+        loading: false,
+        error:false,
+        message:null
+    } );
+};
+
+const fetchProductDeatilsFailed = (state, action) => {
+    return updateObject( state, { loading: false, error: true, message: 'Could not fetch result.' } );
+};
+
+
+const initListings= ( state, action ) => {
+    return updateObject( state, {
+        loading: true
+    } );
+};
+
+const setListings= ( state, action ) => {
+    return updateObject( state, {
+        listings: action.listings.listings,
+        page : action.listings.page,
+        total_records : action.listings.total_records,
+        loading: false,
+        error:false,
+        message:null
+    } );
+};
+
+const fetchListingsFailed = (state, action) => {
+    return updateObject( state, { loading: false, error: true, message: 'Could not fetch result.' } );
+};
+
+
+const productReducer = ( state = initialState, action) =>{
+    switch(action.type){
+        case actionTypes.INIT_PRODUCT_DETAILS: return initProductDeatils(state, action);   
+        case actionTypes.SET_PRODUCT_DETAILS: return setProductDeatils(state, action);    
+        case actionTypes.FETCH_PRODUCT_DETAILS_FAILED: return fetchProductDeatilsFailed(state, action);
+        case actionTypes.INIT_LISTING: return initListings(state, action);   
+        case actionTypes.SET_LISTING: return setListings(state, action);    
+        case actionTypes.FETCH_LISTING_FAILED: return fetchListingsFailed(state, action);
+        default:
+            return state;
+    }
+}
+
+
+export default productReducer;

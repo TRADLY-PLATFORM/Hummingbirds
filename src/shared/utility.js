@@ -18,6 +18,34 @@ export const countryFilter = (code, data) => {
 }
 
 
+// export const CollectionListings = (data) => {
+
+//     let lists = data.listings;
+//     return lists.map((list, i) => {     
+        
+//         let imagePath = '';
+
+//         if(list.images[0]!=undefined){
+//             imagePath = list.images[0];
+//         }
+
+//         return (
+//                 <div className={"col-md-5th-1 col-sm-4 col-md-offset-0 col-sm-offset-2 "} key={i}> 
+//                     <div className={classes.latestTrend}>
+//                         <img src={imagePath} className={classes.storeImage} alt={list.title} title={list.title}/>
+//                         <p>{list.title}</p>
+//                         <div className={classes.bottomDesc}>
+//                             <img src={list.store.image_path} alt="Woman accesories" title="Woman accesories"/> <span>{list.store.name}</span>
+//                             <div className={classes.amountTitle}>{list.currency.symbol}{list.list_price}</div>
+//                         </div> 
+//                     </div>
+//                 </div>    
+//                );
+//     });
+
+// }
+
+
 // CONSTANTS
 
 

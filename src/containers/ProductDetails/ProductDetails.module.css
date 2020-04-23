@@ -46,11 +46,19 @@
     display: block;
 }
 
-.Details p{
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 15px;
-    color: #4A4A4A;
+.Details strike{
+    float: right;
+    color: #13B58C;
+}
+.Details strong{
+    padding-left: 30px;
+    color: #13B58C;
+}
+.Description{
+    font-weight: 500 !important;
+    font-size: 12px !important;
+    line-height: 15px !important;
+    color: #4A4A4A !important;
     text-align: justify;
     margin-top: 1em;
     padding-bottom: 2em;
@@ -66,8 +74,11 @@
     font-weight: bold;
     font-size: 14px;
     line-height: 17px;
-    color: #13B58C;
     margin-top: 0px;
+}
+
+.fashionStore h3 a{
+    color: #13B58C;
 }
 
 .fashionStore p{
@@ -89,7 +100,8 @@ hr{
     color: #4A4A4A;
     mix-blend-mode: normal;
     opacity: 0.5;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
+    margin-top: 10px;
     clear: both;
 }
 
@@ -98,4 +110,6 @@ hr{
     font-size: 12px;
     line-height: 15px;
     color: #4A4A4A;
+    margin-bottom: 15px;
+    margin-top: 10px;
 }

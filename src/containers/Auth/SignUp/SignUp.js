@@ -169,7 +169,7 @@ class SignUp extends Component {
                             <input className={classes.input} name="firstName" type="text" placeholder="First Name" value={this.state.firstName} onChange={this.handleChange}/>
                         </div>
 
-                        <div className="form-group">
+                        <div className="form-group mt-4">
                             <input className={classes.input} name="lastName" type="text" placeholder="Last Name" value={this.state.lastName} onChange={this.handleChange}/>
                         </div>
 
@@ -190,7 +190,10 @@ class SignUp extends Component {
                         </div>
 
                         <div className="text-center mt-5">
-                        <Link to="/sign-in" className="text-center whiteColor">have an account ? Sign in</Link>
+                            <Link to="/sign-in" className="text-center whiteColor">have an account ? Sign in</Link>
+                        </div>
+                        <div className="text-center mt-5">
+                            <Link to="/" className="text-center whiteColor"><i className="fa fa-home fontIconSize"></i> Back to home</Link>
                         </div>
                     </form>
                 </div>

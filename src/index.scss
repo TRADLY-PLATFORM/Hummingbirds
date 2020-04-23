@@ -568,3 +568,27 @@ span.glyphicon.glyphicon-search.form-control-feedback {
   }
 
 }
+
+
+// Home Css
+
+.SpinnerPosition{
+  position: absolute;
+  top: 50%; 
+  left: 50%;
+  margin: -50px 0px 0px -50px;
+  z-index: 999;
+}
+
+
+.SpinnerCenter{
+  text-align: center;
+}
+
+
+//Signpage
+
+.fontIconSize{
+  font-size: 25px;
+  padding-right: 4px;
+}

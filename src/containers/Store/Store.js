@@ -1,22 +1,38 @@
 import React , { Component } from 'react';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
-
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import classes from './Store.module.css';
 import AllenSollyLogo from '../../assets/images/home/store/allenSolly.svg';
 import StoreLogo from '../../assets/images/home/store/store1.svg';
 import StoreLogo2 from '../../assets/images/home/store/store2.svg';
 import StoreBanner from '../../assets/images/store/store.svg';
+import Backdrop from '../../components/UI/Backdrop/Backdrop';
+import Spinner from '../../components/UI/Spinner/Spinner';
+import * as actions from '../../store/actions/index';
+
 
 class Store extends Component{
 
-   
+    componentDidMount(){ 
+       
+        this.timer = setTimeout(
+            () => {
+               this.props.onInitStoreDetails(this.props.match.params.id); 
+            },
+            3000,
+          );
+    }
 
     render(){
 
+
         return (
            <Aux>
-               <img src={StoreBanner} className={classes.storeImage} alt="Woman accesories" title="Woman accesories"/>
-             <div class="container-fluid">
+                <Backdrop show={this.props.loading} />
+                <Spinner show={this.props.loading} />  
+                <img src={StoreBanner} className={classes.storeImage} alt="Woman accesories" title="Woman accesories"/>
+                <div class="container-fluid">
                     <div className={classes.bannerimages + " row"}>
                         <div className="col-lg-12">
                         <div className={classes.bannerText + " col-sm-12"}>
@@ -163,4 +179,17 @@ class Store extends Component{
 }
 
 
-export default Store;
+const mapStateToProps = state => {
+    return {
+        loading: state.store.loading,
+        storeDetails: state.store.storeDetails,
+    };
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onInitStoreDetails: (id) => dispatch(actions.initStoreDetails(id))
+    }
+}
+  
+export default connect(mapStateToProps, mapDispatchToProps)( Store );

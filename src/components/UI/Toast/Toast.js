@@ -6,7 +6,6 @@ import "react-toastify/dist/ReactToastify.css";
 class Toast extends Component{
     render(){ 
         console.log(this.props);
-
         if(this.props.message != null && this.props.type!=null){
             if (! toast.isActive(this.toastId)) {
                 if(this.props.type === 'error'){
@@ -23,8 +22,9 @@ class Toast extends Component{
             }
         }
 
-        return (<ToastContainer autoClose={1000} position="top-center" transition={Slide} closeOnClick rtl={false} pauseOnVisibilityChange draggable pauseOnHover/>);
+        return (<ToastContainer position="top-center" transition={Slide} closeOnClick rtl={false} pauseOnVisibilityChange draggable pauseOnHover/>);
     }
 }
+// autoClose={1000} 
 
-export default Toast;
+export default React.memo(Toast);

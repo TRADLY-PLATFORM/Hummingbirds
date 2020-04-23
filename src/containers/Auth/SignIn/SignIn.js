@@ -149,7 +149,10 @@ class SignIn extends Component {
                         </div>
 
                         <div className="text-center mt-5">
-                        <Link to="/" className="text-center whiteColor">Don't have an account ? Sign Up</Link>
+                        <Link to="/sign-up" className="text-center whiteColor">Don't have an account ? Sign Up</Link>
+                        </div>
+                        <div className="text-center mt-5">
+                        <Link to="/" className="text-center whiteColor"><i className="fa fa-home fontIconSize"></i> Back to home</Link>
                         </div>
                     </form>
                 </div>

@@ -171,7 +171,7 @@ export const refreshToken = () =>{
     return dispatch => {
         dispatch(authStart());
  
-        let url = '/users/token/refresh';    
+        let url = '/app/v1/users/token/refresh';    
  
         axios.get(url, {
             headers:   {
@@ -223,10 +223,9 @@ export const startCountries= () => {
 export const initCountries = () => {
     return dispatch => {
         dispatch(startCountries());
-        let tenant_key = localStorage.getItem('tenant_key');
         axios.get( '/app/v1/countries',{
             headers:   {
-                                'tenant_key': tenant_key
+                                'tenant_key': (localStorage.getItem('tenant_key')) ?? ACCESS_TOKEN
                        }
             })
                         .then( response => {

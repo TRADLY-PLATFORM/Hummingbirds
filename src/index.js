@@ -8,11 +8,17 @@ import './index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import AuthReducer from './store/reducers/auth';
+import HomeReducer from './store/reducers/home';
+import ProductReducer from './store/reducers/product';
+import StoreReducer from './store/reducers/store';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
-    auth : AuthReducer
+    auth : AuthReducer,
+    home : HomeReducer,
+    product: ProductReducer,
+    store : StoreReducer
 });
 
 const store = createStore(rootReducer, composeEnhancers(
