@@ -93,7 +93,6 @@ class Home extends Component{
                                     activeItemIndex={this.state.activeItemIndex}
                                     requestToChangeActive={value => this.setState({ activeItemIndex: value })}
                                     rightChevron={
-                                            // <i className="fa fa-arrow-circle-right" style={{fontSize:'30px',paddingRight:'10px'}}></i>
                                             <span className="glyphicon glyphicon-chevron-right" style={{fontSize:'30px',color:'#e6e6e6'}} aria-hidden="true"></span>
                                        
                                       }
@@ -433,6 +432,8 @@ class Home extends Component{
 
 const mapStateToProps = state => {
     return {
+        token: state.auth.token,
+        userId: state.auth.userId,
         error: state.auth.error,
         loading: state.auth.loading,
         message: state.auth.message,

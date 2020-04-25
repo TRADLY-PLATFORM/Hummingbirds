@@ -67,10 +67,10 @@ export const startListings = () => {
     };
 };
 
-export const initListings = () => {
+export const initListings = (count) => {
     return dispatch => {
         dispatch(startListings());
-        axios.get( '/products/v1/c2c/listings?page=1&per_page=4',{
+        axios.get( '/products/v1/c2c/listings?page=1&per_page='+(parseInt(count)+4),{
             headers:   {
                         "Authorization": "Bearer vb12294e1f1ac6c12361b4516c5e155d0"//(localStorage.getItem('tenant_key')) ?? ACCESS_TOKEN
                        }

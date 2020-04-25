@@ -1,6 +1,7 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios';
 import { ACCESS_TOKEN, EXPIRY_TIME } from '../../shared/utility';
+
 export const authStart = () =>{
     return{
         type:actionTypes.AUTH_START
@@ -48,7 +49,7 @@ export const logout = () =>{
     localStorage.removeItem('brandImage');
     sessionStorage.setItem('userData','');
     sessionStorage.clear();
-
+    
     return{
         type:actionTypes.AUTH_LOGOUT
     }
@@ -75,7 +76,7 @@ export const authVerification = (verificationData) =>{
             }
         })
         .then(response => {           
-                console.log(response.data.data);
+              //  console.log(response.data.data);
                 if(response.data.status){
                     const setTimeExpiry = EXPIRY_TIME;
                     const expirationDate = new Date(new Date().getTime() + setTimeExpiry * 1000);
@@ -85,7 +86,7 @@ export const authVerification = (verificationData) =>{
                     localStorage.setItem('expirationDate',expirationDate);
                     sessionStorage.setItem('userData',JSON.stringify(response.data.data.user));
                     dispatch(authSuccess(response.data.data.user.key.auth_key,response.data.data.user.id,response.data.status));
-                    dispatch(setAuthRedirectPath('/home', null));
+                    dispatch(setAuthRedirectPath('/', null));
                     dispatch(checkAuthTimeout(setTimeExpiry)); 
                 }  
         })
@@ -133,7 +134,7 @@ export const auth = (userData, isSignup) =>{
                     sessionStorage.setItem('userData',JSON.stringify(response.data.data.user));
                     dispatch(authSuccess(response.data.data.user.key.auth_key,response.data.data.user.id,response.data.status));
                     dispatch(checkAuthTimeout(setTimeExpiry));  
-                    dispatch(setAuthRedirectPath('/home', null));
+                    //dispatch(setAuthRedirectPath('/', null));
                 }               
                
             })
@@ -149,7 +150,7 @@ export const authCheckState = () => {
         const token = localStorage.getItem('token');
         if(!token){
             dispatch(logout());
-            dispatch(initCountries());
+            //dispatch(initCountries());
         }else{
             const expirationDate =  new Date(localStorage.getItem('expirationDate'));
 

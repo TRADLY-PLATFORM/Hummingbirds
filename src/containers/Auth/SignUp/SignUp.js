@@ -124,7 +124,7 @@ class SignUp extends Component {
 
 
         let authRedirect = null;
-        if(this.props.authRedirectPath !== '/'){
+        if(this.props.isAuthenticated || this.props.verifyId){
             authRedirect = <Redirect to={this.props.authRedirectPath}/>
         }
 
@@ -212,13 +212,14 @@ const mapStateToProps = state => {
         countryList : state.auth.countries,
         authRedirectPath : state.auth.authRedirectPath,
         verifyId : state.auth.verify_id,
+        isAuthenticated:state.auth.token
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         onAuth : (userData, isSignUp) => dispatch(actions.auth(userData, isSignUp)),
-        //onInitCountries: () => dispatch(actions.initCountries())
+       // onInitCountries: () => dispatch(actions.initCountries())
     }
 }
   

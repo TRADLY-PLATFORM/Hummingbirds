@@ -1,6 +1,6 @@
 import React , { Component } from 'react';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import classes from './Store.module.css';
 import AllenSollyLogo from '../../assets/images/home/store/allenSolly.svg';
@@ -18,19 +18,37 @@ class Store extends Component{
        
         this.timer = setTimeout(
             () => {
-               this.props.onInitStoreDetails(this.props.match.params.id); 
+
+                if(this.props.isAuthentication){
+                    this.props.getUserStoreLists(this.props.userId,this.props.token);
+                }
+               //this.props.onInitStoreDetails(this.props.match.params.id); 
+               
             },
-            3000,
+            1000,
           );
+
+
     }
 
+   
     render(){
 
+        let redirectUrl = null;
+        if(!this.props.isAuthentication){
+            redirectUrl = <Redirect to="/sign-in"/>
+        }
 
-        return (
-           <Aux>
-                <Backdrop show={this.props.loading} />
-                <Spinner show={this.props.loading} />  
+        let storeContent = null
+
+        if(this.props.isAuthentication && this.props.storeLists){
+            storeContent = <h1>Create Store </h1>
+            if(this.props.storeLists.length > 0){
+
+            }
+        }else{
+            storeContent = (
+                <Aux>
                 <img src={StoreBanner} className={classes.storeImage} alt="Woman accesories" title="Woman accesories"/>
                 <div class="container-fluid">
                     <div className={classes.bannerimages + " row"}>
@@ -50,7 +68,6 @@ class Store extends Component{
                 </div>
                 
                 
-                {/* <br/><br/> */}
                 <div class="container-fluid mt-5">
 
 
@@ -109,7 +126,6 @@ class Store extends Component{
                 </div>
             
             
-               
 
                 <div class="container-fluid mt-5">
                     <div className="row">
@@ -165,6 +181,17 @@ class Store extends Component{
                         </div>
                     </div>
                 </div>
+                </Aux>
+            )
+        }
+
+        return (
+           <Aux>
+                {redirectUrl}
+                <Backdrop show={this.props.loading} />
+                <Spinner show={this.props.loading} />  
+                {storeContent}
+                
                 <br/>
                 <br/>
                 <br/>
@@ -183,12 +210,20 @@ const mapStateToProps = state => {
     return {
         loading: state.store.loading,
         storeDetails: state.store.storeDetails,
+        storeLists: state.store.storeLists,
+        isAuthentication : state.auth.token !== null,
+        authRedirectPath : state.auth.authRedirectPath,
+        userId : state.auth.userId,
+        token : state.auth.token
+        
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        onInitStoreDetails: (id) => dispatch(actions.initStoreDetails(id))
+        onInitStoreDetails: (id) => dispatch(actions.initStoreDetails(id)),
+        onSetAuthRedirectPath: (path) => dispatch(actions.setAuthRedirectPath(path,null)),
+        getUserStoreLists: (userId,token) => dispatch(actions.userStoreLists(userId,token))
     }
 }
   

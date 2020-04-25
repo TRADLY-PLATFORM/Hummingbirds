@@ -1,12 +1,30 @@
 import React, { Component } from 'react';
 import Aux from '../Auxiliary/Auxiliary';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import Header from '../../components/Header/Header';
 import classes from './Layout.module.css';
 
 class Layout extends Component {
- 
+
+    state = {
+        userData  : {}
+    }
+
+    componentDidMount(){ 
+
+        this.timer = setTimeout(
+            () => {
+                let userData = sessionStorage.getItem('userData');
+                this.setState({userData: JSON.parse(userData)})
+            },
+            3000,
+          );
+    }
+
+   
+
     render () {
         return (
             <Aux>        
@@ -33,10 +51,10 @@ class Layout extends Component {
           
                 <div className={classes.bgColor +" container-fluid"}>
                   <div className="row content">
-                    <Sidebar/>
+                    <Sidebar isAuthentication={this.props.isAuthentication}/>
                     
                     <div className={classes.rightPanel + " col-lg-10"}>
-                        <Header/>
+                        <Header userData={this.state.userData} isAuthentication={this.props.isAuthentication}/>
                         <main className={classes.rightTopMargin + " col-lg-12"}>
                             {this.props.children}
                         </main>
@@ -49,70 +67,12 @@ class Layout extends Component {
 }
 
 
-export default Layout;
+const mapStateToProps = state => {
+    return {
+        isAuthentication : state.auth.token !== null
+    };
+}
 
-// <div className="well">
-// <h4>Dashboard</h4>
-// <p>Some text..</p>
-// </div>
-// <div className="row">
-// <div className="col-sm-3">
-//   <div className="well">
-//     <h4>Users</h4>
-//     <p>1 Million</p> 
-//   </div>
-// </div>
-// <div className="col-sm-3">
-//   <div className="well">
-//     <h4>Pages</h4>
-//     <p>100 Million</p> 
-//   </div>
-// </div>
-// <div className="col-sm-3">
-//   <div className="well">
-//     <h4>Sessions</h4>
-//     <p>10 Million</p> 
-//   </div>
-// </div>
-// <div className="col-sm-3">
-//   <div className="well">
-//     <h4>Bounce</h4>
-//     <p>30%</p> 
-//   </div>
-// </div>
-// </div>
-// <div className="row">
-// <div className="col-sm-4">
-//   <div className="well">
-//     <p>Text</p> 
-//     <p>Text</p> 
-//     <p>Text</p> 
-//   </div>
-// </div>
-// <div className="col-sm-4">
-//   <div className="well">
-//     <p>Text</p> 
-//     <p>Text</p> 
-//     <p>Text</p> 
-//   </div>
-// </div>
-// <div className="col-sm-4">
-//   <div className="well">
-//     <p>Text</p> 
-//     <p>Text</p> 
-//     <p>Text</p> 
-//   </div>
-// </div>
-// </div>
-// <div className="row">
-// <div className="col-sm-8">
-//   <div className="well">
-//     <p>Text</p> 
-//   </div>
-// </div>
-// <div className="col-sm-4">
-//   <div className="well">
-//     <p>Text</p> 
-//   </div>
-// </div>
-// </div>
+  
+export default connect(mapStateToProps)( Layout );
+

@@ -22,6 +22,7 @@ class App extends Component {
   componentDidMount() {
      this.props.onTryAuthSignUp();
      this.props.onSetTenantConfig();
+     this.props.onInitCountries();
   }
 
   render(){
@@ -35,7 +36,8 @@ class App extends Component {
         <Route path="/listings" exact component={Listings} />
         <Route path="/verification/:verifyID" exact component={PhoneVerification} />
         <Route path="/" exact component={Home} />
-        <Route path="/product-details/:id" exact component={ProductDetails}></Route>
+        <Route path="/product-details/:id" exact component={ProductDetails}/>
+        <Route path="/store" exact component={Store} />
         <Route path="/store/:id" exact component={Store} />
         <Route path="/all-categories" exact component={AllCategory}/>
         <Redirect to="/"/>
@@ -47,7 +49,7 @@ class App extends Component {
     return (
       <div>
 
-        { (this.props.location.pathname === '/sign-up' || this.props.location.pathname === '/sign-in') ? 
+        { (this.props.location.pathname === '/sign-up' || this.props.location.pathname === '/sign-in'  || this.props.location.pathname === '/verification/'+this.props.verifyId) ? 
         (<BeforeAuth>
           {routes}
         </BeforeAuth>) : 
@@ -63,17 +65,18 @@ class App extends Component {
 }
 
 
-// const mapStateToProps = state => {
-//   return{
-//     isAuthentiated : state.auth.token !== null
-//   }
-// }
+const mapStateToProps = state => {
+  return{
+    verifyId : state.auth.verify_id,
+  }
+}
 
 const mapDispatchToProps = dispatch => {
   return{
     onTryAuthSignUp : () => dispatch(actions.authCheckState()),
-    onSetTenantConfig : ()=> dispatch(actions.setTenantConfig())
+    onSetTenantConfig : ()=> dispatch(actions.setTenantConfig()),
+    onInitCountries: () => dispatch(actions.initCountries())
   }
 }
 
-export default withRouter(connect(null,mapDispatchToProps)(App));
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(App));

@@ -1,12 +1,26 @@
 import React from 'react';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
 import classes from './Header.module.css';
 import AvatarImage from '../../assets/images/header/avatar.jpg';
 import CartImage from '../../assets/images/header/cart.svg';
-
+import Skeleton from '../UI/Skeleton/Skeleton';
 const header = (props) => {
+
+    let userName = 'Guests';
+
+    let profilePic = AvatarImage 
+    if(props.isAuthentication){
+            userName = <Skeleton/>
+        if(props.userData.first_name !== undefined){
+            userName = props.userData.first_name+' '+props.userData.last_name;
+        }
+
+        if(props.userData.profile_pic !== ''){
+            profilePic =  props.userData.profile_pic
+        }
+
+    }
     return (
         <header className={classes.header}>
 
@@ -19,14 +33,14 @@ const header = (props) => {
                 <div className="col-sm-6">
                     <div className={classes.userArea + " dropdown"}>
                         <Link to="#" className="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img className= { classes.userAvatar } src={AvatarImage} alt="User Avatar"/>
-                            { (!props.isAuthentication) ? <span className={ classes.spanName}>Guest</span> : <span className={ classes.spanName}>Siddiq</span>}
-                            
+                        
+                            <img className= { classes.userAvatar } src={(profilePic===undefined) ?  AvatarImage : profilePic} alt="User Avatar"/>
+                            <span className={ classes.spanName}>{userName}</span>
                         </Link>
 
                         <div className={classes.dropdownMenu + " user-menu dropdown-menu"}>
 
-                        { (!props.isAuthentication) ? <Link className={classes.navLink} to="/sign-in"><i className="fa fa-power -off"></i>Login</Link> : 
+                        { (!props.isAuthentication) ? <Link className={classes.navLink} to="/sign-in"><i className="fa fa-power-off mr-10"></i>Login</Link> : 
                                 <Aux>
                                     <Link className={classes.navLink} to="#"><i className="fa fa- user"></i>My Profile</Link>
                                     <Link className={classes.navLink} to="#"><i className="fa fa -cog"></i>Settings</Link> 
@@ -59,14 +73,4 @@ const header = (props) => {
     );
 }
 
-
-const mapStateToProps = state => {
-    return {
-        loading: state.auth.loading,
-        message: state.auth.message,
-        isAuthentication : state.auth.token !== null
-    };
-}
-
-  
-export default connect(mapStateToProps)( header );
+export default header;

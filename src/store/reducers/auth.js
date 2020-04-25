@@ -2,8 +2,8 @@ import * as actionTypes from '../actions/actionTypes';
 import { updateObject } from '../../shared/utility';
 
 const initialState = {
-    // token   : null,
-    // userId  : null,
+    token   : null,
+    userId  : null,
     loading : false,
     error   : false,
     disabled: false,
@@ -25,8 +25,7 @@ const authSuccess = (state,action) =>{
             message : null,
             disabled : false,
             error : null,
-            verify_id : null,
-            authRedirectPath: '/home'
+            verify_id : null
         })
 }
 
@@ -41,7 +40,7 @@ const authFail = (state,action) =>{
 }
 
 const authLogout = (state, action) => {
-    return updateObject(state,{token:null,userId:null,disabled : false,error : null,message : null,authRedirectPath:"/"})
+    return updateObject(state,{token:null,userId:null,disabled : false,error : null,message : null,authRedirectPath: '/'})
 }
 
 const startCountries= ( state, action ) => {
@@ -61,14 +60,10 @@ const fetchCountriesFailed = (state, action) => {
     return updateObject( state, { loading: false, error: true, message: 'Could not fetch coutries result.' } );
 };
 
-// const initTenantConfig = (state, action) => {
-//     return updateObject( state, { loading: false, error: false} );
-// };
 
 const setAuthRedirectPath = (state, action) => {
     return updateObject(state,{authRedirectPath:action.path,verify_id:action.verify_id,loading:false,error:false,disabled:false})
 }
-
 
 
 const authVerify = (state,action) =>{
@@ -83,7 +78,6 @@ const authReducer = ( state = initialState, action) =>{
         case actionTypes.AUTH_FAIL: return authFail(state,action);
         case actionTypes.AUTH_LOGOUT: return authLogout(state,action);
         case actionTypes.AUTH_VERIFY: return authVerify(state,action);
-       // case actionTypes.INIT_TENENT_CONFIG: return initTenantConfig(state, action);  
         case actionTypes.INIT_COUNTRIES: return startCountries(state, action);   
         case actionTypes.SET_COUNTRIES: return setCountries(state, action);    
         case actionTypes.FETCH_COUNTRIES_FAILED: return fetchCountriesFailed(state, action);

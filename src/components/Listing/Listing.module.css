@@ -5,7 +5,7 @@
     border: 1px solid #e3e3e3;
     border-radius: 10px;
     box-sizing: border-box;
-    min-height: 235px;
+
 }
 
 .latestTrend p {
@@ -46,9 +46,7 @@
     font-size: 14px;
     line-height: 17px;
     text-align: center;
-
     float: right;
-        padding: 8px;
-
+    padding: 8px;
     color: #13B58C;
 }

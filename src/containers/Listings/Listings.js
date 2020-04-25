@@ -1,6 +1,6 @@
 import React , { Component } from 'react';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
-import HomeBanner from '../../components/HomeBanner/HomeBanner';
+
 import classes from './Listings.module.css';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -12,11 +12,6 @@ import * as actions from '../../store/actions/index';
 
 import Listing from '../../components/Listing/Listing';
 import Filter from '../../components/Listing/Filter/Filter';
-import AllenSollyLogo from '../../assets/images/home/store/allenSolly.svg';
-import NoIamgeLogo from '../../assets/images/home/store/noImage.svg';
-
-import StoreLogo from '../../assets/images/home/store/store1.svg';
-import StoreLogo2 from '../../assets/images/home/store/store2.svg';
 
 
 const options = [
@@ -42,20 +37,31 @@ class Listings extends Component{
     componentDidMount(){ 
         this.timer = setTimeout(
             () => {
-                this.props.onInitListings();
+                this.props.onInitListings(0);
             },
             3000,
           );
     }
     
+    loadMore = (count) =>{
+        this.props.onInitListings(count);
+    }
 
     render(){
         const { selectedOption } = this.state;
 
         let listing = <Spinner show={true} styles='SpinnerCenter'/> 
         console.log(this.props.listings);
+
+        let showLoadButton = null;
+
         if(this.props.listings && this.props.listings.length > 0){
             listing = <Listing listings={this.props.listings} total_products={this.props.total_products}/>
+
+            showLoadButton =   <div className="col-sm-12">
+                                    <button className="btnGreenStyle pull-right mt-4" onClick={() => this.loadMore(4)}>Load More</button>
+                                </div>  
+                               
         }
 
         return (
@@ -69,8 +75,7 @@ class Listings extends Component{
                 
                 {listing}
             
-               
-
+                    {showLoadButton}
 
                 <br/>
                 <br/>
@@ -98,7 +103,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onInitListings: () => dispatch(actions.initListings())
+        onInitListings: (count) => dispatch(actions.initListings(count))
     }
 }
   
