@@ -1,0 +1,58 @@
+.SortbyMenu {
+    background: none !important;
+    border:none;
+    padding-top: 0.8rem;
+    float: left;
+    /* left:8rem; */
+    font-weight: bold;
+}
+
+
+
+.pageTitle{
+    font-weight: bold;
+    font-size: 3rem;
+    top:-0.9rem ;
+}
+
+
+.transactionContainer{
+    background-color: #fff;
+    border: 1px slid #fff;
+    border-radius: 15px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+}
+
+.status{
+        background-color: #13B58C;
+        border:none;
+        border-radius: 15px;
+        padding-top: 0.5rem;
+        float: left;
+        
+}
+
+
+.button {
+    font-size: 2rem;
+    background: none;
+    border: 1.1px solid #FFFFFF;
+    color: #13B58C;
+}
+
+.productImg{
+    float:left;
+    height: 100%;
+    border-radius: 15px 0 0 15px;
+}
+
+
+.transactionDetails {
+       
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        justify-items: center;
+}

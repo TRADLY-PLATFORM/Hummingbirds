@@ -1,0 +1,28 @@
+
+.SortbyMenu {
+    background: none !important;
+    border:none;
+    padding-top: 0.8rem;
+    float: left;
+    font-weight: bold;
+}
+
+
+
+.pageTitle{
+    font-weight: bold;
+    font-size: 3rem;
+    top:-0.9rem ;
+}
+
+.wishLIstItem{
+        min-height: 20px;
+        padding: 19px;
+        margin-bottom: 20px;
+        background-color: #ffffff;
+        border: 1px solid #e3e3e3;
+        border-radius: 10px;
+        height: 120px;
+        box-sizing: border-box;
+}
+

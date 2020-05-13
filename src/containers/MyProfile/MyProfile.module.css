@@ -1,0 +1,56 @@
+.profilecard {
+    border: 1px solid #FFFFFF;
+    border-radius: 10px;
+    background-color: white;
+
+}
+
+.mycontainer{
+    width:80%;
+    margin:0 auto;
+    background-color: #fff;
+    padding: 3rem;
+    border-radius: 10px;
+}
+
+.userAvatar {
+    margin-top: 4px;
+    width: 42px;
+    border-radius: 50% !important;
+}
+
+.editprofile {
+    background-color: #13B58C;
+    border:none;
+    border-radius: 15px;
+    padding: 0.5rem;
+    float:right;
+}
+
+
+.profilelist{
+    background-color: #fff;
+}
+
+.profileinfo{
+        border: 1px solid #FFFFFF;
+        border-radius: 10px;
+        padding: 10rem;
+        background-color: white;
+
+
+}
+
+.button{   
+    background: #FFFFFF;
+    border: 1.1px solid #FFFFFF;
+    color: #13B58C;
+    float:right;
+}
+
+.logout{
+        background: #FFFFFF;
+        border: 1.1px solid #FFFFFF;
+        color: #13B58C;
+        float:left;
+}

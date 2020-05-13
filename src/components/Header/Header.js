@@ -54,7 +54,7 @@ const header = (props) => {
 
                     <div className={classes.cartArea}>
                    
-                        <Link to="#">
+                        <Link to="/cart">
                             <div>
                                 <img className= { classes.cartImage } src={CartImage} alt="Cart"/>
                                 <span className={ classes.countCart }>0</span>

@@ -1,0 +1,75 @@
+.mycontainer{
+    background-color: #fff;
+    width:70%;
+    margin: 10px auto;
+    border-radius: 10px;
+}
+.button {
+    font-size: 2rem;
+    background: none;
+    border: 1.1px solid #FFFFFF;
+    color: #13B58C;
+}
+
+.groupcard {
+    border: 1px solid #FFFFFF;
+    border-radius: 10px;
+    padding:4rem;
+    text-align: center;
+}
+
+.groupAvatar {
+    margin-top: 4px;
+    width: 82px;
+    border-radius: 50% !important;
+}
+
+ .input {
+     width:100%;
+     margin: 0 auto;
+     border: 1px solid #13B58C;
+     border-radius: 24px;
+     padding: 10px;
+     background: #fff;
+     color: #000;
+ }
+
+ .addgroup {
+     padding: 4rem;
+     color: #000;
+     border-radius: 10px;
+ }
+
+ .creategroup {
+     background-color: #13B58C;
+     border: none;
+     border-radius: 15px;
+   
+ }
+
+
+.typeGroup {
+    min-height: 20px;
+    padding: 19px;
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    border: 1px solid #e3e3e3;
+    border-radius: 10px;
+    height: 120px;
+    box-sizing: border-box;
+    
+}
+
+.typeGroup p {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    color: #000000;
+}
+
+.typeGroup img {
+    margin-bottom: 10px;
+}
+
+

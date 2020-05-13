@@ -13,6 +13,12 @@ import AllCategory from './components/Category/AllCategory/AllCategory';
 import ProductDetails from './containers/ProductDetails/ProductDetails';
 import Store from './containers/Store/Store';
 import * as actions from '../src/store/actions/index';
+import WishList from "./containers/WishList/WishList";
+import MyTransactionst from "./containers/MyTransactionst/MyTransactionst";
+import MyProfile from "./containers/MyProfile/MyProfile";
+import Cart from "./containers/Cart/Cart";
+import EditProfile from "./containers/EditProfile/EditProfile";
+import Group from "./containers/Group/Group";
 
 
 class App extends Component {
@@ -40,6 +46,12 @@ class App extends Component {
         <Route path="/store" exact component={Store} />
         <Route path="/store/:id" exact component={Store} />
         <Route path="/all-categories" exact component={AllCategory}/>
+        <Route path="/wishlist" exact component={WishList} />
+        <Route path="/mytransaction" exact component={MyTransactionst} />
+        <Route path="/profile" exact component={MyProfile} />
+        <Route path="/cart" exact component={Cart} />
+        <Route path="/editprofile" excat component={EditProfile} />
+        <Route path="/group" excat component={Group} />
         <Redirect to="/"/>
       </Switch>
       );
