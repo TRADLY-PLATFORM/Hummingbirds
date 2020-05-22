@@ -11,11 +11,11 @@ import AuthReducer from './store/reducers/auth';
 import HomeReducer from './store/reducers/home';
 import ProductReducer from './store/reducers/product';
 import StoreReducer from './store/reducers/store';
-import * as Sentry from "@sentry/browser";
+// import * as Sentry from "@sentry/browser";
 
-Sentry.init({
-    dsn: "http://3f99218da0aa4b1ab32e13029b3b8895@ec2-54-175-98-88.compute-1.amazonaws.com/1"
-});
+// Sentry.init({
+//     dsn: "http://3f99218da0aa4b1ab32e13029b3b8895@ec2-54-175-98-88.compute-1.amazonaws.com/1"
+// });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 
 const skeleton = ( props ) => {

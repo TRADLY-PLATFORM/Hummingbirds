@@ -41,15 +41,15 @@ export const authFail= (error) =>{
 }
 
 export const logout = () =>{
-    localStorage.removeItem('token');
-    localStorage.removeItem('userId');
     localStorage.removeItem('expirationDate');
     localStorage.removeItem('refresh_key');
-    localStorage.removeItem('appDetails');
-    localStorage.removeItem('brandImage');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('token');
     sessionStorage.setItem('userData','');
     sessionStorage.clear();
     
+
+  
     return{
         type:actionTypes.AUTH_LOGOUT
     }
@@ -69,10 +69,10 @@ export const checkAuthTimeout = (expirationTime) => {
 export const authVerification = (verificationData) =>{
     return dispatch => {
         dispatch(authVerify());
-        let url = '/app/v1/users/verify';
+        let url = '/v1/users/verify';
         axios.post(url, verificationData, {
             headers:   {
-                'tenant_key': (localStorage.getItem('tenant_key')) ?? ACCESS_TOKEN
+                'Authorization': 'Bearer '+ (localStorage.getItem('tenant_key')) ?? ACCESS_TOKEN
             }
         })
         .then(response => {           
@@ -101,15 +101,15 @@ export const auth = (userData, isSignup) =>{
    return dispatch => {
        dispatch(authStart());
 
-       let url = '/app/v1/users/register';
+       let url = '/v1/users/register';
        if(!isSignup){
-           url = '/app/v1/users/login';
+           url = '/v1/users/login';
        }
      
 
         axios.post(url, userData, {
                 headers:   {
-                    'tenant_key': (localStorage.getItem('tenant_key')) ?? ACCESS_TOKEN
+                    'Authorization': 'Bearer '+ (localStorage.getItem('tenant_key')) ?? ACCESS_TOKEN
                 }
         })
             .then(response => {
@@ -222,11 +222,12 @@ export const startCountries= () => {
 };
 
 export const initCountries = () => {
+    console.log(localStorage.getItem('logo_path'));
     return dispatch => {
         dispatch(startCountries());
-        axios.get( '/app/v1/countries',{
+        axios.get( '/v1/countries',{
             headers:   {
-                                'tenant_key': (localStorage.getItem('tenant_key')) ?? ACCESS_TOKEN
+                                'Authorization': 'Bearer '+ (localStorage.getItem('tenant_key')) ?? ACCESS_TOKEN
                        }
             })
                         .then( response => {
@@ -257,7 +258,7 @@ export const setTenantConfig = () => {
                             .then( response => {
                               console.log(response.data.data);
                               localStorage.setItem('logo_path',response.data.data.logo_path);
-                              localStorage.setItem('tenant_key',response.data.data.key.tenant_key);
+                              localStorage.setItem('tenant_key',response.data.data.key.app_key);
                               localStorage.setItem('tenantData',JSON.stringify(response.data.data));
                             } )
                             .catch( error => {

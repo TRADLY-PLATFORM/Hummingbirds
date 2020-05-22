@@ -19,6 +19,8 @@ import MyProfile from "./containers/MyProfile/MyProfile";
 import Cart from "./containers/Cart/Cart";
 import EditProfile from "./containers/EditProfile/EditProfile";
 import Group from "./containers/Group/Group";
+import StoreDetails from './containers/Store/StoreDetails';
+import CreateStore from './containers/Store/CreateStore';
 
 
 class App extends Component {
@@ -28,7 +30,16 @@ class App extends Component {
   componentDidMount() {
      this.props.onTryAuthSignUp();
      this.props.onSetTenantConfig();
-     this.props.onInitCountries();
+     this.timer = setTimeout(
+      () => {
+
+       // alert(localStorage.getItem('tenant_key'));
+        this.props.onInitCountries();
+      },
+      3000,
+    );
+
+     
   }
 
   render(){
@@ -44,7 +55,8 @@ class App extends Component {
         <Route path="/" exact component={Home} />
         <Route path="/product-details/:id" exact component={ProductDetails}/>
         <Route path="/store" exact component={Store} />
-        <Route path="/store/:id" exact component={Store} />
+        <Route path="/create-store" exact component={CreateStore}/>
+        <Route path="/store-details/:id" exact component={StoreDetails} />
         <Route path="/all-categories" exact component={AllCategory}/>
         <Route path="/wishlist" exact component={WishList} />
         <Route path="/mytransaction" exact component={MyTransactionst} />

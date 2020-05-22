@@ -21,7 +21,6 @@ class Sidebar extends Component{
        this.props.onSetAuthRedirectPath(path); 
        this.setState({redirect:true})
      
-
     }
 
     render(){
@@ -43,14 +42,14 @@ class Sidebar extends Component{
                     </div>
                     <ul className="nav nav-pills nav-stacked">
                     <li className="active"><Link to="/home"><img className="img-fluid" src={HomeActiveLogo} alt="Home" title="Home"/><span>Home</span></Link></li>
-                    <li><a href="/wishlist"><img className="img-fluid" src={WishlistLogo} alt="Home" title="Home"/><span>My Wishlist</span></a></li>
+                    <li><Link to="/wishlist"><img className="img-fluid" src={WishlistLogo} alt="Home" title="Home"/><span>My Wishlist</span></Link></li>
                     <li className=""><Link to="/Listings"><img className="img-fluid" src={HomeActiveLogo} alt="Home" title="Home"/><span>Listings</span></Link></li>
-                    <li><a href="/mytransaction"><img className="img-fluid" src={TransactionLogo} alt="Home" title="Home"/><span>My Transaction</span></a></li>
+                    <li><Link to="/mytransaction"><img className="img-fluid" src={TransactionLogo} alt="Home" title="Home"/><span>My Transaction</span></Link></li>
                     <li>
                         { (!this.props.isAuthentication) ? <Link to="#" onClick={(path) => this.authRedirectHandler('/store')}><img className="img-fluid" src={StoreLogo} alt="Home" title="Home"/><span>My Store</span></Link> :
                         <Link to="/store"><img className="img-fluid" src={StoreLogo} alt="Home" title="Home"/><span>My Store</span></Link> }
                     </li>
-                    <li><a href="/group"><img className="img-fluid" src={GroupLogo} alt="Home" title="Home"/><span>Group</span></a></li>
+                    <li><Link to="/group"><img className="img-fluid" src={GroupLogo} alt="Home" title="Home"/><span>Group</span></Link></li>
                     </ul><br/>
                 </div>
                 <br/>

@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom';
 import classes from './Header.module.css';
 import AvatarImage from '../../assets/images/header/avatar.jpg';
 import CartImage from '../../assets/images/header/cart.svg';
-import Skeleton from '../UI/Skeleton/Skeleton';
+// import Skeleton from '../UI/Skeleton/Skeleton';
 const header = (props) => {
 
     let userName = 'Guests';
 
     let profilePic = AvatarImage 
     if(props.isAuthentication){
-            userName = <Skeleton/>
+            userName = ''
         if(props.userData.first_name !== undefined){
             userName = props.userData.first_name+' '+props.userData.last_name;
         }

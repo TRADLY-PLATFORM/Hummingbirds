@@ -25,9 +25,9 @@ export const initCollections= () => {
 export const initHomeCollections = () => {
     return dispatch => {
         dispatch(initCollections());
-        axios.get( '/app/products/v1/home/en',{
+        axios.get( '/products/v1/home/',{
             headers:   {
-                                'tenant_key': ACCESS_TOKEN//(localStorage.getItem('tenant_key')) ?? ACCESS_TOKEN
+                'Authorization': 'Bearer '+ (localStorage.getItem('tenant_key')) ?? ACCESS_TOKEN
                        }
             })
                         .then( response => {

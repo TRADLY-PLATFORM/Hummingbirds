@@ -8,10 +8,8 @@ import Modal from '../../components/UI/Modal/Modal';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Skeleton from '../../components/UI/Skeleton/Skeleton';
 import classes from './ProductDetails.module.css';
-import ProductImage from '../../assets/images/products/product1.svg';
 import ArrowLogo from '../../assets/images/products/arrow.svg';
 import * as actions from '../../store/actions/index';
-import homeBanner from '../../components/HomeBanner/HomeBanner';
 
 import Maps from '../../components/UI/Maps/Maps';
 
@@ -65,33 +63,33 @@ class ProductDetails extends Component{
                 currencySymbol = this.props.productDetails.currency.symbol;  
             }
             
-            if(this.props.productDetails.offer_percent !== ''){
+            if(this.props.productDetails.offer_percent !== 0){
                 offerPercent = <strong>{this.props.productDetails.offer_percent || <Skeleton/> }%</strong>
             }
 
             if(this.props.productDetails.list_price !== ''){
                 list_price = <Aux>{currencySymbol}{this.props.productDetails.list_price || <Skeleton/> }</Aux>
-                if(this.props.productDetails.offer_price !== '' ){
+                if(this.props.productDetails.offer_price !== 0 ){
                     list_price = <strike>{currencySymbol}{this.props.productDetails.list_price || <Skeleton/> }</strike>
                 }
             }
 
-            if(this.props.productDetails.offer_price !== ''){
+            if(this.props.productDetails.offer_price !== 0 && offerPercent!==null){
                 offer_price = <Aux>{currencySymbol}{(this.props.productDetails.offer_price!==null) ? this.props.productDetails.offer_price : <Skeleton/> }</Aux> 
             }
             categoryId = 'N/A';
-            if(this.props.productDetails.category_id!=""){
+            if(this.props.productDetails.category_id!==""){
                 categoryId = this.props.productDetails.category_id;
             }
 
             if(this.props.productDetails.store){
-                storeName = <Link to={'/store/'+this.props.productDetails.store.id}>{this.props.productDetails.store.name}</Link>
+                storeName = <Link to={'/store-details/'+this.props.productDetails.store.id}>{this.props.productDetails.store.name}</Link>
                 storeOwner = this.props.productDetails.store.user.first_name+''+this.props.productDetails.store.user.last_name;
                 storeAddress= this.props.productDetails.store.address;
 
                 if(this.props.productDetails.store.coordinates){
-                    coOrdinates1 = this.props.productDetails.store.coordinates.coordinates[0];
-                    coOrdinates2 = this.props.productDetails.store.coordinates.coordinates[1];
+                    coOrdinates1 = this.props.productDetails.store.coordinates.latitude;
+                    coOrdinates2 = this.props.productDetails.store.coordinates.longitude;
                 }
             }
 

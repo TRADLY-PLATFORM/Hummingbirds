@@ -10,7 +10,7 @@ import classes from './Category.module.css';
 // import ElectronicsLogo from '../../assets/images/home/category/electronics.svg';
 // import SporsLogo from '../../assets/images/home/category/sports.svg';
 // import GamesLogo from '../../assets/images/home/category/games.svg';
-import MoreLogo from '../../assets/images/home/category/more.svg';
+
 
 const categoryHtmlHandler = (categories, categoryLength) => {
 
@@ -113,6 +113,8 @@ const category = (props) => {
         if (props.categories.length > 0){
             let categoryLength = props.categories.length;
             categoryContent =    categoryHtmlHandler(props.categories,categoryLength);            
+        }else{
+            categoryContent ='';
         }
         return categoryContent;
 }

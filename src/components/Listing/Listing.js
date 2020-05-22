@@ -3,10 +3,10 @@ import classes from './Listing.module.css';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
 import { Link } from 'react-router-dom';
 import AllenSollyLogo from '../../assets/images/home/store/allenSolly.svg';
-import NoIamgeLogo from '../../assets/images/home/store/noImage.svg';
+
 
 import StoreLogo from '../../assets/images/home/store/store1.svg';
-import StoreLogo2 from '../../assets/images/home/store/store2.svg';
+
 
 const listing = ( props ) => {
 
@@ -16,7 +16,6 @@ const listing = ( props ) => {
 
 
 
-        let offerPercent = null;
         let list_price  = null
         let offer_price = null
 

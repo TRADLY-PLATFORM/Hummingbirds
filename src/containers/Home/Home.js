@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 
 import Backdrop from '../../components/UI/Backdrop/Backdrop';
 import Spinner from '../../components/UI/Spinner/Spinner';
-import Select from 'react-select';
+
 import * as actions from '../../store/actions/index';
 import MoreLogo from '../../assets/images/home/category/more.svg';
 import ItemsCarousel from 'react-items-carousel';
@@ -23,18 +23,15 @@ import NoProductImage from '../../assets/images/rsz_noimage.png';
 
 
 
-const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' },
-];
+
 
 class Home extends Component{
 
 
     state = {
         selectedOption: null,
-        activeItemIndex : 0
+        activeItemIndex : 0,
+        show : true,
     };
 
 
@@ -53,6 +50,15 @@ class Home extends Component{
             },
             3000,
           );
+
+          this.timer = setTimeout(
+            () => {
+                this.setState({show:false})
+            },
+            6000,
+          );
+
+
     }
     
     redirectListing = () => {
@@ -107,7 +113,7 @@ class Home extends Component{
 
                                 collection.listings.map((list, i) =>{
                                     let imagePath = NoProductImage
-                                    if(list.images[0]!=undefined){
+                                    if(list.images[0]!==undefined){
                                         imagePath = list.images[0];
                                     }
 
@@ -134,7 +140,6 @@ class Home extends Component{
     }
 
     render(){
-        const { selectedOption } = this.state;
         let firstCategorySet = {};
         let secondCategorySet = {};
 
@@ -171,10 +176,11 @@ class Home extends Component{
         let collectionContent =  <Spinner show={true} styles='SpinnerCenter'/> 
 ;
         if(this.props.collections && this.props.collections.length > 0 ){
-
             collectionContent = this.collectonsHtmlHandler(this.props.collections); 
-            
-
+        }else{
+            if(!this.state.show){
+                collectionContent = '';
+            }
         }
       
         return (

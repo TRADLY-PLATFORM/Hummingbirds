@@ -28,6 +28,10 @@ $primaryBgColor : #FFFFFF;
   color: $primaryBgColor;
 }
 
+.btnGreenStyle:hover{
+  background: linear-gradient(180deg, #13B58C 0%, #2BDBC0 100%);
+}
+
 .h1Headings{
   font-weight: bold;
   font-size: 14px;

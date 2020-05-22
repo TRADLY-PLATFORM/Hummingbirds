@@ -16,25 +16,26 @@ export default class Group extends Component {
                 <button className={classes.button}><i className="fa fa-arrow-left "></i> back to my group</button>
                  </Link> 
                  <br />
-      <div className={classes.mycontainer}>
-               <div className={classes.groupcard }>
-              <div className="row">
-                  <div class="p-2">
-                    <img className={classes.groupAvatar} src={groupAvatar} alt="Group Avatar" />
-                  </div>
-                
-                  <div class="p-2">
-                    <Link to="#">
-                      <button className={classes.button}>
-                        Add your group photo
-                      </button>
-                    </Link>
-           
-                  </div>
-              </div>
-            </div>
 
-              <div className={classes.addgroup}>
+                <div className={classes.mycontainer}>
+                    <div className={classes.groupcard }>
+                        <div className="row">
+                                <div class="p-2">
+                                    <img className={classes.groupAvatar} src={groupAvatar} alt="Group Avatar" />
+                                </div>
+                                
+                                <div class="p-2">
+                                    <Link to="#">
+                                    <button className={classes.button}>
+                                        Add your group photo
+                                    </button>
+                                    </Link>
+                        
+                                </div>
+                        </div>
+                    </div>
+
+                    <div className={classes.addgroup}>
                         <div className="form-group mt-2 ">
                             <input className={classes.input + " form-control input-lg "} type="text" placeholder="Group Name"/>
                         </div>
@@ -83,9 +84,9 @@ export default class Group extends Component {
                     </div>
                    
                      <div className ="text-center"><button className={classes.creategroup}>Create Group</button>
-                      </div>
+                     </div>
                 
-            </div>
+                </div>
             </div>
         )
     }

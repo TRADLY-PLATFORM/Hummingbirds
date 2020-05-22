@@ -1,67 +1,146 @@
 import React , { Component } from 'react';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
 
-import classes from './Listings.module.css';
+// import classes from './Listings.module.css';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Backdrop from '../../components/UI/Backdrop/Backdrop';
 import Spinner from '../../components/UI/Spinner/Spinner';
-import Select from 'react-select';
+
 import * as actions from '../../store/actions/index';
 
 import Listing from '../../components/Listing/Listing';
 import Filter from '../../components/Listing/Filter/Filter';
 
 
-const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' },
+
+
+const priceOptions = [
+    { value: '10_1000', label: '10 to 1000' },
+    { value: '1001_10000', label: '1001 to 10000' },
+];
+  
+const sortByOptions = [
+    { value: 'relevance', label: 'Relevance' },
+    { value: 'price_high_to_low', label: 'Price higt to low' },
+    { value: 'price_low_to_high', label: 'Price low to high' },
+    { value: 'newest_first', label: 'Newest first' },
 ];
 
 class Listings extends Component{
 
     state = {
-        selectedOption: null,
+        selectedOption: {
+            priceValue : null,
+            sortValue : null,
+            supplierValue : null,
+            locationValue : null,
+            categoryValue : null
+        },
         loading : true,
+        loadOnce : true,
+        noListings: false,
     };
 
-    handleChange = selectedOption => {
-        this.setState(
-            { selectedOption },
-            () => console.log(`Option selected:`, this.state.selectedOption)
-        );
+    handleChange = (selectedOption,selectedName) => {
+        let name = selectedName.name;
+        let selectedValue = {...this.state.selectedOption}
+        selectedValue[name] = selectedOption;
+        this.setState({selectedOption:selectedValue,loadOnce:true});
+        
     };
 
     componentDidMount(){ 
         this.timer = setTimeout(
             () => {
-                this.props.onInitListings(0);
+                this.props.onCategoryLists();
+                this.props.onInitListings(0,'');
             },
-            3000,
+            1000,
+          );
+
+          this.timer = setTimeout(
+            () => {
+               this.setState({noListings : true})
+            },
+            4000,
           );
     }
+
+    componentDidUpdate(){
+        if(this.state.loadOnce){
+            this.loadMore();
+            this.setState({loadOnce:false})
+        }
+        
+    }
     
-    loadMore = (count) =>{
-        this.props.onInitListings(count);
+    loadMore = () =>{
+        let count = 4;
+
+        let filter = '';
+
+        if(this.state.selectedOption.sortValue !== null){
+            filter+= '&sort='+this.state.selectedOption.sortValue.value;
+        }
+
+        if(this.state.selectedOption.priceValue !== null){
+
+            let prices = this.state.selectedOption.priceValue.value;
+            let spitPrices = prices.split('_');
+            filter+= '&price_from='+spitPrices[0]+'&price_to='+spitPrices[1];
+        }
+
+
+        this.props.onInitListings(count,filter);
+    
+    
     }
 
+
+
     render(){
-        const { selectedOption } = this.state;
-
-        let listing = <Spinner show={true} styles='SpinnerCenter'/> 
+        
+        console.log(this.state);
+        let listing = '';
         console.log(this.props.listings);
-
         let showLoadButton = null;
 
         if(this.props.listings && this.props.listings.length > 0){
             listing = <Listing listings={this.props.listings} total_products={this.props.total_products}/>
 
-            showLoadButton =   <div className="col-sm-12">
-                                    <button className="btnGreenStyle pull-right mt-4" onClick={() => this.loadMore(4)}>Load More</button>
-                                </div>  
+            if(this.props.total_products > 4){
+                showLoadButton =   <div className="col-sm-12">
+                <button className="btnGreenStyle pull-right mt-4" onClick={this.loadMore}>Load More</button>
+            </div> 
+            }
                                
+        }else{
+
+            if(this.state.noListings){
+                listing = <div style={{marginTop:'5em'}} className="alert alert-danger fade in alert-dismissible">
+                            <Link to="#" className="close" data-dismiss="alert" aria-label="close" title="close">×</Link>
+                            <strong>oops!</strong> No listings found.
+                         </div>
+            }
+
+        }
+
+        let options ={
+            priceOptions : priceOptions,
+            categoryOptions : [],
+            locationOptions : [],
+            supplerOptions : [],
+            sortByOptions : sortByOptions
+        }
+
+        let selectedOption = {
+            priceValue : this.state.selectedOption.priceValue,
+            sortValue : this.state.selectedOption.sortValue,
+            supplierValue:this.state.selectedOption.supplierValue,
+            locationValue:this.state.selectedOption.locationValue,
+            categoryValue:this.state.selectedOption.categoryValue,
         }
 
         return (
@@ -70,12 +149,12 @@ class Listings extends Component{
                 <Spinner show={this.props.loading} />
              
 
-                <Filter selectedOption={this.state.selectedOption} options={options} handleChange={this.handleChange}/>
+                <Filter selectedOption={selectedOption} options={options} handleChange={this.handleChange}/>
                 
                 
                 {listing}
             
-                    {showLoadButton}
+                {showLoadButton}
 
                 <br/>
                 <br/>
@@ -103,7 +182,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onInitListings: (count) => dispatch(actions.initListings(count))
+        onInitListings: (count,filterValue) => dispatch(actions.initListings(count,filterValue)),
+        onCategoryLists : () => dispatch(actions.initCategoryLists()) 
     }
 }
   

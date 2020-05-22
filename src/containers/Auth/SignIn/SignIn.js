@@ -70,7 +70,8 @@ class SignIn extends Component {
                 uuid        : uUid,
                 mobile      : phoneNumber,
                 password    : this.state.password,
-                country_id  : filterCountry.id
+                country_id  : filterCountry.id,
+                type        : "customer"
             }
         }
 

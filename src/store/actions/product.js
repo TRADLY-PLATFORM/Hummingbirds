@@ -25,7 +25,7 @@ export const startProductDeatils = () => {
 export const initProductDeatils = (id) => {
     return dispatch => {
         dispatch(startProductDeatils());
-        axios.get( '/products/v1/c2c/listings/'+id+'?locale=en',{
+        axios.get( '/products/v1/listings/'+id+'?locale=en',{
             headers:   {
                         "Authorization": "Bearer vb12294e1f1ac6c12361b4516c5e155d0"//(localStorage.getItem('tenant_key')) ?? ACCESS_TOKEN
                        }
@@ -67,10 +67,13 @@ export const startListings = () => {
     };
 };
 
-export const initListings = (count) => {
+export const initListings = (count,filterValue) => {
+
+    console.log(filterValue);
+
     return dispatch => {
         dispatch(startListings());
-        axios.get( '/products/v1/c2c/listings?page=1&per_page='+(parseInt(count)+4),{
+        axios.get( '/products/v1/listings?page=1&per_page='+(parseInt(count)+4)+filterValue,{
             headers:   {
                         "Authorization": "Bearer vb12294e1f1ac6c12361b4516c5e155d0"//(localStorage.getItem('tenant_key')) ?? ACCESS_TOKEN
                        }
@@ -86,6 +89,50 @@ export const initListings = (count) => {
                         } )
                         .catch( error => {
                             dispatch(fetchListingsFailed());
+                        } );  
+
+          
+     };
+};
+
+export const setCategoryLists= ( listings ) => {
+    return {
+        type: actionTypes.SET_CATEGORY_LISTS,
+        listings: listings
+    };
+};
+
+export const fetchCategoryListsFailed = () => {
+    return {
+        type: actionTypes.FETCH_CATEGORY_LISTS_FAILED
+    };
+};
+
+export const startCategoryLists = () => {
+    return {
+        type: actionTypes.INIT_CATEGORY_LISTS
+    };
+};
+
+export const initCategoryLists = (count) => {
+    return dispatch => {
+        dispatch(startCategoryLists());
+        axios.get( '/v1/categories?parent=0',{
+            headers:   {
+                        "Authorization": "Bearer a34asdfe1f234c6c12361db4516c5ezerr" //+(localStorage.getItem('tenant_key')) ?? ACCESS_TOKEN
+                       }
+            })
+                        .then( response => {console.log('test');
+                            console.log(response.data.data);console.log('test');
+                            if(response.data.status){
+                                dispatch(setCategoryLists(response.data.data));
+                                
+                            }else{
+                                dispatch(fetchCategoryListsFailed());
+                            }
+                        } )
+                        .catch( error => {
+                            dispatch(fetchCategoryListsFailed());
                         } );  
 
           

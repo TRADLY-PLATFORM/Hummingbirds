@@ -98,7 +98,8 @@ class SignUp extends Component {
                 last_name   : this.state.lastName,
                 mobile      : phoneNumber,
                 password    : this.state.password,
-                country_id  : filterCountry.id
+                country_id  : filterCountry.id,
+                type        : "customer"
             }
         }
 
