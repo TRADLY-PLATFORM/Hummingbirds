@@ -24,7 +24,7 @@ export default class MyProfile extends Component {
                 <div>
                   <div className="">
                     <Link to="/editprofile">
-                      <button className={classes.editprofile}>
+                      <button className={classes.btnGreenStyle}>
                         Edit Profile
                       </button>
                     </Link>

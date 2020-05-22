@@ -3,6 +3,7 @@
     border-radius: 10px;
     background-color: white;
 
+
 }
 
 .mycontainer{
@@ -15,16 +16,22 @@
 
 .userAvatar {
     margin-top: 4px;
-    width: 42px;
+    width: 40px;
     border-radius: 50% !important;
 }
 
-.editprofile {
-    background-color: #13B58C;
-    border:none;
-    border-radius: 15px;
-    padding: 0.5rem;
-    float:right;
+.btnGreenStyle {
+    padding: 8px 13px;
+    border: none;
+    background: linear-gradient(180deg, #2BDBC0 0%, #13B58C 100%);
+    border-radius: 24px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    /* identical to box height */
+    color: #FFFFFF;
+    float: right;
 }
 
 
@@ -54,3 +61,4 @@
         color: #13B58C;
         float:left;
 }
+

@@ -20,19 +20,13 @@
     background-color: #fff;
     border: 1px slid #fff;
     border-radius: 15px;
-    text-align: center;
     display: flex;
     align-items: center;
+
+
 }
 
-.status{
-        background-color: #13B58C;
-        border:none;
-        border-radius: 15px;
-        padding-top: 0.5rem;
-        float: left;
-        
-}
+
 
 
 .button {
@@ -42,6 +36,20 @@
     color: #13B58C;
 }
 
+.btnGreenStyle{
+    padding: 8px 13px;
+    border: none;
+    background: linear-gradient(180deg, #2BDBC0 0%, #13B58C 100%);
+    border-radius: 24px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    /* identical to box height */
+    color: #FFFFFF;
+    float: left;
+} 
+
 .productImg{
     float:left;
     height: 100%;
@@ -49,10 +57,38 @@
 }
 
 
-.transactionDetails {
-       
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        justify-items: center;
+.transactionDetails { 
+        position: relative;
+        left: 10px;
+        font-weight: 600;
+        font-size: 13px;
+        line-height: 22px;
+        padding-top:10px;
 }
+
+
+.bottomDesc {
+    margin-bottom: 10px;
+}
+
+.bottomDesc img { 
+    margin-left: 10px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    transition: all .5s;
+}
+
+.bottomDesc span {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #4A4A4A;
+    opacity: 0.5;
+    position: relative;
+    left: 3px;
+    top: 3px;
+}
+
+

@@ -1,15 +1,16 @@
 .button {
     font-size: 2rem;
     background: none;
-    border: 1.1px solid #FFFFFF;
+    border: 1.1px solid transparent;
     color: #13B58C;
 }
 
-.mycontainer{
+.editProfile{
     background-color: #fff;
-     width:70%;
+    width:80%;
     margin: 10px auto;
     border-radius: 10px;
+    padding-bottom: 20px;
 }
 
 .profilecard {
@@ -25,7 +26,7 @@
 
 .userAvatar {
     margin-top: 4px;
-    width: 42px;
+    width: 50%;
     border-radius: 50% !important;
 }
 
@@ -56,9 +57,17 @@
      border-radius: 10px;
  }
 
-.savechange {
-    background-color: #13B58C;
+
+.btnGreenStyle {
+    padding: 8px 13px;
     border: none;
-    border-radius: 15px;
+    background: linear-gradient(180deg, #2BDBC0 0%, #13B58C 100%);
+    border-radius: 24px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    /* identical to box height */
+    color: #FFFFFF;
     float: right;
 }

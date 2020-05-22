@@ -7,8 +7,9 @@
 .button {
     font-size: 2rem;
     background: none;
-    border: 1.1px solid #FFFFFF;
+    border: 1.1px solid transparent;
     color: #13B58C;
+    padding-top: 25px;
 }
 
 .groupcard {
@@ -40,12 +41,18 @@
      border-radius: 10px;
  }
 
- .creategroup {
-     background-color: #13B58C;
-     border: none;
-     border-radius: 15px;
-   
- }
+.btnGreenStyle {
+    padding: 8px 13px;
+    border: none;
+    background: linear-gradient(180deg, #2BDBC0 0%, #13B58C 100%);
+    border-radius: 24px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    /* identical to box height */
+    color: #FFFFFF;
+}
 
 
 .typeGroup {
@@ -73,3 +80,8 @@
 }
 
 
+.groupType{
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+}

@@ -13,10 +13,10 @@ export default class EditProfile extends Component {
                  </Link>
 
             
-                <div className={classes.mycontainer}>
+                <div className={classes.editProfile}>
                  <div className={classes.profilecard }>
               <div className="row">
-                  <div class="p-2">
+                  <div className="p-2">
                     <img
                       className={classes.userAvatar}
                       src={AvatarImage}
@@ -24,7 +24,7 @@ export default class EditProfile extends Component {
                     />
                   </div>
                 
-                  <div class="p-2">
+                  <div className="p-2">
                     <Link to="#">
                       <button className={classes.button}>
                         Change photo
@@ -48,10 +48,13 @@ export default class EditProfile extends Component {
                         </div>
                        
                     <div className = "">
-                     <button className={classes.savechange}> Save Change </button>
+                     <button className={classes.btnGreenStyle}> Save Change </button>
                       </div>
                     </div>
-           
+                    </div>
+           <br/>
+
+           <div className={classes.editProfile}>
                     <div className={classes.changepassword }>
                         <div className="form-group mt-2 ">
                             <input className={classes.input + " form-control input-lg "} type="text" placeholder="Old Password"/>
@@ -66,7 +69,7 @@ export default class EditProfile extends Component {
                         </div>
 
                     <div className = "">
-                     <button className={classes.savechange}>
+                     <button className={classes.btnGreenStyle}>
                         Save Change
                       </button>
                       </div>
