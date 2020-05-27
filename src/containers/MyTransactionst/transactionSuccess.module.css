@@ -1,0 +1,30 @@
+.groupSuccess {
+    display: grid;
+    justify-items: center;
+
+}
+
+.pageTitel {
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 44px;
+}
+
+.pageNote {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+}
+
+.btnGreenStyle {
+    padding: 8px 13px;
+    border: none;
+    background: linear-gradient(180deg, #2BDBC0 0%, #13B58C 100%);
+    border-radius: 24px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
+    float: left;
+}

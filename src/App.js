@@ -21,7 +21,10 @@ import EditProfile from "./containers/EditProfile/EditProfile";
 import Group from "./containers/Group/Group";
 import StoreDetails from './containers/Store/StoreDetails';
 import CreateStore from './containers/Store/CreateStore';
-
+import myGroup from "./containers/Group/myGroup";
+import groupAdded from "./containers/Group/groupAdded";
+import groupSuccess from "./containers/Group/groupSuccess";
+import transactionSuccess from "./containers/MyTransactionst/transactionSuccess";
 
 class App extends Component {
 
@@ -64,6 +67,10 @@ class App extends Component {
         <Route path="/cart" exact component={Cart} />
         <Route path="/editprofile" excat component={EditProfile} />
         <Route path="/group" excat component={Group} />
+        <Route path="/mygroup" excat component={myGroup} />
+        <Route path="/groupadded" excat component={groupAdded} />
+        <Route path="/groupsuccess" excat component={groupSuccess} />
+        <Route path="/transactionsuccess" excat component={transactionSuccess} />
         <Redirect to="/"/>
       </Switch>
       );
