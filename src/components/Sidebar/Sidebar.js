@@ -25,7 +25,7 @@ class Sidebar extends Component{
 
     render(){
 
-        let storeLogo = (localStorage.getItem('logo_path')) ?? Logo;
+        let storeLogo =  Logo;
         
         let redirectUrl = null;
         if(this.state.redirect){

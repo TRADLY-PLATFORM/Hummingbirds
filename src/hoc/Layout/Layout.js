@@ -26,6 +26,8 @@ class Layout extends Component {
    
 
     render () {
+
+        console.log(this.props.isAuthentication)
         return (
             <Aux>        
                 <nav className="navbar navbar-inverse visible-xs">
@@ -51,7 +53,7 @@ class Layout extends Component {
           
                 <div className={classes.bgColor +" container-fluid"}>
                   <div className="row content">
-                    <Sidebar isAuthentication={this.props.isAuthentication}/>
+                    <Sidebar isAuthentication={this.props.isAuthentication} tenantData={this.props.tenantData}/>
                     
                     <div className={classes.rightPanel + " col-lg-10"}>
                         <Header userData={this.state.userData} isAuthentication={this.props.isAuthentication}/>
@@ -69,7 +71,8 @@ class Layout extends Component {
 
 const mapStateToProps = state => {
     return {
-        isAuthentication : state.auth.token !== null
+        isAuthentication : state.auth.token !== null,
+        tenantData: state.auth.tenantData
     };
 }
 

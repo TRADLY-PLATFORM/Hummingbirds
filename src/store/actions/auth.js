@@ -225,20 +225,20 @@ export const initCountries = () => {
     console.log(localStorage.getItem('logo_path'));
     return dispatch => {
         dispatch(startCountries());
-        axios.get( '/v1/countries',{
+        axios.get( '/app/v1/countries',{
             headers:   {
-                                'Authorization': 'Bearer '+ (localStorage.getItem('tenant_key')) ?? ACCESS_TOKEN
+                         'Authorization': 'Bearer '+ (localStorage.getItem('tenant_key')) ?? ACCESS_TOKEN
                        }
             })
-                        .then( response => {
-                            var result = response.data.data.countries.map( v => {
-                                return v;
-                            });
-                            dispatch(setCountries(result));
-                        } )
-                        .catch( error => {
-                            dispatch(fetchCountriesFailed());
-                        } );  
+            .then( response => {
+                var result = response.data.data.countries.map( v => {
+                    return v;
+                });
+                dispatch(setCountries(result));
+            } )
+            .catch( error => {
+                dispatch(fetchCountriesFailed());
+            } );  
 
           
     };
@@ -250,20 +250,43 @@ export const initTenantConfig= () =>{
     }
 }
 
+export const successTenantConfig= (data) =>{
+    return{
+        type:actionTypes.SUCCESS_TENENT_CONFIG,
+        data : data
+    }
+}
+
+export const failedTenantConfig= (error) =>{
+    return{
+        type:actionTypes.FAILED_TENENT_CONFIG,
+        error : error
+    }
+}
+
+
+
 export const setTenantConfig = () => {
     return dispatch => {
-        if(!localStorage.getItem('tenant_key')){
+        //if(!localStorage.getItem('tenant_key')){
             dispatch(initTenantConfig());
-            axios.get( '/tenants/kasd123345/configs')
-                            .then( response => {
-                              console.log(response.data.data);
-                              localStorage.setItem('logo_path',response.data.data.logo_path);
-                              localStorage.setItem('tenant_key',response.data.data.key.app_key);
-                              localStorage.setItem('tenantData',JSON.stringify(response.data.data));
-                            } )
-                            .catch( error => {
-                                console.log(error);
-                            } );  
-        }          
+            axios.get( '/tenants/tradlysocial/configs')
+                .then( response => {
+                    console.log(response.data.data);
+                    let data = {
+                        logo_path : response.data.data.logo_path,
+                        tenant_key : response.data.data.key.app_key
+                    }
+                    dispatch(successTenantConfig(data));
+                    localStorage.setItem('logo_path',response.data.data.logo_path);
+                    localStorage.setItem('tenant_key',response.data.data.key.app_key);
+                    localStorage.setItem('tenantData',JSON.stringify(response.data.data));
+                } )
+                .catch( error => {
+                    dispatch(failedTenantConfig('Tenant API Error.'));
+                } );  
+        // }else{
+            
+        // }
     };
 };

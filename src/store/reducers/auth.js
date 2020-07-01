@@ -9,7 +9,11 @@ const initialState = {
     disabled: false,
     message : null,
     verify_id : null,
-    authRedirectPath: '/'
+    authRedirectPath: '/',
+    tenantData : {
+        logo_path : '',
+        tenant_key : ''
+    }
 }
 
 const authStart = (state,action) =>{
@@ -71,6 +75,21 @@ const authVerify = (state,action) =>{
 }
 
 
+export const successTenantConfig= (state,action) =>{
+    return updateObject(state,{
+        tenantData : {
+            logo_path : action.logo_path,
+            tenant_key : action.tenant_key
+        }
+    })
+}
+
+
+export const failedTenantConfig= (state,action) =>{
+    return updateObject(state,{error:action.error})
+}
+
+
 const authReducer = ( state = initialState, action) =>{
     switch(action.type){
         case actionTypes.AUTH_START: return authStart(state,action);
@@ -82,6 +101,8 @@ const authReducer = ( state = initialState, action) =>{
         case actionTypes.SET_COUNTRIES: return setCountries(state, action);    
         case actionTypes.FETCH_COUNTRIES_FAILED: return fetchCountriesFailed(state, action);
         case actionTypes.SET_AUTH_REDIRECT_PATH: return setAuthRedirectPath(state,action);
+        case actionTypes.SUCCESS_TENENT_CONFIG: return successTenantConfig(state,action);
+        case actionTypes.FAILED_TENENT_CONFIG: return failedTenantConfig(state,action);
         default:
             return state;
 

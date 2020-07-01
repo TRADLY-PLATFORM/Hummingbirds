@@ -6,7 +6,7 @@ import AvatarImage from '../../assets/images/header/avatar.jpg';
 import CartImage from '../../assets/images/header/cart.svg';
 // import Skeleton from '../UI/Skeleton/Skeleton';
 const header = (props) => {
-
+    console.log(props);
     let userName = 'Guests';
 
     let profilePic = AvatarImage 
