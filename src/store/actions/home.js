@@ -1,6 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios';
-import { ACCESS_TOKEN } from '../../shared/utility';
+import { ACCESS_TOKEN, ENCRYPT, DECRYPT } from '../../shared/utility';
 
 
 export const setCollections= ( collectionItems ) => {
@@ -24,56 +24,44 @@ export const initCollections= () => {
 
 export const initHomeCollections = () => {
     return dispatch => {
-        dispatch(initCollections());
-        axios.get( '/products/v1/home/',{
+
+        let homeStorage = localStorage.getItem('homeStorage');
+        if(!homeStorage){
+            dispatch(initCollections());
+            axios.get( '/products/v1/home/',{
             headers:   {
                 'Authorization': 'Bearer '+ (localStorage.getItem('tenant_key')) ?? ACCESS_TOKEN
                        }
             })
-                        .then( response => {
-                            
-                            if(response.data.status){
-                                let promo_banners = response.data.data.promo_banners;
-                                let categories = response.data.data.categories;
-                               
-                                // let categories = [
-                                //         {
-                                //             id : 1, name : "1", image_path: "https://storage.googleapis.com/tradlyapp/images/29796/469a14a2-ff59-4e76-9d85-f6e034d7d844.png", has_sub_category: true
-                                //         },
-                                //         {
-                                //             id : 2, name : "2", image_path: "https://storage.googleapis.com/tradlyapp/images/29796/469a14a2-ff59-4e76-9d85-f6e034d7d844.png", has_sub_category: true
-                                //         },
-                                //         {
-                                //             id : 3, name : "3", image_path: "https://storage.googleapis.com/tradlyapp/images/29796/469a14a2-ff59-4e76-9d85-f6e034d7d844.png", has_sub_category: true
-                                //         },
-                                //         {
-                                //             id : 4, name : "4", image_path: "https://storage.googleapis.com/tradlyapp/images/29796/469a14a2-ff59-4e76-9d85-f6e034d7d844.png", has_sub_category: true
-                                //         },
-                                //         {
-                                //             id : 5, name : "5", image_path: "https://storage.googleapis.com/tradlyapp/images/29796/469a14a2-ff59-4e76-9d85-f6e034d7d844.png", has_sub_category: true
-                                //         },{
-                                //             id : 6, name : "6", image_path: "https://storage.googleapis.com/tradlyapp/images/29796/469a14a2-ff59-4e76-9d85-f6e034d7d844.png", has_sub_category: true
-                                //         },
-                                //         {
-                                //             id : 7, name : "7", image_path: "https://storage.googleapis.com/tradlyapp/images/29796/469a14a2-ff59-4e76-9d85-f6e034d7d844.png", has_sub_category: true
-                                //         },
-                                //         {
-                                //             id : 8, name : "8", image_path: "https://storage.googleapis.com/tradlyapp/images/29796/469a14a2-ff59-4e76-9d85-f6e034d7d844.png", has_sub_category: true
-                                //         }
+            .then( response => {
+                
+                if(response.data.status){
+                    let promo_banners = response.data.data.promo_banners;
+                    let categories = response.data.data.categories;
+                    let collections = response.data.data.collections;
+                
+                    dispatch(setCollections({promo_banners,categories,collections}));
 
-                                // ];
-
-                                let collections = response.data.data.collections;
-                                console.log(collections);
-                                dispatch(setCollections({promo_banners,categories,collections}));
-                                
-                            }else{
-                                dispatch(fetchCollectionsFailed());
-                            }
-                        } )
-                        .catch( error => {
-                            dispatch(fetchCollectionsFailed());
-                        } );  
+                    let data = {
+                        promo_banners:promo_banners, categories:categories, collections:collections
+                    }
+                    localStorage.setItem('homeStorage',ENCRYPT(JSON.stringify(data)));
+                    
+                }else{
+                    dispatch(fetchCollectionsFailed());
+                }
+            } )
+            .catch( error => {
+                dispatch(fetchCollectionsFailed());
+            } );  
+        }else{
+            let homeDetails = JSON.parse(DECRYPT(homeStorage));
+            let promo_banners = homeDetails.promo_banners;
+            let categories = homeDetails.categories;
+            let collections = homeDetails.collections;
+            dispatch(setCollections({promo_banners,categories,collections}));
+        }
+        
 
           
     };

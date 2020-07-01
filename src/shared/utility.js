@@ -52,3 +52,18 @@ export const countryFilter = (code, data) => {
 export const ACCESS_TOKEN = 'lkv294e1f1ac6j5a361b4516c5elkczjz'; //not use plz
 
 export const EXPIRY_TIME = 250;
+
+export const ENCRYPT = (text) => {
+    if(text !=='' || text !==null || text !== undefined){
+        return btoa(text);
+    }else{
+        return '';
+    }
+}
+export const DECRYPT = (text) => {
+    if(text !=='' || text !==null || text !== undefined){
+        return atob(text);
+    }else{
+        return '';
+    }
+}

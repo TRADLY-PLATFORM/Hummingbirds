@@ -1,6 +1,6 @@
 import React , { Component } from 'react';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
-import { Link, Redirect } from 'react-router-dom';
+import { Link  } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import noStoreLogo from '../../assets/images/store/noStore.svg';

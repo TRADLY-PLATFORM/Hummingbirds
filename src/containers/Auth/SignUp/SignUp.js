@@ -80,7 +80,7 @@ class SignUp extends Component {
         let phoneNumber = mobile[1];
 
         let filterCountry = countryFilter(phoneCode, this.props.countryList);
-
+        console.log(filterCountry);
         if(phoneNumber.length !== filterCountry.mobile_number_legth){      
             let digits = (filterCountry.mobile_number_legth!==undefined) ? filterCountry.mobile_number_legth : 10;
             if (! toast.isActive(this.toastId)) {
@@ -98,7 +98,7 @@ class SignUp extends Component {
                 last_name   : this.state.lastName,
                 mobile      : phoneNumber,
                 password    : this.state.password,
-                country_id  : filterCountry.id,
+                dial_code   : filterCountry.dial_code,
                 type        : "customer"
             }
         }

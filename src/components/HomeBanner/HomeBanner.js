@@ -1,9 +1,7 @@
 
 import React from 'react';
-import Spinner from '../../components/UI/Spinner/Spinner';
-
 const homeBanner = (props) => {
-    let imageBanner = (<div className="item active"><Spinner show={true} styles='SpinnerCenter'/></div>)
+    let imageBanner = '';
     if(props.images.length > 0){
         imageBanner = props.images.map((image,index) => {
             let active ='';
@@ -15,12 +13,14 @@ const homeBanner = (props) => {
                         <img src={image.image_path} alt="Chania" />
                         <div className="carousel-caption">
                         {/* <h3>Chania</h3>
-                        <p>The atmosphere in Chania has a touch of Florence and Venice.</p> */}
+                            <p>The atmosphere in Chania has a touch of Florence and Venice.</p> */}
                         </div>
                     </div>)
         })
     }
     return (
+            <>
+            { imageBanner !== '' && 
             <div id="myCarousel" className="carousel slide" data-ride="carousel" style={{    background: 'rgba(160, 160, 160, 0.5)'}}>
                 <div className="carousel-inner" role="listbox">
                     {imageBanner}          
@@ -35,6 +35,8 @@ const homeBanner = (props) => {
                     <span className="sr-only">Next</span>
                 </a>
             </div>
+            }
+            </>
     )
 }
 export default homeBanner;

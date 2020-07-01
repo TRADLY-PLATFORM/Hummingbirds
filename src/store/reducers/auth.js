@@ -12,7 +12,9 @@ const initialState = {
     authRedirectPath: '/',
     tenantData : {
         logo_path : '',
-        tenant_key : ''
+        tenant_key : '',
+        auth_type : '',
+        tenantData: ''
     }
 }
 
@@ -78,8 +80,10 @@ const authVerify = (state,action) =>{
 export const successTenantConfig= (state,action) =>{
     return updateObject(state,{
         tenantData : {
-            logo_path : action.logo_path,
-            tenant_key : action.tenant_key
+            logo_path : action.data.logo_path,
+            tenant_key : action.data.tenant_key,
+            auth_type : action.data.auth_type,
+            tenantData: action.data.tenantData
         }
     })
 }

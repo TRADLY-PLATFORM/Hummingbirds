@@ -1,6 +1,6 @@
 import React , { Component } from 'react';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ArrowLogo from '../../assets/images/products/arrow.svg';
 import { toast, ToastContainer, Slide } from 'react-toastify';
@@ -108,7 +108,7 @@ class CreateStore extends Component{
                             <div className={classes.groupcard }>
                         <div className="row">
                                 <div class="p-2">
-                                    <img className={classes.groupAvatar} src={groupAvatar} alt="Store Image" />
+                                    <img className={classes.groupAvatar} src={groupAvatar} alt="Stores" />
                                 </div>
                                 
                                 <div class="p-2">

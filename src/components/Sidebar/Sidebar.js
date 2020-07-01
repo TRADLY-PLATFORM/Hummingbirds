@@ -15,7 +15,9 @@ import * as actions from '../../store/actions/index';
 class Sidebar extends Component{
     
     state = {
-        redirect : false
+        redirect : false,
+        loadOnce : true,
+        logo : Logo
     }
     authRedirectHandler = (path) => {
        this.props.onSetAuthRedirectPath(path); 
@@ -23,9 +25,18 @@ class Sidebar extends Component{
      
     }
 
+  
+
+    componentWillUpdate(){
+        let logo_path = localStorage.getItem('logo_path');
+        if(logo_path !== '' && this.state.loadOnce){
+            this.setState({logo:logo_path,loadOnce:false});
+        }
+    }
+
     render(){
 
-        let storeLogo =  Logo;
+        let storeLogo =  this.state.logo;
         
         let redirectUrl = null;
         if(this.state.redirect){

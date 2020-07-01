@@ -16,15 +16,15 @@ const listing = ( props ) => {
 
 
 
-        let list_price  = null
+        //let list_price  = null
         let offer_price = null
 
-        if(list.list_price !== ''){
-            list_price = <Aux>{list.currency.symbol}{list.list_price}</Aux>
-            if(list.offer_price !== '' ){
-                list_price = <strike>{list.currency.symbol}{list.list_price}</strike>
-            }
-        }
+        // if(list.list_price !== ''){
+        //     list_price = <Aux>{list.currency.symbol}{list.list_price}</Aux>
+        //     if(list.offer_price !== '' ){
+        //         list_price = <strike>{list.currency.symbol}{list.list_price}</strike>
+        //     }
+        // }
 
         if(list.offer_price !== ''){
             offer_price = <Aux>{list.currency.symbol}{list.offer_price}</Aux> 

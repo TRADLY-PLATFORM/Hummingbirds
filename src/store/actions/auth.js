@@ -1,6 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios';
-import { ACCESS_TOKEN, EXPIRY_TIME } from '../../shared/utility';
+import { ACCESS_TOKEN, EXPIRY_TIME, ENCRYPT, DECRYPT } from '../../shared/utility';
 
 export const authStart = () =>{
     return{
@@ -100,7 +100,6 @@ export const authVerification = (verificationData) =>{
 export const auth = (userData, isSignup) =>{
    return dispatch => {
        dispatch(authStart());
-
        let url = '/v1/users/register';
        if(!isSignup){
            url = '/v1/users/login';
@@ -108,39 +107,39 @@ export const auth = (userData, isSignup) =>{
      
 
         axios.post(url, userData, {
-                headers:   {
-                    'Authorization': 'Bearer '+ (localStorage.getItem('tenant_key')) ?? ACCESS_TOKEN
-                }
+                // headers :   {
+                //     'Authorization': 'Bearer '+ localStorage.getItem('tenant_key') 
+                // }
         })
-            .then(response => {
-                if(isSignup){
-                    console.log(response.data);
-                    if(response.data.status){
-                            let encodeVerifyId = btoa(response.data.data.verify_id);                            
-                            dispatch(setAuthRedirectPath('/verification/'+encodeVerifyId, encodeVerifyId));
-                    }else{
-                        dispatch(authFail('Invalid credentials'));
-                        return false;
-                    }          
-                }
-                else{    
-                    console.log(response.data);              
-                    const setTimeExpiry = EXPIRY_TIME;
-                    const expirationDate = new Date(new Date().getTime() + setTimeExpiry * 1000);
-                    localStorage.setItem('token',response.data.data.user.key.auth_key);
-                    localStorage.setItem('refresh_key',response.data.data.user.key.refresh_key);
-                    localStorage.setItem('userId',response.data.data.user.id);
-                    localStorage.setItem('expirationDate',expirationDate);
-                    sessionStorage.setItem('userData',JSON.stringify(response.data.data.user));
-                    dispatch(authSuccess(response.data.data.user.key.auth_key,response.data.data.user.id,response.data.status));
-                    dispatch(checkAuthTimeout(setTimeExpiry));  
-                    //dispatch(setAuthRedirectPath('/', null));
-                }               
-               
-            })
-            .catch(error=>{   
-                dispatch(authFail('Invalid credentials or user not registered'));          
-            });
+        .then(response => {
+            if(isSignup){
+                console.log(response.data);
+                if(response.data.status){
+                    let encodeVerifyId = btoa(response.data.data.verify_id);                            
+                    dispatch(setAuthRedirectPath('/verification/'+encodeVerifyId, encodeVerifyId));
+                }else{
+                    dispatch(authFail('Invalid credentials'));
+                    return false;
+                }          
+            }
+            else{    
+                console.log(response.data);              
+                const setTimeExpiry = EXPIRY_TIME;
+                const expirationDate = new Date(new Date().getTime() + setTimeExpiry * 1000);
+                localStorage.setItem('token',response.data.data.user.key.auth_key);
+                localStorage.setItem('refresh_key',response.data.data.user.key.refresh_key);
+                localStorage.setItem('userId',response.data.data.user.id);
+                localStorage.setItem('expirationDate',expirationDate);
+                sessionStorage.setItem('userData',JSON.stringify(response.data.data.user));
+                dispatch(authSuccess(response.data.data.user.key.auth_key,response.data.data.user.id,response.data.status));
+                dispatch(checkAuthTimeout(setTimeExpiry));  
+                //dispatch(setAuthRedirectPath('/', null));
+            }               
+            
+        })
+        .catch(error=>{   
+            dispatch(authFail('Invalid credentials or user not registered'));          
+        });
    }
 }
 
@@ -221,26 +220,30 @@ export const startCountries= () => {
     };
 };
 
-export const initCountries = () => {
-    console.log(localStorage.getItem('logo_path'));
+export const initCountries = () => {    
     return dispatch => {
-        dispatch(startCountries());
-        axios.get( '/app/v1/countries',{
-            headers:   {
-                         'Authorization': 'Bearer '+ (localStorage.getItem('tenant_key')) ?? ACCESS_TOKEN
-                       }
-            })
-            .then( response => {
-                var result = response.data.data.countries.map( v => {
-                    return v;
-                });
-                dispatch(setCountries(result));
-            } )
-            .catch( error => {
-                dispatch(fetchCountriesFailed());
-            } );  
-
-          
+        let countryStorage = localStorage.getItem('countryStorage');
+        if(!countryStorage){
+            dispatch(startCountries());
+            axios.get( '/app/v1/countries',{
+                headers:{
+                            'Authorization': 'Bearer '+ (localStorage.getItem('tenant_key')) ?? ACCESS_TOKEN
+                        }
+                })
+                .then( response => {
+                    var result = response.data.data.countries.map( v => {
+                        return v;
+                    });
+                    localStorage.setItem('countryStorage',ENCRYPT(JSON.stringify(result)));
+                    dispatch(setCountries(result));
+                } )
+                .catch( error => {
+                    dispatch(fetchCountriesFailed());
+                } );  
+        }else{
+            let countryDetails = JSON.parse(DECRYPT(countryStorage));
+            dispatch(setCountries(countryDetails));
+        }
     };
 };
 
@@ -268,25 +271,36 @@ export const failedTenantConfig= (error) =>{
 
 export const setTenantConfig = () => {
     return dispatch => {
-        //if(!localStorage.getItem('tenant_key')){
+        let tenantStorage = localStorage.getItem('tenantDatas');
+        if(!tenantStorage){
             dispatch(initTenantConfig());
-            axios.get( '/tenants/tradlysocial/configs')
+            axios.get( '/v1/tenants/nammakada/configs')
                 .then( response => {
-                    console.log(response.data.data);
                     let data = {
                         logo_path : response.data.data.logo_path,
-                        tenant_key : response.data.data.key.app_key
+                        tenant_key : response.data.data.key.app_key,
+                        auth_type : response.data.data.configs.auth_type,
+                        tenantData: response.data.data
                     }
-                    dispatch(successTenantConfig(data));
+                    console.log(data);
                     localStorage.setItem('logo_path',response.data.data.logo_path);
                     localStorage.setItem('tenant_key',response.data.data.key.app_key);
-                    localStorage.setItem('tenantData',JSON.stringify(response.data.data));
+                    localStorage.setItem('tenantDatas',JSON.stringify(data.tenantData));
+                    dispatch(successTenantConfig(data));
                 } )
                 .catch( error => {
                     dispatch(failedTenantConfig('Tenant API Error.'));
                 } );  
-        // }else{
-            
-        // }
+        }else{
+            let tenantDetails = JSON.parse(tenantStorage);
+            let data = {
+                logo_path : tenantDetails.logo_path,
+                tenant_key : tenantDetails.key.app_key,
+                auth_type : tenantDetails.configs.auth_type,
+                tenantData: tenantDetails
+            }
+            console.log(data);
+            dispatch(successTenantConfig(data));
+        }
     };
 };
