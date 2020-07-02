@@ -26,3 +26,7 @@ export {
     CreateStore
 } from './store';
 
+export {
+    initGroupDetails,
+    CreateGroup
+} from './group';

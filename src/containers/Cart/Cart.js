@@ -8,7 +8,7 @@ import mastercard from "../../assets/images/cart/mastercard.svg"
 export default class Cart extends Component {
     render() {
         return (
-            <div>
+            <div className="row">
             
             <div className={classes.inCart}>
             <h2 className="text-capitalize">my cart</h2>
@@ -56,7 +56,7 @@ export default class Cart extends Component {
             </div>
 
             <br />
-             
+            <br />  
 
                  <div className="col-md-3 col-lg-3">
                  <div className={classes.totalCart}>
