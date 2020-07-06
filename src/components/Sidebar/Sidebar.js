@@ -19,15 +19,22 @@ class Sidebar extends Component{
         loadOnce : true,
         logo : Logo
     }
+
     authRedirectHandler = (path) => {
        this.props.onSetAuthRedirectPath(path); 
        this.setState({redirect:true})
      
     }
 
-  
+    componentDidMount(){
+        this.logoUpdate();
+    }
 
     componentWillUpdate(){
+        this.logoUpdate();
+    }
+
+    logoUpdate = () => {
         let logo_path = localStorage.getItem('logo_path');
         if(logo_path !== '' && this.state.loadOnce){
             this.setState({logo:logo_path,loadOnce:false});
@@ -68,6 +75,7 @@ class Sidebar extends Component{
         );
     }
 }
+
 
 const mapDispatchToProps = dispatch => {
     return {

@@ -81,6 +81,7 @@ class SignIn extends Component {
 
     render () {
 
+        console.log(this.props.auth_key);
         if(this.props.error  && this.state.showError){
             if (! toast.isActive(this.toastId)) {
                 this.toastId = toast.error(this.props.message);               
@@ -93,14 +94,7 @@ class SignIn extends Component {
             authRedirect = <Redirect to={this.props.authRedirectPath}/>
         }
 
-        let defaultCountry =  <PhoneInput
-                                    onlyCountries={['in','my']}
-                                    className={classes.input}
-                                    country={'in'}
-                                    value={this.state.mobile} 
-                                    onChange={mobile => this.setState({ mobile })}
-                                    name = "mobile"
-                                    />
+        let defaultCountry =  ''
         
         if(this.props.countryList && this.props.countryList.length > 0) {
             let countryCode = this.props.countryList.map(country => {
@@ -172,7 +166,8 @@ const mapStateToProps = state => {
         countryList : state.auth.countries,
         authRedirectPath : state.auth.authRedirectPath,
         verifyId : state.auth.verify_id,
-        isAuthenticated:state.auth.token
+        isAuthenticated:state.auth.token,
+        auth_key : state.auth.tenantData
     };
 }
 

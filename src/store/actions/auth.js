@@ -105,12 +105,12 @@ export const auth = (userData, isSignup) =>{
            url = '/v1/users/login';
        }
      
-
+       alert(ACCESS_TOKEN);
         axios.post(url, userData, {
-                // headers :   {
-                //     'Authorization': 'Bearer '+ localStorage.getItem('tenant_key') 
-                // }
-        })
+                headers :   {
+                    Authorization   : 'Bearer '+ACCESS_TOKEN
+                }
+        })  
         .then(response => {
             if(isSignup){
                 console.log(response.data);

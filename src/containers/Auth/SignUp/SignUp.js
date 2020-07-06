@@ -129,14 +129,7 @@ class SignUp extends Component {
             authRedirect = <Redirect to={this.props.authRedirectPath}/>
         }
 
-        let defaultCountry =  <PhoneInput
-                                    onlyCountries={['in','my']}
-                                    className={classes.input}
-                                    country={'in'}
-                                    value={this.state.mobile} 
-                                    onChange={mobile => this.setState({ mobile })}
-                                    name = "mobile"
-                                    />
+        let defaultCountry =  '';
         
         if(this.props.countryList && this.props.countryList.length > 0) {
             let countryCode = this.props.countryList.map(country => {
