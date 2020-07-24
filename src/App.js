@@ -29,6 +29,7 @@ import myOrder from './containers/Order/myOrder';
 import StoreSuccess from "./containers/Store/StoreSuccess";
 import ProductSuccess from "./containers/Store/ProductSuccess";
 import NoProduct from "./containers/Store/NoProduct";
+import withProduct from './containers/Store/withProduct';
 
 class App extends Component {
 
@@ -79,6 +80,7 @@ class App extends Component {
         <Route path="/storesuccess" excat component={StoreSuccess} />
         <Route path="/productsuccess" excat component={ProductSuccess} />
         <Route path="/noproduct" excat component={NoProduct} />
+        <Route path="/withproduct" excat component={withProduct} />
         <Redirect to="/"/>
       </Switch>
       );
