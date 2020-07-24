@@ -28,6 +28,7 @@ import transactionSuccess from "./containers/MyTransactionst/transactionSuccess"
 import myOrder from './containers/Order/myOrder';
 import StoreSuccess from "./containers/Store/StoreSuccess";
 import ProductSuccess from "./containers/Store/ProductSuccess";
+import NoProduct from "./containers/Store/NoProduct";
 
 class App extends Component {
 
@@ -77,6 +78,7 @@ class App extends Component {
         <Route path="/myorder" excat component={myOrder} />
         <Route path="/storesuccess" excat component={StoreSuccess} />
         <Route path="/productsuccess" excat component={ProductSuccess} />
+        <Route path="/noproduct" excat component={NoProduct} />
         <Redirect to="/"/>
       </Switch>
       );
