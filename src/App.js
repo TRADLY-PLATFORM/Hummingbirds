@@ -26,6 +26,8 @@ import groupAdded from "./containers/Group/groupAdded";
 import groupSuccess from "./containers/Group/groupSuccess";
 import transactionSuccess from "./containers/MyTransactionst/transactionSuccess";
 import myOrder from './containers/Order/myOrder';
+import StoreSuccess from "./containers/Store/StoreSuccess";
+import ProductSuccess from "./containers/Store/ProductSuccess";
 
 class App extends Component {
 
@@ -73,6 +75,8 @@ class App extends Component {
         <Route path="/groupsuccess" excat component={groupSuccess} />
         <Route path="/transactionsuccess" excat component={transactionSuccess} />
         <Route path="/myorder" excat component={myOrder} />
+        <Route path="/storesuccess" excat component={StoreSuccess} />
+        <Route path="/productsuccess" excat component={ProductSuccess} />
         <Redirect to="/"/>
       </Switch>
       );
