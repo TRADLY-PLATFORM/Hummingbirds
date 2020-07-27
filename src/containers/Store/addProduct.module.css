@@ -1,0 +1,79 @@
+.mycontainer {
+    background-color: #fff;
+    width: 70%;
+    margin: 10px auto;
+    border-radius: 10px;
+        padding: 4rem;
+}
+
+.button {
+    font-size: 2rem;
+    background: none;
+    border: 1.1px solid transparent;
+    color: #13B58C;
+    padding-top: 25px;
+}
+
+.productImg{
+    width: 150px;
+    height: 150px;
+    left: 819px;
+    top: 266px;
+
+}
+
+.addProductImg{
+        width: 150px;
+        height: 100px;
+        left: 819px;
+        top: 266px;
+        margin-top: -13px;
+}
+
+.productImgRule {
+    font-size: 14px;
+    line-height: 16px;
+    color: #4F4F4F;
+    padding-left: 28px;
+
+}
+
+
+
+
+.input {
+    width: 100%;
+    margin: 0 auto;
+    border: 1px solid #13B58C;
+    border-radius: 24px;
+    padding: 10px;
+    background: #fff;
+    color: #000;
+}
+
+.productDetails {
+    padding-top: 4rem;
+    color: #000;
+    border-radius: 10px;
+}
+
+.btnGreenStyle {
+    padding: 8px 13px;
+    border: none;
+    background: linear-gradient(180deg, #2BDBC0 0%, #13B58C 100%);
+    border-radius: 24px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    /* identical to box height */
+    color: #FFFFFF;
+    width: 164px;
+    height: 32px;
+    left: 835px;
+    top: 954px;
+    margin-top: 30px;
+}
+
+
+

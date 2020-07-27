@@ -30,6 +30,7 @@ import StoreSuccess from "./containers/Store/StoreSuccess";
 import ProductSuccess from "./containers/Store/ProductSuccess";
 import NoProduct from "./containers/Store/NoProduct";
 import withProduct from './containers/Store/withProduct';
+import addProduct from './containers/Store/addProduct';
 
 class App extends Component {
 
@@ -81,6 +82,7 @@ class App extends Component {
         <Route path="/productsuccess" excat component={ProductSuccess} />
         <Route path="/noproduct" excat component={NoProduct} />
         <Route path="/withproduct" excat component={withProduct} />
+        <Route path="/addproduct" excat component={addProduct} />
         <Redirect to="/"/>
       </Switch>
       );
