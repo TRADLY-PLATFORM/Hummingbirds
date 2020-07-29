@@ -10,7 +10,7 @@ export default class addProduct extends Component {
     render() {
         return (
           <div>
-            <Link to="#">
+            <Link to="Store">
               <button className={classes.button}>
                 <i className="fa fa-arrow-left "></i> back to my store
               </button>
