@@ -40,16 +40,15 @@ export default class reviewPage extends Component {
                       <div className="col-md-8">
                         <p className={classes.productPrice}>2500/-</p>
                       </div>
-                      <div className="row">
-                        <button className={classes.reviewProduct}>
-                          Review Product
-                        </button>
-                      </div>
+                    </div>
+                    <div className={classes.centerd}>
+                      <button className={classes.reviewProduct}>
+                        Review Product
+                      </button>
                     </div>
                   </div>
                 </div>
 
-               
                 <div className={classes.rate}>
                   <div className="col-md-5">
                     <div className={classes.rateContainer}>
@@ -137,6 +136,11 @@ export default class reviewPage extends Component {
                         <button className={classes.btnGreen}>
                           SEND REVIEW
                         </button>
+                        <div className={classes.centerd}>
+                          <button className={classes.cancelReview}>
+                            Cancel Review
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>

@@ -97,7 +97,6 @@ border: 1px solid #A0A0A0;
 box-sizing: border-box;
 filter: drop-shadow(0px 1px 20px rgba(0, 0, 0, 0.05));
 border-radius: 4px;
-text-align: center;
 width: 314px;
 left: 930px;
 top: 530px;
@@ -108,7 +107,6 @@ line-height: 150%;
 letter-spacing: -0.15px;
 color: #9B9B9B;
 margin: 0 auto;
-padding-top: 20px;
 }
 
 .addPhoto{
@@ -167,6 +165,10 @@ padding-top: 20px;
     float: left;
 }
 
+.centerd{
+    text-align: center;
+}
+
 .reviewProduct {
     font-weight: 500;
     font-size: 14px;
@@ -175,6 +177,13 @@ padding-top: 20px;
     color: #FF3E3E;
     border: none;
     background-color: #fff;
-    text-align: center;
 }
 
+.cancelReview{
+    font-size: 14px;
+    line-height: 8px;
+    text-align: center;
+    color: #222222;
+    opacity: 0.5;
+    border: 1px dashed #FFFFFF;
+}
