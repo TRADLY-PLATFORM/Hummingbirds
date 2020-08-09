@@ -274,7 +274,7 @@ export const setTenantConfig = () => {
         let tenantStorage = localStorage.getItem('tenantDatas');
         if(!tenantStorage){
             dispatch(initTenantConfig());
-            axios.get( '/v1/tenants/nammakada/configs')
+            axios.get( '/v1/tenants/tradlysocial/configs')
                 .then( response => {
                     let data = {
                         logo_path : response.data.data.logo_path,

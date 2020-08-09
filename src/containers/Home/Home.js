@@ -67,74 +67,100 @@ class Home extends Component{
     }
    
     collectonsHtmlHandler = (collections) => {
-        return collections.map(function (collection, index) {    
-            return (
-                    <Aux key={index}>
-                    <div className="container-fluid mt-5">
-                        <div className="row">
-                            <div className="col-lg-6 nopaddingLeft" key={index}>
-                                <h3 className={classes.headingTitle}>{collection.title}</h3>
-                            </div>
-                            <div className="col-lg-6 nopaddingRight">
-                                <Link to="/listings"><button className={"btnGreenStyle pull-right"}>View All</button></Link>  
-                            </div>
-                        </div>
-                    </div>
-                    <div className="container-fluid mt-5">
-                        <div className="row">
-                            <ItemsCarousel
-                                    infiniteLoop={false}
-                                    gutter={12}
-                                    activePosition={'center'}
-                                    chevronWidth={60}
-                                    disableSwipe={false}
-                                    alwaysShowChevrons={false}
-                                    numberOfCards={5}
-                                    slidesToScroll={3}
-                                    outsideChevron={false}
-                                    showSlither={false}
-                                    firstAndLastGutter={true}                                   
-                                    activeItemIndex={this.state.activeItemIndex}
-                                    requestToChangeActive={value => this.setState({ activeItemIndex: value })}
-                                    rightChevron={
-                                            <span className="glyphicon glyphicon-chevron-right" style={{fontSize:'30px',color:'#e6e6e6'}} aria-hidden="true"></span>
-                                       
-                                      }
-                                      leftChevron={
-                                        <span className="glyphicon glyphicon-chevron-left" style={{fontSize:'30px',color:'#e6e6e6'}} aria-hidden="true"></span>                                    
-                                      }
-                                >
+        if(collections && collections.length > 0){
+            return collections.map(function (collection, index) {   
+                let arrayListings = [];
+                if(collection.title === 'Stores to Follow'){
+                    arrayListings = collection.accounts.map((list, i) =>{
+                        let imagePath = AllenSollyLogo
+                        if(list.images.length > 0){
+                            imagePath = list.images[0];
+                        }
 
-                                {      
+                        return ( <div className={classes.wellStore +" col-lg-12"}  key={i}> 
+                                    <img src={imagePath} alt={list.name} title={list.name}/>
+
+                                    <div>{list.name}</div>
+                                    <p>{list.description}</p> 
+                                    <button className={classes.btnGreenFollow + " mt-5"}>View All</button>
+                                </div>  )
+                    });
+                }else if(collection.title === 'Latest Products'){
+                    arrayListings = collection.listings.map((list, i) =>{
+                        let imagePath = NoProductImage
+                        if(list.images[0]!==undefined){
+                            imagePath = list.images[0];
+                        }
+
+                        return ( <Link to={"/product-details/"+list.id} key={i}> 
+                        <div className={classes.latestTrend}>
+                            <img src={imagePath} className={classes.storeImage} alt={list.title} title={list.title}/>
+                            <p>{list.title}</p>
+                            <div className={classes.bottomDesc}>
+                                { (list.account!==undefined && list.account.images[0]) ?
+                                    <>
+                                    <img src={list.account.images[0]} alt={list.account.name} title={list.account.name}/>
+                                    <span>{list.account.name}</span>
+                                    </>
+                                    :
+                                    <>
+                                    <img src={NoIamgeLogo} alt={list.title} title={list.title}/>
+                                    <span>N/A</span>
+                                    </>
+                                }
                                 
-                          
-
-                                collection.listings.map((list, i) =>{
-                                    let imagePath = NoProductImage
-                                    if(list.images[0]!==undefined){
-                                        imagePath = list.images[0];
-                                    }
-
-                                    return ( <Link to={"/product-details/"+list.id} key={i}> 
-                                    <div className={classes.latestTrend}>
-                                        <img src={imagePath} className={classes.storeImage} alt={list.title} title={list.title}/>
-                                        <p>{list.title}</p>
-                                        <div className={classes.bottomDesc}>
-                                            <img src={list.store.image_path} alt="Woman accesories" title="Woman accesories"/> <span>{list.store.name}</span>
-                                            <div className={classes.amountTitle}>{list.currency.symbol}{list.list_price}</div>
-                                        </div> 
-                                    </div>
-                                </Link>)
-                                }                                 
-                                    
-                                )}
-                                    {/* <CollectionListings listings={collection.listings}/>   */}
-                                </ItemsCarousel>
+                                <div className={classes.amountTitle}>{(list.list_price.formatted!==undefined) ? list.list_price.formatted : ''}</div>
+                            </div> 
                         </div>
-                    </div>
-                    </Aux>
-                   );
-        }, this);
+                    </Link>)
+                    });
+                }
+
+                return (
+                        <Aux key={index}>
+                        <div className="container-fluid mt-5">
+                            <div className="row">
+                                <div className="col-lg-6 nopaddingLeft" key={index}>
+                                    <h3 className={classes.headingTitle}>{collection.title}</h3>
+                                </div>
+                                <div className="col-lg-6 nopaddingRight">
+                                    <Link to="/listings"><button className={"btnGreenStyle pull-right"}>View All</button></Link>  
+                                </div>
+                            </div>
+                        </div>
+                        <div className="container-fluid mt-5">
+                            <div className="row">
+                                <ItemsCarousel
+                                        infiniteLoop={false}
+                                        gutter={12}
+                                        activePosition={'center'}
+                                        chevronWidth={60}
+                                        disableSwipe={false}
+                                        alwaysShowChevrons={false}
+                                        numberOfCards={5}
+                                        slidesToScroll={3}
+                                        outsideChevron={false}
+                                        showSlither={false}
+                                        firstAndLastGutter={true}                                   
+                                        activeItemIndex={this.state.activeItemIndex}
+                                        requestToChangeActive={value => this.setState({ activeItemIndex: value })}
+                                        rightChevron={
+                                                <span className="glyphicon glyphicon-chevron-right" style={{fontSize:'30px',color:'#e6e6e6'}} aria-hidden="true"></span>
+                                           
+                                          }
+                                          leftChevron={
+                                            <span className="glyphicon glyphicon-chevron-left" style={{fontSize:'30px',color:'#e6e6e6'}} aria-hidden="true"></span>                                    
+                                          }
+                                    >
+                                    {arrayListings} 
+                                    </ItemsCarousel>
+                                    {/* <CollectionListings listings={collection.listings}/>   */}
+                            </div> 
+                        </div>
+                        </Aux>
+                       );
+            }, this);
+        }
     }
 
     componentWillUpdate(){
@@ -201,8 +227,9 @@ class Home extends Component{
 
 
         let collectionContent =  <Spinner show={true} styles='SpinnerCenter'/> 
+        console.log(this.props.collections);
         if(this.props.collections && this.props.collections.length > 0 ){
-            collectionContent = this.collectonsHtmlHandler(this.props.collections); 
+           collectionContent = this.collectonsHtmlHandler(this.props.collections); 
         }else{
             if(!this.state.show){
                 collectionContent = '';
@@ -220,7 +247,7 @@ class Home extends Component{
 
                 {collectionContent}
 
-                <div className="container-fluid mt-5">
+                {/* <div className="container-fluid mt-5">
                     <div className="row">
                         <div className="col-lg-6 nopaddingLeft">
                             <h3 className={classes.headingTitle}>Stores to follow</h3>
@@ -354,7 +381,7 @@ class Home extends Component{
                             <button className={"btnGreenStyle pull-right"}>View All</button>
                         </div>
                     </div>
-                </div>
+                </div> */}
 
                 <div className="container-fluid mt-5">
                     <div className="row">
