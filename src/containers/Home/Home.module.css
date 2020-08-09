@@ -67,6 +67,7 @@
 
 .wellStore img {
     margin-bottom: 15px;
+    width: 50%;
 }
 
 
@@ -118,16 +119,16 @@
 .storeImage{
     margin-bottom: 15px;
     width:100%;
+    height: 190px;
 }
 
 .amountTitle{
     font-weight: 600;
     font-size: 14px;
     line-height: 17px;
-    text-align: center;
-
+    text-align: right;
     float: right;
-        padding: 8px;
+    padding: 16px 8px;
 
     color: #13B58C;
 }
