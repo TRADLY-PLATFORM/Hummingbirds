@@ -26,6 +26,12 @@
     "uuidv4": "^6.0.7"
   },
   "scripts": {
+    "start:development": "env-cmd -f .env.development react-scripts start",
+    "build:development": "env-cmd -f .env.development react-scripts build",
+    "start:sandbox": "env-cmd -f .env.sandbox react-scripts start",
+    "build:sandbox": "env-cmd -f .env.sandbox react-scripts build",
+    "start:production": "env-cmd -f .env.production react-scripts start",
+    "build:production": "env-cmd -f .env.production react-scripts build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -45,5 +51,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "env-cmd": "^10.1.0"
   }
 }
