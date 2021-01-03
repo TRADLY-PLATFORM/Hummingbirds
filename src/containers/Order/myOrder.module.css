@@ -1,0 +1,146 @@
+.SortbyMenu {
+    background: none !important;
+    border: none;
+    padding-top: 0.8rem;
+    float: right;
+    font-weight: bold;
+}
+
+
+
+.pageTitle {
+    font-weight: bold;
+    font-size: 3rem;
+    top: -0.9rem;
+}
+
+.btnGreen {
+    padding: 8px 20px;
+    margin: 0px -20px;
+    border: none;
+    background: linear-gradient(180deg, #fff 0%, #fff 100%);
+    border-radius: 24px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 21px;
+    line-height: 17px;
+    font-weight: bold;
+}
+
+.btnGreenStyle {
+    padding: 8px 13px;
+    border: none;
+    background: linear-gradient(180deg, #2BDBC0 0%, #13B58C 100%);
+    border-radius: 24px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    /* identical to box height */
+    color: #FFFFFF;
+    float: left;
+}
+
+.button {
+    font-size: 2rem;
+    background: none;
+    border: 1.1px solid #FFFFFF;
+    color: #13B58C;
+}
+
+.filter {
+    position: relative;
+    float: left;
+    font-weight: lighter;
+    left: -27px;
+    top: 7px;
+}
+
+.filterDateBtn {
+    border: none;
+    font-weight: bold;
+    background-color: #F6F9FF;
+
+}
+
+.filterDateBtn:hover {
+    background: #DFFBF4;
+    border-radius: 10px;
+    color: #14B78E !important;
+
+}
+
+
+
+.transactionContainer {
+    background-color: #fff;
+    border: 1px slid #fff;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+
+
+}
+
+.productImg {
+    float: left;
+    height: 100%;
+    padding: 30px;
+}
+
+
+.transactionDetails {
+    position: relative;
+    left: 10px;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    padding-top: 5px;
+    margin: 5px;
+}
+
+
+.bottomDesc {
+    margin-bottom: 10px;
+    position: relative;
+    left: 10px;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+}
+
+.bottomDesc img {
+    margin-left: 10px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    transition: all .5s;
+}
+
+.lastWeek {
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 28px;
+}
+
+.orderHistory {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    display: flex;
+    align-items: center;
+    letter-spacing: -0.385882px;
+
+}
+
+.bottomDesc span {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #4A4A4A;
+    opacity: 0.5;
+    position: relative;
+    left: 3px;
+    top: 3px;
+}
