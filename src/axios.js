@@ -1,10 +1,6 @@
 import axios from 'axios';
-
-
-//const accessToken = 'ff9294e1f1ac6c12361b4516c5e155d0';
-
 const instance = axios.create({
- baseURL: 'https://api.sandbox.tradly.app',
+ baseURL: process.env.REACT_APP_BACKEND_API_URL,
  headers:   {
                 "Content-Type" : "application/json",
             }

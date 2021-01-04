@@ -32,7 +32,7 @@ export const initStoreDetails = (id) => {
 
         axios.get( '/v1/stores/'+id,{
             headers:   {
-                'Authorization': 'Bearer ff9294e1f1ac6c12361b4516c5e155d0'//+ (localStorage.getItem('tenant_key')) ?? ACCESS_TOKEN
+                'Authorization': 'Bearer '+ (localStorage.getItem('tenant_key')) ?? ACCESS_TOKEN,
                        }
             })
             .then( response => {
