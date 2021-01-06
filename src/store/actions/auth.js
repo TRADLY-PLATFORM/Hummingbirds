@@ -227,7 +227,7 @@ export const initCountries = () => {
             dispatch(startCountries());
             axios.get( '/app/v1/countries',{
                 headers:{
-                            'Authorization': 'Bearer '+ (localStorage.getItem('tenant_key')) ?? ACCESS_TOKEN
+                            'Authorization': 'Bearer '+ (localStorage.getItem('tenant_key')) ?? ACCESS_TOKEN // should be configured in axios
                         }
                 })
                 .then( response => {
@@ -274,7 +274,7 @@ export const setTenantConfig = () => {
         let tenantStorage = localStorage.getItem('tenantDatas');
         if(!tenantStorage){
             dispatch(initTenantConfig());
-            axios.get( '/v1/tenants/tradlysocial/configs')
+            axios.get( `/v1/tenants/${process.env.REACT_APP_TENANT_NAME}/configs`)
                 .then( response => {
                     let data = {
                         logo_path : response.data.data.logo_path,

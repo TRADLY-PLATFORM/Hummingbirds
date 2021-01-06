@@ -1,6 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios';
-//import { ACCESS_TOKEN } from '../../shared/utility';
+import { ACCESS_TOKEN } from '../../shared/utility';
 
 
 export const setProductDeatils= ( productDetails ) => {
@@ -27,7 +27,7 @@ export const initProductDeatils = (id) => {
         dispatch(startProductDeatils());
         axios.get( '/products/v1/listings/'+id+'?locale=en',{
             headers:   {
-                        "Authorization": "Bearer vb12294e1f1ac6c12361b4516c5e155d0"//(localStorage.getItem('tenant_key')) ?? ACCESS_TOKEN
+                        "Authorization": "Bearer "+(localStorage.getItem('tenant_key')) ?? ACCESS_TOKEN
                        }
             })
                         .then( response => {
@@ -75,7 +75,7 @@ export const initListings = (count,filterValue) => {
         dispatch(startListings());
         axios.get( '/products/v1/listings?page=1&per_page='+(parseInt(count)+4)+filterValue,{
             headers:   {
-                        "Authorization": "Bearer vb12294e1f1ac6c12361b4516c5e155d0"//(localStorage.getItem('tenant_key')) ?? ACCESS_TOKEN
+                "Authorization": "Bearer "+(localStorage.getItem('tenant_key')) ?? ACCESS_TOKEN
                        }
             })
                         .then( response => {console.log('test');
@@ -119,7 +119,7 @@ export const initCategoryLists = (count) => {
         dispatch(startCategoryLists());
         axios.get( '/v1/categories?parent=0',{
             headers:   {
-                        "Authorization": "Bearer a34asdfe1f234c6c12361db4516c5ezerr" //+(localStorage.getItem('tenant_key')) ?? ACCESS_TOKEN
+                "Authorization": "Bearer "+(localStorage.getItem('tenant_key')) ?? ACCESS_TOKEN
                        }
             })
                         .then( response => {console.log('test');
