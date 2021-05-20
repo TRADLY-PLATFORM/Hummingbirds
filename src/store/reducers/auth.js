@@ -79,12 +79,7 @@ const authVerify = (state,action) =>{
 
 export const successTenantConfig= (state,action) =>{
     return updateObject(state,{
-        tenantData : {
-            logo_path : action.data.logo_path,
-            tenant_key : action.data.tenant_key,
-            auth_type : action.data.auth_type,
-            tenantData: action.data.tenantData
-        }
+        tenantData : action.data
     })
 }
 
@@ -105,8 +100,8 @@ const authReducer = ( state = initialState, action) =>{
         case actionTypes.SET_COUNTRIES: return setCountries(state, action);    
         case actionTypes.FETCH_COUNTRIES_FAILED: return fetchCountriesFailed(state, action);
         case actionTypes.SET_AUTH_REDIRECT_PATH: return setAuthRedirectPath(state,action);
-        case actionTypes.SUCCESS_TENENT_CONFIG: return successTenantConfig(state,action);
-        case actionTypes.FAILED_TENENT_CONFIG: return failedTenantConfig(state,action);
+        case actionTypes.SUCCESS_TENANT_CONFIG: return successTenantConfig(state,action);
+        case actionTypes.FAILED_TENANT_CONFIG: return failedTenantConfig(state,action);
         default:
             return state;
 

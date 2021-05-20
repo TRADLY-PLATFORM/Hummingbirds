@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
 import { connect } from 'react-redux';
-import Logo from '../../assets/images/logo.svg';
 import classes from './Sidebar.module.css';
 import { Link, Redirect } from 'react-router-dom';
 //import HomeLogo from '../../assets/images/sidebar/home.svg';
@@ -13,38 +12,18 @@ import TransactionLogo from '../../assets/images/sidebar/transaction.svg';
 import * as actions from '../../store/actions/index';
 
 class Sidebar extends Component{
-    
     state = {
         redirect : false,
-        loadOnce : true,
-        logo : Logo
     }
 
     authRedirectHandler = (path) => {
        this.props.onSetAuthRedirectPath(path); 
        this.setState({redirect:true})
-     
-    }
-
-    componentDidMount(){
-        this.logoUpdate();
-    }
-
-    componentWillUpdate(){
-        this.logoUpdate();
-    }
-
-    logoUpdate = () => {
-        let logo_path = localStorage.getItem('logo_path');
-        if(logo_path !== '' && this.state.loadOnce){
-            this.setState({logo:logo_path,loadOnce:false});
-        }
     }
 
     render(){
-
-        let storeLogo =  this.state.logo;
-        
+        const { tenantData } = this.props;
+        let storeLogo =  tenantData.get('logo_path','');
         let redirectUrl = null;
         if(this.state.redirect){
             redirectUrl = <Redirect to="/sign-in"/>
@@ -56,8 +35,10 @@ class Sidebar extends Component{
                 <div className={classes.bgSidebar + " col-lg-2 sidenav hidden-xs nopadding" }>
                     <br/>
                     <div className={classes.logoImage}>
-                        <Link to="/home"><img className="img-fluid" src={storeLogo} style={{width:'145px'}} alt="Tradly" title="Tradly"/></Link>
-                    </div>
+                        <Link to="/home">
+                            {storeLogo !== '' ? <img className="img-fluid" src={storeLogo} style={{ width: '145px' }} alt="Tradly" title="Tradly" /> : 'Loading...'}
+                        </Link>
+                    </div> 
                     <ul className="nav nav-pills nav-stacked">
                     <li className="active"><Link to="/home"><img className="img-fluid" src={HomeActiveLogo} alt="Home" title="Home"/><span>Home</span></Link></li>
                     <li><Link to="/wishlist"><img className="img-fluid" src={WishlistLogo} alt="Home" title="Home"/><span>My Wishlist</span></Link></li>

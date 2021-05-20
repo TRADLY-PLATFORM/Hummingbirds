@@ -249,20 +249,20 @@ export const initCountries = () => {
 
 export const initTenantConfig= () =>{
     return{
-        type:actionTypes.INIT_TENENT_CONFIG,
+        type:actionTypes.INIT_TENANT_CONFIG,
     }
 }
 
 export const successTenantConfig= (data) =>{
     return{
-        type:actionTypes.SUCCESS_TENENT_CONFIG,
+        type:actionTypes.SUCCESS_TENANT_CONFIG,
         data : data
     }
 }
 
 export const failedTenantConfig= (error) =>{
     return{
-        type:actionTypes.FAILED_TENENT_CONFIG,
+        type:actionTypes.FAILED_TENANT_CONFIG,
         error : error
     }
 }
@@ -271,36 +271,14 @@ export const failedTenantConfig= (error) =>{
 
 export const setTenantConfig = () => {
     return dispatch => {
-        // let tenantStorage = localStorage.getItem('tenantDatas');
-        // if(!tenantStorage){
             dispatch(initTenantConfig());
-            axios.get( `/v1/tenants/${process.env.REACT_APP_TENANT_NAME}/configs`)
-                .then( response => {
-                    let data = {
-                        logo_path : response.data.data.logo_path,
-                        tenant_key : response.data.data.key.app_key,
-                        auth_type : response.data.data.configs.auth_type,
-                        tenantData: response.data.data
-                    }
-                    console.log(data);
-                    localStorage.setItem('logo_path',response.data.data.logo_path);
-                    localStorage.setItem('tenant_key',response.data.data.key.app_key);
-                    localStorage.setItem('tenantDatas',JSON.stringify(data.tenantData));
-                    dispatch(successTenantConfig(data));
-                } )
-                .catch( error => {
-                    dispatch(failedTenantConfig('Tenant API Error.'));
-                } );  
-        // }else{
-        //     let tenantDetails = JSON.parse(tenantStorage);
-        //     let data = {
-        //         logo_path : tenantDetails.logo_path,
-        //         tenant_key : tenantDetails.key.app_key,
-        //         auth_type : tenantDetails.configs.auth_type,
-        //         tenantData: tenantDetails
-        //     }
-        //     console.log(data);
-        //     dispatch(successTenantConfig(data));
-        // }
+        axios.get( `/v1/tenants/${process.env.REACT_APP_TENANT_NAME}/configs`)
+            .then(response => {
+                localStorage.setItem('tenant_key',response.data.data.key.app_key);
+                dispatch(successTenantConfig(response.data.data));
+            } )
+            .catch(   error  => {
+                dispatch(failedTenantConfig('Tenant API Error.'));
+            } );
     };
 };
