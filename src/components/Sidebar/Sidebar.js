@@ -8,8 +8,8 @@ import { Link, Redirect } from 'react-router-dom';
 import HomeActiveLogo from '../../assets/images/sidebar/active/home.svg';
 import WishlistLogo from '../../assets/images/sidebar/wishlist.svg';
 import TransactionLogo from '../../assets/images/sidebar/transaction.svg';
-import StoreLogo from '../../assets/images/sidebar/store.svg';
-import GroupLogo from '../../assets/images/sidebar/group.svg';
+// import StoreLogo from '../../assets/images/sidebar/store.svg';
+// import GroupLogo from '../../assets/images/sidebar/group.svg';
 import * as actions from '../../store/actions/index';
 
 class Sidebar extends Component{
@@ -63,11 +63,11 @@ class Sidebar extends Component{
                     <li><Link to="/wishlist"><img className="img-fluid" src={WishlistLogo} alt="Home" title="Home"/><span>My Wishlist</span></Link></li>
                     <li className=""><Link to="/Listings"><img className="img-fluid" src={HomeActiveLogo} alt="Home" title="Home"/><span>Listings</span></Link></li>
                     <li><Link to="/mytransaction"><img className="img-fluid" src={TransactionLogo} alt="Home" title="Home"/><span>My Transaction</span></Link></li>
-                    <li>
+                    {/* <li>
                         { (!this.props.isAuthentication) ? <Link to="#" onClick={(path) => this.authRedirectHandler('/store')}><img className="img-fluid" src={StoreLogo} alt="Home" title="Home"/><span>My Store</span></Link> :
                         <Link to="/store"><img className="img-fluid" src={StoreLogo} alt="Home" title="Home"/><span>My Store</span></Link> }
                     </li>
-                    <li><Link to="/group"><img className="img-fluid" src={GroupLogo} alt="Home" title="Home"/><span>Group</span></Link></li>
+                    <li><Link to="/group"><img className="img-fluid" src={GroupLogo} alt="Home" title="Home"/><span>Group</span></Link></li> */}
                     </ul><br/>
                 </div>
                 <br/>

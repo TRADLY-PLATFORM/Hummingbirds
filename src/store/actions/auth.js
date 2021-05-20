@@ -271,8 +271,8 @@ export const failedTenantConfig= (error) =>{
 
 export const setTenantConfig = () => {
     return dispatch => {
-        let tenantStorage = localStorage.getItem('tenantDatas');
-        if(!tenantStorage){
+        // let tenantStorage = localStorage.getItem('tenantDatas');
+        // if(!tenantStorage){
             dispatch(initTenantConfig());
             axios.get( `/v1/tenants/${process.env.REACT_APP_TENANT_NAME}/configs`)
                 .then( response => {
@@ -291,16 +291,16 @@ export const setTenantConfig = () => {
                 .catch( error => {
                     dispatch(failedTenantConfig('Tenant API Error.'));
                 } );  
-        }else{
-            let tenantDetails = JSON.parse(tenantStorage);
-            let data = {
-                logo_path : tenantDetails.logo_path,
-                tenant_key : tenantDetails.key.app_key,
-                auth_type : tenantDetails.configs.auth_type,
-                tenantData: tenantDetails
-            }
-            console.log(data);
-            dispatch(successTenantConfig(data));
-        }
+        // }else{
+        //     let tenantDetails = JSON.parse(tenantStorage);
+        //     let data = {
+        //         logo_path : tenantDetails.logo_path,
+        //         tenant_key : tenantDetails.key.app_key,
+        //         auth_type : tenantDetails.configs.auth_type,
+        //         tenantData: tenantDetails
+        //     }
+        //     console.log(data);
+        //     dispatch(successTenantConfig(data));
+        // }
     };
 };
