@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import Header from '../../components/Header/Header';
 import classes from './Layout.module.css';
-
+import { selectTenantData } from '../../store/selectors/auth';
 class Layout extends Component {
 
     state = {
@@ -26,8 +26,7 @@ class Layout extends Component {
    
 
     render () {
-
-        console.log(this.props.isAuthentication)
+        const { tenantData } = this.props;
         return (
             <Aux>        
                 <nav className="navbar navbar-inverse visible-xs">
@@ -52,7 +51,7 @@ class Layout extends Component {
           
                 <div className={classes.bgColor +" container-fluid"}>
                   <div className="row content">
-                    <Sidebar isAuthentication={this.props.isAuthentication} tenantData={this.props.tenantData}/>
+                    <Sidebar isAuthentication={this.props.isAuthentication} tenantData={tenantData}/>
                     
                     <div className={classes.rightPanel + " col-lg-10"}>
                         <Header userData={this.state.userData} isAuthentication={this.props.isAuthentication}/>
@@ -71,7 +70,7 @@ class Layout extends Component {
 const mapStateToProps = state => {
     return {
         isAuthentication : state.auth.token !== null,
-        tenantData: state.auth.tenantData
+        tenantData: selectTenantData(state)
     };
 }
 

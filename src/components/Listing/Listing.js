@@ -13,7 +13,7 @@ const listing = ( props ) => {
 
 
     let listArray = props.listings.map((list,index) => {
-
+console.log('list',list)
 
 
         //let list_price  = null
@@ -27,7 +27,7 @@ const listing = ( props ) => {
         // }
 
         if(list.offer_price !== ''){
-            offer_price = <Aux>{list.currency.symbol}{list.offer_price}</Aux> 
+            offer_price = <Aux>{list.offer_price.formatted}</Aux> 
         }
 
 
@@ -37,7 +37,7 @@ const listing = ( props ) => {
                     <img src={StoreLogo} className={classes.storeImage} alt={list.title} title={list.title}/>
                     <p>{list.title}</p>
                     <div className={classes.bottomDesc}>
-                        <img src={AllenSollyLogo} alt={list.title} title={list.store.name}/> <span>{list.store.name}</span>
+                        <img src={AllenSollyLogo} alt={list.title} title={list.account.name}/> <span>{list.account.name}</span>
                         <div className={classes.amountTitle}>{offer_price}</div>
                     </div>                                 
                 </div>                  

@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.21.1",
     "google-map-react": "^1.1.7",
+    "immutable": "^4.0.0-rc.12",
     "node-sass": "^4.13.1",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
@@ -23,6 +24,7 @@
     "react-toastify": "^5.5.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0",
     "uuidv4": "^6.0.7"
   },
   "scripts": {
@@ -53,6 +55,10 @@
     ]
   },
   "devDependencies": {
-    "env-cmd": "^10.1.0"
+    "env-cmd": "^10.1.0",
+    "eslint": "^6.6.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-react": "^7.21.5",
+    "prettier": "2.1.2"
   }
 }

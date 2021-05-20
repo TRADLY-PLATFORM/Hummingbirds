@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {Map} from "immutable";
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
@@ -28,7 +29,7 @@ const rootReducer = combineReducers({
     group : GroupReducer
 });
 
-const store = createStore(rootReducer, composeEnhancers(
+const store = createStore(rootReducer, Map(), composeEnhancers(
     applyMiddleware(thunk)
 ));
 

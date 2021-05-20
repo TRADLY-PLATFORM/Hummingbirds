@@ -54,8 +54,7 @@ class App extends Component {
   }
 
   render(){
-  
-    console.log(this.props);
+       console.log(this.props);
     let routes = (
       <Switch>
         <Route path="/sign-up" exact component={SignUp} />
