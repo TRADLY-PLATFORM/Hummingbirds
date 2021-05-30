@@ -1,134 +1,134 @@
-
-.headingTitle{
-    font-style: normal;
-    font-weight: 600;
-    font-size: 24px;
-    line-height: 29px;
-    color: #000000;
-    margin: 0;
-    float: left;
+.headingTitle {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 29px;
+  color: #000000;
+  margin: 0;
+  float: left;
 }
 
-.btnGreenStyle{
-    padding: 8px 13px;
-    border: none;
-    background: linear-gradient(180deg, #2BDBC0 0%, #13B58C 100%);
-    border-radius: 24px;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 17px;
-    /* identical to box height */
-    color: #FFFFFF;
+.btnGreenStyle {
+  padding: 8px 13px;
+  border: none;
+  background: linear-gradient(180deg, #2bdbc0 0%, #13b58c 100%);
+  border-radius: 24px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  /* identical to box height */
+  color: #ffffff;
 }
 
-
-.btnGreenFollow{
-    padding: 8px 13px;
-    border: none;
-    background: linear-gradient(180deg, #2BDBC0 0%, #13B58C 100%);
-    border-radius: 24px;
-    width: 100%;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 17px;
-    /* identical to box height */
-    color: #FFFFFF;
+.btnGreenFollow {
+  padding: 8px 13px;
+  border: none;
+  background: linear-gradient(180deg, #2bdbc0 0%, #13b58c 100%);
+  border-radius: 24px;
+  width: 100%;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  /* identical to box height */
+  color: #ffffff;
 }
-
 
 .wellStore {
-    min-height: 18.5em;
-    padding: 30px 15px 15px 15px;
-    margin-bottom: 20px;
-    background-color: #ffffff;
-    border: 1px solid #e3e3e3;
-    border-radius: 10px;
-    text-align: center;
-    box-sizing: border-box;
+  min-height: 18.5em;
+  padding: 30px 15px 15px 15px;
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  border: 1px solid #e3e3e3;
+  border-radius: 10px;
+  text-align: center;
+  box-sizing: border-box;
+}
+.imageDiv {
+  height: 130px;
 }
 
-.wellStore div{
-    font-style: normal;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 17px;
-    /* Neutral/Black */
-    color: #000000;
+.wellStore div {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  /* Neutral/Black */
+  color: #000000;
 }
 
 .wellStore p {
-    font-size: 18px;
-    line-height: 22px;
-    margin-top: 1em;
-    color: #4A4A4A;
+  font-size: 18px;
+  line-height: 22px;
+  margin-top: 1em;
+  color: #4a4a4a;
+  height: 15px;
 }
 
 .wellStore img {
-    margin-bottom: 15px;
-    width: 50%;
+  margin-bottom: 15px;
+  width: 50%;
 }
 
-
-
 .latestTrend {
-    margin-bottom: 20px;
-    background-color: #ffffff;
-    border: 1px solid #e3e3e3;
-    border-radius: 10px;
-    box-sizing: border-box;
-    min-height: 235px;
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  border: 1px solid #e3e3e3;
+  border-radius: 10px;
+  box-sizing: border-box;
+  min-height: 235px;
 }
 
 .latestTrend p {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 17px;
-    color: #4A4A4A;
-    padding-left:10px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: #4a4a4a;
+  padding: 10px;
+  height: 50px;
 }
-.bottomDesc{
-    margin-bottom: 10px;
+.bottomDesc {
+  margin-bottom: 10px;
 }
 .bottomDesc img {
-    width: 15%;
-    margin-left: 10px;
-  
-            border-radius: 50%;
-            -webkit-border-radius: 50%;
-            -moz-border-radius: 50%;
-            /* border: solid 1px #949ca2; */
-            padding: 3px;
-            transition: all .5s;
+  width: 15%;
+  margin-left: 10px;
+
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  /* border: solid 1px #949ca2; */
+  padding: 3px;
+  transition: all 0.5s;
 }
 
 .bottomDesc span {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 17px;
-    color: #4A4A4A;
-    opacity: 0.5;
-    position: relative;
-    left: 3px;
-    top: 3px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #4a4a4a;
+  opacity: 0.5;
+  position: relative;
+  left: 3px;
+  top: 3px;
 }
 
-.storeImage{
-    margin-bottom: 15px;
-    width:100%;
-    height: 190px;
+.storeImage {
+  margin-bottom: 15px;
+  width: 100%;
+  height: 190px;
 }
 
-.amountTitle{
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 17px;
-    text-align: right;
-    float: right;
-    padding: 16px 8px;
+.amountTitle {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: right;
+  float: right;
+  padding: 16px 8px;
 
-    color: #13B58C;
+  color: #13b58c;
 }

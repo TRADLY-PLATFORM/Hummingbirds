@@ -1,70 +1,63 @@
-
- .title {
-    width: 100%;
-    height: 88px;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 36px;
-    line-height: 44px;
-    letter-spacing: -0.578824px;
-
+.title {
+  width: 100%;
+  height: 88px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 44px;
+  letter-spacing: -0.578824px;
 }
 
- .titleAcccount{
-    
-    height: 22px;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 18px;
-    line-height: 22px;
-    letter-spacing: -0.385882px;
+.titleAccount {
+  height: 22px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: -0.385882px;
 }
 
- .input{
-
-    width: 100%;
-    border: 1.1px solid #FFFFFF;
-    box-sizing: border-box;
-    border-radius: 24px;
-    padding: 10px;
-    background: none;
-    color: white;
+.input {
+  width: 100%;
+  border: 1.1px solid #ffffff;
+  box-sizing: border-box;
+  border-radius: 24px;
+  padding: 10px;
+  background: none;
+  color: white;
 }
 
 input::placeholder {
-    color: white;
+  color: white;
 }
 
-
-.button{
-
-width: 100%;
-border: 1.1px solid #FFFFFF;
-box-sizing: border-box;
-border-radius: 24px;
-padding: 10px;
-color: #13B58C;
-background-color: #FFFFFF;
+.button {
+  width: 100%;
+  border: 1.1px solid #ffffff;
+  box-sizing: border-box;
+  border-radius: 24px;
+  padding: 10px;
+  color: #13b58c;
+  background-color: #ffffff;
 }
 
-
-.PhoneDigit{
-    background: none;
-    border: none;
-    border-bottom: 1px solid white;
-    color: white;
-    text-align: center;
-    font-weight: bold;
-    font-size: 30px;
+.PhoneDigit {
+  background: none;
+  border: none;
+  border-bottom: 1px solid white;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  font-size: 30px;
 }
 
-.PhoneDigit:focus{
-    background: none !important;
-    color: white;
+.PhoneDigit:focus {
+  background: none !important;
+  color: white;
 }
 
 .col2 {
-    float: left;
-    width: 16%;
-    padding: 12px 30px;
+  float: left;
+  width: 16%;
+  padding: 12px 30px;
 }

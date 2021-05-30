@@ -1,198 +1,189 @@
-
 .breadCrumb {
-    padding: 0px 8px 15px;
-    margin-bottom: 8px;
-    list-style: none;
-    
+  padding: 0px 8px 15px;
+  margin-bottom: 8px;
+  list-style: none;
 }
 
-.breadCrumb li a{
-    font-weight: 500;
-    font-size: 18px;
-    line-height: 22px;
-    letter-spacing: -0.385882px;
-    color: #13B58C;
-    opacity: 0.7;
+.breadCrumb li a {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: -0.385882px;
+  color: #13b58c;
+  opacity: 0.7;
 }
 
-.noStore{
-    font-weight: 500;
-    font-size: 36px;
-    text-align: center;
-    letter-spacing: -0.385882px;
-    margin: 4em 0;
+.noStore {
+  font-weight: 500;
+  font-size: 36px;
+  text-align: center;
+  letter-spacing: -0.385882px;
+  margin: 4em 0;
 }
 
-.noStore img{
-    margin-top: 3em;
+.noStore img {
+  margin-top: 3em;
 }
 
-
-.mycontainer{
-    background-color: #fff;
-    width:70%;
-    margin: 10px auto;
-    border-radius: 10px;
+.mycontainer {
+  background-color: #fff;
+  width: 70%;
+  margin: 10px auto;
+  border-radius: 10px;
 }
 
 .title {
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 17px;
-    text-align: center;
-    color: #13B58C;
-    margin-top: 1em;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #13b58c;
+  margin-top: 1em;
 }
 
 .addgroup {
-    padding: 2rem 4rem 3rem;
-    color: #000;
-    border-radius: 10px;
+  padding: 2rem 4rem 3rem;
+  color: #000;
+  border-radius: 10px;
 }
 
 .groupcard {
-    border: 1px solid #FFFFFF;
-    border-radius: 10px;
-    padding:4rem;
-    text-align: center;
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  padding: 4rem;
+  text-align: center;
 }
 
 .input {
-    width:100%;
-    margin: 0 auto;
-    border: 1px solid #ececec;
-    border-radius: 24px;
-    padding: 10px 20px;
-    background: #fff;
-    color: #000;
+  width: 100%;
+  margin: 0 auto;
+  border: 1px solid #ececec;
+  border-radius: 24px;
+  padding: 10px 20px;
+  background: #fff;
+  color: #000;
 }
-
-
-
 
 .groupAvatar {
-    margin-top: 4px;
-    width: 82px;
-    border-radius: 50% !important;
+  margin-top: 4px;
+  width: 82px;
+  border-radius: 50% !important;
 }
 
-
 .wellCategory {
-    min-height: 20px;
-    padding: 19px;
-    margin-bottom: 20px;
-    background-color: #ffffff;
-    border: 1px solid #e3e3e3;
-    border-radius: 10px;
-    text-align: center;
-    height: 120px;
-    box-sizing: border-box;
+  min-height: 20px;
+  padding: 19px;
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  border: 1px solid #e3e3e3;
+  border-radius: 10px;
+  text-align: center;
+  height: 120px;
+  box-sizing: border-box;
 }
 
 .wellCategory p {
-    font-style: normal;
-    font-weight: normal;
-    font-size: 14px;
-    line-height: 17px;
-    color: #000000;
-    word-break: break-word;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000000;
+  word-break: break-word;
 }
 
-.wellCategory img { 
-    margin-bottom: 10px;
+.wellCategory img {
+  margin-bottom: 10px;
 }
 
-
-
-.fashionStore h3{
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 10px;
-    display: flex;
-    align-items: center;
-    letter-spacing: -0.385882px;
-    color: #000000;
+.fashionStore h3 {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 10px;
+  display: flex;
+  align-items: center;
+  letter-spacing: -0.385882px;
+  color: #000000;
 }
 
-.fashionStore img{
-    float: left;
-    padding-right: 20px;
+.fashionStore img {
+  float: left;
+  padding-right: 20px;
 }
 
-.fashionStore p{
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 15px;
-    color: #4A4A4A;
-    opacity: 0.5;
+.fashionStore p {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  color: #4a4a4a;
+  opacity: 0.5;
 }
 
-.bannerText{
-    background: #FFFFFF;
-box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.0523656);
-border-radius: 10px;
-padding: 20px 0px;
-margin-top: -65px;
-
+.bannerText {
+  background: #ffffff;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.0523656);
+  border-radius: 10px;
+  padding: 20px 0px;
+  margin-top: -65px;
 }
 
-.bannerimage{
-    background-image: url(/static/media/store.e5a4d495.svg);
-    background-repeat: no-repeat;
-    background-position: inherit;
-    background-size: cover;
-    height: 217px;
+.bannerimage {
+  background-image: url(/static/media/store.e5a4d495.svg);
+  background-repeat: no-repeat;
+  background-position: inherit;
+  background-size: cover;
+  height: 217px;
 }
 .latestTrend {
-    margin-bottom: 5px;
-    background-color: #ffffff;
-    border: 1px solid #e3e3e3;
-    border-radius: 10px;
-    box-sizing: border-box;
-    min-height: 235px;
+  margin-bottom: 5px;
+  background-color: #ffffff;
+  border: 1px solid #e3e3e3;
+  border-radius: 10px;
+  box-sizing: border-box;
+  min-height: 235px;
 }
 
 .latestTrend p {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 17px;
-    color: #4A4A4A;
-    padding-left:10px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: #4a4a4a;
+  padding: 10px;
+  height: 50px;
 }
-.bottomDesc{
-    margin-bottom: 10px;
+.bottomDesc {
+  margin-bottom: 10px;
 }
 .bottomDesc img {
-    width: 15%;
-    margin-left: 10px;
+  width: 15%;
+  margin-left: 10px;
 }
 
 .bottomDesc span {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 17px;
-    color: #4A4A4A;
-    opacity: 0.5;
-    position: relative;
-    left: 3px;
-    top: 3px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #4a4a4a;
+  opacity: 0.5;
+  position: relative;
+  left: 3px;
+  top: 3px;
 }
 
-.storeImage{
-    margin-bottom: 15px;
-    width:100%;
+.storeImage {
+  margin-bottom: 15px;
+  width: 100%;
 }
 
-.amountTitle{
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 17px;
-    text-align: center;
+.amountTitle {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
 
-    float: right;
-        padding: 8px;
+  float: right;
+  padding: 8px;
 
-    color: #13B58C;
+  color: #13b58c;
 }

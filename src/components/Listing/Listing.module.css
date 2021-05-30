@@ -1,51 +1,50 @@
-
 .latestTrend {
-    margin-bottom: 20px;
-    background-color: #ffffff;
-    border: 1px solid #e3e3e3;
-    border-radius: 10px;
-    box-sizing: border-box;
-
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  border: 1px solid #e3e3e3;
+  border-radius: 10px;
+  box-sizing: border-box;
 }
 
 .latestTrend p {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 17px;
-    color: #4A4A4A;
-    padding-left:10px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+  color: #4a4a4a;
+  padding: 10px;
+  height: 50px;
 }
-.bottomDesc{
-    margin-bottom: 10px;
+.bottomDesc {
+  margin-bottom: 10px;
 }
 .bottomDesc img {
-    width: 15%;
-    margin-left: 10px;
+  width: 15%;
+  margin-left: 10px;
 }
 
 .bottomDesc span {
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 17px;
-    color: #4A4A4A;
-    opacity: 0.5;
-    position: relative;
-    left: 3px;
-    top: 3px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #4a4a4a;
+  opacity: 0.5;
+  position: relative;
+  left: 3px;
+  top: 3px;
 }
 
-.storeImage{
-    margin-bottom: 15px;
-    width:100%;
+.storeImage {
+  margin-bottom: 15px;
+  width: 100%;
 }
 
-.amountTitle{
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 17px;
-    text-align: right;
-    padding: 8px;
-    color: #13B58C;
+.amountTitle {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: right;
+  padding: 8px;
+  color: #13b58c;
 }
