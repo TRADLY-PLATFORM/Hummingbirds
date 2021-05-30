@@ -4,20 +4,20 @@ import { connect } from 'react-redux';
 import * as actions from '../../../store/actions/index';
 
 class Logout extends Component {
-    
-    componentDidMount() {
-        this.props.onLogout();
-    }
-    render(){
-        return <Redirect to="/"/>;
-    }
+  componentDidMount() {
+    this.props.onLogout();
+    this.props.onSetTenantConfig();
+  }
+  render() {
+    return <Redirect to="/" />;
+  }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onLogout: () => dispatch(actions.logout()),
+    onSetTenantConfig: () => dispatch(actions.setTenantConfig()),
+  };
+};
 
-const mapDispatchToProps = dispatch => {
-    return {
-        onLogout : () => dispatch(actions.logout())
-    }
-}
-
-export default connect(null,mapDispatchToProps)(Logout);
+export default connect(null, mapDispatchToProps)(Logout);

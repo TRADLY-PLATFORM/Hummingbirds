@@ -2,67 +2,125 @@ import React, { Component } from 'react';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
 import { connect } from 'react-redux';
 import classes from './Sidebar.module.css';
-import { Link, Redirect } from 'react-router-dom';
-//import HomeLogo from '../../assets/images/sidebar/home.svg';
+import { Link, Redirect, withRouter } from 'react-router-dom';
+import HomeLogo from '../../assets/images/sidebar/home.svg';
 import HomeActiveLogo from '../../assets/images/sidebar/active/home.svg';
 import WishlistLogo from '../../assets/images/sidebar/wishlist.svg';
+import WishlistActiveLogo from '../../assets/images/sidebar/active/wishlist.svg';
 import TransactionLogo from '../../assets/images/sidebar/transaction.svg';
-// import StoreLogo from '../../assets/images/sidebar/store.svg';
+import TransactionActiveLogo from '../../assets/images/sidebar/active/transaction.svg';
+import StoreLogo from '../../assets/images/sidebar/store.svg';
+import StoreActiveLogo from '../../assets/images/sidebar/active/store.svg';
 // import GroupLogo from '../../assets/images/sidebar/group.svg';
 import * as actions from '../../store/actions/index';
 
-class Sidebar extends Component{
-    state = {
-        redirect : false,
+class Sidebar extends Component {
+  state = {
+    redirect: false,
+  };
+
+  authRedirectHandler = (path) => {
+    this.props.onSetAuthRedirectPath(path);
+    this.setState({ redirect: true });
+  };
+
+  render() {
+    const { tenantData, location } = this.props;
+    let appLogo = tenantData.get('logo_path', '');
+    let redirectUrl = null;
+    if (this.state.redirect) {
+      redirectUrl = <Redirect to="/sign-in" />;
     }
 
-    authRedirectHandler = (path) => {
-       this.props.onSetAuthRedirectPath(path); 
-       this.setState({redirect:true})
-    }
+    let url = location.pathname;
+    let search = window.location.search;
+    let params = new URLSearchParams(search);
 
-    render(){
-        const { tenantData } = this.props;
-        let storeLogo =  tenantData.get('logo_path','');
-        let redirectUrl = null;
-        if(this.state.redirect){
-            redirectUrl = <Redirect to="/sign-in"/>
-        }
+    console.log('urlurlurlurl', url, search, params);
 
-        return (
-            <Aux>
-                {redirectUrl}
-                <div className={classes.bgSidebar + " col-lg-2 sidenav hidden-xs nopadding" }>
-                    <br/>
-                    <div className={classes.logoImage}>
-                        <Link to="/home">
-                            {storeLogo !== '' ? <img className="img-fluid" src={storeLogo} style={{ width: '145px' }} alt="Tradly" title="Tradly" /> : 'Loading...'}
-                        </Link>
-                    </div> 
-                    <ul className="nav nav-pills nav-stacked">
-                    <li className="active"><Link to="/home"><img className="img-fluid" src={HomeActiveLogo} alt="Home" title="Home"/><span>Home</span></Link></li>
-                    <li><Link to="/wishlist"><img className="img-fluid" src={WishlistLogo} alt="Home" title="Home"/><span>My Wishlist</span></Link></li>
-                    <li className=""><Link to="/Listings"><img className="img-fluid" src={HomeActiveLogo} alt="Home" title="Home"/><span>Listings</span></Link></li>
-                    <li><Link to="/mytransaction"><img className="img-fluid" src={TransactionLogo} alt="Home" title="Home"/><span>My Transaction</span></Link></li>
-                    {/* <li>
+    return (
+      <Aux>
+        {redirectUrl}
+        <div className={classes.bgSidebar + ' col-lg-2 sidenav hidden-xs nopadding'}>
+          <br />
+          <div className={classes.logoImage}>
+            <Link to="/home">
+              {appLogo !== '' ? (
+                <img
+                  className="img-fluid"
+                  src={appLogo}
+                  style={{ width: '145px' }}
+                  alt="Tradly"
+                  title="Tradly"
+                />
+              ) : (
+                'Loading...'
+              )}
+            </Link>
+          </div>
+          <ul className="nav nav-pills nav-stacked">
+            <li className={url === '/' || url === '/home' ? 'active' : ''}>
+              <Link to="/home">
+                <img
+                  className="img-fluid"
+                  src={url === '/' || url === '/home' ? HomeActiveLogo : HomeLogo}
+                  alt="Home"
+                  title="Home"
+                />
+                <span>Home</span>
+              </Link>
+            </li>
+            <li className={url === '/wishlist' ? 'active' : ''}>
+              <Link to="/wishlist">
+                <img
+                  className="img-fluid"
+                  src={url === '/wishlist' ? WishlistActiveLogo : WishlistLogo}
+                  alt="Home"
+                  title="Home"
+                />
+                <span>My Wishlist</span>
+              </Link>
+            </li>
+            <li className={url === '/listings' ? 'active' : ''}>
+              <Link to="/listings">
+                <img
+                  className="img-fluid"
+                  src={url === '/listings' ? StoreActiveLogo : StoreLogo}
+                  alt="Home"
+                  title="Home"
+                />
+                <span>Listings</span>
+              </Link>
+            </li>
+            <li className={url === '/my-transaction' ? 'active' : ''}>
+              <Link to="/my-transaction">
+                <img
+                  className="img-fluid"
+                  src={url === '/my-transaction' ? TransactionActiveLogo : TransactionLogo}
+                  alt="Home"
+                  title="Home"
+                />
+                <span>My Transaction</span>
+              </Link>
+            </li>
+            {/* <li>
                         { (!this.props.isAuthentication) ? <Link to="#" onClick={(path) => this.authRedirectHandler('/store')}><img className="img-fluid" src={StoreLogo} alt="Home" title="Home"/><span>My Store</span></Link> :
                         <Link to="/store"><img className="img-fluid" src={StoreLogo} alt="Home" title="Home"/><span>My Store</span></Link> }
                     </li>
                     <li><Link to="/group"><img className="img-fluid" src={GroupLogo} alt="Home" title="Home"/><span>Group</span></Link></li> */}
-                    </ul><br/>
-                </div>
-                <br/>
-            </Aux>
-        );
-    }
+          </ul>
+          <br />
+        </div>
+        <br />
+      </Aux>
+    );
+  }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onSetAuthRedirectPath: (path) => dispatch(actions.setAuthRedirectPath(path, null)),
+  };
+};
 
-const mapDispatchToProps = dispatch => {
-    return {
-        onSetAuthRedirectPath: (path) => dispatch(actions.setAuthRedirectPath(path,null))
-    }
-}
-
-  
-export default connect(null,mapDispatchToProps)( Sidebar );
+export default connect(null, mapDispatchToProps)(withRouter(Sidebar));

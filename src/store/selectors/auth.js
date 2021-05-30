@@ -1,14 +1,12 @@
 import { createSelector } from 'reselect';
 import { fromJS } from 'immutable';
 
-const currentUserId = (state) =>
-  state.auth && state.auth.token ? state.auth.token.replace(/^"(.*)"$/, '$1') : '';
+// const currentUserId = (state) =>
+//   state.auth && state.auth.userData ? state.auth.userData.id.replace(/^"(.*)"$/, '$1') : '';
 const userInfo = (state) => state.auth;
-
-const selectUserId = createSelector([currentUserId], (currentUserId) => currentUserId);
+//createSelector([currentUserId], (currentUserId) => currentUserId);
+const selectUserId = createSelector(userInfo, (state) => fromJS(state.userData.id || ''));
 const selectTenantData = createSelector(userInfo, (state) => fromJS(state.tenantData || {}));
+const selectUserData = createSelector(userInfo, (state) => fromJS(state.userData || {}));
 
-export {
-  selectUserId,
-  selectTenantData,
-};
+export { selectUserId, selectTenantData, selectUserData };
