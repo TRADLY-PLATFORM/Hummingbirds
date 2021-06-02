@@ -30,7 +30,7 @@ const listing = (props) => {
         <div className={'col-md-5th-1 col-sm-4 '}>
           <div className={classes.latestTrend}>
             <img
-              src={StoreLogo}
+              src={list.images[0]}
               className={classes.storeImage}
               alt={list.title}
               title={list.title}

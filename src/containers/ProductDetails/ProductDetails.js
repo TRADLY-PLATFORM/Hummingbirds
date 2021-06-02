@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { List } from 'immutable';
+import { List, Map } from 'immutable';
 import Toast from '../../components/UI/Toast/Toast';
 import Backdrop from '../../components/UI/Backdrop/Backdrop';
 import Modal from '../../components/UI/Modal/Modal';
@@ -81,6 +81,51 @@ class ProductDetails extends Component {
     return <Skeleton count={10} />;
   };
 
+  getPrices = () => {
+    const { productDetails } = this.props;
+    if (!productDetails.getIn(['listing', 'list_price'], Map()).isEmpty()) {
+      return (
+        productDetails.getIn(['listing', 'list_price', 'formatted'], '') +
+        ' ' +
+        (productDetails.getIn(['listing', 'list_price', 'offer_percent'], 0) !== 0
+          ? productDetails.getIn(['listing', 'list_price', 'offer_percent'], '')
+          : '')
+      );
+    }
+    return <Skeleton count={10} />;
+  };
+
+  getStoreOwner = () => {
+    const { productDetails } = this.props;
+    if (!productDetails.getIn(['listing', 'account', 'user'], Map()).isEmpty()) {
+      return (
+        productDetails.getIn(['listing', 'account', 'user', 'first_name'], '') +
+        ' ' +
+        productDetails.getIn(['listing', 'account', 'user', 'last_name'], '')
+      );
+    }
+    return <Skeleton count={10} />;
+  };
+  getStoreName = () => {
+    const { productDetails } = this.props;
+    if (productDetails.getIn(['listing', 'account', 'name'], '') !== '') {
+      return (
+        <Link to={'/store-details/' + productDetails.getIn(['listing', 'account_id'], '')}>
+          {productDetails.getIn(['listing', 'account', 'name'], '')}
+        </Link>
+      );
+    }
+    return <Skeleton count={10} />;
+  };
+
+  getCategoryIds = () => {
+    const { productDetails } = this.props;
+    if (productDetails.getIn(['listing', 'category_id'], List()).size > 0) {
+      return productDetails.getIn(['listing', 'category_id'], List()).join(', ');
+    }
+    return '';
+  };
+
   render() {
     const { error, productDetails, message } = this.props;
     let toastMessage = null;
@@ -89,13 +134,8 @@ class ProductDetails extends Component {
     }
     console.log('productDetails', productDetails);
     // let currencySymbol = <Skeleton />;
-    // let offerPercent = null;
-    // let list_price = <Skeleton />;
-    // let offer_price = null;
     // let storeName = <Skeleton />;
-    // let storeOwner = <Skeleton />;
     // let storeAddress = <Skeleton count={2} />;
-    // let categoryId = <Skeleton />;
     // let homeBanner = <Skeleton count={10} />;
 
     // let coOrdinates1 = null;
@@ -104,44 +144,6 @@ class ProductDetails extends Component {
     // if (this.props.productDetails) {
     //   if (this.props.productDetails.currency) {
     //     currencySymbol = this.props.productDetails.currency.symbol;
-    //   }
-
-    //   if (this.props.productDetails.offer_percent !== 0) {
-    //     offerPercent = <strong>{this.props.productDetails.offer_percent || <Skeleton />}%</strong>;
-    //   }
-
-    //   if (this.props.productDetails.list_price !== '') {
-    //     list_price = (
-    //       <Aux>
-    //         {currencySymbol}
-    //         {this.props.productDetails.list_price.formatted || <Skeleton />}
-    //       </Aux>
-    //     );
-    //     if (this.props.productDetails.offer_price !== 0) {
-    //       list_price = (
-    //         <strike>
-    //           {currencySymbol}
-    //           {this.props.productDetails.list_price.formatted || <Skeleton />}
-    //         </strike>
-    //       );
-    //     }
-    //   }
-
-    //   if (this.props.productDetails.offer_price !== 0 && offerPercent !== null) {
-    //     offer_price = (
-    //       <Aux>
-    //         {currencySymbol}
-    //         {this.props.productDetails.offer_price !== null ? (
-    //           this.props.productDetails.offer_price
-    //         ) : (
-    //           <Skeleton />
-    //         )}
-    //       </Aux>
-    //     );
-    //   }
-    //   categoryId = 'N/A';
-    //   if (this.props.productDetails.category_id !== '') {
-    //     categoryId = this.props.productDetails.category_id;
     //   }
 
     //   if (this.props.productDetails.store) {
@@ -206,20 +208,20 @@ class ProductDetails extends Component {
 
             <div className={classes.Details + ' col-lg-12'}>
               <h4>{productDetails.getIn(['listing', 'title'], '') || <Skeleton />}</h4>
-              <div> {/* {offer_price} {offerPercent} {list_price}{' '} */}</div>
+              <div> {this.getPrices()}</div>
               <span>Product Description</span>
               <div className={classes.Description}>
                 {productDetails.getIn(['listing', 'description'], '') || <Skeleton count="10" />}
               </div>
             </div>
           </div>
-          {/*
-                <div className="col-xs-6 bgColor">
+
+          <div className="col-xs-6 bgColor">
             <div className="col-lg-12 mt-4">
               <div className="row">
                 <div className={classes.fashionStore + ' col-sm-6'}>
-                  <h3>{storeName}</h3>
-                  <div className={classes.Description}>@{storeOwner}</div>
+                  <h3>{this.getStoreOwner()}</h3>
+                  <div className={classes.Description}>@{this.getStoreOwner()}</div>
                 </div>
                 <div className="col-sm-6">
                   <button className="btnGreenStyle pull-right">Follow</button>
@@ -242,15 +244,15 @@ class ProductDetails extends Component {
 
                 <div className={classes.DeatilsLeft + ' col-lg-6 col-sm-6 col-md-6'}>Category</div>
                 <div className={classes.DeatilsRight + ' col-lg-6 col-sm-6 col-md-6'}>
-                  {categoryId}
+                  {this.getCategoryIds()}
                 </div>
 
                 <div className={classes.DeatilsLeft + ' col-lg-6 col-sm-6 col-md-6'}>Location</div>
                 <div className={classes.DeatilsRight + ' col-lg-6 col-sm-6 col-md-6'}>
-                  {storeAddress}
+                  {/* {storeAddress} */}
                 </div>
                 <div className={classes.DeatilsLeft + ' col-lg-6'}></div>
-                {maps}
+                {/* {maps} */}
               </div>
 
               <h1 className="h1Headings">Additional Details</h1>
@@ -263,6 +265,7 @@ class ProductDetails extends Component {
                   Home Delivery Available, Cash On Delivery
                 </div>
               </div>
+
               <br />
               <button type="button" className="btn btn-addtocart btn-lg btn-block height70">
                 Add To Cart
@@ -274,7 +277,6 @@ class ProductDetails extends Component {
               <br />
             </div>
           </div>
-        */}
         </div>
 
         <br />
