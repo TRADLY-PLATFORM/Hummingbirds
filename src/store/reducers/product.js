@@ -8,6 +8,7 @@ const initialState = {
   message: null,
   listings: [],
   categoryLists: [],
+  supplierLists: [],
   page: 1,
   total_records: 0,
 };
@@ -60,7 +61,7 @@ const startCategoryLists = (state, action) => {
 
 const setCategoryLists = (state, action) => {
   return updateObject(state, {
-    categoryLists: action.categoryLists,
+    categoryLists: action.listings,
     loading: false,
     error: false,
     message: null,
@@ -68,6 +69,25 @@ const setCategoryLists = (state, action) => {
 };
 
 const fetchCategoryListsFailed = (state, action) => {
+  return updateObject(state, { loading: false, error: true, message: 'Could not fetch result.' });
+};
+
+const startSupplierLists = (state, action) => {
+  return updateObject(state, {
+    loading: true,
+  });
+};
+
+const setSupplierLists = (state, action) => {
+  return updateObject(state, {
+    supplierLists: action.data,
+    loading: false,
+    error: false,
+    message: null,
+  });
+};
+
+const fetchSupplierListsFailed = (state, action) => {
   return updateObject(state, { loading: false, error: true, message: 'Could not fetch result.' });
 };
 
@@ -91,6 +111,12 @@ const productReducer = (state = initialState, action) => {
       return fetchCategoryListsFailed(state, action);
     case actionTypes.INIT_CATEGORY_LISTS:
       return startCategoryLists(state, action);
+    case actionTypes.SET_SUPPLIER_LISTS:
+      return setSupplierLists(state, action);
+    case actionTypes.FETCH_SUPPLIER_LISTS_FAILED:
+      return fetchSupplierListsFailed(state, action);
+    case actionTypes.INIT_SUPPLIER_LISTS:
+      return startSupplierLists(state, action);
     default:
       return state;
   }

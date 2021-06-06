@@ -1,115 +1,111 @@
 .breadCrumb {
-    padding: 0px 8px 15px;
-    margin-bottom: 8px;
-    list-style: none;
-    
+  padding: 0px 8px 15px;
+  margin-bottom: 8px;
+  list-style: none;
 }
 
-.breadCrumb li a{
-    font-weight: 500;
-    font-size: 18px;
-    line-height: 22px;
-    letter-spacing: -0.385882px;
-    color: #13B58C;
-    opacity: 0.7;
+.breadCrumb li a {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: -0.385882px;
+  color: #13b58c;
+  opacity: 0.7;
 }
 
-.Details{
-    background: white;
-    padding-top: 1em;
-    padding-bottom: 2em;
+.Details {
+  background: white;
+  padding-top: 1em;
+  padding-bottom: 2em;
 }
 
-.Details h4{
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 17px;
-    margin-top: 0;
-    color: #4A4A4A;
+.Details h4 {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  margin-top: 0;
+  color: #4a4a4a;
 }
 
-.Details div{
-    font-weight: bold;
-    font-size: 18px;
-    line-height: 22px;
+.Details div {
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 22px;
 
-    color: #4A4A4A;
+  color: #4a4a4a;
 }
 
-.Details span{
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 15px;
-    color: #4A4A4A;
-    opacity: 0.4;
-    margin-top: 1em;
-    display: block;
+.Details span {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  color: #4a4a4a;
+  opacity: 0.4;
+  margin-top: 1em;
+  display: block;
 }
 
-.Details strike{
-    float: right;
-    color: #13B58C;
+.Details strike {
+  float: right;
+  color: #13b58c;
 }
-.Details strong{
-    padding-left: 30px;
-    color: #13B58C;
+.Details strong {
+  padding-left: 30px;
+  color: #13b58c;
 }
-.Description{
-    font-weight: 500 !important;
-    font-size: 12px !important;
-    line-height: 15px !important;
-    color: #4A4A4A !important;
-    text-align: justify;
-    margin-top: 1em;
-    padding-bottom: 2em;
-}
-
-
-.itemImg img{
-    width: 100%;
+.Description {
+  font-weight: 500 !important;
+  font-size: 12px !important;
+  line-height: 15px !important;
+  color: #4a4a4a !important;
+  text-align: justify;
+  margin-top: 1em;
+  padding-bottom: 2em;
 }
 
-
-.fashionStore h3{
-    font-weight: bold;
-    font-size: 14px;
-    line-height: 17px;
-    margin-top: 0px;
+.itemImg img {
+  width: 100%;
 }
 
-.fashionStore h3 a{
-    color: #13B58C;
+.fashionStore h3 {
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 17px;
+  margin-top: 0px;
 }
 
-.fashionStore p{
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 15px;
-    color: #4A4A4A;
-    opacity: 0.5;
+.fashionStore h3 a {
+  color: #13b58c;
 }
 
-hr{
-    margin-top: 10px;
-    margin-bottom: 15px;
+.fashionStore p {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  color: #4a4a4a;
+  opacity: 0.5;
 }
 
-.DeatilsLeft{
-    font-size: 14px;
-    line-height: 15px;
-    color: #4A4A4A;
-    mix-blend-mode: normal;
-    opacity: 0.5;
-    margin-bottom: 15px;
-    margin-top: 10px;
-    clear: both;
+hr {
+  margin-top: 10px;
+  margin-bottom: 15px;
 }
 
+.DetailsLeft {
+  font-size: 14px;
+  line-height: 15px;
+  color: #4a4a4a;
+  mix-blend-mode: normal;
+  opacity: 0.5;
+  margin-bottom: 15px;
+  margin-top: 10px;
+  clear: both;
+}
 
-.DeatilsRight{
-    font-size: 12px;
-    line-height: 15px;
-    color: #4A4A4A;
-    margin-bottom: 15px;
-    margin-top: 10px;
+.DetailsRight {
+  font-size: 12px;
+  line-height: 15px;
+  color: #4a4a4a;
+  margin-bottom: 15px;
+  margin-top: 10px;
 }

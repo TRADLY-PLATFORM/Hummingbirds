@@ -86,7 +86,7 @@ class Home extends Component {
             }
 
             return (
-              <Link to={'/product-details/' + list.id} key={i}>
+              <Link to={`/product-details/${list.id}/${list.title}`} key={i}>
                 <div className={classes.latestTrend}>
                   <img
                     src={imagePath}

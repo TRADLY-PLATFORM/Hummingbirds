@@ -10,7 +10,7 @@ export {
 
 export { initHomeCollections } from './home';
 
-export { initProductDetails, initListings, initCategoryLists } from './product';
+export { initProductDetails, initListings, initCategoryLists, initSupplierLists } from './product';
 
 export { initStoreDetails, userStoreLists, CreateStore } from './store';
 
