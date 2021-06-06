@@ -81,7 +81,7 @@ class Sidebar extends Component {
                 <span>My Wishlist</span>
               </Link>
             </li>
-            <li className={url === '/listings' ? 'active' : ''}>
+            <li className={url === '/listings' || url.includes('/product') ? 'active' : ''}>
               <Link to="/listings">
                 <img
                   className="img-fluid"

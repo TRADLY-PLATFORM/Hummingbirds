@@ -1,6 +1,5 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios';
-import { ACCESS_TOKEN } from '../../shared/utility';
 
 export const setProductDetails = (productDetails) => {
   return {
@@ -58,21 +57,16 @@ export const startListings = () => {
   };
 };
 
-export const initListings = (count, filterValue) => {
-  console.log(filterValue);
-
+export const initListings = (count, filterValue, totalCountOfProducts) => {
   return (dispatch) => {
     dispatch(startListings());
     axios
-      .get('/products/v1/listings?page=1&per_page=' + (parseInt(count) + 4) + filterValue, {
-        headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('tenant_key') ?? ACCESS_TOKEN,
-        },
-      })
+      .get(
+        '/products/v1/listings?page=1&per_page=' +
+          (parseInt(count) + totalCountOfProducts) +
+          filterValue
+      )
       .then((response) => {
-        console.log('test');
-        console.log(response.data.data);
-        console.log('test');
         if (response.data.status) {
           dispatch(setListings(response.data.data));
         } else {
@@ -111,13 +105,50 @@ export const initCategoryLists = (count) => {
       .get('/v1/categories?parent=0&type=listings')
       .then((response) => {
         if (response.data.status) {
-          dispatch(setCategoryLists(response.data.data));
+          dispatch(setCategoryLists(response.data?.data?.categories));
         } else {
           dispatch(fetchCategoryListsFailed());
         }
       })
       .catch((error) => {
         dispatch(fetchCategoryListsFailed());
+      });
+  };
+};
+
+export const setSupplierLists = (listings) => {
+  return {
+    type: actionTypes.SET_SUPPLIER_LISTS,
+    data: listings,
+  };
+};
+
+export const fetchSupplierListsFailed = () => {
+  return {
+    type: actionTypes.FETCH_SUPPLIER_LISTS_FAILED,
+  };
+};
+
+export const startSupplierLists = () => {
+  return {
+    type: actionTypes.INIT_SUPPLIER_LISTS,
+  };
+};
+
+export const initSupplierLists = () => {
+  return (dispatch) => {
+    dispatch(startSupplierLists());
+    axios
+      .get('/v1/accounts?page=1&type=account')
+      .then((response) => {
+        if (response.data.status) {
+          dispatch(setSupplierLists(response.data?.data?.accounts));
+        } else {
+          dispatch(fetchSupplierListsFailed());
+        }
+      })
+      .catch((error) => {
+        dispatch(fetchSupplierListsFailed());
       });
   };
 };

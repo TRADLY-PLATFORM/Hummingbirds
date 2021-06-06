@@ -49,7 +49,7 @@ class App extends Component {
         <Route path="/listings" exact component={Listings} />
         <Route path="/verification/:verifyID" exact component={PhoneVerification} />
         <Route path="/" exact component={Home} />
-        <Route path="/product-details/:id" exact component={ProductDetails} />
+        <Route path="/product-details/:id/:name" exact component={ProductDetails} />
         <Route path="/store" exact component={Store} />
         <Route path="/create-store" exact component={CreateStore} />
         <Route path="/store-details/:id" exact component={StoreDetails} />
