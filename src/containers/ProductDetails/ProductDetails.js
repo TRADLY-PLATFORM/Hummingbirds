@@ -21,7 +21,6 @@ class ProductDetails extends Component {
   };
 
   componentDidMount() {
-    console.log('test', this.props.match.params.id);
     this.props.onInitProductDetails(this.props.match.params.id);
   }
 
@@ -210,11 +209,11 @@ class ProductDetails extends Component {
             </div>
 
             <div className={classes.Details + ' col-lg-12'}>
-              <h4>{productDetails.getIn(['listing', 'title'], '') || <Skeleton />}</h4>
+              <h4>{productDetails.getIn(['listing', 'title'], 'N/A')}</h4>
               <div> {this.getPrices()}</div>
               <span>Product Description</span>
               <div className={classes.Description}>
-                {productDetails.getIn(['listing', 'description'], '') || <Skeleton count="10" />}
+                {productDetails.getIn(['listing', 'description'], 'N/A')}
               </div>
             </div>
           </div>

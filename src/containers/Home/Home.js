@@ -51,7 +51,7 @@ class Home extends Component {
     this.props.history.push('/listings');
   };
 
-  collectonsHtmlHandler = (collections) => {
+  collectionsHtmlHandler = (collections) => {
     if (collections && collections.length > 0) {
       return collections.map(function (collection, index) {
         let arrayListings = [];
@@ -74,7 +74,9 @@ class Home extends Component {
                 </div>
                 <div>{list.name}</div>
                 <p>{description}</p>
-                <button className={classes.btnGreenFollow + ' mt-5'}>View All</button>
+                <Link to={`/store-details/${list.id}/${list.name}`}>
+                  <button className={classes.btnGreenFollow + ' mt-5'}>View Details</button>
+                </Link>
               </div>
             );
           });
@@ -130,9 +132,11 @@ class Home extends Component {
                   <h3 className={classes.headingTitle}>{collection.title}</h3>
                 </div>
                 <div className="col-lg-6 nopaddingRight">
-                  <Link to="/listings">
-                    <button className={'btnGreenStyle pull-right'}>View All</button>
-                  </Link>
+                  {collection.title === 'Latest Products' && (
+                    <Link to="/listings">
+                      <button className={'btnGreenStyle pull-right'}>View All</button>
+                    </Link>
+                  )}
                 </div>
               </div>
             </div>
@@ -208,9 +212,6 @@ class Home extends Component {
   }
 
   render() {
-    console.log(this.props);
-    console.log(this.state);
-
     let categoryContent = <Spinner show={true} styles="SpinnerCenter" />;
     if (this.state.categorySet && this.state.categorySet.length > 0) {
       if (this.state.categorySet <= 4) {
@@ -246,7 +247,7 @@ class Home extends Component {
     let collectionContent = <Spinner show={true} styles="SpinnerCenter" />;
     console.log(this.props.collections);
     if (this.props.collections && this.props.collections.length > 0) {
-      collectionContent = this.collectonsHtmlHandler(this.props.collections);
+      collectionContent = this.collectionsHtmlHandler(this.props.collections);
     } else {
       if (!this.state.show) {
         collectionContent = '';
