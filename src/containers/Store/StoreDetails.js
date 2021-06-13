@@ -10,7 +10,7 @@ import StoreBanner from '../../assets/images/store/store.svg';
 import Backdrop from '../../components/UI/Backdrop/Backdrop';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import * as actions from '../../store/actions/index';
-import Skeleton from '../../components/UI/Skeleton/Skeleton';
+//import Skeleton from '../../components/UI/Skeleton/Skeleton';
 import { selectStoreDetails } from '../../store/selectors/store';
 class StoreDetails extends Component {
   constructor(props) {
