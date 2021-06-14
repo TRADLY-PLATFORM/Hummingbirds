@@ -11,7 +11,7 @@ import TransactionLogo from '../../assets/images/sidebar/transaction.svg';
 import TransactionActiveLogo from '../../assets/images/sidebar/active/transaction.svg';
 import StoreLogo from '../../assets/images/sidebar/store.svg';
 import StoreActiveLogo from '../../assets/images/sidebar/active/store.svg';
-// import GroupLogo from '../../assets/images/sidebar/group.svg';
+//import GroupLogo from '../../assets/images/sidebar/group.svg';
 import * as actions from '../../store/actions/index';
 
 class Sidebar extends Component {
@@ -33,10 +33,8 @@ class Sidebar extends Component {
     }
 
     let url = location.pathname;
-    let search = window.location.search;
-    let params = new URLSearchParams(search);
-
-    console.log('urlurlurlurl', url, search, params);
+    //let search = window.location.search;
+    //let params = new URLSearchParams(search);
 
     return (
       <Aux>
@@ -85,7 +83,9 @@ class Sidebar extends Component {
               <Link to="/listings">
                 <img
                   className="img-fluid"
-                  src={url === '/listings' ? StoreActiveLogo : StoreLogo}
+                  src={
+                    url === '/listings' || url.includes('/product') ? StoreActiveLogo : StoreLogo
+                  }
                   alt="Home"
                   title="Home"
                 />
@@ -104,10 +104,24 @@ class Sidebar extends Component {
               </Link>
             </li>
             {/* <li>
-                        { (!this.props.isAuthentication) ? <Link to="#" onClick={(path) => this.authRedirectHandler('/store')}><img className="img-fluid" src={StoreLogo} alt="Home" title="Home"/><span>My Store</span></Link> :
-                        <Link to="/store"><img className="img-fluid" src={StoreLogo} alt="Home" title="Home"/><span>My Store</span></Link> }
-                    </li>
-                    <li><Link to="/group"><img className="img-fluid" src={GroupLogo} alt="Home" title="Home"/><span>Group</span></Link></li> */}
+              {!this.props.isAuthentication ? (
+                <Link to="#" onClick={(path) => this.authRedirectHandler('/store')}>
+                  <img className="img-fluid" src={StoreLogo} alt="Home" title="Home" />
+                  <span>My Store</span>
+                </Link>
+              ) : (
+                <Link to="/store">
+                  <img className="img-fluid" src={StoreLogo} alt="Home" title="Home" />
+                  <span>My Store</span>
+                </Link>
+              )}
+            </li>
+            <li>
+              <Link to="/group">
+                <img className="img-fluid" src={GroupLogo} alt="Home" title="Home" />
+                <span>Group</span>
+              </Link>
+            </li> */}
           </ul>
           <br />
         </div>

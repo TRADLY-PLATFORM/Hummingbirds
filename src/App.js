@@ -52,7 +52,7 @@ class App extends Component {
         <Route path="/product-details/:id/:name" exact component={ProductDetails} />
         <Route path="/store" exact component={Store} />
         <Route path="/create-store" exact component={CreateStore} />
-        <Route path="/store-details/:id" exact component={StoreDetails} />
+        <Route path="/store-details/:id/:name" exact component={StoreDetails} />
         <Route path="/all-categories" exact component={AllCategory} />
         <Route path="/wishlist" exact component={WishList} />
         <Route path="/my-transaction" exact component={MyTransactionst} />
