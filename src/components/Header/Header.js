@@ -7,7 +7,7 @@ import CartImage from '../../assets/images/header/cart.svg';
 // import Skeleton from '../UI/Skeleton/Skeleton';
 const header = (props) => {
   const { userData } = props;
-  console.log('userData', userData);
+  console.log(' ', userData);
   function getUserName() {
     return userData.get('first_name', 'Guests') + ' ' + userData.get('last_name', '');
   }
@@ -63,13 +63,13 @@ const header = (props) => {
           </div>
 
           <div className={classes.cartArea}>
-            <Link to="/cart">
+            {/* <Link to="/cart">
               <div>
                 <img className={classes.cartImage} src={CartImage} alt="Cart" />
                 <span className={classes.countCart}>0</span>
-                {/* <span className={ classes.cartName}>Cart</span> */}
+                <span className={ classes.cartName}>Cart</span>
               </div>
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>

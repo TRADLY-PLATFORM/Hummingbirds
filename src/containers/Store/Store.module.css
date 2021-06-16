@@ -188,3 +188,11 @@
 
   color: #13b58c;
 }
+
+.bannerDescText {
+  background: #ffffff;
+  box-shadow: 0px 0px 20px rgb(0 0 0 / 5%);
+  border-radius: 10px;
+  padding: 20px 0px;
+  margin-top: 1em;
+}
