@@ -262,11 +262,14 @@ class ProductDetails extends Component {
 
               <br />
               <button type="button" className="btn btn-addtocart btn-lg btn-block height70">
+                Download App
+              </button>
+              {/* <button type="button" className="btn btn-addtocart btn-lg btn-block height70">
                 Add To Cart
               </button>
               <button type="button" className="btn btn-success btn-lg btn-block height70">
                 Buy Now
-              </button>
+              </button> */}
               <br />
               <br />
             </div>

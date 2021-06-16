@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
+import { List } from 'immutable';
 
 import { connect } from 'react-redux';
 import classes from './Store.module.css';
@@ -10,7 +11,9 @@ import StoreBanner from '../../assets/images/store/store.svg';
 import Backdrop from '../../components/UI/Backdrop/Backdrop';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import * as actions from '../../store/actions/index';
-import Skeleton from '../../components/UI/Skeleton/Skeleton';
+import Maps from '../../components/UI/Maps/Maps';
+import Modal from '../../components/UI/Modal/Modal';
+
 import { selectStoreDetails } from '../../store/selectors/store';
 class StoreDetails extends Component {
   constructor(props) {
@@ -23,6 +26,7 @@ class StoreDetails extends Component {
     this.state = {
       storeId: id,
       storeName: name,
+      maps: false,
     };
   }
 
@@ -30,6 +34,24 @@ class StoreDetails extends Component {
     const { storeId } = this.state;
     this.props.onInitStoreDetails(storeId);
   }
+
+  showMaps = () => {
+    this.setState({ maps: true });
+  };
+  closeMaps = () => {
+    this.setState({ maps: false });
+  };
+
+  getCategory = () => {
+    const { storeDetails } = this.props;
+    if (storeDetails.get('categories', List()).size > 0) {
+      return storeDetails
+        .get('categories', List())
+        .map((item) => item.get('name'))
+        .join(', ');
+    }
+    return '';
+  };
 
   render() {
     const { storeDetails } = this.props;
@@ -72,6 +94,50 @@ class StoreDetails extends Component {
                   <button className="btnGreenStyle pull-right mt-4">Follow</button>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="container-fluid">
+          <div className={classes.bannerDescText + ' row'}>
+            <div className="col-lg-12 mb1">
+              <div className="col-lg-3">
+                Descriptions <span className="float-right">:</span>
+              </div>
+              <div className="col-lg-9">{storeDetails.get('description', '')}</div>
+            </div>
+            <div className="col-lg-12 mb1">
+              <div className="col-lg-3">
+                categories <span className="float-right">:</span>
+              </div>
+              <div className="col-lg-9">{this.getCategory()}</div>
+            </div>
+            <div className="col-lg-12 mb1">
+              <div className="col-lg-3">
+                Location <span className="float-right">:</span>
+              </div>
+              <div className="col-lg-9">
+                {storeDetails.getIn(['location', 'formatted_address'], 'N/A')}
+                <button
+                  type="button"
+                  className="btn btn-outline-success float-right"
+                  onClick={this.showMaps}
+                >
+                  Get Direction
+                </button>
+              </div>
+            </div>
+            <div className="col-lg-12 mb1">
+              <div className="col-lg-3">
+                Total Followers <span className="float-right">:</span>
+              </div>
+              <div className="col-lg-9">{storeDetails.get('total_followers', '')}</div>
+            </div>
+            <div className="col-lg-12 mb1">
+              <div className="col-lg-3">
+                Total Listings <span className="float-right">:</span>
+              </div>
+              <div className="col-lg-9">{storeDetails.get('total_listings', '')}</div>
             </div>
           </div>
         </div>
@@ -189,6 +255,13 @@ class StoreDetails extends Component {
         <Backdrop show={this.props.loading} />
         <Spinner show={this.props.loading} />
         {storeContent}
+        <Modal show={this.state.maps} modalClosed={this.closeMaps}>
+          <Maps
+            lat={storeDetails.getIn(['coordinates', 'latitude'], '')}
+            lng={storeDetails.getIn(['coordinates', 'longitude'], '')}
+          />
+        </Modal>
+
         <br />
         <br />
         <br />

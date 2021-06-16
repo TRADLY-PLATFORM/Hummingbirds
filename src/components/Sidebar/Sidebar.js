@@ -35,7 +35,7 @@ class Sidebar extends Component {
     let url = location.pathname;
     //let search = window.location.search;
     //let params = new URLSearchParams(search);
-
+    console.log('url', url);
     return (
       <Aux>
         {redirectUrl}
@@ -57,11 +57,19 @@ class Sidebar extends Component {
             </Link>
           </div>
           <ul className="nav nav-pills nav-stacked">
-            <li className={url === '/' || url === '/home' ? 'active' : ''}>
+            <li
+              className={
+                url === '/' || url === '/home' || url.indexOf('/store-details') > -1 ? 'active' : ''
+              }
+            >
               <Link to="/home">
                 <img
                   className="img-fluid"
-                  src={url === '/' || url === '/home' ? HomeActiveLogo : HomeLogo}
+                  src={
+                    url === '/' || url === '/home' || url.indexOf('/store-details') > -1
+                      ? HomeActiveLogo
+                      : HomeLogo
+                  }
                   alt="Home"
                   title="Home"
                 />
@@ -92,7 +100,7 @@ class Sidebar extends Component {
                 <span>Listings</span>
               </Link>
             </li>
-            <li className={url === '/my-transaction' ? 'active' : ''}>
+            {/* <li className={url === '/my-transaction' ? 'active' : ''}>
               <Link to="/my-transaction">
                 <img
                   className="img-fluid"
@@ -102,7 +110,7 @@ class Sidebar extends Component {
                 />
                 <span>My Transaction</span>
               </Link>
-            </li>
+            </li> */}
             {/* <li>
               {!this.props.isAuthentication ? (
                 <Link to="#" onClick={(path) => this.authRedirectHandler('/store')}>
