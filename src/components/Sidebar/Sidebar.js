@@ -11,7 +11,7 @@ import TransactionLogo from '../../assets/images/sidebar/transaction.svg';
 import TransactionActiveLogo from '../../assets/images/sidebar/active/transaction.svg';
 import StoreLogo from '../../assets/images/sidebar/store.svg';
 import StoreActiveLogo from '../../assets/images/sidebar/active/store.svg';
-import GroupLogo from '../../assets/images/sidebar/group.svg';
+//import GroupLogo from '../../assets/images/sidebar/group.svg';
 import * as actions from '../../store/actions/index';
 
 class Sidebar extends Component {
