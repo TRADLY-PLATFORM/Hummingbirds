@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
+import { Link } from 'react-router-dom';
 import { List } from 'immutable';
-
 import { connect } from 'react-redux';
+
 import classes from './Store.module.css';
 import AllenSollyLogo from '../../assets/images/home/store/allenSolly.svg';
-import StoreLogo from '../../assets/images/home/store/store1.svg';
-import StoreLogo2 from '../../assets/images/home/store/store2.svg';
 import StoreBanner from '../../assets/images/store/store.svg';
 import Backdrop from '../../components/UI/Backdrop/Backdrop';
 import Spinner from '../../components/UI/Spinner/Spinner';
@@ -14,8 +13,10 @@ import * as actions from '../../store/actions/index';
 
 import Maps from '../../components/UI/Maps/Maps';
 import Modal from '../../components/UI/Modal/Modal';
-
 import { selectStoreDetails } from '../../store/selectors/store';
+import { totalCountOfProducts } from '../../shared/constants';
+import Listing from '../../components/Listing/Listing';
+import { selectListings, selectTotalListings } from '../../store/selectors/product';
 class StoreDetails extends Component {
   constructor(props) {
     super(props);
@@ -34,6 +35,8 @@ class StoreDetails extends Component {
   componentDidMount() {
     const { storeId } = this.state;
     this.props.onInitStoreDetails(storeId);
+    const filter = '&account_id=' + storeId;
+    this.props.onInitListings(0, filter, totalCountOfProducts);
   }
 
   showMaps = () => {
@@ -55,15 +58,41 @@ class StoreDetails extends Component {
   };
 
   render() {
-    const { storeDetails } = this.props;
-    console.log('storeDetails', storeDetails);
+    const { storeDetails, listings, total_records, loading } = this.props;
+    let listing = '';
+    let showLoadButton = null;
     let storeContent = null;
-
     let storeName = storeDetails.get('name', '');
     let storeOwner =
       storeDetails.getIn(['user', 'first_name'], '') +
       ' ' +
       storeDetails.getIn(['user', 'last_name'], '');
+    if (listings && listings.size === 0 && !loading) {
+      listing = (
+        <div style={{ marginTop: '5em' }} className="alert alert-danger fade in alert-dismissible">
+          <Link to="#" className="close" data-dismiss="alert" aria-label="close" title="close">
+            ×
+          </Link>
+          <strong>oops!</strong> No listings found.
+        </div>
+      );
+    }
+    if (listings && listings.size > 0) {
+      listing = <Listing listings={listings} total_records={total_records} />;
+      if (total_records > totalCountOfProducts && listings.size !== total_records) {
+        showLoadButton = (
+          <div className="col-sm-12">
+            <button
+              className="btnGreenStyle pull-right mt-4"
+              onClick={this.loadMore}
+              style={{ marginBottom: '50px' }}
+            >
+              Load More
+            </button>
+          </div>
+        );
+      }
+    }
 
     storeContent = (
       <Aux>
@@ -142,112 +171,7 @@ class StoreDetails extends Component {
             </div>
           </div>
         </div>
-
-        <div class="container-fluid mt-5">
-          <div className="row">
-            <div class={'col-md-5th-1 col-sm-4 col-md-offset-0 col-sm-offset-2 '}>
-              <div className={classes.latestTrend}>
-                <img
-                  src={StoreLogo}
-                  className={classes.storeImage}
-                  alt="Woman accesories"
-                  title="Woman accesories"
-                />
-                <p>White Full Slive Top</p>
-                <div className={classes.bottomDesc}>
-                  <img src={AllenSollyLogo} alt="Woman accesories" title="Woman accesories" />{' '}
-                  <span>Rahul</span>
-                  <div className={classes.amountTitle}>$25</div>
-                </div>
-              </div>
-            </div>
-            <div class={'col-md-5th-1 col-sm-4'}>
-              <div className={classes.latestTrend}>
-                <img
-                  src={StoreLogo2}
-                  className={classes.storeImage}
-                  alt="Woman accesories"
-                  title="Woman accesories"
-                />
-                <p>White Full Slive Top</p>
-                <div className={classes.bottomDesc}>
-                  <img src={AllenSollyLogo} alt="Woman accesories" title="Woman accesories" />{' '}
-                  <span>Rahul</span>
-                  <div className={classes.amountTitle}>$25</div>
-                </div>
-              </div>
-            </div>
-            <div class={'col-md-5th-1 col-sm-4'}>
-              <div className={classes.latestTrend}>
-                <img
-                  src={StoreLogo}
-                  className={classes.storeImage}
-                  alt="Woman accesories"
-                  title="Woman accesories"
-                />
-                <p>White Full Slive Top</p>
-                <div className={classes.bottomDesc}>
-                  <img src={AllenSollyLogo} alt="Woman accesories" title="Woman accesories" />{' '}
-                  <span>Rahul</span>
-                  <div className={classes.amountTitle}>$25</div>
-                </div>
-              </div>
-            </div>
-            <div class={'col-md-5th-1 col-sm-4'}>
-              <div className={classes.latestTrend}>
-                <img
-                  src={StoreLogo2}
-                  className={classes.storeImage}
-                  alt="Woman accesories"
-                  title="Woman accesories"
-                />
-                <p>White Full Slive Top</p>
-                <div className={classes.bottomDesc}>
-                  <img src={AllenSollyLogo} alt="Woman accesories" title="Woman accesories" />{' '}
-                  <span>Rahul</span>
-                  <div className={classes.amountTitle}>$25</div>
-                </div>
-              </div>
-            </div>
-            <div class={'col-md-5th-1 col-sm-4 '}>
-              <div className={classes.latestTrend}>
-                <img
-                  src={StoreLogo}
-                  className={classes.storeImage}
-                  alt="Woman accesories"
-                  title="Woman accesories"
-                />
-                <p>White Full Slive Top</p>
-                <div className={classes.bottomDesc}>
-                  <img src={AllenSollyLogo} alt="Woman accesories" title="Woman accesories" />{' '}
-                  <span>Rahul</span>
-                  <div className={classes.amountTitle}>$25</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="container-fluid mt-5">
-          <div className="row">
-            <div class={'col-md-5th-1 col-sm-4 col-md-offset-0 col-sm-offset-2 '}>
-              <div className={classes.latestTrend}>
-                <img
-                  src={StoreLogo}
-                  className={classes.storeImage}
-                  alt="Woman accesories"
-                  title="Woman accesories"
-                />
-                <p>White Full Slive Top</p>
-                <div className={classes.bottomDesc}>
-                  <img src={AllenSollyLogo} alt="Woman accesories" title="Woman accesories" />{' '}
-                  <span>Rahul</span>
-                  <div className={classes.amountTitle}>$25</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        {listing}
       </Aux>
     );
 
@@ -279,12 +203,16 @@ const mapStateToProps = (state) => {
     isAuthentication: state.auth.token !== null,
     userId: state.auth.userId,
     token: state.auth.token,
+    total_records: selectTotalListings(state),
+    listings: selectListings(state),
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onInitStoreDetails: (id) => dispatch(actions.initStoreDetails(id)),
+    onInitListings: (count, filterValue, totalCountOfProducts) =>
+      dispatch(actions.initListings(count, filterValue, totalCountOfProducts)),
   };
 };
 
