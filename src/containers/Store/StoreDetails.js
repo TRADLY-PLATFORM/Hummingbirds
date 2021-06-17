@@ -10,6 +10,7 @@ import StoreBanner from '../../assets/images/store/store.svg';
 import Backdrop from '../../components/UI/Backdrop/Backdrop';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import * as actions from '../../store/actions/index';
+
 import Maps from '../../components/UI/Maps/Maps';
 import Modal from '../../components/UI/Modal/Modal';
 import { selectStoreDetails } from '../../store/selectors/store';
