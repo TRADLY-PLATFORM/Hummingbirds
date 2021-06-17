@@ -12,4 +12,12 @@ const selectSupplierLists = createSelector(productDetails, (state) =>
   fromJS(state.supplierLists || [])
 );
 const selectListings = createSelector(productDetails, (state) => fromJS(state.listings || []));
-export { selectProductDetails, selectCategoryLists, selectSupplierLists, selectListings };
+const selectTotalListings = createSelector(productDetails, (state) => state.total_records || 0);
+
+export {
+  selectProductDetails,
+  selectCategoryLists,
+  selectSupplierLists,
+  selectListings,
+  selectTotalListings,
+};
