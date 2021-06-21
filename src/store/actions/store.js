@@ -122,3 +122,39 @@ export const CreateStore = (store, token) => {
       });
   };
 };
+
+export const postStoreFollowFailed = () => {
+  return {
+    type: actionTypes.POST_STORE_FOLLOW_FAILED,
+  };
+};
+
+export const postStoreFollowRequest = () => {
+  return {
+    type: actionTypes.POST_STORE_FOLLOW_REQUEST,
+  };
+};
+
+export const postStoreFollowSuccess = () => {
+  return {
+    type: actionTypes.POST_STORE_FOLLOW_SUCCESS,
+  };
+};
+
+export const postStoreFollow = (storeId) => {
+  return (dispatch) => {
+    dispatch(postStoreFollowRequest());
+    axios
+      .post(`/v1/accounts/${storeId}/follow`, {})
+      .then((response) => {
+        if (response.data.status) {
+          dispatch(postStoreFollowSuccess());
+        } else {
+          dispatch(postStoreFollowFailed());
+        }
+      })
+      .catch((error) => {
+        dispatch(postStoreFollowFailed());
+      });
+  };
+};
