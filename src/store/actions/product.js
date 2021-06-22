@@ -152,3 +152,42 @@ export const initSupplierLists = () => {
       });
   };
 };
+
+export const fetchProductLikeDisLike = (productDetails) => {
+  return {
+    type: actionTypes.FAILED_PRODUCT_LIKE_DISLIKE,
+    productDetails: productDetails,
+  };
+};
+
+export const setProductLikeDisLike = (message) => {
+  return {
+    type: actionTypes.SET_PRODUCT_LIKE_DISLIKE,
+    message: message,
+  };
+};
+
+export const startProductLikeDisLike = () => {
+  return {
+    type: actionTypes.START_PRODUCT_LIKE_DISLIKE,
+  };
+};
+
+export const onProductLikeDisLike = (id) => {
+  return (dispatch) => {
+    dispatch(startProductLikeDisLike());
+    axios
+      .post('/products/v1/listings/' + id + '/likes')
+      .then((response) => {
+        console.log('response', response);
+        if (response.data.status) {
+          dispatch(setProductLikeDisLike('Product Liked Successfully'));
+        } else {
+          dispatch(fetchProductLikeDisLike());
+        }
+      })
+      .catch((error) => {
+        dispatch(fetchProductLikeDisLike());
+      });
+  };
+};

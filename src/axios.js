@@ -17,6 +17,10 @@ instance.interceptors.request.use(
     if (token) {
       config.headers['Authorization'] = 'Bearer ' + token;
     }
+    const authKey = LocalStorageService.getAccessToken();
+    if (authKey) {
+      config.headers['X-Auth-Key'] = authKey;
+    }
     return config;
   },
   (error) => {
