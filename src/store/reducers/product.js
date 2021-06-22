@@ -91,6 +91,24 @@ const fetchSupplierListsFailed = (state, action) => {
   return updateObject(state, { loading: false, error: true, message: 'Could not fetch result.' });
 };
 
+const startProductLikeDisLike = (state, action) => {
+  return updateObject(state, {
+    loading: true,
+  });
+};
+
+const setProductLikeDisLike = (state, action) => {
+  return updateObject(state, {
+    loading: false,
+    error: false,
+    message: action.message,
+  });
+};
+
+const fetchProductLikeDisLike = (state, action) => {
+  return updateObject(state, { loading: false, error: true, message: 'Could not fetch result.' });
+};
+
 const productReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.INIT_PRODUCT_DETAILS:
@@ -117,6 +135,12 @@ const productReducer = (state = initialState, action) => {
       return fetchSupplierListsFailed(state, action);
     case actionTypes.INIT_SUPPLIER_LISTS:
       return startSupplierLists(state, action);
+    case actionTypes.START_PRODUCT_LIKE_DISLIKE:
+      return startProductLikeDisLike(state, action);
+    case actionTypes.SET_PRODUCT_LIKE_DISLIKE:
+      return setProductLikeDisLike(state, action);
+    case actionTypes.FAILED_PRODUCT_LIKE_DISLIKE:
+      return fetchProductLikeDisLike(state, action);
     default:
       return state;
   }

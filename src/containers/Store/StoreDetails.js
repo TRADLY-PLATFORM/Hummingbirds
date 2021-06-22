@@ -57,6 +57,12 @@ class StoreDetails extends Component {
     return '';
   };
 
+  postStoreFollow = () => {
+    const { storeDetails } = this.props;
+    const storeId = storeDetails.get('id');
+    this.props.postStoreFollow(storeId);
+  };
+
   render() {
     const { storeDetails, listings, total_records, loading } = this.props;
     let listing = '';
@@ -121,7 +127,9 @@ class StoreDetails extends Component {
                   <p>@{storeOwner}</p>
                 </div>
                 <div className="col-sm-6">
-                  <button className="btnGreenStyle pull-right mt-4">Follow</button>
+                  <button className="btnGreenStyle pull-right mt-4" onClick={this.postStoreFollow}>
+                    Follow
+                  </button>
                 </div>
               </div>
             </div>
@@ -213,6 +221,7 @@ const mapDispatchToProps = (dispatch) => {
     onInitStoreDetails: (id) => dispatch(actions.initStoreDetails(id)),
     onInitListings: (count, filterValue, totalCountOfProducts) =>
       dispatch(actions.initListings(count, filterValue, totalCountOfProducts)),
+    postStoreFollow: (storeId) => dispatch(actions.postStoreFollow(storeId)),
   };
 };
 
