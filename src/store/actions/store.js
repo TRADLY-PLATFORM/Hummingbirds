@@ -1,6 +1,5 @@
 import * as actionTypes from './actionTypes';
 import axios from '../../axios';
-import { ACCESS_TOKEN } from '../../shared/utility';
 
 export const setStoreDetails = (storeDetails) => {
   return {
@@ -57,20 +56,14 @@ export const initStoreLists = () => {
   };
 };
 
-export const userStoreLists = (userId, authKey) => {
+export const userStoreLists = (userId) => {
   return (dispatch) => {
     dispatch(initStoreLists());
     axios
-      .get('/v1/stores?page=1&user_id=' + userId, {
-        headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('tenant_key') ?? ACCESS_TOKEN,
-          'X-Auth_key': authKey,
-        },
-      })
+      .get('/v1/accounts?page=1&type=accounts&user_id=' + userId)
       .then((response) => {
-        console.log(response.data.data);
         if (response.data.status) {
-          dispatch(setStoreLists(response.data.data.stores));
+          dispatch(setStoreLists(response.data.data.accounts));
         } else {
           dispatch(fetchStoreListsFailed());
         }
@@ -99,20 +92,15 @@ export const createStoreSuccess = () => {
   };
 };
 
-export const CreateStore = (store, token) => {
-  console.log(store);
+export const CreateStore = (store, callBack) => {
   return (dispatch) => {
     dispatch(initCreateStore());
     axios
-      .post('/v1/stores', store, {
-        headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('tenant_key') ?? ACCESS_TOKEN,
-          'X-Auth-Key': token,
-        },
-      })
+      .post('/v1/accounts', store)
       .then((response) => {
         if (response.data.status) {
           dispatch(createStoreSuccess());
+          callBack && callBack();
         } else {
           dispatch(createStoreFailed());
         }

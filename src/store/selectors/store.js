@@ -7,4 +7,6 @@ const selectStoreDetails = createSelector(storeDetails, (state) =>
   fromJS(state.storeDetails || {})
 );
 
-export { selectStoreDetails };
+const selectStoreLists = createSelector(storeDetails, (state) => fromJS(state.storeLists || {}));
+
+export { selectStoreDetails, selectStoreLists };
