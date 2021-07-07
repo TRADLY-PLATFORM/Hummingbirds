@@ -33,6 +33,7 @@ import withProduct from './containers/Store/withProduct';
 import addProduct from './containers/Store/addProduct';
 import reviewPage from './containers/Order/reviewPage';
 import detailOrder from './containers/Order/detailOrder';
+import { selectUserId } from './store/selectors/auth';
 
 class App extends Component {
   componentDidMount() {
@@ -41,6 +42,7 @@ class App extends Component {
   }
 
   render() {
+    const { isAuthenticated } = this.props;
     let routes = (
       <Switch>
         <Route path="/sign-up" exact component={SignUp} />
@@ -65,7 +67,7 @@ class App extends Component {
         <Route path="/groupsuccess" excat component={groupSuccess} />
         <Route path="/transactionsuccess" excat component={transactionSuccess} />
         <Route path="/myorder" excat component={myOrder} />
-        <Route path="/storesuccess" excat component={StoreSuccess} />
+        {isAuthenticated && <Route path="/storesuccess" excat component={StoreSuccess} />}
         <Route path="/productsuccess" excat component={ProductSuccess} />
         <Route path="/noproduct" excat component={NoProduct} />
         <Route path="/withproduct" excat component={withProduct} />
@@ -92,6 +94,7 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    isAuthenticated: selectUserId(state),
     verifyId: state.auth.verify_id,
   };
 };
