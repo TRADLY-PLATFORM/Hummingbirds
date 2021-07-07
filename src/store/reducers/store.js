@@ -66,6 +66,25 @@ const createStoreSuccess = (state, action) => {
   });
 };
 
+const postStoreFollowRequest = (state, action) => {
+  return updateObject(state, {
+    loading: true,
+  });
+};
+
+const postStoreFollowFailed = (state, action) => {
+  return updateObject(state, {
+    loading: false,
+    error: action.error,
+  });
+};
+
+const postStoreFollowSuccess = (state, action) => {
+  return updateObject(state, {
+    loading: false,
+  });
+};
+
 const storeReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.INIT_STORE_DETAILS:
@@ -88,6 +107,13 @@ const storeReducer = (state = initialState, action) => {
       return createStoreFailed(state, action);
     case actionTypes.CREATE_STORE_SUCCESS:
       return createStoreSuccess(state, action);
+
+    case actionTypes.POST_STORE_FOLLOW_REQUEST:
+      return postStoreFollowRequest(state, action);
+    case actionTypes.POST_STORE_FOLLOW_SUCCESS:
+      return postStoreFollowSuccess(state, action);
+    case actionTypes.POST_STORE_FOLLOW_FAILED:
+      return postStoreFollowFailed(state, action);
 
     default:
       return state;

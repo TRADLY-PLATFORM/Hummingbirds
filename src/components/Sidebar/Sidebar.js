@@ -7,13 +7,13 @@ import HomeLogo from '../../assets/images/sidebar/home.svg';
 import HomeActiveLogo from '../../assets/images/sidebar/active/home.svg';
 import WishlistLogo from '../../assets/images/sidebar/wishlist.svg';
 import WishlistActiveLogo from '../../assets/images/sidebar/active/wishlist.svg';
-import TransactionLogo from '../../assets/images/sidebar/transaction.svg';
-import TransactionActiveLogo from '../../assets/images/sidebar/active/transaction.svg';
+//import TransactionLogo from '../../assets/images/sidebar/transaction.svg';
+//import TransactionActiveLogo from '../../assets/images/sidebar/active/transaction.svg';
 import StoreLogo from '../../assets/images/sidebar/store.svg';
 import StoreActiveLogo from '../../assets/images/sidebar/active/store.svg';
 //import GroupLogo from '../../assets/images/sidebar/group.svg';
 import * as actions from '../../store/actions/index';
-
+import { selectUserId } from '../../store/selectors/auth';
 class Sidebar extends Component {
   state = {
     redirect: false,
@@ -25,7 +25,7 @@ class Sidebar extends Component {
   };
 
   render() {
-    const { tenantData, location } = this.props;
+    const { tenantData, location, isAuthenticated } = this.props;
     let appLogo = tenantData.get('logo_path', '');
     let redirectUrl = null;
     if (this.state.redirect) {
@@ -35,7 +35,7 @@ class Sidebar extends Component {
     let url = location.pathname;
     //let search = window.location.search;
     //let params = new URLSearchParams(search);
-
+    console.log('url', url);
     return (
       <Aux>
         {redirectUrl}
@@ -92,7 +92,7 @@ class Sidebar extends Component {
                 <span>Listings</span>
               </Link>
             </li>
-            <li className={url === '/my-transaction' ? 'active' : ''}>
+            {/* <li className={url === '/my-transaction' ? 'active' : ''}>
               <Link to="/my-transaction">
                 <img
                   className="img-fluid"
@@ -102,21 +102,42 @@ class Sidebar extends Component {
                 />
                 <span>My Transaction</span>
               </Link>
-            </li>
-            {/* <li>
-              {!this.props.isAuthentication ? (
+            </li> */}
+            <li
+              className={
+                url === '/store' ||
+                url === '/create-store' ||
+                url.indexOf('/store-details') > -1 ||
+                url.indexOf('/storesuccess') > -1
+                  ? 'active'
+                  : ''
+              }
+            >
+              {!isAuthenticated ? (
                 <Link to="#" onClick={(path) => this.authRedirectHandler('/store')}>
                   <img className="img-fluid" src={StoreLogo} alt="Home" title="Home" />
                   <span>My Store</span>
                 </Link>
               ) : (
                 <Link to="/store">
-                  <img className="img-fluid" src={StoreLogo} alt="Home" title="Home" />
+                  <img
+                    className="img-fluid"
+                    src={
+                      url === '/store' ||
+                      url === '/create-store' ||
+                      url.indexOf('/store-details') > -1 ||
+                      url.indexOf('/storesuccess') > -1
+                        ? StoreActiveLogo
+                        : StoreLogo
+                    }
+                    alt="Home"
+                    title="Home"
+                  />
                   <span>My Store</span>
                 </Link>
               )}
             </li>
-            <li>
+            {/* <li>
               <Link to="/group">
                 <img className="img-fluid" src={GroupLogo} alt="Home" title="Home" />
                 <span>Group</span>
@@ -137,4 +158,10 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(withRouter(Sidebar));
+const mapStateToProps = (state) => {
+  return {
+    isAuthenticated: selectUserId(state),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Sidebar));

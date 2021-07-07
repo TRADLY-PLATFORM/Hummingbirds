@@ -10,7 +10,7 @@
     "axios": "^0.21.1",
     "google-map-react": "^1.1.7",
     "immutable": "^4.0.0-rc.12",
-    "node-sass": "^4.13.1",
+    "node-sass": "^4.14.1",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-items-carousel": "^2.8.0",
@@ -25,7 +25,11 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
-    "uuidv4": "^6.0.7"
+    "uuidv4": "^6.0.7",
+    "http": "0.0.0",
+    "paralleljs": "^0.2.1",
+    "puppeteer": "^1.14.0",
+    "underscore": "^1.12.1"
   },
   "scripts": {
     "start:development": "env-cmd -f .env.development react-scripts start",
@@ -37,7 +41,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "sitemap": "node server.js"
   },
   "browserslist": {
     "production": [

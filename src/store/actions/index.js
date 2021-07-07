@@ -10,8 +10,14 @@ export {
 
 export { initHomeCollections } from './home';
 
-export { initProductDetails, initListings, initCategoryLists, initSupplierLists } from './product';
+export {
+  initProductDetails,
+  initListings,
+  initCategoryLists,
+  initSupplierLists,
+  onProductLikeDisLike,
+} from './product';
 
-export { initStoreDetails, userStoreLists, CreateStore } from './store';
+export { initStoreDetails, userStoreLists, CreateStore, postStoreFollow } from './store';
 
 export { initGroupDetails, CreateGroup } from './group';

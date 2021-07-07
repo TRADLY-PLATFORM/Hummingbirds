@@ -14,6 +14,7 @@ import {
   selectCategoryLists,
   selectSupplierLists,
   selectListings,
+  selectTotalListings,
 } from '../../store/selectors/product';
 class Listings extends Component {
   state = {
@@ -123,6 +124,7 @@ class Listings extends Component {
     let listing = '';
     let showLoadButton = null;
     const { listings, total_records, loading } = this.props;
+    console.log('total_records', total_records);
     const { selectedOption } = this.state;
     const { categoryValue, supplierValue, locationValue } = selectedOption;
     const productsListing = listings
@@ -208,7 +210,7 @@ const mapStateToProps = (state) => {
     message: state.product.message,
     listings: selectListings(state),
     page: state.product.page,
-    total_records: state.product.total_records,
+    total_records: selectTotalListings(state),
     categoryLists: selectCategoryLists(state),
     supplierLists: selectSupplierLists(state),
   };

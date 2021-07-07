@@ -12,7 +12,7 @@ import classes from './ProductDetails.module.css';
 import ArrowLogo from '../../assets/images/products/arrow.svg';
 import * as actions from '../../store/actions/index';
 import { selectProductDetails } from '../../store/selectors/product';
-
+import { selectUserId } from '../../store/selectors/auth';
 import Maps from '../../components/UI/Maps/Maps';
 
 class ProductDetails extends Component {
@@ -171,13 +171,20 @@ class ProductDetails extends Component {
     return '';
   };
 
+  productLike = () => {
+    const { productDetails } = this.props;
+    const productId = productDetails.getIn(['listing', 'id'], '');
+    console.log('productDetails', productDetails, productId);
+    this.props.onProductLikeDisLike(productId);
+  };
+
   render() {
-    const { error, productDetails, message } = this.props;
+    const { error, productDetails, message, isAuthenticated } = this.props;
     let toastMessage = null;
     if (error) {
       toastMessage = <Toast type="error" message={message} />;
     }
-    console.log('productDetails', productDetails);
+    console.log('isAuthenticated', isAuthenticated);
 
     return (
       <Aux>
@@ -227,6 +234,11 @@ class ProductDetails extends Component {
                 </div>
                 <div className="col-sm-6">
                   <button className="btnGreenStyle pull-right">Follow</button>
+                  {isAuthenticated !== '' && (
+                    <button onClick={this.productLike} className="btnGreenStyle pull-right  mr-10">
+                      Like
+                    </button>
+                  )}
                 </div>
               </div>
               <hr />
@@ -262,11 +274,14 @@ class ProductDetails extends Component {
 
               <br />
               <button type="button" className="btn btn-addtocart btn-lg btn-block height70">
+                Download App
+              </button>
+              {/* <button type="button" className="btn btn-addtocart btn-lg btn-block height70">
                 Add To Cart
               </button>
               <button type="button" className="btn btn-success btn-lg btn-block height70">
                 Buy Now
-              </button>
+              </button> */}
               <br />
               <br />
             </div>
@@ -286,12 +301,14 @@ const mapStateToProps = (state) => {
     loading: state.product.loading,
     message: state.product.message,
     productDetails: selectProductDetails(state),
+    isAuthenticated: selectUserId(state),
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onInitProductDetails: (id) => dispatch(actions.initProductDetails(id)),
+    onProductLikeDisLike: (id) => dispatch(actions.onProductLikeDisLike(id)),
   };
 };
 
