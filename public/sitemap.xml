@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+<url> <loc>http://localhost:3000/</loc> </url>
+<url> <loc>http://localhost:3000/sign-up</loc> </url>
+<url> <loc>http://localhost:3000/sign-in</loc> </url>
+<url> <loc>http://localhost:3000/logout</loc> </url>
+<url> <loc>http://localhost:3000/listings</loc> </url>
+<url> <loc>http://localhost:3000/verification/:verifyID</loc> </url>
+<url> <loc>http://localhost:3000/</loc> </url>
+<url> <loc>http://localhost:3000/product-details/:id/:name</loc> </url>
+<url> <loc>http://localhost:3000/store</loc> </url>
+<url> <loc>http://localhost:3000/create-store</loc> </url>
+<url> <loc>http://localhost:3000/store-details/:id/:name</loc> </url>
+<url> <loc>http://localhost:3000/all-categories</loc> </url>
+<url> <loc>http://localhost:3000/wishlist</loc> </url>
+<url> <loc>http://localhost:3000/my-transaction</loc> </url>
+<url> <loc>http://localhost:3000/profile</loc> </url>
+<url> <loc>http://localhost:3000/cart</loc> </url>
+<url> <loc>http://localhost:3000/editprofile</loc> </url>
+<url> <loc>http://localhost:3000/group</loc> </url>
+<url> <loc>http://localhost:3000/mygroup</loc> </url>
+<url> <loc>http://localhost:3000/groupadded</loc> </url>
+<url> <loc>http://localhost:3000/groupsuccess</loc> </url>
+<url> <loc>http://localhost:3000/transactionsuccess</loc> </url>
+<url> <loc>http://localhost:3000/myorder</loc> </url>
+<url> <loc>http://localhost:3000/storesuccess</loc> </url>
+<url> <loc>http://localhost:3000/productsuccess</loc> </url>
+<url> <loc>http://localhost:3000/noproduct</loc> </url>
+<url> <loc>http://localhost:3000/withproduct</loc> </url>
+<url> <loc>http://localhost:3000/addproduct</loc> </url>
+<url> <loc>http://localhost:3000/reviewpage</loc> </url>
+<url> <loc>http://localhost:3000/detailorder</loc> </url>
+</urlset>

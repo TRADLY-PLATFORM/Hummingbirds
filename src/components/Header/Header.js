@@ -3,7 +3,7 @@ import Aux from '../../hoc/Auxiliary/Auxiliary';
 import { Link } from 'react-router-dom';
 import classes from './Header.module.css';
 import AvatarImage from '../../assets/images/header/avatar.jpg';
-//import CartImage from '../../assets/images/header/cart.svg';
+import CartImage from '../../assets/images/header/cart.svg';
 // import Skeleton from '../UI/Skeleton/Skeleton';
 const header = (props) => {
   const { userData } = props;
