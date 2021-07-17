@@ -89,3 +89,45 @@
     position: relative;
 
 }
+
+.searchResultShowing{
+    top:80px;
+    position: absolute;
+    background-color: #f6f9ff;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+.closeBtn{
+     color: #13b58c;
+     outline: none;
+     border: none;
+     font-size: 25px;
+     padding: 5px 3px;
+ 
+}
+.notFound{
+    background-color: #13b58c;
+    color: rgb(19, 18, 18);
+    text-align: center;
+    width: 40%;
+    padding: 10px;
+    margin: 0 auto;
+    font-size: 20px;
+    border-radius: 10px;
+}
+.find{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.singleResult{
+    width: 25%;
+    padding: 5px;
+    border: 1px solid gray;
+    margin: 10px;
+}
+.singleResult img{
+    width:100%;
+    height: 400px;
+}

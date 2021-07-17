@@ -1,12 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
 import { Link } from 'react-router-dom';
 import classes from './Header.module.css';
 import AvatarImage from '../../assets/images/header/avatar.jpg';
+import { selectCategoryLists } from '../../store/selectors/product';
+import Listings from '../../containers/Listings/Listings';
+import axios from '../../axios';
+ 
 //import CartImage from '../../assets/images/header/cart.svg';
 // import Skeleton from '../UI/Skeleton/Skeleton';
-const header = (props) => {
-  const { userData } = props;
+
+
+const Header = (props) => {
+  const [searchText, setSearchText] = useState('');
+  const [showSearchResult, setShowSearchResult] = useState(false);
+  const [searchResult, setSearchResult] = useState('');
+
+
+  const handleChange = (e) => {
+       setSearchText(e.target.value)
+}
+  const handleKeypress = e => {
+    
+      //it triggers by pressing the enter key
+    if (e.key === "Enter") {
+       
+  axios.get('/products/v1/listings?page=1&search_key='+searchText)
+  .then(function (response) {
+    // handle success
+    setShowSearchResult(true);
+    setSearchResult(response.data.data.listings)
+    console.log(response.data.data.listings);
+  })
+    }
+  };
+
+  const { userData } = props; 
   console.log(' ', userData);
   function getUserName() {
     return userData.get('first_name', 'Guests') + ' ' + userData.get('last_name', '');
@@ -17,11 +46,12 @@ const header = (props) => {
   }
 
   return (
+    <>
     <header className={classes.header}>
       <div className="header-menu">
         <div className="col-sm-6">
           <span className="glyphicon glyphicon-search form-control-feedback"></span>
-          <input type="text" className="form-control input-lg" placeholder="Search Product" />
+          <input type="text" className="form-control input-lg" placeholder="Search Product" onChange={handleChange}  onKeyPress={(e)=>{handleKeypress(e)}}/>
         </div>
 
         <div className="col-sm-6">
@@ -62,7 +92,7 @@ const header = (props) => {
             </div>
           </div>
 
-          <div className={classes.cartArea}>
+          <div className={classes.cartArea} >
             {/* <Link to="/cart">
               <div>
                 <img className={classes.cartImage} src={CartImage} alt="Cart" />
@@ -72,9 +102,36 @@ const header = (props) => {
             </Link> */}
           </div>
         </div>
-      </div>
+        </div>
+        <div className={classes.searchResultShowing} style={{ display: showSearchResult ? "block" : "none" }}>
+          <button className={classes.closeBtn} onClick={()=>setShowSearchResult(false)}><i className="fa fa-arrow-left "></i> back to home</button> 
+          
+          <div >
+            {
+              searchResult.length != 0 ? (
+                <div className={classes.find}>
+                 { searchResult.map((result) => {
+              return (
+                <div className={classes.singleResult}>
+                  <img src={result.images[0]} alt="" />
+                   
+                  <p>{ result.title}</p>
+                </div>
+              )
+              })}
+                </div>
+              ):(<div className={classes.notFound} >
+             Oops!! The product you searched for was not found
+          </div>)
+            }
+          </div>
+        </div>
     </header>
+    </>
   );
 };
 
-export default header;
+export default Header;
+
+
+ 
