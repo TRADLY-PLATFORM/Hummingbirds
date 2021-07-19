@@ -1,0 +1,44 @@
+.paymentOptions {
+  padding: 2rem 4rem 4rem 4rem;
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  margin: 30px auto;
+}
+.paymentOptions button {
+  border: 1px solid #000000;
+  margin: 10px 15px;
+  padding: 10px 15px;
+  border-radius: 20px;
+  background-color: #fff;
+}
+.paymentOptions button:hover {
+  background-color: #13b58c;
+  border: 1px solid white;
+}
+.payment {
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  margin: 0 auto;
+  padding-bottom: 4rem;
+}
+
+.paymentInputFields {
+  padding: 4rem;
+}
+.input {
+  border: 1px solid #000000;
+  border-radius: 24px;
+  padding: 10px;
+  background: #fff;
+  color: #000;
+}
+.headerStyle {
+  padding: 4rem 4rem 0rem 4rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.paymentCard {
+  float: right;
+  padding-top: 30px;
+}

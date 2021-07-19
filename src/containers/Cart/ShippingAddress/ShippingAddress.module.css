@@ -1,0 +1,31 @@
+.shippingAddress {
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.headerStyle {
+  padding: 4rem 4rem 1rem 4rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.headerStyle h2 {
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 44px;
+}
+
+.inputsField {
+  padding: 4rem;
+}
+.input {
+  border: 1px solid #000000;
+  border-radius: 24px;
+  padding: 10px;
+  background: #fff;
+  color: #000;
+}
+
+.formPadding {
+  padding: 4rem;
+  align-items: center;
+}
