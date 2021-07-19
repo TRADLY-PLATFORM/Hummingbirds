@@ -8,7 +8,7 @@ import classes from './Layout.module.css';
 import { selectTenantData, selectUserData, selectUserId } from '../../store/selectors/auth';
 class Layout extends Component {
   render() {
-    const { tenantData, userData } = this.props;
+    const { tenantData, userData, isAuthentication } = this.props;
     return (
       <Aux>
         <nav className="navbar navbar-inverse visible-xs">
@@ -46,7 +46,7 @@ class Layout extends Component {
 
         <div className={classes.bgColor + ' container-fluid'}>
           <div className="row content">
-            <Sidebar tenantData={tenantData} />
+            <Sidebar isAuthentication={isAuthentication} tenantData={tenantData} />
 
             <div className={classes.rightPanel + ' col-lg-10'}>
               <Header userData={userData} />

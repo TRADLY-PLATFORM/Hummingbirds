@@ -66,7 +66,7 @@ class StoreDetails extends Component {
   render() {
     const { storeDetails, listings, total_records, loading } = this.props;
     let listing = '';
-
+    let showLoadButton = null;
     let storeContent = null;
     let storeName = storeDetails.get('name', '');
     let storeOwner =
@@ -83,7 +83,6 @@ class StoreDetails extends Component {
         </div>
       );
     }
-    var showLoadButton = null;
     if (listings && listings.size > 0) {
       listing = <Listing listings={listings} total_records={total_records} />;
       if (total_records > totalCountOfProducts && listings.size !== total_records) {
@@ -181,7 +180,6 @@ class StoreDetails extends Component {
           </div>
         </div>
         {listing}
-        {showLoadButton}
       </Aux>
     );
 

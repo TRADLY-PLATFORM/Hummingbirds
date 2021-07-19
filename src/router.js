@@ -1,8 +1,5 @@
-import React, { Component } from 'react';
-import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import Layout from './hoc/Layout/Layout';
-import BeforeAuth from './hoc/Layout/BeforeAuth/BeforeAuth';
+import React from 'react';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import SignUp from './containers/Auth/SignUp/SignUp';
 import SignIn from './containers/Auth/SignIn/SignIn';
 import Logout from './containers/Auth/Logout/Logout';
@@ -12,7 +9,6 @@ import Listings from './containers/Listings/Listings';
 import AllCategory from './components/Category/AllCategory/AllCategory';
 import ProductDetails from './containers/ProductDetails/ProductDetails';
 import Store from './containers/Store/Store';
-import * as actions from '../src/store/actions/index';
 import WishList from './containers/WishList/WishList';
 import MyTransactionst from './containers/MyTransactionst/MyTransactionst';
 import MyProfile from './containers/MyProfile/MyProfile';
@@ -34,14 +30,9 @@ import addProduct from './containers/Store/addProduct';
 import reviewPage from './containers/Order/reviewPage';
 import detailOrder from './containers/Order/detailOrder';
 
-class App extends Component {
-  componentDidMount() {
-    this.props.onTryAuthSignUp();
-    this.props.onSetTenantConfig();
-  }
-
-  render() {
-    let routes = (
+function Routes() {
+  return (
+    <BrowserRouter>
       <Switch>
         <Route path="/sign-up" exact component={SignUp} />
         <Route path="/sign-in" exact component={SignIn} />
@@ -74,34 +65,7 @@ class App extends Component {
         <Route path="/detailorder" excat component={detailOrder} />
         <Redirect to="/" />
       </Switch>
-    );
-
-    return (
-      <div>
-        {this.props.location.pathname === '/sign-up' ||
-        this.props.location.pathname === '/sign-in' ||
-        this.props.location.pathname === '/verification/' + this.props.verifyId ? (
-          <BeforeAuth>{routes}</BeforeAuth>
-        ) : (
-          <Layout>{routes}</Layout>
-        )}
-      </div>
-    );
-  }
+    </BrowserRouter>
+  );
 }
-
-const mapStateToProps = (state) => {
-  return {
-    verifyId: state.auth.verify_id,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onTryAuthSignUp: () => dispatch(actions.authCheckState()),
-    onSetTenantConfig: () => dispatch(actions.setTenantConfig()),
-    // onInitCountries: () => dispatch(actions.initCountries())
-  };
-};
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+export default Routes;
