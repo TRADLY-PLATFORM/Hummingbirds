@@ -70,15 +70,19 @@ instance.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    if (error.response.status !== undefined && error.response.status === 401 && !check) {
+    if (error.response.status !== undefined && error.response.status === 401 && !check && false) {
       originalRequest._retry = true;
       return axios
-        .get(URL + '/v1/users/token/refresh', {
-          headers: {
-            Authorization: 'Bearer ' + LocalStorageService.getApiToken(),
-            'X-Refresh-Key': LocalStorageService.getRefreshToken(),
-          },
-        })
+        .post(
+          URL + '/v1/users/token/refresh',
+          {},
+          {
+            headers: {
+              Authorization: 'Bearer ' + LocalStorageService.getApiToken(),
+              'X-Auth-Key': LocalStorageService.getRefreshToken(),
+            },
+          }
+        )
         .then((res) => {
           if (res.status === 200) {
             const tokenObject = {
