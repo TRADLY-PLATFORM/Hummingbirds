@@ -1,0 +1,45 @@
+.totalCart {
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  position: absolute;
+  width: 350px;
+  margin-top: -30px;
+}
+.totalHeader {
+  text-align: center;
+  color: #4a4a4a;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  background-color: #fafafa;
+  padding: 15px;
+}
+.checkOutBodyPart {
+  padding: 15px;
+}
+.btnGreenStyle {
+  padding: 8px 43px;
+  border: none;
+  background: linear-gradient(180deg, #2bdbc0 0%, #13b58c 100%);
+  border-radius: 24px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  /* identical to box height */
+  color: #ffffff;
+}
+
+.price {
+  float: right;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.headerStyle {
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 44px;
+}
