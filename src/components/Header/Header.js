@@ -9,7 +9,6 @@ import Listings from '../../containers/Listings/Listings';
 import axios from '../../axios';
  
 //import CartImage from '../../assets/images/header/cart.svg';
-=======
 import CartImage from '../../assets/images/header/cart.svg';
 
 // import Skeleton from '../UI/Skeleton/Skeleton';
