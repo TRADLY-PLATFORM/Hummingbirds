@@ -20,6 +20,8 @@ import NoIamgeLogo from '../../assets/images/home/store/noImage.svg';
 // import StoreLogo2 from '../../assets/images/home/store/store2.svg';
 
 import NoProductImage from '../../assets/images/rsz_noimage.png';
+import StoresToFollow from './StoresToFollow/StoresToFollow';
+import LatestProducts from './LatestProducts/LatestProducts';
 
 class Home extends Component {
   state = {
@@ -51,136 +53,137 @@ class Home extends Component {
     this.props.history.push('/listings');
   };
 
-  collectionsHtmlHandler = (collections) => {
-    if (collections && collections.length > 0) {
-      return collections.map(function (collection, index) {
-        let arrayListings = [];
-        if (collection.title === 'Stores to Follow') {
-          arrayListings = collection.accounts.map((list, i) => {
-            let imagePath = AllenSollyLogo;
-            if (list.images.length > 0) {
-              imagePath = list.images[0];
-            }
+  // collectionsHtmlHandler = (collections) => {
+  //   if (collections && collections.length > 0) {
+  //     return collections.map(function (collection, index) {
+  //       let arrayListings = [];
+  //       if (collection.title === 'Stores to Follow') {
+  //         arrayListings = collection.accounts.map((list, i) => {
+  //           let imagePath = AllenSollyLogo;
+  //           if (list.images.length > 0) {
+  //             imagePath = list.images[0];
+  //           }
 
-            let description = list.description;
-            if (description.length > 35) {
-              description = description.substring(0, 35) + '...';
-            }
+  //           let description = list.description;
+  //           if (description.length > 35) {
+  //             description = description.substring(0, 35) + '...';
+  //           }
 
-            return (
-              <div className={classes.wellStore + ' col-lg-12'} key={i}>
-                <div className={classes.imageDiv}>
-                  <img src={imagePath} alt={list.name} title={list.name} />
-                </div>
-                <div>{list.name}</div>
-                <p>{description}</p>
-                <Link to={`/store-details/${list.id}/${list.name}`}>
-                  <button className={classes.btnGreenFollow + ' mt-5'}>View Details</button>
-                </Link>
-              </div>
-            );
-          });
-        } else if (collection.title === 'Latest Products') {
-          arrayListings = collection.listings.map((list, i) => {
-            let imagePath = NoProductImage;
-            if (list.images[0] !== undefined) {
-              imagePath = list.images[0];
-            }
+  //           return (
+  //             <div className={classes.wellStore + ' col-lg-12'} key={i}>
+  //               <div className={classes.imageDiv}>
+  //                 <img src={imagePath} alt={list.name} title={list.name} />
+  //               </div>
+  //               <div>{list.name}</div>
+  //               <p>{description}</p>
+  //               <Link to={`/store-details/${list.id}/${list.name}`}>
+  //                 <button className={classes.btnGreenFollow + ' mt-5'}>View Details</button>
+  //               </Link>
+  //             </div>
+  //           );
+  //         });
+  //       } else if (collection.title === 'Latest Products') {
+  //         arrayListings = collection.listings.map((list, i) => {
+  //           let imagePath = NoProductImage;
+  //           if (list.images[0] !== undefined) {
+  //             imagePath = list.images[0];
+  //           }
 
-            return (
-              <Link to={`/product-details/${list.id}/${list.title}`} key={i}>
-                <div className={classes.latestTrend}>
-                  <img
-                    src={imagePath}
-                    className={classes.storeImage}
-                    alt={list.title}
-                    title={list.title}
-                  />
-                  <p>{list.title}</p>
-                  <div className={classes.bottomDesc}>
-                    {list.account !== undefined && list.account.images[0] ? (
-                      <>
-                        <img
-                          src={list.account.images[0]}
-                          alt={list.account.name}
-                          title={list.account.name}
-                        />
-                        <span>{list.account.name}</span>
-                      </>
-                    ) : (
-                      <>
-                        <img src={NoIamgeLogo} alt={list.title} title={list.title} />
-                        <span>N/A</span>
-                      </>
-                    )}
+  //           return (
+  //             <Link to={`/product-details/${list.id}/${list.title}`} key={i}>
+  //               <div className={classes.latestTrend}>
+  //                 <img
+  //                   src={imagePath}
+  //                   className={classes.storeImage}
+  //                   alt={list.title}
+  //                   title={list.title}
+  //                 />
+  //                 <p>{list.title}</p>
+  //                 <div className={classes.bottomDesc}>
+  //                   {list.account !== undefined && list.account.images[0] ? (
+  //                     <>
+  //                       <img
+  //                         src={list.account.images[0]}
+  //                         alt={list.account.name}
+  //                         title={list.account.name}
+  //                       />
+  //                       <span>{list.account.name}</span>
+  //                     </>
+  //                   ) : (
+  //                     <>
+  //                       <img src={NoIamgeLogo} alt={list.title} title={list.title} />
+  //                       <span>N/A</span>
+  //                     </>
+  //                   )}
 
-                    <div className={classes.amountTitle}>
-                      {list.list_price.formatted !== undefined ? list.list_price.formatted : ''}
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            );
-          });
-        }
+  //                   <div className={classes.amountTitle}>
+  //                     {list.list_price.formatted !== undefined ? list.list_price.formatted : ''}
+  //                   </div>
+  //                 </div>
+  //               </div>
+  //             </Link>
+  //           );
+  //         });
+  //       }
 
-        return (
-          <Aux key={index}>
-            <div className="container-fluid mt-5">
-              <div className="row">
-                <div className="col-lg-6 nopaddingLeft" key={index}>
-                  <h3 className={classes.headingTitle}>{collection.title}</h3>
-                </div>
-                <div className="col-lg-6 nopaddingRight">
-                  {collection.title === 'Latest Products' && (
-                    <Link to="/listings">
-                      <button className={'btnGreenStyle pull-right'}>View All</button>
-                    </Link>
-                  )}
-                </div>
-              </div>
-            </div>
-            <div className="container-fluid mt-5">
-              <div className="row">
-                <ItemsCarousel
-                  infiniteLoop={false}
-                  gutter={12}
-                  activePosition={'center'}
-                  chevronWidth={60}
-                  disableSwipe={false}
-                  alwaysShowChevrons={false}
-                  numberOfCards={5}
-                  slidesToScroll={3}
-                  outsideChevron={false}
-                  showSlither={false}
-                  firstAndLastGutter={true}
-                  activeItemIndex={this.state.activeItemIndex}
-                  requestToChangeActive={(value) => this.setState({ activeItemIndex: value })}
-                  rightChevron={
-                    <span
-                      className="glyphicon glyphicon-chevron-right"
-                      style={{ fontSize: '30px', color: '#e6e6e6' }}
-                      aria-hidden="true"
-                    ></span>
-                  }
-                  leftChevron={
-                    <span
-                      className="glyphicon glyphicon-chevron-left"
-                      style={{ fontSize: '30px', color: '#e6e6e6' }}
-                      aria-hidden="true"
-                    ></span>
-                  }
-                >
-                  {arrayListings}
-                </ItemsCarousel>
-                {/* <CollectionListings listings={collection.listings}/>   */}
-              </div>
-            </div>
-          </Aux>
-        );
-      }, this);
-    }
-  };
+  //       return (
+  //         <Aux key={index}>
+  //           <div className="container-fluid mt-5">
+  //             <div className="row">
+  //               <div className="col-lg-6 nopaddingLeft" key={index}>
+  //                 <h3 className={classes.headingTitle}>{collection.title}</h3>
+  //               </div>
+  //               <div className="col-lg-6 nopaddingRight">
+  //                 {collection.title === 'Latest Products' && (
+  //                   <Link to="/listings">
+  //                     <button className={'btnGreenStyle pull-right'}>View All</button>
+  //                   </Link>
+  //                 )}
+  //               </div>
+  //             </div>
+  //           </div>
+  //           <div className="container-fluid mt-5">
+  //             <div className="row">
+  //               <ItemsCarousel
+  //                 infiniteLoop={false}
+  //                 gutter={12}
+  //                 activePosition={'center'}
+  //                 chevronWidth={60}
+  //                 disableSwipe={false}
+  //                 alwaysShowChevrons={false}
+  //                 numberOfCards={5}
+  //                 slidesToScroll={3}
+  //                 outsideChevron={false}
+  //                 showSlither={false}
+  //                 firstAndLastGutter={true}
+  //                 // activeItemIndex={this.state.activeItemIndex}
+  //                 // requestToChangeActive={(value) => this.setState({ activeItemIndex: value })}
+  //                 rightChevron={
+  //                   <span
+  //                     className="glyphicon glyphicon-chevron-right"
+  //                     style={{ fontSize: '30px', color: '#e6e6e6' }}
+  //                     aria-hidden="true"
+  //                   ></span>
+  //                 }
+  //                 leftChevron={
+  //                   <span
+  //                     className="glyphicon glyphicon-chevron-left"
+  //                     style={{ fontSize: '30px', color: '#e6e6e6' }}
+  //                     aria-hidden="true"
+  //                   ></span>
+  //                 }
+  //               >
+  //                 {arrayListings}
+  //               </ItemsCarousel>
+  //               <StoresToFollow />
+  //               {/* <CollectionListings listings={collection.listings}/>   */}
+  //             </div>
+  //           </div>
+  //         </Aux>
+  //       );
+  //     }, this);
+  //   }
+  // };
 
   componentWillUpdate() {
     if (this.props.categories && this.props.categories.length > 0 && this.state.loadOnce) {
@@ -247,7 +250,12 @@ class Home extends Component {
     let collectionContent = <Spinner show={true} styles="SpinnerCenter" />;
     console.log(this.props.collections);
     if (this.props.collections && this.props.collections.length > 0) {
-      collectionContent = this.collectionsHtmlHandler(this.props.collections);
+      collectionContent = (
+        <div>
+          <StoresToFollow />
+          <LatestProducts />
+        </div>
+      );
     } else {
       if (!this.state.show) {
         collectionContent = '';

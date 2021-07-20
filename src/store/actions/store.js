@@ -119,6 +119,7 @@ export const CreateStore = (store, token) => {
       })
       .catch((error) => {
         dispatch(createStoreFailed());
+        console.log(error);
       });
   };
 };
