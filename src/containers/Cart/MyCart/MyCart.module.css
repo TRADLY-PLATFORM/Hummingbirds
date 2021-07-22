@@ -13,18 +13,37 @@
   background-size: cover;
 }
 .QTY {
-  margin-left: -70px;
+  margin-left: -90px;
 }
 .quantity {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  margin: 10px auto;
+  margin: 10px 20px;
 }
-
+.countButton {
+  width: 17px;
+  height: 17px;
+  border-radius: 20px;
+  padding-bottom: 10px;
+  position: relative;
+  border: none;
+}
+.minus {
+  position: absolute;
+  top: -13px;
+  left: 3px;
+  font-size: 28px;
+}
+.plus {
+  position: absolute;
+  top: -13px;
+  left: 0px;
+  font-size: 28px;
+}
 .removeItem {
   font-size: 1.5rem;
-  margin-left: 25px;
+  margin-left: 45px;
   background: none;
   border: 1.1px solid transparent;
   color: #13b58c;

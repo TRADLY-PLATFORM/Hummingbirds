@@ -54,6 +54,7 @@ class Store extends Component {
         </div>
       </Aux>
     );
+    console.log(this.props.token);
 
     return (
       <Aux>
