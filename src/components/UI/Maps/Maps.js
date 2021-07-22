@@ -20,7 +20,7 @@ class Maps extends Component {
       <div style={{ height: '50vh', width: '100%' }}>
         <GoogleMapReact
           bootstrapURLKeys={{ key: MapKey }}
-          defaultCenter={this.props.center}
+          defaultCenter={this.props?this.props:this.props.center}
           defaultZoom={this.props.zoom}
         >
           <AnyReactComponent lat={this.props.lat} lng={this.props.lng} text="My Marker" />
