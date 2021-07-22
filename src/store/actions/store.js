@@ -101,6 +101,7 @@ export const createStoreSuccess = () => {
 
 export const CreateStore = (store, token) => {
   console.log(store);
+  console.log(token);
   return (dispatch) => {
     dispatch(initCreateStore());
     axios

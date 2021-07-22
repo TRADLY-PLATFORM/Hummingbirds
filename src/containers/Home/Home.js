@@ -48,7 +48,6 @@ class Home extends Component {
       this.setState({ show: false });
     }, 6000);
   }
-
   redirectListing = () => {
     this.props.history.push('/listings');
   };
@@ -261,7 +260,7 @@ class Home extends Component {
         collectionContent = '';
       }
     }
-
+    console.log(this.props.token);
     return (
       <Aux>
         <Backdrop show={this.props.loading} />

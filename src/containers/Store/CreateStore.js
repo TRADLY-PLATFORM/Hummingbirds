@@ -26,6 +26,7 @@ class CreateStore extends Component {
     name: '',
     description: '',
     web_address: '',
+    type: '',
   };
 
   createStore = (e) => {
@@ -40,6 +41,10 @@ class CreateStore extends Component {
       if (!toast.isActive(this.toastId)) {
         this.toastId = toast.error('Store Description is required');
       }
+    } else if (this.state.type === '') {
+      if (!toast.isActive(this.toastId)) {
+        this.toastId = toast.error('Type is required');
+      }
       return false;
     }
 
@@ -52,6 +57,7 @@ class CreateStore extends Component {
         web_address: this.state.web_address,
         image_path: this.state.web_address,
         address: this.state.web_address,
+        type: this.state.type,
       },
     };
 
@@ -67,12 +73,26 @@ class CreateStore extends Component {
     });
     this.setState({ showError: false });
   };
+  getType = (e) => {
+    if (e.target.children.length > 0) {
+      this.setState({
+        type: e.target.children[1].innerHTML,
+      });
+      console.log(e.target.children[1].innerHTML);
+    } else {
+      this.setState({
+        type: e.target.alt || e.target.innerHTML,
+      });
+      console.log(e.target.alt || e.target.innerHTML);
+    }
+  };
 
   render() {
     let redirectUrl = null;
     // if(!this.props.isAuthentication){
     //     redirectUrl = <Redirect to="/sign-in"/>
     // }
+    console.log(this.props.token);
 
     return (
       <Aux>
@@ -161,7 +181,7 @@ class CreateStore extends Component {
                 <div className="col-lg-12 col-md-12">
                   <div className="col-lg-12">
                     <div className="col-sm-6 col-md-3">
-                      <div className={classes.wellCategory}>
+                      <div className={classes.wellCategory} onClick={this.getType}>
                         <img
                           src={WomanAccesoriesLogo}
                           alt="Woman accesories"
@@ -171,40 +191,40 @@ class CreateStore extends Component {
                       </div>
                     </div>
                     <div className="col-sm-6 col-md-3">
-                      <div className={classes.wellCategory}>
+                      <div className={classes.wellCategory} onClick={this.getType}>
                         <img src={WomanClothLogo} alt="Woman cloth" title="Woman cloth" />
                         <p>Woman cloth</p>
                       </div>
                     </div>
                     <div className="col-sm-6 col-md-3">
-                      <div className={classes.wellCategory}>
+                      <div className={classes.wellCategory} onClick={this.getType}>
                         <img src={BookLogo} alt="Book" title="Book" />
                         <p>Book</p>
                       </div>
                     </div>
                     <div className="col-sm-6 col-md-3">
-                      <div className={classes.wellCategory}>
+                      <div className={classes.wellCategory} onClick={this.getType}>
                         <img src={TextBooksLogo} alt="Text books" title="Text books" />
                         <p>Text books</p>
                       </div>
                     </div>
 
                     <div className="col-sm-6 col-md-3">
-                      <div className={classes.wellCategory}>
+                      <div className={classes.wellCategory} onClick={this.getType}>
                         <img src={SporsLogo} alt="Sports" title="Sports" />
                         <p>Sports</p>
                       </div>
                     </div>
                     <div className="col-sm-6 col-md-3">
-                      <div className={classes.wellCategory}>
+                      <div className={classes.wellCategory} onClick={this.getType}>
                         <img src={ElectronicsLogo} alt="Electornics" title="Electornics" />
                         <p>Electornics</p>
                       </div>
                     </div>
                     <div className="col-sm-6 col-md-3">
-                      <div className={classes.wellCategory}>
-                        <img src={GamesLogo} alt="Game &amp; toys" title="Game &amp; toys" />
-                        <p>Game &amp; toys</p>
+                      <div className={classes.wellCategory} onClick={this.getType}>
+                        <img src={GamesLogo} alt="Game & toys" title="Game & ; toys" />
+                        <p>Game & toys</p>
                       </div>
                     </div>
 
