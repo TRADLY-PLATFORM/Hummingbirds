@@ -80,6 +80,7 @@
   text-align: center;
   height: 120px;
   box-sizing: border-box;
+  cursor: pointer;
 }
 
 .wellCategory p {
