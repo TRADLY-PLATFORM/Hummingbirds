@@ -9,6 +9,7 @@ const initialState = {
   disabled: false,
   message: null,
   verify_id: null,
+  countries: null,
   authRedirectPath: '/',
   userData: {},
   tenantData: {},

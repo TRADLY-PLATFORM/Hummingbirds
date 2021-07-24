@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Modal from '../../../components/UI/Modal/Modal';
 import classes from './CheckOut.module.css';
+import doneImage from '../../../assets/images/Done.svg';
 
 const CheckOut = () => {
+  const [orderSuccess, setOrderSuccess] = useState(false);
+  const showResult = () => {
+    setOrderSuccess(true);
+  };
+  const closeResult = () => {
+    setOrderSuccess(false);
+  };
+
   return (
     <div className={classes.totalCart}>
       <div className={classes.totalHeader + ' text-uppercase '}>
@@ -26,7 +36,9 @@ const CheckOut = () => {
         <br />
         <br />
         <div className="text-center">
-          <button className={classes.btnGreenStyle}>check out</button>
+          <button className={classes.btnGreenStyle} onClick={showResult}>
+            check out
+          </button>
           <br />
           <br />
           <p>
@@ -39,6 +51,18 @@ const CheckOut = () => {
         <p></p>
         <span></span>
       </div>
+      <Modal show={orderSuccess} modalClosed={closeResult} modalStyle={classes.Modal}>
+        <div className={classes.orderSuccessText}>
+          <img src={doneImage} alt="" />
+          <h4>
+            Your order has been placed <br /> successfully
+          </h4>
+        </div>
+        <div className={classes.orderSuccessButton}>
+          <button className={classes.continue}>Continue Shopping</button>
+          <button className={classes.goToOrders}> Go to my orders</button>
+        </div>
+      </Modal>
     </div>
   );
 };

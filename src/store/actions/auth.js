@@ -85,6 +85,7 @@ export const authVerification = (verificationData) => {
 };
 
 export const auth = (userData, isSignup) => {
+  console.log(userData, isSignup);
   return (dispatch) => {
     dispatch(authStart());
     let url = '/v1/users/register';
@@ -95,13 +96,14 @@ export const auth = (userData, isSignup) => {
       .post(url, userData)
       .then((response) => {
         if (isSignup) {
-          if (response.data.status) {
-            let encodeVerifyId = btoa(response.data.data.verify_id);
-            dispatch(setAuthRedirectPath('/verification/' + encodeVerifyId, encodeVerifyId));
-          } else {
-            dispatch(authFail('Invalid credentials'));
-            return false;
-          }
+          console.log(response);
+          // if (response.data.status) {
+          //   let encodeVerifyId = btoa(response.data.data.verify_id);
+          //   dispatch(setAuthRedirectPath('/verification/' + encodeVerifyId, encodeVerifyId));
+          // } else {
+          //   dispatch(authFail('Invalid credentials'));
+          //   return false;
+          // }
         } else {
           const setTimeExpiry = EXPIRY_TIME;
           const expirationDate = new Date(new Date().getTime() + setTimeExpiry * 1000);
@@ -198,7 +200,7 @@ export const initCountries = () => {
   return (dispatch) => {
     let countryStorage = localStorage.getItem('countryStorage');
     if (!countryStorage) {
-      dispatch(startCountries());
+      // dispatch(startCountries());
       axios
         .get('/app/v1/countries', {
           headers: {
@@ -209,7 +211,7 @@ export const initCountries = () => {
           var result = response.data.data.countries.map((v) => {
             return v;
           });
-          localStorage.setItem('countryStorage', ENCRYPT(JSON.stringify(result)));
+          // localStorage.setItem('countryStorage', ENCRYPT(JSON.stringify(result)));
           dispatch(setCountries(result));
         })
         .catch((error) => {

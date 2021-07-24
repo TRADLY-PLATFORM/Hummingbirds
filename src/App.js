@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
+
 import { connect } from 'react-redux';
 import Layout from './hoc/Layout/Layout';
 import BeforeAuth from './hoc/Layout/BeforeAuth/BeforeAuth';
@@ -34,6 +36,25 @@ import addProduct from './containers/Store/addProduct';
 import reviewPage from './containers/Order/reviewPage';
 import detailOrder from './containers/Order/detailOrder';
 
+// const rollbarConfig = {
+//   accessToken: '3b6226f9262f4bc8bc2b9e3392f708e5',
+//   environment: 'production',
+//   // server: {
+//   //   root: 'http://localhost:3000/',
+//   //   branch: 'main',
+//   // },
+//   // code_version: '0.13.7',
+//   // person: {
+//   //   id: 117,
+//   //   email: 'ahsan@tradly.app',
+//   //   username: 'Ahsan Ullah',
+//   // },
+// };
+
+const rollbarConfig = {
+  accessToken: '3b6226f9262f4bc8bc2b9e3392f708e5',
+  environment: 'production',
+};
 class App extends Component {
   componentDidMount() {
     this.props.onTryAuthSignUp();

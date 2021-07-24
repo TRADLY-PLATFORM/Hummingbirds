@@ -9,14 +9,17 @@ import { toast, ToastContainer, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Backdrop from '../../../components/UI/Backdrop/Backdrop';
 import Spinner from '../../../components/UI/Spinner/Spinner';
-import { validateEmail } from '../../../shared/utility'; //countryFilter
+import { countryFilter, validateEmail } from '../../../shared/utility'; //countryFilter
 import * as actions from '../../../store/actions/index';
 import { selectUserId } from '../../../store/selectors/auth';
+import PhoneInput from 'react-phone-input-2';
+import { isPossiblePhoneNumber, isValidPhoneNumber } from 'libphonenumber-js';
+
 class SignUp extends Component {
   state = {
     firstName: '',
     lastName: '',
-    email: '',
+    dialCode: '',
     mobile: '',
     password: '',
     reTypePassword: '',
@@ -47,25 +50,24 @@ class SignUp extends Component {
         this.toastId = toast.error('Last name is required');
       }
       return false;
-    } else if (this.state.email === '') {
-      if (!toast.isActive(this.toastId)) {
-        this.toastId = toast.error('Email is required');
-      }
-      return false;
-    } else if (!validateEmail(this.state.email)) {
-      if (!toast.isActive(this.toastId)) {
-        this.toastId = toast.error('Enter valid email');
-      }
-      return false;
     }
-
-    // else if (this.state.mobile === '') {
+    // else if (this.state.email === '') {
     //   if (!toast.isActive(this.toastId)) {
-    //     this.toastId = toast.error('Phone number is required');
+    //     this.toastId = toast.error('Email is required');
+    //   }
+    //   return false;
+    // } else if (!validateEmail(this.state.email)) {
+    //   if (!toast.isActive(this.toastId)) {
+    //     this.toastId = toast.error('Enter valid email');
     //   }
     //   return false;
     // }
-    else if (this.state.password === '') {
+    else if (this.state.mobile === '') {
+      if (!toast.isActive(this.toastId)) {
+        this.toastId = toast.error('Phone number is required');
+      }
+      return false;
+    } else if (this.state.password === '') {
       if (!toast.isActive(this.toastId)) {
         this.toastId = toast.error('Password is required');
       }
@@ -82,7 +84,15 @@ class SignUp extends Component {
       return false;
     }
 
-    // let mobile = this.state.mobile;
+    let mobile = this.state.mobile;
+    let checkNumber = isValidPhoneNumber(`+${mobile}`);
+    if (checkNumber !== true) {
+      if (!toast.isActive(this.toastId)) {
+        this.toastId = toast.error('Invalid phone number.');
+      }
+      return false;
+    }
+
     // mobile = mobile.replace(/-/g, '');
     // mobile = mobile.match(/^\s*(\S+)\s*(.*?)\s*$/).slice(1);
     // let phoneCode = mobile[0].substring(1);
@@ -103,9 +113,9 @@ class SignUp extends Component {
         uuid: uUid,
         first_name: this.state.firstName,
         last_name: this.state.lastName,
-        email: this.state.email,
+        mobile: this.state.mobile,
         password: this.state.password,
-        //dial_code: filterCountry.dial_code,
+        dial_code: this.state.dialCode,
         type: 'client',
       },
     };
@@ -113,7 +123,7 @@ class SignUp extends Component {
   };
 
   componentDidMount() {
-    //this.props.onInitCountries();
+    // this.props.onInitCountries();
   }
 
   render() {
@@ -144,7 +154,6 @@ class SignUp extends Component {
     //     />
     //   );
     // }
-
     return (
       <div className="row">
         <Backdrop show={this.props.loading} />
@@ -192,7 +201,7 @@ class SignUp extends Component {
               />
             </div>
 
-            <div className="form-group mt-4">
+            {/* <div className="form-group mt-4">
               <input
                 className={classes.input}
                 name="email"
@@ -202,8 +211,20 @@ class SignUp extends Component {
                 onChange={this.handleChange}
                 autoComplete="off"
               />
+              </div> */}
+            <div className="form-group mt-4">
+              <PhoneInput
+                // onlyCountries={countryCode}
+                className={classes.input}
+                country={'bd'}
+                value={this.state.mobile}
+                onChange={(value, country, e) => {
+                  this.setState({ mobile: value });
+                  this.setState({ dialCode: country.dialCode });
+                }}
+                name="mobile"
+              />
             </div>
-            {/* <div className="form-group mt-4">{defaultCountry}</div> */}
 
             <div className="form-group mt-4">
               <input

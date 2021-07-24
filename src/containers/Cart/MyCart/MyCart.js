@@ -44,7 +44,9 @@ const MyCart = () => {
                 <p className={classes.plus}>+</p>
               </button>
             </div>
-            <button className={classes.removeItem}>remove item</button>
+            <div className={classes.removeItem}>
+              <button>remove item</button>
+            </div>
           </div>
 
           <div className="col-lg-3 col-md-3">
