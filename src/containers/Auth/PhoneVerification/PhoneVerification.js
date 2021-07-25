@@ -41,6 +41,7 @@ class PhoneVerification extends Component {
     this.setState({ showError: true });
 
     let verification_id = atob(this.props.verifyId);
+    console.log(verification_id);
 
     const verification = {
       verify_id: verification_id,

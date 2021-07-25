@@ -50,8 +50,8 @@ instance.interceptors.response.use(
       [`/v1/users/verify`, `/v1/users/login`].includes(originalRequest.url)
     ) {
       const tokenObject = {
-        access_token: response.data.data.user.key.auth_key,
-        refresh_token: response.data.data.user.key.refresh_key,
+        // access_token: response.data.data.user.key.auth_key,
+        // refresh_token: response.data.data.user.key.refresh_key,
         x_api_key: LocalStorageService.getApiToken(),
       };
       LocalStorageService.setToken(tokenObject);

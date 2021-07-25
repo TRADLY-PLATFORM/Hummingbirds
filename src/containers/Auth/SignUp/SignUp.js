@@ -56,7 +56,7 @@ class SignUp extends Component {
     //     this.toastId = toast.error('Email is required');
     //   }
     //   return false;
-    // } else if (!validateEmail(this.state.email)) {
+    // // } else if (!validateEmail(this.state.email)) {
     //   if (!toast.isActive(this.toastId)) {
     //     this.toastId = toast.error('Enter valid email');
     //   }
@@ -93,6 +93,10 @@ class SignUp extends Component {
       return false;
     }
 
+    // console.log(this.state.dialCode.length);
+    // let updateNumber = mobile.slice(this.state.dialCode.length);
+    // this.setState({ mobile: updateNumber });
+    // console.log(this.state.mobile);
     // mobile = mobile.replace(/-/g, '');
     // mobile = mobile.match(/^\s*(\S+)\s*(.*?)\s*$/).slice(1);
     // let phoneCode = mobile[0].substring(1);
@@ -113,7 +117,7 @@ class SignUp extends Component {
         uuid: uUid,
         first_name: this.state.firstName,
         last_name: this.state.lastName,
-        mobile: this.state.mobile,
+        mobile: this.state.mobile.slice(this.state.dialCode.length),
         password: this.state.password,
         dial_code: this.state.dialCode,
         type: 'client',

@@ -20,6 +20,7 @@ const authStart = (state, action) => {
 };
 
 const authSuccess = (state, action) => {
+  console.log(action);
   return updateObject(state, {
     userData: action.data,
     loading: false,
