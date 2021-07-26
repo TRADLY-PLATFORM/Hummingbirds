@@ -9,13 +9,17 @@ import { toast, ToastContainer, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Backdrop from '../../../components/UI/Backdrop/Backdrop';
 import Spinner from '../../../components/UI/Spinner/Spinner';
-import { validateEmail } from '../../../shared/utility'; //countryFilter
+import { countryFilter, validateEmail } from '../../../shared/utility'; //countryFilter
 import * as actions from '../../../store/actions/index';
 import { selectUserId } from '../../../store/selectors/auth';
+import PhoneInput from 'react-phone-input-2';
+import { isPossiblePhoneNumber, isValidPhoneNumber } from 'libphonenumber-js';
+
 class SignUp extends Component {
   state = {
     firstName: '',
     lastName: '',
+    dialCode: '',
     email: '',
     mobile: '',
     password: '',
@@ -58,12 +62,11 @@ class SignUp extends Component {
       }
       return false;
     }
-
     // else if (this.state.mobile === '') {
     //   if (!toast.isActive(this.toastId)) {
     //     this.toastId = toast.error('Phone number is required');
     //   }
-    //   return false;
+    //     return false;
     // }
     else if (this.state.password === '') {
       if (!toast.isActive(this.toastId)) {
@@ -83,6 +86,18 @@ class SignUp extends Component {
     }
 
     // let mobile = this.state.mobile;
+    // let checkNumber = isValidPhoneNumber(`+${mobile}`);
+    // if (checkNumber !== true) {
+    //   if (!toast.isActive(this.toastId)) {
+    //     this.toastId = toast.error('Invalid phone number.');
+    //   }
+    //   return false;
+    // }
+
+    // console.log(this.state.dialCode.length);
+    // let updateNumber = mobile.slice(this.state.dialCode.length);
+    // this.setState({ mobile: updateNumber });
+    // console.log(this.state.mobile);
     // mobile = mobile.replace(/-/g, '');
     // mobile = mobile.match(/^\s*(\S+)\s*(.*?)\s*$/).slice(1);
     // let phoneCode = mobile[0].substring(1);
@@ -103,9 +118,10 @@ class SignUp extends Component {
         uuid: uUid,
         first_name: this.state.firstName,
         last_name: this.state.lastName,
+        // mobile: this.state.mobile.slice(this.state.dialCode.length),
         email: this.state.email,
         password: this.state.password,
-        //dial_code: filterCountry.dial_code,
+        // dial_code: this.state.dialCode,
         type: 'client',
       },
     };
@@ -113,7 +129,7 @@ class SignUp extends Component {
   };
 
   componentDidMount() {
-    //this.props.onInitCountries();
+    // this.props.onInitCountries();
   }
 
   render() {
@@ -144,7 +160,6 @@ class SignUp extends Component {
     //     />
     //   );
     // }
-
     return (
       <div className="row">
         <Backdrop show={this.props.loading} />
@@ -176,7 +191,7 @@ class SignUp extends Component {
                 placeholder="First Name"
                 value={this.state.firstName}
                 onChange={this.handleChange}
-                autoComplete="off"
+                // autoComplete="off"
               />
             </div>
 
@@ -188,7 +203,7 @@ class SignUp extends Component {
                 placeholder="Last Name"
                 value={this.state.lastName}
                 onChange={this.handleChange}
-                autoComplete="off"
+                // autoComplete="off"
               />
             </div>
 
@@ -200,10 +215,21 @@ class SignUp extends Component {
                 placeholder="Email"
                 value={this.state.email}
                 onChange={this.handleChange}
-                autoComplete="off"
               />
             </div>
-            {/* <div className="form-group mt-4">{defaultCountry}</div> */}
+            {/* <div className="form-group mt-4">
+              <PhoneInput
+                // onlyCountries={countryCode}
+                className={classes.input}
+                country={'bd'}
+                value={this.state.mobile}
+                onChange={(value, country, e) => {
+                  this.setState({ mobile: value });
+                  this.setState({ dialCode: country.dialCode });
+                }}
+                name="mobile"
+              />
+            </div> */}
 
             <div className="form-group mt-4">
               <input

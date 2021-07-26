@@ -3,7 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { uuid } from 'uuidv4';
 import classes from './SignIn.module.css';
-//import PhoneInput from 'react-phone-input-2';
+import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/bootstrap.css';
 import { toast, ToastContainer, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,10 +12,12 @@ import Spinner from '../../../components/UI/Spinner/Spinner';
 import { validateEmail } from '../../../shared/utility'; //countryFilter
 import * as actions from '../../../store/actions/index';
 import { selectUserId } from '../../../store/selectors/auth';
+import { isPossiblePhoneNumber, isValidPhoneNumber } from 'libphonenumber-js';
+
 class SignIn extends Component {
   state = {
-    mobile: '',
     email: '',
+    mobile: '',
     password: '',
     isSignUp: false,
     showError: false,
@@ -50,27 +52,21 @@ class SignIn extends Component {
         this.toastId = toast.error('Enter valid email');
       }
       return false;
-    } else if (this.state.password === '') {
+    }
+    // let mobile = this.state.mobile;
+    // let checkNumber = isValidPhoneNumber(`+${mobile}`);
+    // if (checkNumber !== true) {
+    //   if (!toast.isActive(this.toastId)) {
+    //     this.toastId = toast.error('Invalid phone number.');
+    //   }
+    //   return false;
+    // }
+    else if (this.state.password === '') {
       if (!toast.isActive(this.toastId)) {
         this.toastId = toast.error('Password is required');
       }
       return false;
     }
-
-    // let mobile = this.state.mobile;
-    // mobile = mobile.replace(/-/g, '');
-    // mobile = mobile.match(/^\s*(\S+)\s*(.*?)\s*$/).slice(1);
-    // let phoneCode = mobile[0].substring(1);
-    // let phoneNumber = mobile[1];
-    // let filterCountry = countryFilter(phoneCode, this.props.countryList);
-    // if (phoneNumber.length !== filterCountry.mobile_number_legth) {
-    //   let digits =
-    //     filterCountry.mobile_number_legth !== undefined ? filterCountry.mobile_number_legth : 10;
-    //   if (!toast.isActive(this.toastId)) {
-    //     this.toastId = toast.error('Phone number length should be ' + digits + ' digits');
-    //   }
-    //   return false;
-    // }
 
     this.setState({ showError: true });
     const uUid = uuid();
@@ -78,10 +74,10 @@ class SignIn extends Component {
     const users = {
       user: {
         uuid: uUid,
-        //mobile: phoneNumber,
+        // mobile: this.state.mobile.slice(this.state.dialCode.length),
         email: this.state.email,
         password: this.state.password,
-        //country_id: filterCountry.id,
+        // dial_code: this.state.dialCode,
         type: 'client',
       },
     };
@@ -142,7 +138,6 @@ class SignIn extends Component {
           <h5 className={classes.titleAccount}>Login to your account</h5>
           <br />
           <form action="" method="post" onSubmit={this.onSubmit}>
-            {/* <div className="form-group mt-4">{defaultCountry}</div> */}
             <div className="form-group mt-4">
               <input
                 className={classes.input}
@@ -154,6 +149,19 @@ class SignIn extends Component {
                 autoComplete="off"
               />
             </div>
+            {/* <div className="form-group mt-4">
+              <PhoneInput
+                // onlyCountries={countryCode}
+                className={classes.input}
+                country={'bd'}
+                value={this.state.mobile}
+                onChange={(value, country, e) => {
+                  this.setState({ mobile: value });
+                  this.setState({ dialCode: country.dialCode });
+                }}
+                name="mobile"
+              />
+            </div> */}
             <div className="form-group mt-4">
               <input
                 className={classes.input}

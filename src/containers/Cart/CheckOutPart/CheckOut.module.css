@@ -43,3 +43,45 @@
   font-size: 36px;
   line-height: 44px;
 }
+.Modal {
+  border-radius: 30px;
+  background-color: white;
+  position: fixed;
+  z-index: 500;
+  width: 30%;
+  height: 43%;
+  padding: 18px;
+  left: 35%;
+  top: 25%;
+  text-align: center;
+  box-sizing: border-box;
+  transition: all 0.3s ease-out;
+}
+.orderSuccessText h4 {
+  font-size: 20px;
+  font-weight: bold;
+}
+.orderSuccessButton {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 5px 10px;
+  text-align: center;
+}
+.orderSuccessButton button {
+  display: block;
+  margin: 10px 0px;
+  border: none;
+  font-size: 18px;
+}
+.continue {
+  background-color: #2bdbc0;
+  padding: 10px;
+  border-radius: 20px;
+  width: 50%;
+  color: white;
+}
+.goToOrders {
+  background-color: white;
+}

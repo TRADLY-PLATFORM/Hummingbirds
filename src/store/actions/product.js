@@ -27,6 +27,7 @@ export const initProductDetails = (id) => {
       .get('/products/v1/listings/' + id + '?locale=en')
       .then((response) => {
         if (response.data.status) {
+          console.log(response);
           dispatch(setProductDetails(response.data.data));
         } else {
           dispatch(fetchProductDetailsFailed());

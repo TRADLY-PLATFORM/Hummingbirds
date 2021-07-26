@@ -9,6 +9,7 @@ const initialState = {
   disabled: false,
   message: null,
   verify_id: null,
+  countries: null,
   authRedirectPath: '/',
   userData: {},
   tenantData: {},
@@ -19,6 +20,7 @@ const authStart = (state, action) => {
 };
 
 const authSuccess = (state, action) => {
+  console.log(action.data);
   return updateObject(state, {
     userData: action.data,
     loading: false,
