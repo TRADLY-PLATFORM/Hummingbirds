@@ -5,17 +5,23 @@ import { ACCESS_TOKEN } from '../../shared/utility';
 export const setCatList = (cartList) => {
   return {
     type: actionTypes.GET_CART,
-    storeDetails: cartList,
+    data: cartList,
+  };
+};
+export const setCartItem = (cartItem) => {
+  return {
+    type: actionTypes.ADD_TO_CART,
+    data: cartItem,
   };
 };
 
-export const getCartList = (authKey) => {
+//
+
+export const getCartList = () => {
   return (dispatch) => {
     axios
       .get('/products/v1/cart', {
         headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('tenant_key') ?? ACCESS_TOKEN,
-          'X-Auth_key': authKey,
           'X-Currency': 'MYR',
         },
       })
@@ -25,6 +31,33 @@ export const getCartList = (authKey) => {
         } else {
           console.log('error', response);
         }
+      });
+  };
+};
+
+export const addToCart = (cartItem) => {
+  return (dispatch) => {
+    console.log(JSON.stringify(cartItem));
+    var config = {
+      method: 'post',
+      url: '/products/v1/cart',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Currency': 'INR',
+      },
+      data: cartItem,
+    };
+
+    axios(config)
+      .then((response) => {
+        if (response.data.status) {
+          console.log(response);
+        } else {
+          console.log('error', response);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
       });
   };
 };

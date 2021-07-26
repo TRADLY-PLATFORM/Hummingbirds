@@ -63,7 +63,7 @@ export const authVerification = (verificationData) => {
         //  console.log(response.data.data);
         if (response.data.status) {
           const setTimeExpiry = EXPIRY_TIME;
-          const expirationDate = new Date(new Date().getTime() + setTimeExpiry * 1000);
+          const expirationDate = new Date(new Date().getTime() + setTimeExpiry * 5000);
           localStorage.setItem('token', response.data.data.user.key.auth_key);
           //   localStorage.setItem('refresh_key', response.data.data.user.key.refresh_key);
           //   localStorage.setItem('userId', response.data.data.user.id);
@@ -120,7 +120,7 @@ export const auth = (userData, isSignup) => {
           console.log(response);
           console.log('====================================');
           const setTimeExpiry = EXPIRY_TIME;
-          const expirationDate = new Date(new Date().getTime() + setTimeExpiry * 1000);
+          const expirationDate = new Date(new Date().getTime() + setTimeExpiry * 5000);
           //   localStorage.setItem('token', response.data.data.user.key.auth_key);
           //   localStorage.setItem('refresh_key', response.data.data.user.key.refresh_key);
           //   localStorage.setItem('userId', response.data.data.user.id);

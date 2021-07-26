@@ -11,7 +11,6 @@ import Skeleton from '../../components/UI/Skeleton/Skeleton';
 import classes from './ProductDetails.module.css';
 import ArrowLogo from '../../assets/images/products/arrow.svg';
 import * as actions from '../../store/actions/index';
-import * as actions2 from '../../store/actions/cart';
 import { selectProductDetails } from '../../store/selectors/product';
 import { selectUserId } from '../../store/selectors/auth';
 import Maps from '../../components/UI/Maps/Maps';
@@ -178,8 +177,16 @@ class ProductDetails extends Component {
     console.log('productDetails', productDetails, productId);
     this.props.onProductLikeDisLike(productId);
   };
-  getCart = () => {
-    this.props.onGetCart(this.props.token);
+  addToCart = () => {
+    const { productDetails } = this.props;
+    const productId = productDetails.getIn(['listing', 'id'], '');
+    const cartData = {
+      cart: {
+        listing_id: productId,
+        quantity: 1,
+      },
+    };
+    this.props.onAddToCart(cartData);
   };
 
   render() {
@@ -190,7 +197,7 @@ class ProductDetails extends Component {
     }
     console.log(productDetails.getIn(['listing']));
     console.log('isAuthenticated', isAuthenticated);
-
+    console.log(this.props.token);
     return (
       <Aux>
         <Backdrop show={this.props.loading} />
@@ -305,7 +312,7 @@ class ProductDetails extends Component {
                     type="button"
                     className="btn btn-addtocart btn-lg btn-block height70"
                     style={{ marginRight: '15px' }}
-                    onClick={this.getCart}
+                    onClick={this.addToCart}
                   >
                     Add To Cart
                   </button>
@@ -346,7 +353,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onInitProductDetails: (id) => dispatch(actions.initProductDetails(id)),
     onProductLikeDisLike: (id) => dispatch(actions.onProductLikeDisLike(id)),
-    onGetCart: () => dispatch(actions2.getCartList()),
+    onGetCart: () => dispatch(actions.getCartList()),
+    onAddToCart: (data) => dispatch(actions.addToCart(data)),
   };
 };
 

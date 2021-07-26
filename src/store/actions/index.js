@@ -22,4 +22,4 @@ export { initStoreDetails, userStoreLists, CreateStore, postStoreFollow } from '
 
 export { initGroupDetails, CreateGroup } from './group';
 
-export { getCartList } from './cart';
+export { getCartList, addToCart } from './cart';
