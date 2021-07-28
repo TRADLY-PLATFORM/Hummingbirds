@@ -223,6 +223,7 @@ export const initCountries = () => {
           },
         })
         .then((response) => {
+          console.log(response);
           var result = response.data.data.countries.map((v) => {
             return v;
           });

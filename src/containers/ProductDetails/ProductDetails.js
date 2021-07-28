@@ -109,11 +109,9 @@ class ProductDetails extends Component {
   getStoreName = () => {
     const { productDetails } = this.props;
     if (productDetails.getIn(['listing', 'account', 'name'], '') !== '') {
-      return (
-        <Link to={'/store-details/' + productDetails.getIn(['listing', 'account_id'], '')}>
-          {productDetails.getIn(['listing', 'account', 'name'], '')}
-        </Link>
-      );
+      const store_name = productDetails.getIn(['listing', 'account', 'name'], '');
+      const id = productDetails.getIn(['listing', 'account_id'], '');
+      return <Link to={`/store-details/${id}/${store_name}`}>{store_name}</Link>;
     }
     return <Skeleton count={10} />;
   };
@@ -246,7 +244,7 @@ class ProductDetails extends Component {
               <div className="row bgColor">
                 <div className={classes.fashionStore}>
                   <div className="  ">
-                    <h3>{this.getStoreOwner()}</h3>
+                    <h3>{this.getStoreName()}</h3>
                     <div>@{this.getStoreOwner()}</div>
                   </div>
                   <div className=" ">

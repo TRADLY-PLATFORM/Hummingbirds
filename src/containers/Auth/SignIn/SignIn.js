@@ -16,8 +16,10 @@ import { isPossiblePhoneNumber, isValidPhoneNumber } from 'libphonenumber-js';
 
 class SignIn extends Component {
   state = {
+    email: '',
     mobile: '',
     password: '',
+    dialCode: '',
     isSignUp: false,
     showError: false,
   };
@@ -32,6 +34,9 @@ class SignIn extends Component {
     this.setState({ showError: false });
   };
 
+  componentDidMount() {
+    this.props.onInitCountries();
+  }
   onSubmit = (e) => {
     e.preventDefault();
 
@@ -46,8 +51,7 @@ class SignIn extends Component {
     //     this.toastId = toast.error('Email is required');
     //   }
     //   return false;
-    // }
-    // else if (!validateEmail(this.state.email)) {
+    // } else if (!validateEmail(this.state.email)) {
     //   if (!toast.isActive(this.toastId)) {
     //     this.toastId = toast.error('Enter valid email');
     //   }
@@ -88,6 +92,7 @@ class SignIn extends Component {
     const users = {
       user: {
         uuid: uUid,
+        // email:this.state.email,
         mobile: this.state.mobile.slice(this.state.dialCode.length),
         password: this.state.password,
         dial_code: this.state.dialCode,
@@ -111,22 +116,30 @@ class SignIn extends Component {
       authRedirect = <Redirect to={this.props.authRedirectPath} />;
     }
 
-    // let defaultCountry = '';
-    // if (this.props.countryList && this.props.countryList.length > 0) {
-    //   let countryCode = this.props.countryList.map((country) => {
-    //     return country.code2.toLowerCase();
-    //   });
-    //   defaultCountry = (
-    //     <PhoneInput
-    //       onlyCountries={countryCode}
-    //       className={classes.input}
-    //       country={'in'}
-    //       value={this.state.mobile}
-    //       onChange={(mobile) => this.setState({ mobile })}
-    //       name="mobile"
-    //     />
-    //   );
+    // let authRedirect = null;
+    // if (this.props.isAuthenticated || this.props.verifyId) {
+    //   authRedirect = <Redirect to={this.props.authRedirectPath} />;
     // }
+
+    let defaultCountry = '';
+    if (this.props.countryList && this.props.countryList.length > 0) {
+      let countryCode = this.props.countryList.map((country) => {
+        return country.code2.toLowerCase();
+      });
+      defaultCountry = (
+        <PhoneInput
+          onlyCountries={countryCode}
+          className={classes.input}
+          // country={'in'}
+          value={this.state.mobile}
+          onChange={(mobile, country, e) => {
+            this.setState({ mobile: mobile });
+            this.setState({ dialCode: country.dialCode });
+          }}
+          name="mobile"
+        />
+      );
+    }
     console.log('isAuthenticated', isAuthenticated);
     return (
       <div className="row">
@@ -151,7 +164,7 @@ class SignIn extends Component {
           <h5 className={classes.titleAccount}>Login to your account</h5>
           <br />
           <form action="" method="post" onSubmit={this.onSubmit}>
-            {/* <div className="form-group mt-4">{defaultCountry}</div> */}
+            <div className="form-group mt-4">{defaultCountry}</div>
             {/* <div className="form-group mt-4">
               <input
                 className={classes.input}
@@ -163,7 +176,7 @@ class SignIn extends Component {
                 autoComplete="off"
               />
             </div> */}
-            <div className="form-group mt-4">
+            {/* <div className="form-group mt-4">
               <PhoneInput
                 // onlyCountries={countryCode}
                 className={classes.input}
@@ -175,7 +188,7 @@ class SignIn extends Component {
                 }}
                 name="mobile"
               />
-            </div>
+            </div> */}
             <div className="form-group mt-4">
               <input
                 className={classes.input}
@@ -231,6 +244,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onAuth: (userData, isSignUp) => dispatch(actions.auth(userData, isSignUp)),
+    onInitCountries: () => dispatch(actions.initCountries()),
   };
 };
 

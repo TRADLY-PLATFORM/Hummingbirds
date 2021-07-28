@@ -93,10 +93,7 @@ class SignUp extends Component {
       return false;
     }
 
-    // console.log(this.state.dialCode.length);
-    // let updateNumber = mobile.slice(this.state.dialCode.length);
-    // this.setState({ mobile: updateNumber });
-    // console.log(this.state.mobile);
+    // let mobile = this.state.mobile;
     // mobile = mobile.replace(/-/g, '');
     // mobile = mobile.match(/^\s*(\S+)\s*(.*?)\s*$/).slice(1);
     // let phoneCode = mobile[0].substring(1);
@@ -127,7 +124,7 @@ class SignUp extends Component {
   };
 
   componentDidMount() {
-    // this.props.onInitCountries();
+    this.props.onInitCountries();
   }
 
   render() {
@@ -142,22 +139,25 @@ class SignUp extends Component {
       authRedirect = <Redirect to={this.props.authRedirectPath} />;
     }
 
-    // let defaultCountry = '';
-    // if (this.props.countryList && this.props.countryList.length > 0) {
-    //   let countryCode = this.props.countryList.map((country) => {
-    //     return country.code2.toLowerCase();
-    //   });
-    //   defaultCountry = (
-    //     <PhoneInput
-    //       onlyCountries={countryCode}
-    //       className={classes.input}
-    //       country={'in'}
-    //       value={this.state.mobile}
-    //       onChange={(mobile) => this.setState({ mobile })}
-    //       name="mobile"
-    //     />
-    //   );
-    // }
+    let defaultCountry = '';
+    if (this.props.countryList && this.props.countryList.length > 0) {
+      let countryCode = this.props.countryList.map((country) => {
+        return country.code2.toLowerCase();
+      });
+      defaultCountry = (
+        <PhoneInput
+          onlyCountries={countryCode}
+          className={classes.input}
+          // country={'in'}
+          value={this.state.mobile}
+          onChange={(mobile, country, e) => {
+            this.setState({ mobile: mobile });
+            this.setState({ dialCode: country.dialCode });
+          }}
+          name="mobile"
+        />
+      );
+    }
     return (
       <div className="row">
         <Backdrop show={this.props.loading} />
@@ -217,7 +217,7 @@ class SignUp extends Component {
               />
               </div> */}
             <div className="form-group mt-4">
-              <PhoneInput
+              {/* <PhoneInput
                 // onlyCountries={countryCode}
                 className={classes.input}
                 country={'bd'}
@@ -227,7 +227,8 @@ class SignUp extends Component {
                   this.setState({ dialCode: country.dialCode });
                 }}
                 name="mobile"
-              />
+              /> */}
+              {defaultCountry}
             </div>
 
             <div className="form-group mt-4">
@@ -292,7 +293,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onAuth: (userData, isSignUp) => dispatch(actions.auth(userData, isSignUp)),
-    //onInitCountries: () => dispatch(actions.initCountries()),
+    onInitCountries: () => dispatch(actions.initCountries()),
   };
 };
 
