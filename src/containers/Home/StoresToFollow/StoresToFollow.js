@@ -50,8 +50,7 @@ const StoresToFollow = () => {
       <div className="col-lg-6  ">
         <h3 className={classes.headingTitle}>{title}</h3>
       </div>
-      <br />
-      <br />
+
       <div style={{ marginTop: '60px', marginLeft: '-10px', marginRight: '10px' }}>
         <ItemsCarousel
           infiniteLoop={false}
