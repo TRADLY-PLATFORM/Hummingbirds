@@ -22,6 +22,7 @@ import NoIamgeLogo from '../../assets/images/home/store/noImage.svg';
 import NoProductImage from '../../assets/images/rsz_noimage.png';
 import StoresToFollow from './StoresToFollow/StoresToFollow';
 import LatestProducts from './LatestProducts/LatestProducts';
+import Categories from './Categories/Categories';
 
 class Home extends Component {
   state = {
@@ -52,68 +53,7 @@ class Home extends Component {
     this.props.history.push('/listings');
   };
 
-  componentWillUpdate() {
-    if (this.props.categories && this.props.categories.length > 0 && this.state.loadOnce) {
-      console.log(this.props.categories);
-      let copyCategories = [...this.props.categories];
-      let lengthOfCategories = this.props.categories.length;
-      let firstCategorySet = '';
-      if (lengthOfCategories <= 4) {
-        firstCategorySet = copyCategories.slice(0, 4);
-      } else if (lengthOfCategories <= 8) {
-        firstCategorySet = copyCategories.slice(0, 8);
-      } else if (lengthOfCategories > 8) {
-        firstCategorySet = copyCategories.slice(0, 7);
-        let moreCategory = {
-          id: Math.random(),
-          name: 'More',
-          image_path: MoreLogo,
-          has_sub_category: true,
-          link: 'all-categories',
-        };
-        firstCategorySet.push(moreCategory);
-      }
-      this.setState({
-        categorySet: firstCategorySet,
-        categoryLength: lengthOfCategories,
-        loadOnce: false,
-      });
-    }
-  }
-
   render() {
-    let categoryContent = <Spinner show={true} styles="SpinnerCenter" />;
-    if (this.state.categorySet && this.state.categorySet.length > 0) {
-      if (this.state.categorySet <= 4) {
-        categoryContent = (
-          <div className="col-lg-12 col-md-12">
-            <div className="row">
-              <Category categories={this.state.categorySet} />
-            </div>
-          </div>
-        );
-      } else {
-        categoryContent = (
-          <>
-            <div className="col-lg-6 col-md-12">
-              <div className="row">
-                <Category categories={this.state.categorySet.slice(0, 4)} />
-              </div>
-            </div>
-            <div className="col-lg-6 col-md-12">
-              <div className="row">
-                <Category categories={this.state.categorySet.slice(4, 8)} />
-              </div>
-            </div>
-          </>
-        );
-      }
-    } else {
-      if (!this.state.show) {
-        categoryContent = '';
-      }
-    }
-
     let collectionContent = <Spinner show={true} styles="SpinnerCenter" />;
     console.log(this.props.collections);
     if (this.props.collections && this.props.collections.length > 0) {
@@ -136,7 +76,7 @@ class Home extends Component {
         <Backdrop show={this.props.loading} />
         <Spinner show={this.props.loading} />
         <HomeBanner images={this.props.promo_banners} />
-        <div className="row mt-5">{categoryContent}</div>
+        <Categories />
 
         {collectionContent}
 
