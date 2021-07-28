@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
 import { Link } from 'react-router-dom';
 import classes from './Header.module.css';
-import AvatarImage from '../../assets/images/header/avatar.jpg';
+import profileUser from '../../assets/images/header/profile-user.png';
 
 import { selectCategoryLists } from '../../store/selectors/product';
 import Listings from '../../containers/Listings/Listings';
@@ -79,7 +79,7 @@ const Header = (props) => {
               >
                 <img
                   className={classes.userAvatar}
-                  src={getUserImage() !== '' ? getUserImage() : AvatarImage}
+                  src={getUserImage() !== '' ? getUserImage() : profileUser}
                   alt="User Avatar"
                 />
                 <span className={classes.spanName}>{getUserName()}</span>
