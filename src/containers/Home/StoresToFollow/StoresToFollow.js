@@ -29,14 +29,14 @@ const StoresToFollow = () => {
 
         return (
           <div className={classes.wellStore + ' col-lg-12'} key={i}>
-            <div className={classes.imageDiv}>
-              <img src={imagePath} alt={list.name} title={list.name} />
-            </div>
-            <div className={classes.wellStoreDetails}>
-              <p style={{ fontWeight: 'bold', marginBottom: '1em' }}>{list.name}</p>
-              <p>{description}</p>
-            </div>
-            <Link to={`/store-details/${list.id}/${list.name}`}>
+            <Link to={`/store-details/${list.id}/${list.name}`} style={{ textDecoration: 'none' }}>
+              <div className={classes.imageDiv}>
+                <img src={imagePath} alt={list.name} title={list.name} />
+              </div>
+              <div className={classes.wellStoreDetails}>
+                <p style={{ fontWeight: 'bold', marginBottom: '1em' }}>{list.name}</p>
+                <p>{description}</p>
+              </div>
               <button className={classes.btnGreenFollow + ' mt-5'}>Follow</button>
             </Link>
           </div>
