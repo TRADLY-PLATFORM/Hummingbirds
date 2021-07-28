@@ -9,7 +9,7 @@
 }
 .wellStore {
   min-height: 18.5em;
-  padding: 30px 15px 15px 15px;
+  padding: 20px 40px;
   margin-bottom: 20px;
   background-color: #ffffff;
   border: 1px solid #e3e3e3;
@@ -17,19 +17,14 @@
   text-align: center;
   box-sizing: border-box;
 }
-.wellStore div {
+.wellStoreDetails {
   font-style: normal;
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 17px;
-  /* Neutral/Black */
-  color: #000000;
+  margin-top: 15px;
 }
 
-.wellStore p {
-  font-size: 18px;
+.wellStoreDetails p {
+  font-size: 15px;
   line-height: 22px;
-  margin-top: 1em;
   color: #4a4a4a;
   height: 15px;
 }
@@ -37,12 +32,13 @@
 .wellStore img {
   margin-bottom: 15px;
   width: 50%;
+  border-radius: 100%;
 }
 .imageDiv {
-  height: 130px;
+  height: 100px;
 }
 .btnGreenFollow {
-  padding: 8px 13px;
+  padding: 10px 13px;
   border: none;
   background: linear-gradient(180deg, #2bdbc0 0%, #13b58c 100%);
   border-radius: 24px;

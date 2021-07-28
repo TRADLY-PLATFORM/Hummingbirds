@@ -118,10 +118,12 @@ class Home extends Component {
     console.log(this.props.collections);
     if (this.props.collections && this.props.collections.length > 0) {
       collectionContent = (
-        <div>
+        <>
           <StoresToFollow />
+          <br />
+          <br />
           <LatestProducts />
-        </div>
+        </>
       );
     } else {
       if (!this.state.show) {

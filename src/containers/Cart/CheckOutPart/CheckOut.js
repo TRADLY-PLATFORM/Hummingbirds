@@ -2,14 +2,21 @@ import React, { useState } from 'react';
 import Modal from '../../../components/UI/Modal/Modal';
 import classes from './CheckOut.module.css';
 import doneImage from '../../../assets/images/Done.svg';
+import { useDispatch } from 'react-redux';
+import * as actions from '../../../store/actions/index';
 
 const CheckOut = () => {
+  const dispatch = useDispatch();
   const [orderSuccess, setOrderSuccess] = useState(false);
   const showResult = () => {
     setOrderSuccess(true);
   };
   const closeResult = () => {
     setOrderSuccess(false);
+  };
+
+  const payment = () => {
+    dispatch(actions.connectStripe());
   };
 
   return (

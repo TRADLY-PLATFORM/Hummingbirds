@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.21.1",
     "crypto-js": "^4.1.1",
+    "custom-env": "^2.0.1",
     "google-map-react": "^1.1.7",
     "http": "0.0.0",
     "immutable": "^4.0.0-rc.12",

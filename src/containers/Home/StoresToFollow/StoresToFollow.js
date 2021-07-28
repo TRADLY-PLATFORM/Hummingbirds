@@ -23,8 +23,8 @@ const StoresToFollow = () => {
         }
 
         let description = list.description;
-        if (description.length > 35) {
-          description = description.substring(0, 35) + '...';
+        if (description.length > 25) {
+          description = description.substring(0, 25) + '...';
         }
 
         return (
@@ -32,10 +32,12 @@ const StoresToFollow = () => {
             <div className={classes.imageDiv}>
               <img src={imagePath} alt={list.name} title={list.name} />
             </div>
-            <div>{list.name}</div>
-            <p>{description}</p>
+            <div className={classes.wellStoreDetails}>
+              <p style={{ fontWeight: 'bold', marginBottom: '1em' }}>{list.name}</p>
+              <p>{description}</p>
+            </div>
             <Link to={`/store-details/${list.id}/${list.name}`}>
-              <button className={classes.btnGreenFollow + ' mt-5'}>View Details</button>
+              <button className={classes.btnGreenFollow + ' mt-5'}>Follow</button>
             </Link>
           </div>
         );
@@ -45,10 +47,10 @@ const StoresToFollow = () => {
 
   return (
     <div className="row">
-      <div className="col-lg-6 nopaddingLeft">
+      <div className="col-lg-6  ">
         <h3 className={classes.headingTitle}>{title}</h3>
       </div>
-      <div style={{ marginTop: '60px' }}>
+      <div style={{ marginTop: '60px', marginLeft: '-10px', marginRight: '10px' }}>
         <ItemsCarousel
           infiniteLoop={false}
           gutter={12}

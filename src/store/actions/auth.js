@@ -49,7 +49,7 @@ export const checkAuthTimeout = (expirationTime) => {
     setTimeout(() => {
       //dispatch(logout());
       //dispatch(refreshToken());
-    }, expirationTime * 1000);
+    }, expirationTime * 500000);
   };
 };
 
@@ -63,7 +63,7 @@ export const authVerification = (verificationData) => {
         //  console.log(response.data.data);
         if (response.data.status) {
           const setTimeExpiry = EXPIRY_TIME;
-          const expirationDate = new Date(new Date().getTime() + setTimeExpiry * 5000);
+          const expirationDate = new Date(new Date().getTime() + setTimeExpiry * 500000);
           localStorage.setItem('token', response.data.data.user.key.auth_key);
           //   localStorage.setItem('refresh_key', response.data.data.user.key.refresh_key);
           //   localStorage.setItem('userId', response.data.data.user.id);
@@ -120,7 +120,7 @@ export const auth = (userData, isSignup) => {
           console.log(response);
           console.log('====================================');
           const setTimeExpiry = EXPIRY_TIME;
-          const expirationDate = new Date(new Date().getTime() + setTimeExpiry * 5000);
+          const expirationDate = new Date(new Date().getTime() + setTimeExpiry * 500000);
           //   localStorage.setItem('token', response.data.data.user.key.auth_key);
           //   localStorage.setItem('refresh_key', response.data.data.user.key.refresh_key);
           //   localStorage.setItem('userId', response.data.data.user.id);
@@ -157,7 +157,7 @@ export const authCheckState = () => {
     //     console.log('checking----------4');
     const response = localStorage.getItem('response');
     dispatch(authSuccess(JSON.parse(response)));
-    dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 1000));
+    dispatch(checkAuthTimeout((expirationDate.getTime() - new Date().getTime()) / 500000));
     //   }
     // }
   };
@@ -177,7 +177,7 @@ export const refreshToken = () => {
       })
       .then((response) => {
         const setTimeExpiry = EXPIRY_TIME;
-        const expirationDate = new Date(new Date().getTime() + setTimeExpiry * 1000);
+        const expirationDate = new Date(new Date().getTime() + setTimeExpiry * 500000);
         localStorage.setItem('token', response.data.data.user.key.auth_key);
         localStorage.setItem('refresh_key', response.data.data.user.key.refresh_key);
         localStorage.setItem('expirationDate', expirationDate);

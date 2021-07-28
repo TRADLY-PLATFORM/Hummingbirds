@@ -16,7 +16,6 @@ import { isPossiblePhoneNumber, isValidPhoneNumber } from 'libphonenumber-js';
 
 class SignIn extends Component {
   state = {
-    email: '',
     mobile: '',
     password: '',
     isSignUp: false,
@@ -36,37 +35,52 @@ class SignIn extends Component {
   onSubmit = (e) => {
     e.preventDefault();
 
-    // if (this.state.mobile === '') {
-    //   if (!toast.isActive(this.toastId)) {
-    //     this.toastId = toast.error('Phone number is required');
-    //   }
-    //   return false;
-    // }
-    if (this.state.email === '') {
+    if (this.state.mobile === '') {
       if (!toast.isActive(this.toastId)) {
-        this.toastId = toast.error('Email is required');
-      }
-      return false;
-    } else if (!validateEmail(this.state.email)) {
-      if (!toast.isActive(this.toastId)) {
-        this.toastId = toast.error('Enter valid email');
+        this.toastId = toast.error('Phone number is required');
       }
       return false;
     }
-    // let mobile = this.state.mobile;
-    // let checkNumber = isValidPhoneNumber(`+${mobile}`);
-    // if (checkNumber !== true) {
+    // if (this.state.email === '') {
     //   if (!toast.isActive(this.toastId)) {
-    //     this.toastId = toast.error('Invalid phone number.');
+    //     this.toastId = toast.error('Email is required');
     //   }
     //   return false;
     // }
-    else if (this.state.password === '') {
+    // else if (!validateEmail(this.state.email)) {
+    //   if (!toast.isActive(this.toastId)) {
+    //     this.toastId = toast.error('Enter valid email');
+    //   }
+    //   return false;
+    // }
+    let mobile = this.state.mobile;
+    let checkNumber = isValidPhoneNumber(`+${mobile}`);
+    if (checkNumber !== true) {
+      if (!toast.isActive(this.toastId)) {
+        this.toastId = toast.error('Invalid phone number.');
+      }
+      return false;
+    } else if (this.state.password === '') {
       if (!toast.isActive(this.toastId)) {
         this.toastId = toast.error('Password is required');
       }
       return false;
     }
+
+    // let mobile = this.state.mobile;
+    // mobile = mobile.replace(/-/g, '');
+    // mobile = mobile.match(/^\s*(\S+)\s*(.*?)\s*$/).slice(1);
+    // let phoneCode = mobile[0].substring(1);
+    // let phoneNumber = mobile[1];
+    // let filterCountry = countryFilter(phoneCode, this.props.countryList);
+    // if (phoneNumber.length !== filterCountry.mobile_number_legth) {
+    //   let digits =
+    //     filterCountry.mobile_number_legth !== undefined ? filterCountry.mobile_number_legth : 10;
+    //   if (!toast.isActive(this.toastId)) {
+    //     this.toastId = toast.error('Phone number length should be ' + digits + ' digits');
+    //   }
+    //   return false;
+    // }
 
     this.setState({ showError: true });
     const uUid = uuid();
@@ -74,10 +88,9 @@ class SignIn extends Component {
     const users = {
       user: {
         uuid: uUid,
-        // mobile: this.state.mobile.slice(this.state.dialCode.length),
-        email: this.state.email,
+        mobile: this.state.mobile.slice(this.state.dialCode.length),
         password: this.state.password,
-        // dial_code: this.state.dialCode,
+        dial_code: this.state.dialCode,
         type: 'client',
       },
     };
@@ -138,7 +151,8 @@ class SignIn extends Component {
           <h5 className={classes.titleAccount}>Login to your account</h5>
           <br />
           <form action="" method="post" onSubmit={this.onSubmit}>
-            <div className="form-group mt-4">
+            {/* <div className="form-group mt-4">{defaultCountry}</div> */}
+            {/* <div className="form-group mt-4">
               <input
                 className={classes.input}
                 name="email"
@@ -148,8 +162,8 @@ class SignIn extends Component {
                 onChange={this.handleChange}
                 autoComplete="off"
               />
-            </div>
-            {/* <div className="form-group mt-4">
+            </div> */}
+            <div className="form-group mt-4">
               <PhoneInput
                 // onlyCountries={countryCode}
                 className={classes.input}
@@ -161,7 +175,7 @@ class SignIn extends Component {
                 }}
                 name="mobile"
               />
-            </div> */}
+            </div>
             <div className="form-group mt-4">
               <input
                 className={classes.input}

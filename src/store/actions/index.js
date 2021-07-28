@@ -23,3 +23,5 @@ export { initStoreDetails, userStoreLists, CreateStore, postStoreFollow } from '
 export { initGroupDetails, CreateGroup } from './group';
 
 export { getCartList, addToCart } from './cart';
+
+export { connectStripe } from './payment';
