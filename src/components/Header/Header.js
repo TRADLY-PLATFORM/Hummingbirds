@@ -10,6 +10,8 @@ import axios from '../../axios';
 
 //import CartImage from '../../assets/images/header/cart.svg';
 import CartImage from '../../assets/images/header/cart.svg';
+import NoProductImage from '../../assets/images/rsz_noimage.png';
+import NoIamgeLogo from '../../assets/images/home/store/noImage.svg';
 
 // import Skeleton from '../UI/Skeleton/Skeleton';
 
@@ -43,6 +45,11 @@ const Header = (props) => {
     return userData.get('profile_pic', '');
   }
 
+  const backClick = () => {
+    setSearchText('');
+    setShowSearchResult(false);
+  };
+
   return (
     <>
       <header className={classes.header}>
@@ -51,6 +58,7 @@ const Header = (props) => {
             <span className="glyphicon glyphicon-search form-control-feedback"></span>
             <input
               type="text"
+              value={searchText}
               className="form-control input-lg"
               placeholder="Search Product"
               onChange={handleChange}
@@ -113,20 +121,63 @@ const Header = (props) => {
           className={classes.searchResultShowing}
           style={{ display: showSearchResult ? 'block' : 'none' }}
         >
-          <button className={classes.closeBtn} onClick={() => setShowSearchResult(false)}>
-            <i className="fa fa-arrow-left "></i> back to home
+          <button className={classes.closeBtn} onClick={backClick}>
+            <i className="fa fa-arrow-left "></i> Back
           </button>
 
           <div>
             {searchResult.length != 0 ? (
               <div className={classes.find}>
-                {searchResult.map((result) => {
+                {searchResult.map((list, i) => {
+                  let imagePath = NoProductImage;
+                  if (list.images[0] !== undefined) {
+                    imagePath = list.images[0];
+                  }
                   return (
-                    <div className={classes.singleResult}>
-                      <img src={result.images[0]} alt="" />
+                    <Link
+                      to={`/product-details/${list.id}/${list.title}`}
+                      key={i}
+                      style={{ textDecoration: 'none' }}
+                      onClick={backClick}
+                    >
+                      <div className={classes.latestTrend}>
+                        <img
+                          src={imagePath}
+                          className={classes.storeImage}
+                          alt={list.title}
+                          title={list.title}
+                        />
+                        <p>{list.title}</p>
+                        <div className={classes.bottomDesc}>
+                          {list.account !== undefined && list.account.images[0] ? (
+                            <div>
+                              <img
+                                src={list.account.images[0]}
+                                alt={list.account.name}
+                                title={list.account.name}
+                              />
+                              <span>
+                                {list.account.name.length < 15
+                                  ? list.account.name
+                                  : list.account.name.substring(0, 14) + '..'}
+                              </span>
+                            </div>
+                          ) : (
+                            <div>
+                              <img src={NoIamgeLogo} alt={list.title} title={list.title} />
+                              <span>N/A</span>
+                            </div>
+                          )}
 
-                      <p>{result.title}</p>
-                    </div>
+                          <div className={classes.amountTitle}>
+                            {list.list_price.formatted !== undefined
+                              ? list.list_price.formatted
+                              : ''}
+                          </div>
+                        </div>
+                      </div>
+                      <div></div>
+                    </Link>
                   );
                 })}
               </div>
