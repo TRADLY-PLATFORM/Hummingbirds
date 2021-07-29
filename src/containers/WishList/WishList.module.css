@@ -12,6 +12,12 @@
   top: -0.9rem;
 }
 
+.wishList {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
 .wishListItem {
   padding: 19px;
   margin-bottom: 20px;

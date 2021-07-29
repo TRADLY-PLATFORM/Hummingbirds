@@ -48,7 +48,7 @@ export const checkAuthTimeout = (expirationTime) => {
   return (dispatch) => {
     setTimeout(() => {
       //dispatch(logout());
-      //dispatch(refreshToken());
+      dispatch(refreshToken());
     }, expirationTime * 500000);
   };
 };
@@ -217,7 +217,7 @@ export const initCountries = () => {
     if (!countryStorage) {
       // dispatch(startCountries());
       axios
-        .get('/app/v1/countries', {
+        .get('/v1/tenants/countries', {
           headers: {
             Authorization: 'Bearer ' + localStorage.getItem('tenant_key') ?? ACCESS_TOKEN, // should be configured in axios
           },

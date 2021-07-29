@@ -249,10 +249,20 @@ class ProductDetails extends Component {
                   </div>
                   <div className=" ">
                     <button className="btnGreenStyle ">Follow</button>
-                    {isAuthenticated !== '' && (
+                    {this.props.isAuthentication === null ? (
+                      <Link to="/sign-in">
+                        <button
+                          className="btnGreenStyle pull-right "
+                          style={{ marginLeft: '15px' }}
+                        >
+                          Like
+                        </button>
+                      </Link>
+                    ) : (
                       <button
                         onClick={this.productLike}
-                        className="btnGreenStyle pull-right  mr-10"
+                        className="btnGreenStyle pull-right "
+                        style={{ marginLeft: '15px' }}
                       >
                         Like
                       </button>

@@ -49,7 +49,7 @@ export const countryFilter = (code, data) => {
 
 export const ACCESS_TOKEN = localStorage.getItem('tenant_key');
 
-export const EXPIRY_TIME = 2500;
+export const EXPIRY_TIME = 250000;
 
 export const ENCRYPT = (text) => {
   if (text !== '' || text !== null || text !== undefined) {
