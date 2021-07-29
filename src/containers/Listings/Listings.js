@@ -124,9 +124,10 @@ class Listings extends Component {
     let listing = '';
     let showLoadButton = null;
     const { listings, total_records, loading } = this.props;
-    console.log('total_records', total_records);
+    console.log('total_records', total_records,  listings);
     const { selectedOption } = this.state;
     const { categoryValue, supplierValue, locationValue } = selectedOption;
+    console.log(categoryValue, supplierValue, locationValue);
     const productsListing = listings
       .filter((item) =>
         categoryValue !== null
@@ -151,6 +152,7 @@ class Listings extends Component {
         </div>
       );
     }
+    console.log(productsListing);
     if (productsListing && productsListing.size > 0) {
       listing = <Listing listings={productsListing} total_records={total_records} />;
       if (total_records > totalCountOfProducts && productsListing.size !== total_records) {
