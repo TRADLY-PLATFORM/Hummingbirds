@@ -68,6 +68,7 @@ class App extends Component {
         <Route path="/sign-in" exact component={SignIn} />
         <Route path="/logout" exact component={Logout} />
         <Route path="/listings" exact component={Listings} />
+        <Route path="/listings/:categoryID" exact component={Listings} />
         <Route path="/verification/:verifyID" exact component={PhoneVerification} />
         <Route path="/" exact component={Home} />
         <Route path="/product-details/:id/:name" exact component={ProductDetails} />

@@ -10,6 +10,6 @@ export const sortByOptions = [
   { value: 'newest_first', label: 'Newest first' },
 ];
 
-export const totalCountOfProducts = 20;
+export const totalCountOfProducts = 25;
 
 export const MapKey = 'AIzaSyCXCZxpNJ3Y8KzXGkrJUkdZ7vyT2M9T-c4';

@@ -27,7 +27,6 @@ class Listings extends Component {
     },
     loadOnce: false,
   };
-
   handleChange = (selectedOption, selectedName) => {
     let name = selectedName.name;
     let selectedValue = { ...this.state.selectedOption };
@@ -45,7 +44,13 @@ class Listings extends Component {
   };
 
   componentDidMount() {
-    this.props.onInitListings(0, '', totalCountOfProducts);
+    const prams = this.props.match.params.categoryID;
+    if (prams !== undefined) {
+      this.props.onInitListings(0, '&category_id=' + prams, totalCountOfProducts);
+    } else {
+      this.props.onInitListings(0, '', totalCountOfProducts);
+    }
+
     this.props.onCategoryLists();
     this.props.onSupplierLists();
   }
@@ -121,10 +126,12 @@ class Listings extends Component {
   };
 
   render() {
+    console.log(this.props.match.params.categoryID);
+
     let listing = '';
     let showLoadButton = null;
     const { listings, total_records, loading } = this.props;
-    console.log('total_records', total_records,  listings);
+    console.log('total_records', total_records, listings);
     const { selectedOption } = this.state;
     const { categoryValue, supplierValue, locationValue } = selectedOption;
     console.log(categoryValue, supplierValue, locationValue);

@@ -34,7 +34,7 @@ const categoryHtmlHandler = (categories, categoryLength) => {
     //   link = '/' + category.link;
     // }
     return (
-      <Link to={link} key={category.id}>
+      <Link to={`/listings/${category.id}`} key={category.id}>
         <div className="col-sm-3">
           <div className={classes.wellCategory}>
             <img
