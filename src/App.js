@@ -35,6 +35,7 @@ import withProduct from './containers/Store/withProduct';
 import addProduct from './containers/Store/addProduct';
 import reviewPage from './containers/Order/reviewPage';
 import detailOrder from './containers/Order/detailOrder';
+import ListingsByCategory from './containers/ListingsByCategory/ListingsByCategory';
 
 // const rollbarConfig = {
 //   accessToken: '3b6226f9262f4bc8bc2b9e3392f708e5',
@@ -68,7 +69,7 @@ class App extends Component {
         <Route path="/sign-in" exact component={SignIn} />
         <Route path="/logout" exact component={Logout} />
         <Route path="/listings" exact component={Listings} />
-        <Route path="/listings/:categoryID" exact component={Listings} />
+        <Route path="/category/:categoryName/:categoryID" exact component={ListingsByCategory} />
         <Route path="/verification/:verifyID" exact component={PhoneVerification} />
         <Route path="/" exact component={Home} />
         <Route path="/product-details/:id/:name" exact component={ProductDetails} />

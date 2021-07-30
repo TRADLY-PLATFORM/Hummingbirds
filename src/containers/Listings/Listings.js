@@ -44,13 +44,7 @@ class Listings extends Component {
   };
 
   componentDidMount() {
-    const prams = this.props.match.params.categoryID;
-    if (prams !== undefined) {
-      this.props.onInitListings(0, '&category_id=' + prams, totalCountOfProducts);
-    } else {
-      this.props.onInitListings(0, '', totalCountOfProducts);
-    }
-
+    this.props.onInitListings(0, '', totalCountOfProducts);
     this.props.onCategoryLists();
     this.props.onSupplierLists();
   }

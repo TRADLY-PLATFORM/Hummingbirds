@@ -266,11 +266,22 @@ class ProductDetails extends Component {
                     <div>@{this.getStoreOwner()}</div>
                   </div>
                   <div className=" ">
-                    <button className="btnGreenStyle " onClick={this.storeFollow}>
-                      {this.props.productDetails.getIn(['listing', 'account', 'following'], '')
-                        ? 'following'
-                        : 'follow'}
-                    </button>
+                    {this.props.isAuthentication === null ? (
+                      <Link to="/sign-in">
+                        <button
+                          className="btnGreenStyle pull-right "
+                          style={{ marginLeft: '15px' }}
+                        >
+                          following
+                        </button>
+                      </Link>
+                    ) : (
+                      <button className="btnGreenStyle " onClick={this.storeFollow}>
+                        {this.props.productDetails.getIn(['listing', 'account', 'following'], '')
+                          ? 'following'
+                          : 'follow'}
+                      </button>
+                    )}
                     {this.props.isAuthentication === null ? (
                       <Link to="/sign-in">
                         <button

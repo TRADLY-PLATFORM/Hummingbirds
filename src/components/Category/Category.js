@@ -33,9 +33,11 @@ const categoryHtmlHandler = (categories, categoryLength) => {
     // if (category.link) {
     //   link = '/' + category.link;
     // }
+    let categoryName = category.name.replace(/\//g, '-');
+
     return (
       <Link
-        to={`/listings/${category.id}`}
+        to={`/category/${categoryName}/${category.id}`}
         key={category.id}
         className="col-sm-3"
         style={{ textDecoration: 'none' }}
