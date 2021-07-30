@@ -34,17 +34,20 @@ const categoryHtmlHandler = (categories, categoryLength) => {
     //   link = '/' + category.link;
     // }
     return (
-      <Link to={`/listings/${category.id}`} key={category.id}>
-        <div className="col-sm-3">
-          <div className={classes.wellCategory}>
-            <img
-              src={category.image_path}
-              alt={category.name}
-              title={category.name}
-              style={{ width: '32px', height: '32px' }}
-            />
-            <p>{category.name}</p>
-          </div>
+      <Link
+        to={`/listings/${category.id}`}
+        key={category.id}
+        className="col-sm-3"
+        style={{ textDecoration: 'none' }}
+      >
+        <div className={classes.wellCategory}>
+          <img
+            src={category.image_path}
+            alt={category.name}
+            title={category.name}
+            style={{ width: '32px', height: '32px' }}
+          />
+          <p>{category.name}</p>
         </div>
       </Link>
     );

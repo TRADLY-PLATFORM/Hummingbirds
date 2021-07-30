@@ -169,6 +169,17 @@ class ProductDetails extends Component {
     return '';
   };
 
+  storeFollow = () => {
+    const { productDetails } = this.props;
+    const storeId = productDetails.getIn(['listing', 'account', 'id'], '');
+    let IsFollowing = false;
+    if (productDetails.getIn(['listing', 'account', 'following'], '') !== false) {
+      IsFollowing = true;
+    }
+    console.log(storeId);
+    this.props.onStoreFollowUnFollow(storeId, IsFollowing);
+  };
+
   productLike = () => {
     const { productDetails } = this.props;
     const productId = productDetails.getIn(['listing', 'id'], '');
@@ -188,18 +199,25 @@ class ProductDetails extends Component {
   };
 
   render() {
-    const { error, productDetails, message, isAuthenticated } = this.props;
+    const {
+      error,
+      productDetails,
+      message,
+      isAuthenticated,
+      followError,
+      followMessage,
+    } = this.props;
     let toastMessage = null;
-    if (error) {
-      toastMessage = <Toast type="error" message={message} />;
+    if (error || followError) {
+      toastMessage = <Toast type="error" message={message || followMessage} />;
     }
     console.log(productDetails.getIn(['listing']));
     console.log('isAuthenticated', isAuthenticated);
     console.log(this.props.token);
     return (
       <Aux>
-        <Backdrop show={this.props.loading} />
-        <Spinner show={this.props.loading} />
+        <Backdrop show={this.props.loading || this.props.followLoading} />
+        <Spinner show={this.props.loading || this.props.followLoading} />
         {toastMessage}
 
         <div className="row ">
@@ -248,7 +266,11 @@ class ProductDetails extends Component {
                     <div>@{this.getStoreOwner()}</div>
                   </div>
                   <div className=" ">
-                    <button className="btnGreenStyle ">Follow</button>
+                    <button className="btnGreenStyle " onClick={this.storeFollow}>
+                      {this.props.productDetails.getIn(['listing', 'account', 'following'], '')
+                        ? 'following'
+                        : 'follow'}
+                    </button>
                     {this.props.isAuthentication === null ? (
                       <Link to="/sign-in">
                         <button
@@ -354,6 +376,9 @@ const mapStateToProps = (state) => {
     productDetails: selectProductDetails(state),
     isAuthenticated: selectUserId(state),
     token: state.auth.token,
+    followLoading: state.store.loading,
+    followError: state.store.error,
+    followMessage: state.store.message,
   };
 };
 
@@ -361,6 +386,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onInitProductDetails: (id) => dispatch(actions.initProductDetails(id)),
     onProductLikeDisLike: (id) => dispatch(actions.onProductLikeDisLike(id)),
+    onStoreFollowUnFollow: (id, IsFollowing) => dispatch(actions.postStoreFollow(id, IsFollowing)),
     onGetCart: () => dispatch(actions.getCartList()),
     onAddToCart: (data) => dispatch(actions.addToCart(data)),
   };

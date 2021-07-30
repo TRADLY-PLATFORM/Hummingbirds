@@ -143,20 +143,37 @@ export const postStoreFollowSuccess = () => {
   };
 };
 
-export const postStoreFollow = (storeId) => {
+export const postStoreFollow = (storeId, IsFollowing) => {
   return (dispatch) => {
     dispatch(postStoreFollowRequest());
-    axios
-      .post(`/v1/accounts/${storeId}/follow`, {})
-      .then((response) => {
-        if (response.data.status) {
-          dispatch(postStoreFollowSuccess());
-        } else {
+    if (IsFollowing === false) {
+      axios
+        .post(`/v1/accounts/${storeId}/follow`)
+        .then((response) => {
+          console.log(response);
+          if (response.data.status) {
+            dispatch(postStoreFollowSuccess());
+          } else {
+            dispatch(postStoreFollowFailed());
+          }
+        })
+        .catch((error) => {
           dispatch(postStoreFollowFailed());
-        }
-      })
-      .catch((error) => {
-        dispatch(postStoreFollowFailed());
-      });
+        });
+    } else {
+      axios
+        .delete(`/v1/accounts/${storeId}/follow`)
+        .then((response) => {
+          console.log(response);
+          if (response.data.status) {
+            dispatch(postStoreFollowSuccess());
+          } else {
+            dispatch(postStoreFollowFailed());
+          }
+        })
+        .catch((error) => {
+          dispatch(postStoreFollowFailed());
+        });
+    }
   };
 };

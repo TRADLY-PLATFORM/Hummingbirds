@@ -76,9 +76,11 @@ class Home extends Component {
         <Backdrop show={this.props.loading} />
         <Spinner show={this.props.loading} />
         <HomeBanner images={this.props.promo_banners} />
-        <Categories />
+        <div>
+          <Categories />
+        </div>
 
-        {collectionContent}
+        <div>{collectionContent}</div>
 
         <br />
         <br />
