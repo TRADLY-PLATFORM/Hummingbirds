@@ -63,7 +63,7 @@ const Categories = () => {
   //   }
   // }
   return (
-    <div style={{ marginTop: '20px' }}>
+    <div style={{ marginTop: '20px', minHeight: '150px' }}>
       {categorySet && categorySet.length > 5 ? (
         <>
           <div className="col-lg-12 col-md-12">

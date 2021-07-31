@@ -139,3 +139,20 @@
 .buttons button {
   font-size: 18px;
 }
+
+.heartDisable {
+  width: 40px;
+  height: 40px;
+  background-color: #13b58c;
+  padding: 10px;
+  border-radius: 50%;
+}
+
+.heartActive{
+  width: 40px;
+  height: 40px;
+  background-color: rgb(218, 216, 216);
+  padding: 10px;
+  border-radius: 50%;
+  border:1px solid rgba(224, 224, 224, 0.924), 0.924);
+}

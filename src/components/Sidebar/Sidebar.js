@@ -114,7 +114,7 @@ class Sidebar extends Component {
                 <span>Listings</span>
               </Link>
             </li>
-            {/* <li className={url === '/my-transaction' ? 'active' : ''}>
+            <li className={url === '/my-transaction' ? 'active' : ''}>
               <Link to="/my-transaction">
                 <img
                   className="img-fluid"
@@ -124,7 +124,7 @@ class Sidebar extends Component {
                 />
                 <span>My Transaction</span>
               </Link>
-            </li> */}
+            </li>
             <li>
               {!this.props.isAuthentication ? (
                 <Link to="#" onClick={(path) => this.authRedirectHandler('/store')}>

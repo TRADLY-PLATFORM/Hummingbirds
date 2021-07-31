@@ -14,10 +14,13 @@ import * as actions from '../../store/actions/index';
 import { selectProductDetails } from '../../store/selectors/product';
 import { selectUserId } from '../../store/selectors/auth';
 import Maps from '../../components/UI/Maps/Maps';
+import heartActive from '../../assets/images/products/heartActive.png';
+import heartDisable from '../../assets/images/products/heartDisable.png';
 
 class ProductDetails extends Component {
   state = {
     maps: false,
+    like: false,
   };
 
   componentDidMount() {
@@ -177,14 +180,35 @@ class ProductDetails extends Component {
       IsFollowing = true;
     }
     console.log(storeId);
-    this.props.onStoreFollowUnFollow(storeId, IsFollowing);
+    this.timer = setTimeout(() => {
+      this.props.onStoreFollowUnFollow(storeId, IsFollowing);
+    }, 1000);
+
+    this.timer = setTimeout(() => {
+      if (!this.props.followError) {
+        this.props.onInitProductDetails(this.props.match.params.id);
+      }
+    }, 2000);
   };
 
   productLike = () => {
     const { productDetails } = this.props;
+
+    let isLiked = false;
+    if (productDetails.getIn(['listing', 'liked'], '') !== isLiked) {
+      isLiked = true;
+    }
     const productId = productDetails.getIn(['listing', 'id'], '');
     console.log('productDetails', productDetails, productId);
-    this.props.onProductLikeDisLike(productId);
+    this.timer = setTimeout(() => {
+      this.props.onProductLikeDisLike(productId, isLiked);
+    }, 1000);
+
+    this.timer = setTimeout(() => {
+      if (!this.props.error) {
+        this.props.onInitProductDetails(this.props.match.params.id);
+      }
+    }, 2000);
   };
   addToCart = () => {
     const { productDetails } = this.props;
@@ -196,6 +220,9 @@ class ProductDetails extends Component {
       },
     };
     this.props.onAddToCart(cartData);
+  };
+  getImage = () => {
+    return <h2>Hello</h2>;
   };
 
   render() {
@@ -265,7 +292,7 @@ class ProductDetails extends Component {
                     <h3>{this.getStoreName()}</h3>
                     <div>@{this.getStoreOwner()}</div>
                   </div>
-                  <div className=" ">
+                  <div className=" " style={{ display: 'flex', alignItems: 'center' }}>
                     {this.props.isAuthentication === null ? (
                       <Link to="/sign-in">
                         <button
@@ -294,10 +321,19 @@ class ProductDetails extends Component {
                     ) : (
                       <button
                         onClick={this.productLike}
-                        className="btnGreenStyle pull-right "
-                        style={{ marginLeft: '15px' }}
+                        className="  pull-right "
+                        style={{
+                          marginLeft: '15px',
+                          outline: 'none',
+                          border: 'none',
+                          backgroundColor: 'white',
+                        }}
                       >
-                        Like
+                        {productDetails.getIn(['listing', 'liked'], '') ? (
+                          <img className={classes.heartActive} src={heartActive} alt="" />
+                        ) : (
+                          <img className={classes.heartDisable} src={heartDisable} alt="" />
+                        )}
                       </button>
                     )}
                   </div>
@@ -396,7 +432,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onInitProductDetails: (id) => dispatch(actions.initProductDetails(id)),
-    onProductLikeDisLike: (id) => dispatch(actions.onProductLikeDisLike(id)),
+    onProductLikeDisLike: (id, isLiked) => dispatch(actions.onProductLikeDisLike(id, isLiked)),
     onStoreFollowUnFollow: (id, IsFollowing) => dispatch(actions.postStoreFollow(id, IsFollowing)),
     onGetCart: () => dispatch(actions.getCartList()),
     onAddToCart: (data) => dispatch(actions.addToCart(data)),
