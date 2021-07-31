@@ -24,6 +24,14 @@ class PhoneVerification extends Component {
     this.setState({ showError: false });
   };
 
+  autoTab = (e) => {
+    const check = e.target.value === e.target.maxlength;
+    const field = document.getElementsByTagName('input').nextSibling;
+    if (check === true) {
+      field.focus();
+    }
+  };
+
   onSubmit = (e) => {
     e.preventDefault();
 
@@ -92,28 +100,55 @@ class PhoneVerification extends Component {
               <div>
                 <input
                   type="text"
-                  className={classes.PhoneDigit + ' form-control'}
+                  className={classes.PhoneDigit}
                   maxLength="6"
                   value={this.state.verificationCode}
                   name="verificationCode"
                   onChange={this.handleChange}
                 />
               </div>
-              {/* <div className={classes.col2}>
-                        <input type="text" className={ classes.PhoneDigit + " form-control" } maxLength="1"/>
-                        </div>
-                        <div className={classes.col2}>
-                        <input type="text" className={ classes.PhoneDigit + " form-control" } maxLength="1"/>
-                        </div>
-                        <div className={classes.col2}>
-                        <input type="text" className={ classes.PhoneDigit + " form-control" } maxLength="1"/>
-                        </div>
-                        <div className={classes.col2}>
-                        <input type="text" className={ classes.PhoneDigit + " form-control" } maxLength="1"/>
-                        </div>
-                        <div className={classes.col2}>
-                        <input type="text" className={ classes.PhoneDigit + " form-control" } maxLength="1"/>
-                        </div> */}
+
+              {/* <input
+                type="text"
+                className={classes.PhoneDigit + ' form-control'}
+                maxLength="1"
+                onChange={this.autoTab}
+              />
+
+              <input
+                type="text"
+                className={classes.PhoneDigit + ' form-control'}
+                maxLength="1"
+                onChange={this.autoTab}
+              />
+
+              <input
+                type="text"
+                className={classes.PhoneDigit + ' form-control'}
+                maxLength="1"
+                onChange={this.autoTab}
+              />
+
+              <input
+                type="text"
+                className={classes.PhoneDigit + ' form-control'}
+                maxLength="1"
+                onChange={this.autoTab}
+              />
+
+              <input
+                type="text"
+                className={classes.PhoneDigit + ' form-control'}
+                maxLength="1"
+                onChange={this.autoTab}
+              />
+
+              <input
+                type="text"
+                className={classes.PhoneDigit + ' form-control'}
+                maxLength="1"
+                onChange={this.autoTab}
+              /> */}
             </div>
 
             <div className="text-center mt-5">

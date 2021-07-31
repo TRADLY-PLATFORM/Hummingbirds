@@ -29,6 +29,10 @@ class CreateStore extends Component {
     type: '',
   };
 
+  componentDidMount() {
+    this.props.onInitHomeCollections();
+  }
+
   createStore = (e) => {
     e.preventDefault();
 
@@ -74,17 +78,10 @@ class CreateStore extends Component {
     this.setState({ showError: false });
   };
   getType = (e) => {
-    if (e.target.children.length > 0) {
-      this.setState({
-        type: e.target.children[1].innerHTML,
-      });
-      console.log(e.target.children[1].innerHTML);
-    } else {
-      this.setState({
-        type: e.target.alt || e.target.innerHTML,
-      });
-      console.log(e.target.alt || e.target.innerHTML);
-    }
+    this.setState({
+      type: e,
+    });
+    console.log(e);
   };
 
   render() {
@@ -163,77 +160,47 @@ class CreateStore extends Component {
                 </div>
 
                 <div className="form-group mt-2">
-                  <input
+                  <textarea
+                    rows="4"
                     className={classes.input + ' form-control input-lg '}
                     name="description"
                     value={this.state.description}
                     onChange={this.handleChange}
                     type="text"
                     placeholder="Store Description"
+                    style={{ resize: 'none' }}
                   />
                 </div>
               </div>
 
-              <div className="text-center">Store Type</div>
+              <div className="text-center">
+                <p style={{ fontWeight: 'bold' }}>Store Type</p>
+              </div>
               <br />
 
-              <div className="mt-5">
+              <div className="mt-2">
                 <div className="col-lg-12 col-md-12">
-                  <div className="col-lg-12">
-                    <div className="col-sm-6 col-md-3">
-                      <div className={classes.wellCategory} onClick={this.getType}>
-                        <img
-                          src={WomanAccesoriesLogo}
-                          alt="Woman accesories"
-                          title="Woman accesories"
-                        />
-                        <p>Woman accesories</p>
-                      </div>
-                    </div>
-                    <div className="col-sm-6 col-md-3">
-                      <div className={classes.wellCategory} onClick={this.getType}>
-                        <img src={WomanClothLogo} alt="Woman cloth" title="Woman cloth" />
-                        <p>Woman cloth</p>
-                      </div>
-                    </div>
-                    <div className="col-sm-6 col-md-3">
-                      <div className={classes.wellCategory} onClick={this.getType}>
-                        <img src={BookLogo} alt="Book" title="Book" />
-                        <p>Book</p>
-                      </div>
-                    </div>
-                    <div className="col-sm-6 col-md-3">
-                      <div className={classes.wellCategory} onClick={this.getType}>
-                        <img src={TextBooksLogo} alt="Text books" title="Text books" />
-                        <p>Text books</p>
-                      </div>
-                    </div>
-
-                    <div className="col-sm-6 col-md-3">
-                      <div className={classes.wellCategory} onClick={this.getType}>
-                        <img src={SporsLogo} alt="Sports" title="Sports" />
-                        <p>Sports</p>
-                      </div>
-                    </div>
-                    <div className="col-sm-6 col-md-3">
-                      <div className={classes.wellCategory} onClick={this.getType}>
-                        <img src={ElectronicsLogo} alt="Electornics" title="Electornics" />
-                        <p>Electornics</p>
-                      </div>
-                    </div>
-                    <div className="col-sm-6 col-md-3">
-                      <div className={classes.wellCategory} onClick={this.getType}>
-                        <img src={GamesLogo} alt="Game & toys" title="Game & ; toys" />
-                        <p>Game & toys</p>
-                      </div>
-                    </div>
-
-                    <div className="col-sm-6 col-md-3">
-                      <div className={classes.wellCategory}>
-                        <img src={MoreLogo} alt="More" title="More" />
-                        <p>More</p>
-                      </div>
-                    </div>
+                  <div
+                    className="col-lg-12"
+                    style={{ paddingRight: '100px', paddingLeft: '100px' }}
+                  >
+                    {this.props.categories.map((category, i) => {
+                      return (
+                        <div className="col-sm-6 col-md-3" key={i}>
+                          <div
+                            className={classes.wellCategory}
+                            onClick={() => this.getType(category.name)}
+                          >
+                            <img
+                              src={category.image_path}
+                              alt={category.name}
+                              title={category.name}
+                            />
+                            <p>{category.name}</p>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
@@ -262,12 +229,14 @@ const mapStateToProps = (state) => {
     authRedirectPath: state.auth.authRedirectPath,
     userId: state.auth.userId,
     token: state.auth.token,
+    categories: state.home.categories,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onCreateStore: (store, token) => dispatch(actions.CreateStore(store, token)),
+    onInitHomeCollections: () => dispatch(actions.initHomeCollections()),
   };
 };
 
