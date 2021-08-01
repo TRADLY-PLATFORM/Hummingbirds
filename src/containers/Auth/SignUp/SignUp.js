@@ -14,6 +14,8 @@ import * as actions from '../../../store/actions/index';
 import { selectUserId } from '../../../store/selectors/auth';
 import PhoneInput from 'react-phone-input-2';
 import { isPossiblePhoneNumber, isValidPhoneNumber } from 'libphonenumber-js';
+import { Helmet } from 'react-helmet';
+
 
 class SignUp extends Component {
   state = {
@@ -159,53 +161,61 @@ class SignUp extends Component {
       );
     }
     return (
-      <div className="row">
-        <Backdrop show={this.props.loading} />
-        <Spinner show={this.props.loading} />
-        <ToastContainer
-          autoClose={2000}
-          position="top-center"
-          transition={Slide}
-          closeOnClick
-          rtl={false}
-          pauseOnVisibilityChange
-          draggable
-          pauseOnHover
-        />
-        {authRedirect}
-        <div className={classes.title}>
-          Welcome to Tradly <br /> Marketplace
-        </div>
+      <>
+        <Helmet>
+          <title>Tradly Web - Sign Up</title>
+          <meta
+            name="description"
+            content=" Widest Range of Mobile & Tablets, Home Appliances, Tv, Audio, Home & Living At Tradly | Best Prices ? Fast DELIVERY | Cash on Delivery ? Effortless Shopping ? Best Customer Care!"
+          />
+        </Helmet>
+        <div className="row">
+          <Backdrop show={this.props.loading} />
+          <Spinner show={this.props.loading} />
+          <ToastContainer
+            autoClose={2000}
+            position="top-center"
+            transition={Slide}
+            closeOnClick
+            rtl={false}
+            pauseOnVisibilityChange
+            draggable
+            pauseOnHover
+          />
+          {authRedirect}
+          <div className={classes.title}>
+            Welcome to Tradly <br /> Marketplace
+          </div>
 
-        <div className="col-lg-12 nopaddingLeft">
-          <h5 className={classes.titleAccount}>Create your account</h5>
-          <br />
-          <form action="" method="post" onSubmit={this.onSubmit}>
-            <div className="form-group">
-              <input
-                className={classes.input}
-                name="firstName"
-                type="text"
-                placeholder="First Name"
-                value={this.state.firstName}
-                onChange={this.handleChange}
-                autoComplete="off"
-              />
-            </div>
+          <div className="col-lg-12 nopaddingLeft">
+            <h5 className={classes.titleAccount}>Create your account</h5>
+            <br />
+            <form action="" method="post" onSubmit={this.onSubmit}>
+              <div className="form-group">
+                <input
+                  className={classes.input}
+                  name="firstName"
+                  type="text"
+                  placeholder="First Name"
+                  value={this.state.firstName}
+                  onChange={this.handleChange}
+                  autoComplete="off"
+                />
+              </div>
 
-            <div className="form-group mt-4">
-              <input
-                className={classes.input}
-                name="lastName"
-                type="text"
-                placeholder="Last Name"
-                value={this.state.lastName}
-                onChange={this.handleChange}
-                autoComplete="off"
-              />
-            </div>
+              <div className="form-group mt-4">
+                <input
+                  className={classes.input}
+                  name="lastName"
+                  type="text"
+                  placeholder="Last Name"
+                  value={this.state.lastName}
+                  onChange={this.handleChange}
+                  autoComplete="off"
+                />
+              </div>
 
-            {/* <div className="form-group mt-4">
+              {/* <div className="form-group mt-4">
               <input
                 className={classes.input}
                 name="email"
@@ -216,8 +226,8 @@ class SignUp extends Component {
                 autoComplete="off"
               />
               </div> */}
-            <div className="form-group mt-4">
-              {/* <PhoneInput
+              <div className="form-group mt-4">
+                {/* <PhoneInput
                 // onlyCountries={countryCode}
                 className={classes.input}
                 country={'bd'}
@@ -228,52 +238,53 @@ class SignUp extends Component {
                 }}
                 name="mobile"
               /> */}
-              {defaultCountry}
-            </div>
+                {defaultCountry}
+              </div>
 
-            <div className="form-group mt-4">
-              <input
-                className={classes.input}
-                type="password"
-                name="password"
-                placeholder="Password"
-                value={this.state.password}
-                onChange={this.handleChange}
-                autoComplete="off"
-              />
-            </div>
+              <div className="form-group mt-4">
+                <input
+                  className={classes.input}
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  value={this.state.password}
+                  onChange={this.handleChange}
+                  autoComplete="off"
+                />
+              </div>
 
-            <div className="form-group mt-4">
-              <input
-                className={classes.input}
-                type="password"
-                name="reTypePassword"
-                placeholder="Re Type Password"
-                value={this.state.reTypePassword}
-                onChange={this.handleChange}
-                autoComplete="off"
-              />
-            </div>
+              <div className="form-group mt-4">
+                <input
+                  className={classes.input}
+                  type="password"
+                  name="reTypePassword"
+                  placeholder="Re Type Password"
+                  value={this.state.reTypePassword}
+                  onChange={this.handleChange}
+                  autoComplete="off"
+                />
+              </div>
 
-            <div className="form-group mt-5">
-              <button type="submit" className={classes.button}>
-                Sign Up
-              </button>
-            </div>
+              <div className="form-group mt-5">
+                <button type="submit" className={classes.button}>
+                  Sign Up
+                </button>
+              </div>
 
-            <div className="text-center mt-5">
-              <Link to="/sign-in" className="text-center whiteColor">
-                have an account ? Sign in
-              </Link>
-            </div>
-            <div className="text-center mt-5">
-              <Link to="/" className="text-center whiteColor">
-                <i className="fa fa-home fontIconSize"></i> Back to home
-              </Link>
-            </div>
-          </form>
+              <div className="text-center mt-5">
+                <Link to="/sign-in" className="text-center whiteColor">
+                  have an account ? Sign in
+                </Link>
+              </div>
+              <div className="text-center mt-5">
+                <Link to="/" className="text-center whiteColor">
+                  <i className="fa fa-home fontIconSize"></i> Back to home
+                </Link>
+              </div>
+            </form>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 }

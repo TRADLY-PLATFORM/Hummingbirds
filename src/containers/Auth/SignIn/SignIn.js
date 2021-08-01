@@ -13,6 +13,8 @@ import { validateEmail } from '../../../shared/utility'; //countryFilter
 import * as actions from '../../../store/actions/index';
 import { selectUserId } from '../../../store/selectors/auth';
 import { isPossiblePhoneNumber, isValidPhoneNumber } from 'libphonenumber-js';
+import { Helmet } from 'react-helmet';
+
 
 class SignIn extends Component {
   state = {
@@ -142,7 +144,13 @@ class SignIn extends Component {
     }
     console.log('isAuthenticated', isAuthenticated);
     return (
+      <>
+      <Helmet> 
+       <title>Tradly Web - Sign In</title>
+          <meta name="description" content=" Widest Range of Mobile & Tablets, Home Appliances, Tv, Audio, Home & Living At Tradly | Best Prices ? Fast DELIVERY | Cash on Delivery ? Effortless Shopping ? Best Customer Care!" />
+         </Helmet>
       <div className="row">
+        
         <div className={classes.title}>
           Tradly <br /> Marketplace
         </div>
@@ -225,6 +233,7 @@ class SignIn extends Component {
           </form>
         </div>
       </div>
+      </>
     );
   }
 }

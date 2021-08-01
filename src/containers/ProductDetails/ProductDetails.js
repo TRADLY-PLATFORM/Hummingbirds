@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect, useDispatch } from 'react-redux';
 import { List, Map } from 'immutable';
 import Toast from '../../components/UI/Toast/Toast';
@@ -16,8 +16,18 @@ import { selectUserId } from '../../store/selectors/auth';
 import Maps from '../../components/UI/Maps/Maps';
 import heartActive from '../../assets/images/products/heartActive.png';
 import heartDisable from '../../assets/images/products/heartDisable.png';
+ 
+import { Helmet } from 'react-helmet';
+
+import PropTypes from 'prop-types';
+
 
 class ProductDetails extends Component {
+  static propTypes = {
+    match: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
+  };
   state = {
     maps: false,
     like: false,
@@ -226,6 +236,7 @@ class ProductDetails extends Component {
   };
 
   render() {
+    const { match, location, history } = this.props;
     const {
       error,
       productDetails,
@@ -242,76 +253,101 @@ class ProductDetails extends Component {
     console.log('isAuthenticated', isAuthenticated);
     console.log(this.props.token);
     return (
-      <Aux>
-        <Backdrop show={this.props.loading || this.props.followLoading} />
-        <Spinner show={this.props.loading || this.props.followLoading} />
-        {toastMessage}
+      <>
+        <Helmet>
+          <title>Tradly Web - {productDetails.getIn(['listing', 'title'], 'N/A')}  </title>
+          <meta
+            name="description"
+            content={productDetails.getIn(['listing', 'description'], 'N/A')}
+          />
+          <link rel="canonical" href={location.pathname} />
+        </Helmet>
+        <Aux>
+          <Backdrop show={this.props.loading || this.props.followLoading} />
+          <Spinner show={this.props.loading || this.props.followLoading} />
+          {toastMessage}
 
-        <div className="row ">
-          <div className="col-lg-12">
-            <nav aria-label="breadcrumb">
-              <ol className={classes.breadCrumb}>
-                <li className="breadcrumb-item active" aria-current="page">
-                  <Link to="/home">
-                    <img src={ArrowLogo} alt="Back" style={{ marginRight: '10px' }} />
-                    Back to profile
-                  </Link>
-                </li>
-              </ol>
-            </nav>
-          </div>
-
-          <div className="col-xs-6 ">
-            <div id="myCarousel" className="carousel slide" data-ride="carousel">
-              <div className={classes.productImageBox}>
-                <div className="carousel-inner" role="listbox">
-                  <ol className="carousel-indicators">{this.getHomeBannerControl()}</ol>
-
-                  {this.getHomeBanner()}
-                </div>
-                <div>
-                  <p>{productDetails.getIn(['listing', 'title'], 'N/A')}</p>
-                  <p style={{ fontWeight: 'bold' }}>{this.getPrices()}</p>
-                </div>
-              </div>
+          <div className="row ">
+            <div className="col-lg-12">
+              <nav aria-label="breadcrumb">
+                <ol className={classes.breadCrumb}>
+                  <li className="breadcrumb-item active" aria-current="page">
+                    <Link to="/home">
+                      <img src={ArrowLogo} alt="Back" style={{ marginRight: '10px' }} />
+                      Back to profile
+                    </Link>
+                  </li>
+                </ol>
+              </nav>
             </div>
 
-            <div className={classes.Details + ' col-lg-12'}>
-              <div className={classes.Description}>
-                <span style={{ fontSize: '15px', marginBottom: '20px' }}>Product Description</span>
-                <p>{productDetails.getIn(['listing', 'description'], 'N/A')}</p>
-              </div>
-            </div>
-          </div>
+            <div className="col-xs-6 ">
+              <div id="myCarousel" className="carousel slide" data-ride="carousel">
+                <div className={classes.productImageBox}>
+                  <div className="carousel-inner" role="listbox">
+                    <ol className="carousel-indicators">{this.getHomeBannerControl()}</ol>
 
-          <div className="col-xs-6 ">
-            <div className="col-lg-12 mt-4">
-              <div className="row bgColor">
-                <div className={classes.fashionStore}>
-                  <div className="  ">
-                    <h3>{this.getStoreName()}</h3>
-                    <div>@{this.getStoreOwner()}</div>
+                    {this.getHomeBanner()}
                   </div>
-                  <div className=" " style={{ display: 'flex', alignItems: 'center' }}>
-                    {this.props.isAuthentication === null ? (
-                      <Link to="/sign-in">
-                        <button
-                          className="btnGreenStyle pull-right "
-                          style={{ marginLeft: '15px' }}
-                        >
-                          follow
+                  <div>
+                    <p>{productDetails.getIn(['listing', 'title'], 'N/A')}</p>
+                    <p style={{ fontWeight: 'bold' }}>{this.getPrices()}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className={classes.Details + ' col-lg-12'}>
+                <div className={classes.Description}>
+                  <span style={{ fontSize: '15px', marginBottom: '20px' }}>
+                    Product Description
+                  </span>
+                  <p>{productDetails.getIn(['listing', 'description'], 'N/A')}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-xs-6 ">
+              <div className="col-lg-12 mt-4">
+                <div className="row bgColor">
+                  <div className={classes.fashionStore}>
+                    <div className="  ">
+                      <h3>{this.getStoreName()}</h3>
+                      <div>@{this.getStoreOwner()}</div>
+                    </div>
+                    <div className=" " style={{ display: 'flex', alignItems: 'center' }}>
+                      {this.props.isAuthentication === null ? (
+                        <Link to="/sign-in">
+                          <button
+                            className="btnGreenStyle pull-right "
+                            style={{ marginLeft: '15px' }}
+                          >
+                            follow
+                          </button>
+                        </Link>
+                      ) : (
+                        <button className="btnGreenStyle " onClick={this.storeFollow}>
+                          {this.props.productDetails.getIn(['listing', 'account', 'following'], '')
+                            ? 'following'
+                            : 'follow'}
                         </button>
-                      </Link>
-                    ) : (
-                      <button className="btnGreenStyle " onClick={this.storeFollow}>
-                        {this.props.productDetails.getIn(['listing', 'account', 'following'], '')
-                          ? 'following'
-                          : 'follow'}
-                      </button>
-                    )}
-                    {this.props.isAuthentication === null ? (
-                      <Link to="/sign-in">
+                      )}
+                      {this.props.isAuthentication === null ? (
+                        <Link to="/sign-in">
+                          <button
+                            className="  pull-right "
+                            style={{
+                              marginLeft: '15px',
+                              outline: 'none',
+                              border: 'none',
+                              backgroundColor: 'white',
+                            }}
+                          >
+                            <img className={classes.heartDisable} src={heartDisable} alt="" />
+                          </button>
+                        </Link>
+                      ) : (
                         <button
+                          onClick={this.productLike}
                           className="  pull-right "
                           style={{
                             marginLeft: '15px',
@@ -320,102 +356,89 @@ class ProductDetails extends Component {
                             backgroundColor: 'white',
                           }}
                         >
-                          <img className={classes.heartDisable} src={heartDisable} alt="" />
+                          {productDetails.getIn(['listing', 'liked'], '') ? (
+                            <img className={classes.heartActive} src={heartActive} alt="" />
+                          ) : (
+                            <img className={classes.heartDisable} src={heartDisable} alt="" />
+                          )}
                         </button>
-                      </Link>
-                    ) : (
-                      <button
-                        onClick={this.productLike}
-                        className="  pull-right "
-                        style={{
-                          marginLeft: '15px',
-                          outline: 'none',
-                          border: 'none',
-                          backgroundColor: 'white',
-                        }}
-                      >
-                        {productDetails.getIn(['listing', 'liked'], '') ? (
-                          <img className={classes.heartActive} src={heartActive} alt="" />
-                        ) : (
-                          <img className={classes.heartDisable} src={heartDisable} alt="" />
-                        )}
-                      </button>
-                    )}
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="row bgColor " style={{ marginTop: '20px' }}>
-                <div className={classes.details}>
-                  <h1 className="h1Headings" style={{ fontSize: '18px' }}>
-                    Details
-                  </h1>
-                  {this.getAttributes()}
+                <div className="row bgColor " style={{ marginTop: '20px' }}>
+                  <div className={classes.details}>
+                    <h1 className="h1Headings" style={{ fontSize: '18px' }}>
+                      Details
+                    </h1>
+                    {this.getAttributes()}
 
-                  <div className={classes.DetailsLeft + ' col-lg-6 col-sm-6 col-md-6'}>
-                    Category
-                  </div>
-                  <div className={classes.DetailsRight + ' col-lg-6 col-sm-6 col-md-6'}>
-                    {this.getCategoryIds()}
-                  </div>
+                    <div className={classes.DetailsLeft + ' col-lg-6 col-sm-6 col-md-6'}>
+                      Category
+                    </div>
+                    <div className={classes.DetailsRight + ' col-lg-6 col-sm-6 col-md-6'}>
+                      {this.getCategoryIds()}
+                    </div>
 
-                  <div className={classes.DetailsLeft + ' col-lg-6 col-sm-6 col-md-6'}>
-                    Location
-                  </div>
-                  <div className={classes.DetailsRight + ' col-lg-6 col-sm-6 col-md-6'}>
-                    {productDetails.getIn(['listing', 'location', 'formatted_address'], '')}
-                  </div>
-                  <div className={classes.DetailsLeft + ' col-lg-6'}></div>
-                  {this.getCoOrdinates()}
-                </div>
-              </div>
-
-              <div className="row bgColor" style={{ marginTop: '20px' }}>
-                <div className={classes.additionalDetails}>
-                  <h1 className="h1Headings" style={{ fontSize: '18px' }}>
-                    Additional Details
-                  </h1>
-                  <div className={classes.DetailsLeft + ' col-lg-6 col-sm-6 col-md-6'}>
-                    Deliver Details
-                  </div>
-                  <div className={classes.DetailsRight + ' col-lg-6 col-sm-6 col-md-6'}>
-                    Home Delivery Available, Cash On Delivery
+                    <div className={classes.DetailsLeft + ' col-lg-6 col-sm-6 col-md-6'}>
+                      Location
+                    </div>
+                    <div className={classes.DetailsRight + ' col-lg-6 col-sm-6 col-md-6'}>
+                      {productDetails.getIn(['listing', 'location', 'formatted_address'], '')}
+                    </div>
+                    <div className={classes.DetailsLeft + ' col-lg-6'}></div>
+                    {this.getCoOrdinates()}
                   </div>
                 </div>
-              </div>
 
-              <br />
-              {/* <button type="button" className="btn btn-addtocart btn-lg btn-block height70">
+                <div className="row bgColor" style={{ marginTop: '20px' }}>
+                  <div className={classes.additionalDetails}>
+                    <h1 className="h1Headings" style={{ fontSize: '18px' }}>
+                      Additional Details
+                    </h1>
+                    <div className={classes.DetailsLeft + ' col-lg-6 col-sm-6 col-md-6'}>
+                      Deliver Details
+                    </div>
+                    <div className={classes.DetailsRight + ' col-lg-6 col-sm-6 col-md-6'}>
+                      Home Delivery Available, Cash On Delivery
+                    </div>
+                  </div>
+                </div>
+
+                <br />
+                {/* <button type="button" className="btn btn-addtocart btn-lg btn-block height70">
                 Download App
               </button> */}
-              <div className="row">
-                <div className={classes.buttons}>
-                  <button
-                    type="button"
-                    className="btn btn-addtocart btn-lg btn-block height70"
-                    style={{ marginRight: '15px' }}
-                    onClick={this.addToCart}
-                  >
-                    Add To Cart
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-success btn-lg btn-block height70"
-                    style={{ marginLeft: '15px' }}
-                  >
-                    Buy Now
-                  </button>
+                <div className="row">
+                  <div className={classes.buttons}>
+                    <button
+                      type="button"
+                      className="btn btn-addtocart btn-lg btn-block height70"
+                      style={{ marginRight: '15px' }}
+                      onClick={this.addToCart}
+                    >
+                      Add To Cart
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-success btn-lg btn-block height70"
+                      style={{ marginLeft: '15px' }}
+                    >
+                      Buy Now
+                    </button>
+                  </div>
                 </div>
+                <br />
+                <br />
               </div>
-              <br />
-              <br />
             </div>
           </div>
-        </div>
 
-        <br />
-        <br />
-      </Aux>
+          <br />
+          <br />
+        </Aux>
+      </>
     );
   }
 }

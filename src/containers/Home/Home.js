@@ -3,7 +3,7 @@ import Aux from '../../hoc/Auxiliary/Auxiliary';
 import HomeBanner from '../../components/HomeBanner/HomeBanner';
 import Category from '../../components/Category/Category';
 import classes from './Home.module.css';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Backdrop from '../../components/UI/Backdrop/Backdrop';
@@ -23,8 +23,16 @@ import NoProductImage from '../../assets/images/rsz_noimage.png';
 import StoresToFollow from './StoresToFollow/StoresToFollow';
 import LatestProducts from './LatestProducts/LatestProducts';
 import Categories from './Categories/Categories';
+import { Helmet } from 'react-helmet';
+import PropTypes from 'prop-types';
+
 
 class Home extends Component {
+  static propTypes = {
+    match: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
+  };
   state = {
     selectedOption: null,
     activeItemIndex: 0,
@@ -54,6 +62,7 @@ class Home extends Component {
   };
 
   render() {
+    const { match, location, history } = this.props;
     let collectionContent = <Spinner show={true} styles="SpinnerCenter" />;
     console.log(this.props.collections);
     if (this.props.collections && this.props.collections.length > 0) {
@@ -73,6 +82,14 @@ class Home extends Component {
     console.log(this.props.token);
     return (
       <Aux>
+        <Helmet>
+          <title>Tradly Web - Home Page</title>
+          <meta
+            name="description"
+            content="Tradly is a great business platform. Where there is a collection of various products. There are attractive offers and free shipping for different products. And you will get a lot of good pleasure in shopping."
+          />
+          <link   href={location.pathname} />
+        </Helmet>
         <Backdrop show={this.props.loading} />
         <Spinner show={this.props.loading} />
         <HomeBanner images={this.props.promo_banners} />

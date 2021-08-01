@@ -18,6 +18,11 @@ import { totalCountOfProducts } from '../../shared/constants';
 import Listing from '../../components/Listing/Listing';
 import { selectListings, selectTotalListings } from '../../store/selectors/product';
 import { selectUserId } from '../../store/selectors/auth';
+
+import { Helmet } from 'react-helmet';
+import PropTypes from 'prop-types';
+
+
 class StoreDetails extends Component {
   constructor(props) {
     super(props);
@@ -32,6 +37,11 @@ class StoreDetails extends Component {
       maps: false,
     };
   }
+  static propTypes = {
+    match: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
+  };
 
   componentDidMount() {
     const { storeId } = this.state;
@@ -61,8 +71,8 @@ class StoreDetails extends Component {
   postStoreFollow = () => {
     const { storeDetails } = this.props;
     const storeId = storeDetails.get('id');
-     let IsFollowing = false;
-    if (storeDetails.get (  'following' ) !== false) {
+    let IsFollowing = false;
+    if (storeDetails.get('following') !== false) {
       IsFollowing = true;
     }
     console.log(storeId);
@@ -215,25 +225,32 @@ class StoreDetails extends Component {
         {listing}
       </Aux>
     );
-     console.log(this.props.isAuthentication);
-
+    console.log(this.props.isAuthentication);
+    const { match, location, history } = this.props;
 
     return (
-      <Aux>
-        <Backdrop show={this.props.loading} />
-        <Spinner show={this.props.loading} />
-        {storeContent}
-        <Modal show={this.state.maps} modalClosed={this.closeMaps}>
-          <Maps
-            lat={storeDetails.getIn(['coordinates', 'latitude'], '')}
-            lng={storeDetails.getIn(['coordinates', 'longitude'], '')}
-          />
-        </Modal>
+      <>
+        <Helmet>
+          <title>Tradly Web - {storeName} </title>
+          <meta name="description" content={storeName +"-" + storeOwner} />
+          <link rel="canonical" href={location.pathname} />
+        </Helmet>
+        <Aux>
+          <Backdrop show={this.props.loading} />
+          <Spinner show={this.props.loading} />
+          {storeContent}
+          <Modal show={this.state.maps} modalClosed={this.closeMaps}>
+            <Maps
+              lat={storeDetails.getIn(['coordinates', 'latitude'], '')}
+              lng={storeDetails.getIn(['coordinates', 'longitude'], '')}
+            />
+          </Modal>
 
-        <br />
-        <br />
-        <br />
-      </Aux>
+          <br />
+          <br />
+          <br />
+        </Aux>
+      </>
     );
   }
 }
