@@ -20,6 +20,12 @@ export const startStoreDetails = () => {
     type: actionTypes.INIT_STORE_DETAILS,
   };
 };
+export const setAllStores = (stores) => {
+  return {
+    type: actionTypes.SET_ALL_STORES,
+    storesData: stores,
+  };
+};
 
 export const initStoreDetails = (id) => {
   return (dispatch) => {
@@ -175,5 +181,25 @@ export const postStoreFollow = (storeId, IsFollowing) => {
           dispatch(postStoreFollowFailed());
         });
     }
+  };
+};
+
+export const getStores = () => {
+  return (dispatch) => {
+    dispatch(initStoreLists());
+    axios
+      .get('/products/v1/home/')
+      .then((response) => {
+        if (response.data.status) {
+          let stores = response.data.data.collections[0];
+          console.log(stores);
+          dispatch(setAllStores(response.data.data.collections[0]));
+        } else {
+          dispatch(fetchStoreListsFailed());
+        }
+      })
+      .catch((error) => {
+        dispatch(fetchStoreListsFailed());
+      });
   };
 };

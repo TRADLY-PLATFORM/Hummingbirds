@@ -5,6 +5,7 @@ const initialState = {
   loading: false,
   storeDetails: {},
   storeLists: [],
+  storesLists: [],
   error: false,
   message: null,
 };
@@ -37,6 +38,14 @@ const initStoreLists = (state, action) => {
 const setStoreLists = (state, action) => {
   return updateObject(state, {
     storeLists: action.storeLists,
+    loading: false,
+    error: false,
+    message: null,
+  });
+};
+const setStoresLists = (state, action) => {
+  return updateObject(state, {
+    storesLists: action.storesData,
     loading: false,
     error: false,
     message: null,
@@ -114,6 +123,9 @@ const storeReducer = (state = initialState, action) => {
       return postStoreFollowSuccess(state, action);
     case actionTypes.POST_STORE_FOLLOW_FAILED:
       return postStoreFollowFailed(state, action);
+
+    case actionTypes.SET_ALL_STORES:
+      return setStoresLists(state, action);
 
     default:
       return state;

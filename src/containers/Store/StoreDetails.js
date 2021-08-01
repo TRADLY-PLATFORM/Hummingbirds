@@ -60,9 +60,24 @@ class StoreDetails extends Component {
   postStoreFollow = () => {
     const { storeDetails } = this.props;
     const storeId = storeDetails.get('id');
-    this.props.postStoreFollow(storeId);
-  };
+     let IsFollowing = false;
+    if (storeDetails.get (  'following' ) !== false) {
+      IsFollowing = true;
+    }
+    console.log(storeId);
+    this.timer = setTimeout(() => {
+      this.props.postStoreFollow(storeId, IsFollowing);
+    }, 1000);
 
+    this.timer = setTimeout(() => {
+      if (!this.props.error) {
+        const { storeId } = this.state;
+        this.props.onInitStoreDetails(storeId);
+        const filter = '&account_id=' + storeId;
+        this.props.onInitListings(0, filter, totalCountOfProducts);
+      }
+    }, 2000);
+  };
   render() {
     const { storeDetails, listings, total_records, loading } = this.props;
     let listing = '';
@@ -127,9 +142,26 @@ class StoreDetails extends Component {
                   <p>@{storeOwner}</p>
                 </div>
                 <div className="col-sm-6">
-                  <button className="btnGreenStyle pull-right mt-4" onClick={this.postStoreFollow}>
+                  {/* <button className="btnGreenStyle pull-right mt-4" onClick={this.postStoreFollow}>
                     Follow
-                  </button>
+                  </button> */}
+                  {this.props.isAuthentication ? (
+                    <button
+                      className="btnGreenStyle pull-right mt-4"
+                      onClick={this.postStoreFollow}
+                    >
+                      {this.props.storeDetails.following ? 'following' : 'follow'}
+                    </button>
+                  ) : (
+                    <Link to="/sign-in">
+                      <button
+                        className="btnGreenStyle pull-right mt-4 "
+                        style={{ marginLeft: '15px' }}
+                      >
+                        follow
+                      </button>
+                    </Link>
+                  )}
                 </div>
               </div>
             </div>
@@ -182,6 +214,8 @@ class StoreDetails extends Component {
         {listing}
       </Aux>
     );
+     console.log(this.props.isAuthentication);
+
 
     return (
       <Aux>
@@ -205,6 +239,7 @@ class StoreDetails extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    error: state.store.error,
     loading: state.store.loading,
     storeDetails: selectStoreDetails(state),
     storeLists: state.store.storeLists,

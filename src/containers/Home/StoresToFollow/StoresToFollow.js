@@ -50,6 +50,11 @@ const StoresToFollow = () => {
       <div className="col-lg-6  ">
         <h3 className={classes.headingTitle}>{title}</h3>
       </div>
+      <div className="col-lg-6  ">
+        <Link to="/stores">
+          <button className={'btnGreenStyle pull-right'}>View All</button>
+        </Link>
+      </div>
 
       <div style={{ marginTop: '60px', marginLeft: '-10px', marginRight: '10px' }}>
         <ItemsCarousel

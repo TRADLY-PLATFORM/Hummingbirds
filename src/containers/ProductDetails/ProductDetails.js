@@ -299,7 +299,7 @@ class ProductDetails extends Component {
                           className="btnGreenStyle pull-right "
                           style={{ marginLeft: '15px' }}
                         >
-                          following
+                          follow
                         </button>
                       </Link>
                     ) : (
