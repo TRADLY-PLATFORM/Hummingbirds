@@ -1,12 +1,17 @@
 .wellCategory {
-  min-height: 50px;
-  padding-top: 19px;
-  padding-bottom: 19px;
+  min-height: 30px;
+  padding: 20px;
   margin-bottom: 20px;
   background-color: #ffffff;
   border: 1px solid #e3e3e3;
   border-radius: 10px;
   text-align: center;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .wellCategory p {
@@ -18,5 +23,7 @@
 }
 
 .wellCategory img {
+  width: 20%;
+
   margin-bottom: 10px;
 }
