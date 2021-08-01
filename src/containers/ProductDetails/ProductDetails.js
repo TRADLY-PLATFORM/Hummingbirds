@@ -230,7 +230,7 @@ class ProductDetails extends Component {
       error,
       productDetails,
       message,
-      isAuthentication,
+      isAuthenticated,
       followError,
       followMessage,
     } = this.props;
@@ -239,7 +239,7 @@ class ProductDetails extends Component {
       toastMessage = <Toast type="error" message={message || followMessage} />;
     }
     console.log(productDetails.getIn(['listing']));
-    console.log('isAuthentication', isAuthentication);
+    console.log('isAuthenticated', isAuthenticated);
     console.log(this.props.token);
     return (
       <Aux>
@@ -293,13 +293,7 @@ class ProductDetails extends Component {
                     <div>@{this.getStoreOwner()}</div>
                   </div>
                   <div className=" " style={{ display: 'flex', alignItems: 'center' }}>
-                    {this.props.isAuthentication ? (
-                      <button className="btnGreenStyle " onClick={this.storeFollow}>
-                        {this.props.productDetails.getIn(['listing', 'account', 'following'], '')
-                          ? 'following'
-                          : 'follow'}
-                      </button>
-                    ) : (
+                    {this.props.isAuthentication === null ? (
                       <Link to="/sign-in">
                         <button
                           className="btnGreenStyle pull-right "
@@ -308,8 +302,28 @@ class ProductDetails extends Component {
                           follow
                         </button>
                       </Link>
+                    ) : (
+                      <button className="btnGreenStyle " onClick={this.storeFollow}>
+                        {this.props.productDetails.getIn(['listing', 'account', 'following'], '')
+                          ? 'following'
+                          : 'follow'}
+                      </button>
                     )}
-                    {this.props.isAuthentication ? (
+                    {this.props.isAuthentication === null ? (
+                      <Link to="/sign-in">
+                        <button
+                          className="  pull-right "
+                          style={{
+                            marginLeft: '15px',
+                            outline: 'none',
+                            border: 'none',
+                            backgroundColor: 'white',
+                          }}
+                        >
+                          <img className={classes.heartDisable} src={heartDisable} alt="" />
+                        </button>
+                      </Link>
+                    ) : (
                       <button
                         onClick={this.productLike}
                         className="  pull-right "
@@ -326,15 +340,6 @@ class ProductDetails extends Component {
                           <img className={classes.heartDisable} src={heartDisable} alt="" />
                         )}
                       </button>
-                    ) : (
-                      <Link to="/sign-in">
-                        <button
-                          className="btnGreenStyle pull-right "
-                          style={{ marginLeft: '15px' }}
-                        >
-                          Like
-                        </button>
-                      </Link>
                     )}
                   </div>
                 </div>
@@ -421,7 +426,7 @@ const mapStateToProps = (state) => {
     loading: state.product.loading,
     message: state.product.message,
     productDetails: selectProductDetails(state),
-    isAuthentication: state.auth.token !== null,
+    isAuthenticated: selectUserId(state),
     token: state.auth.token,
     followLoading: state.store.loading,
     followError: state.store.error,

@@ -17,6 +17,7 @@ import { selectStoreDetails } from '../../store/selectors/store';
 import { totalCountOfProducts } from '../../shared/constants';
 import Listing from '../../components/Listing/Listing';
 import { selectListings, selectTotalListings } from '../../store/selectors/product';
+import { selectUserId } from '../../store/selectors/auth';
 class StoreDetails extends Component {
   constructor(props) {
     super(props);
@@ -145,12 +146,12 @@ class StoreDetails extends Component {
                   {/* <button className="btnGreenStyle pull-right mt-4" onClick={this.postStoreFollow}>
                     Follow
                   </button> */}
-                  {this.props.isAuthentication ? (
+                  {this.props.isAuthentication !== null ? (
                     <button
                       className="btnGreenStyle pull-right mt-4"
                       onClick={this.postStoreFollow}
                     >
-                      {this.props.storeDetails.following ? 'following' : 'follow'}
+                      {this.props.storeDetails.get('following') ? 'following' : 'follow'}
                     </button>
                   ) : (
                     <Link to="/sign-in">
@@ -243,7 +244,8 @@ const mapStateToProps = (state) => {
     loading: state.store.loading,
     storeDetails: selectStoreDetails(state),
     storeLists: state.store.storeLists,
-    isAuthentication: state.auth.token !== null,
+    isAuthenticated: selectUserId(state),
+    // isAuthentication: state.auth.token !== null,
     userId: state.auth.userId,
     token: state.auth.token,
     total_records: selectTotalListings(state),
@@ -256,7 +258,8 @@ const mapDispatchToProps = (dispatch) => {
     onInitStoreDetails: (id) => dispatch(actions.initStoreDetails(id)),
     onInitListings: (count, filterValue, totalCountOfProducts) =>
       dispatch(actions.initListings(count, filterValue, totalCountOfProducts)),
-    postStoreFollow: (storeId) => dispatch(actions.postStoreFollow(storeId)),
+    postStoreFollow: (storeId, IsFollowing) =>
+      dispatch(actions.postStoreFollow(storeId, IsFollowing)),
   };
 };
 
