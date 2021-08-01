@@ -64,28 +64,11 @@ const Categories = () => {
   // }
   return (
     <div style={{ marginTop: '20px', minHeight: '150px' }}>
-      {categorySet && categorySet.length > 5 ? (
-        <>
-          <div className="col-lg-12 col-md-12">
-            <div className="row">
-              <Category categories={categorySet} />
-            </div>
-          </div>
-        </>
-      ) : (
-        <>
-          <div className="col-lg-6 col-md-12">
-            <div className="row">
-              <Category categories={categorySet.slice(0, 4)} />
-            </div>
-          </div>
-          <div className="col-lg-6 col-md-12">
-            <div className="row">
-              <Category categories={categorySet.slice(4, 8)} />
-            </div>
-          </div>
-        </>
-      )}
+      <div className="col-lg-12 col-md-12">
+        <div className="row" style={{display:'flex'}}>
+          <Category categories={categorySet} />
+        </div>
+      </div>
     </div>
   );
 };

@@ -39,8 +39,7 @@ const categoryHtmlHandler = (categories, categoryLength) => {
       <Link
         to={`/category/${categoryName}/${category.id}`}
         key={category.id}
-        className="col-sm-3"
-        style={{ textDecoration: 'none' }}
+         style={{ textDecoration: 'none' }}
       >
         <div className={classes.wellCategory}>
           <img
@@ -57,65 +56,6 @@ const categoryHtmlHandler = (categories, categoryLength) => {
 };
 
 const category = (props) => {
-  // let dummyCategoryContent =  (
-  //     <div className="row mt-5">
-  //         <div className="col-lg-6 col-md-12">
-  //             <div className="row">
-  //                 <div className="col-sm-3">
-  //                     <div className={classes.wellCategory}>
-  //                         <img src={WomanAccesoriesLogo} alt="Woman accesories" title="Woman accesories"/>
-  //                         <p>Woman accesories</p>
-  //                     </div>
-  //                 </div>
-  //                 <div className="col-sm-3">
-  //                     <div className={classes.wellCategory}>
-  //                     <img src={WomanClothLogo} alt="Woman cloth" title="Woman cloth"/>
-  //                         <p>Woman cloth</p>
-  //                     </div>
-  //                 </div>
-  //                 <div className="col-sm-3">
-  //                     <div className={classes.wellCategory}>
-  //                     <img src={BookLogo} alt="Book" title="Book"/>
-  //                         <p>Book</p>
-  //                     </div>
-  //                 </div>
-  //                 <div className="col-sm-3">
-  //                     <div className={classes.wellCategory}>
-  //                     <img src={TextBooksLogo} alt="Text books" title="Text books"/>
-  //                         <p>Text books</p>
-  //                     </div>
-  //                 </div>
-  //             </div>
-  //         </div>
-  //         <div className="col-lg-6 col-md-12">
-  //             <div className="row">
-  //                 <div className="col-sm-3">
-  //                     <div className={classes.wellCategory}>
-  //                     <img src={SporsLogo} alt="Sports" title="Sports"/>
-  //                         <p>Sports</p>
-  //                     </div>
-  //                 </div>
-  //                 <div className="col-sm-3">
-  //                     <div className={classes.wellCategory}>
-  //                     <img src={ElectronicsLogo} alt="Electornics" title="Electornics"/>
-  //                         <p>Electornics</p>
-  //                     </div>
-  //                 </div>
-  //                 <div className="col-sm-3">
-  //                     <div className={classes.wellCategory}>
-  //                     <img src={GamesLogo} alt="Game &amp; toys" title="Game &amp; toys"/>
-  //                         <p>Game &amp; toys</p>
-  //                     </div>
-  //                 </div>
-  //                 <div className="col-sm-3">
-  //                     <div className={classes.wellCategory}>
-  //                     <img src={MoreLogo} alt="More" title="More"/>
-  //                         <p>More</p>
-  //                     </div>
-  //                 </div>
-  //             </div>
-  //         </div>
-  //     </div>);
 
   let categoryContent = <Spinner show={true} styles="SpinnerCenter" />;
 
@@ -128,28 +68,6 @@ const category = (props) => {
   return categoryContent;
 };
 
-// return <div className={divLength}><div className="row">{categories.map(function (category, index) {
 
-//     if ((index + 1) === categoryLength) {
-//         return [<div className="col-sm-3" key={category.id}>
-//                     <div className={classes.wellCategory}>
-//                         <img src={category.image_path} alt={category.name} title={category.name} style={{width:'32px',height:'32px'}} />
-//                         <p>{category.name}</p>
-//                     </div>
-//                 </div>, <div className="col-sm-3" key={Math.random()}>
-//                     <div className={classes.wellCategory}>
-//                     <img src={MoreLogo} alt="More" title="More"/>
-//                         <p>More</p>
-//                     </div>
-//                 </div> ];
-//     }
-
-//     return (<div className="col-sm-3" key={category.id}>
-//                     <div className={classes.wellCategory}>
-//                         <img src={category.image_path} alt={category.name} title={category.name} style={{width:'32px',height:'32px'}} />
-//                         <p>{category.name}</p>
-//                     </div>
-//                 </div>);
-// })}</div></div>;
 
 export default category;
