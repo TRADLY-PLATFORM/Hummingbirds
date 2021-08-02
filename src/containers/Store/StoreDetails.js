@@ -22,6 +22,7 @@ import { selectUserId } from '../../store/selectors/auth';
 import { Helmet } from 'react-helmet';
 import PropTypes from 'prop-types';
 
+ 
 
 class StoreDetails extends Component {
   constructor(props) {
@@ -227,14 +228,29 @@ class StoreDetails extends Component {
     );
     console.log(this.props.isAuthentication);
     const { match, location, history } = this.props;
+    
+    const buisnessName = process.env.REACT_APP_BUSINESS_NAME;
 
     return (
       <>
         <Helmet>
-          <title>Tradly Web - {storeName} </title>
-          <meta name="description" content={storeName +"-" + storeOwner} />
+          <title>
+            Buy online from - {storeName} from your mobile via {buisnessName} app
+          </title>
+          <meta
+            name="description"
+            content={`Find products sold by ${storeName} Only on ${buisnessName}`}
+          />
           <link rel="canonical" href={location.pathname} />
         </Helmet>
+        {/* <Helmet>
+          <title>
+           
+            Buy online from - {`${process.env.REACT_APP_BUSINESS_NAME}`} from your mobile via app 
+          </title>
+          <meta name="description" content={storeName + '-' + storeOwner} />
+          <link rel="canonical" href={location.pathname} />
+        </Helmet> */}
         <Aux>
           <Backdrop show={this.props.loading} />
           <Spinner show={this.props.loading} />

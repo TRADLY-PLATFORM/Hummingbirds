@@ -1,8 +1,7 @@
 require('babel-register')({
   presets: ['es2015', 'react'],
 });
-require('custom-env').env('sitemap');
-
+ 
 const router = require('./sitemap-routes').default;
 const Sitemap = require('react-router-sitemap').default;
 
