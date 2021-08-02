@@ -255,7 +255,7 @@ class ProductDetails extends Component {
     return (
       <>
         <Helmet>
-          <title>Tradly Web - {productDetails.getIn(['listing', 'title'], 'N/A')}  </title>
+          <title>Tradly Web - {productDetails.getIn(['listing', 'title'], 'N/A')} </title>
           <meta
             name="description"
             content={productDetails.getIn(['listing', 'description'], 'N/A')}
@@ -315,7 +315,13 @@ class ProductDetails extends Component {
                       <div>@{this.getStoreOwner()}</div>
                     </div>
                     <div className=" " style={{ display: 'flex', alignItems: 'center' }}>
-                      {this.props.isAuthentication === null ? (
+                      {isAuthenticated ? (
+                        <button className="btnGreenStyle " onClick={this.storeFollow}>
+                          {this.props.productDetails.getIn(['listing', 'account', 'following'], '')
+                            ? 'following'
+                            : 'follow'}
+                        </button>
+                      ) : (
                         <Link to="/sign-in">
                           <button
                             className="btnGreenStyle pull-right "
@@ -324,28 +330,8 @@ class ProductDetails extends Component {
                             follow
                           </button>
                         </Link>
-                      ) : (
-                        <button className="btnGreenStyle " onClick={this.storeFollow}>
-                          {this.props.productDetails.getIn(['listing', 'account', 'following'], '')
-                            ? 'following'
-                            : 'follow'}
-                        </button>
                       )}
-                      {this.props.isAuthentication === null ? (
-                        <Link to="/sign-in">
-                          <button
-                            className="  pull-right "
-                            style={{
-                              marginLeft: '15px',
-                              outline: 'none',
-                              border: 'none',
-                              backgroundColor: 'white',
-                            }}
-                          >
-                            <img className={classes.heartDisable} src={heartDisable} alt="" />
-                          </button>
-                        </Link>
-                      ) : (
+                      {isAuthenticated ? (
                         <button
                           onClick={this.productLike}
                           className="  pull-right "
@@ -362,6 +348,20 @@ class ProductDetails extends Component {
                             <img className={classes.heartDisable} src={heartDisable} alt="" />
                           )}
                         </button>
+                      ) : (
+                        <Link to="/sign-in">
+                          <button
+                            className="  pull-right "
+                            style={{
+                              marginLeft: '15px',
+                              outline: 'none',
+                              border: 'none',
+                              backgroundColor: 'white',
+                            }}
+                          >
+                            <img className={classes.heartDisable} src={heartDisable} alt="" />
+                          </button>
+                        </Link>
                       )}
                     </div>
                   </div>

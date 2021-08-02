@@ -157,7 +157,7 @@ class StoreDetails extends Component {
                   {/* <button className="btnGreenStyle pull-right mt-4" onClick={this.postStoreFollow}>
                     Follow
                   </button> */}
-                  {this.props.isAuthentication !== null ? (
+                  {this.props.isAuthenticated  ? (
                     <button
                       className="btnGreenStyle pull-right mt-4"
                       onClick={this.postStoreFollow}
@@ -226,7 +226,7 @@ class StoreDetails extends Component {
         {listing}
       </Aux>
     );
-    console.log(this.props.isAuthentication);
+    console.log(this.props.isAuthenticated);
     const { match, location, history } = this.props;
     
     const buisnessName = process.env.REACT_APP_BUSINESS_NAME;

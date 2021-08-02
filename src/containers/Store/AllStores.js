@@ -52,7 +52,7 @@ const AllStores = () => {
                   <p style={{ fontWeight: 'bold', marginBottom: '1em' }}>{store.name}</p>
                   <p>{description}</p>
                 </div>
-                <button className={classes.btnGreenFollow + ' mt-5'}>Follow</button>
+                <button className={classes.btnGreenFollow }>Follow</button>
               </Link>
             </div>
           );

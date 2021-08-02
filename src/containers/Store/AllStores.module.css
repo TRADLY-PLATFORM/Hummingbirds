@@ -1,19 +1,18 @@
-.storesStyle{
+.storesStyle {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-
 }
 .wellStore {
   min-height: 18.5em;
-  padding: 20px 40px;
+  padding: 20px 30px;
   margin-bottom: 20px;
   background-color: #ffffff;
   border: 1px solid #e3e3e3;
   border-radius: 10px;
   text-align: center;
   box-sizing: border-box;
-  width: 300px;
+  width: 250px;
   margin: 15px;
 }
 .wellStoreDetails {
@@ -25,7 +24,8 @@
   font-size: 15px;
   line-height: 22px;
   color: #4a4a4a;
-  height: 15px;
+  min-height: 15px;
+
 }
 
 .wellStore img {
@@ -34,7 +34,7 @@
   border-radius: 100%;
 }
 .imageDiv {
-  height: 100px;
+  height: 90px;
 }
 .btnGreenFollow {
   padding: 10px 13px;
@@ -48,4 +48,5 @@
   line-height: 17px;
   /* identical to box height */
   color: #ffffff;
+  margin-top: 7px;
 }
