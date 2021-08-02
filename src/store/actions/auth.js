@@ -48,7 +48,6 @@ export const checkAuthTimeout = (expirationTime) => {
   return (dispatch) => {
     setTimeout(() => {
       dispatch(logout());
-      window.location.reload();
 
       dispatch(refreshToken());
     }, expirationTime * 1000);
