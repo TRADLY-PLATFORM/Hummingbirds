@@ -47,9 +47,11 @@ export const checkAuthTimeout = (expirationTime) => {
   //console.log(expirationTime);
   return (dispatch) => {
     setTimeout(() => {
-      dispatch(logout());
-
-      dispatch(refreshToken());
+      if (localStorage.getItem('response')) {
+        dispatch(refreshToken());
+        dispatch(logout());
+      }
+      
     }, expirationTime * 1000);
   };
 };
@@ -178,7 +180,7 @@ export const refreshToken = () => {
       })
       .then((response) => {
         const setTimeExpiry = EXPIRY_TIME;
-        const expirationDate = new Date(new Date().getTime() + setTimeExpiry * 100000);
+        const expirationDate = new Date(new Date().getTime() + setTimeExpiry * 1000);
         localStorage.setItem('token', response.data.data.user.key.auth_key);
         localStorage.setItem('refresh_key', response.data.data.user.key.refresh_key);
         localStorage.setItem('expirationDate', expirationDate);

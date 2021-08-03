@@ -77,7 +77,7 @@
 .wellCategory {
   min-height: 30px;
   padding: 20px;
-  margin-bottom: 20px;
+  margin: 20px;
   background-color: #ffffff;
   border: 1px solid #e3e3e3;
   border-radius: 10px;
@@ -103,7 +103,9 @@
   width: 20%;
   margin-bottom: 10px;
 }
-
+.wellCategory:active{
+    border: 1px solid #13b58c;
+}
 .fashionStore h3 {
   font-weight: 600;
   font-size: 18px;

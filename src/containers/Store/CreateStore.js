@@ -27,6 +27,7 @@ class CreateStore extends Component {
     description: '',
     web_address: '',
     type: '',
+    active:"false"
   };
 
   componentDidMount() {
@@ -55,17 +56,38 @@ class CreateStore extends Component {
     this.setState({ showError: true });
 
     const stores = {
-      store: {
+        account: {
         name: this.state.name,
         description: this.state.description,
-        web_address: this.state.web_address,
-        image_path: this.state.web_address,
+        web_address: '',
+        image_path: '',
         address: this.state.web_address,
-        type: this.state.type,
+        type: 'accounts',
       },
     };
+    // account: {
+    //     category_id: ['251'],
+    //     image_path:
+    //       'https://storage.googleapis.com/tradlyapp/images/42979/02465724-e97b-40a8-af4a-95fdacb31ad0.jpeg',
+    //     name: 'Heello 124',
+    //     description: 'Mark',
+    //     coordinates: {
+    //       latitude: 26.444,
+    //       longitude: 50.1235,
+    //     },
+    //     shipping_methods: [1],
+    //     attributes: [
+    //       {
+    //         values: ['9626137045'],
+    //         id: 52,
+    //       },
+    //     ],
+    //     type: 'accounts',
+    //   },
 
-    this.props.onCreateStore(stores, this.props.token);
+this.props.onCreateStore(stores, () =>
+  this.props.history.push(`/storesuccess?id=${this.props.isAuthenticated}`)
+    );
   };
 
   handleChange = (e) => {
@@ -80,7 +102,7 @@ class CreateStore extends Component {
   getType = (e) => {
     this.setState({
       type: e,
-    });
+     });
     console.log(e);
   };
 
@@ -89,7 +111,6 @@ class CreateStore extends Component {
     // if(!this.props.isAuthentication){
     //     redirectUrl = <Redirect to="/sign-in"/>
     // }
-    console.log(this.props.token);
 
     return (
       <Aux>
@@ -190,7 +211,7 @@ class CreateStore extends Component {
                           <div
                             className={classes.wellCategory}
                             onClick={() => this.getType(category.name)}
-                          >
+                           >
                             <img
                               src={category.image_path}
                               alt={category.name}
@@ -235,7 +256,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onCreateStore: (store, token) => dispatch(actions.CreateStore(store, token)),
+    onCreateStore: (store, callBack) => dispatch(actions.CreateStore(store, callBack)),
     onInitHomeCollections: () => dispatch(actions.initHomeCollections()),
   };
 };
