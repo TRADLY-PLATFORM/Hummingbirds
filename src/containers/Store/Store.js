@@ -10,16 +10,13 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 import * as actions from '../../store/actions/index';
 import classes from './Store.module.css';
 import AllenSollyLogo from '../../assets/images/home/store/allenSolly.svg';
-
+import StoreBanner from '../../assets/images/store/store.svg';
 
 class Store extends Component {
   componentDidMount() {
-    
-      this.timer = setTimeout(() => {
-       this.props.getUserStoreLists(this.props.isAuthenticated);
-      }, 1000);
-      
-     
+    this.timer = setTimeout(() => {
+      this.props.getUserStoreLists(this.props.isAuthenticated);
+    }, 1000);
   }
 
   render() {
@@ -29,41 +26,87 @@ class Store extends Component {
     // }
 
     let storeContent = null;
-        const { isAuthenticated, storeLists } = this.props;
-
+    const { isAuthenticated, storeLists } = this.props;
 
     if (isAuthenticated && storeLists) {
       if (this.props.storeLists.length > 0) {
         storeContent = (
           <React.Fragment>
-            <div style={{ textAlign: 'right', marginBottom: '15px' }}>
-              <Link to="/create-store">
-                <button className={'btnGreenStyle'}>Create Store</button>
-              </Link>
-            </div>
-
             {storeLists.map((list, i) => {
-              let imagePath =  AllenSollyLogo;
-              let description = list.description ;
+              let imagePath = AllenSollyLogo;
+              let description = list.description;
               if (description.size > 35) {
                 description = description.substring(0, 35) + '...';
               }
+              let storeName = list.name;
+              let storeOwner = list.name;
 
               return (
-                <div className="col-lg-3 col-md-3" key={i}>
+                <div className=" " key={i}>
                   <div className="row">
-                    <div className={classes.wellStore + ' col-lg-12'} key={i}>
-                      <div className={classes.imageDiv}>
-                        <img
-                          src={imagePath}
-                           
-                        />
+                    <div class="container-fluid">
+                      <img
+                        src={StoreBanner}
+                        className={classes.storeImage}
+                        alt="Woman accesories"
+                        title="Woman accesories"
+                      />
+                      <div className={classes.bannerimages + ' row'}>
+                        <div className="col-lg-12">
+                          <div className={classes.bannerText + ' col-sm-12'}>
+                            <div className={classes.fashionStore + ' col-sm-6'}>
+                              {list.image_path ? (
+                                <img
+                                  src={list.image_path}
+                                  alt="Woman accesories"
+                                  title="Woman accesories"
+                                />
+                              ) : (
+                                <img
+                                  src={AllenSollyLogo}
+                                  alt="Woman accesories"
+                                  title="Woman accesories"
+                                />
+                              )}
+
+                              <h3>{storeName}</h3>
+                              <p>@{storeOwner}</p>
+                            </div>
+                            <div className="col-sm-6">
+                              <button className="btnGreenStyle pull-right mt-4">
+                                Go to profile store
+                              </button>
+                            </div>
+                            {/* <div className="col-sm-6">
+                              <button
+                                className="btnGreenStyle pull-right mt-4"
+                                onClick={this.postStoreFollow}
+                              >
+                                Follow
+                              </button>
+                              {this.props.isAuthenticated ? (
+                                <button
+                                  className="btnGreenStyle pull-right mt-4"
+                                  onClick={this.postStoreFollow}
+                                >
+                                  {this.props.storeDetails.get('following')
+                                    ? 'following'
+                                    : 'follow'}
+                                </button>
+                              ) : (
+                                <Link to="/sign-in">
+                                  <button
+                                    className="btnGreenStyle pull-right mt-4 "
+                                    style={{ marginLeft: '15px' }}
+                                  >
+                                    follow
+                                  </button>
+                                </Link>
+                              )}
+                            </div> */}
+                          </div>
+                        </div>
                       </div>
-                      {/* <div>{list.get('name', '')}</div> */}
-                      <p>{description}</p>
-                      {/* <Link to={`/store-details/${list.get('id', '')}/${list.get('name', '')}`}>
-                        <button className={classes.btnGreenFollow + ' mt-5'}>View Details</button>
-                      </Link> */}
                     </div>
                   </div>
                 </div>
@@ -103,7 +146,7 @@ class Store extends Component {
     //     </div>
     //   </Aux>
     // );
- 
+
     return (
       <Aux>
         {redirectUrl}

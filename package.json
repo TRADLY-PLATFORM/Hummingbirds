@@ -21,6 +21,7 @@
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-helmet": "^6.1.0",
+    "react-images-upload": "^1.2.8",
     "react-items-carousel": "^2.8.0",
     "react-loader-spinner": "^3.1.14",
     "react-loading-skeleton": "^2.0.1",

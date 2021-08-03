@@ -19,6 +19,7 @@ import TextBooksLogo from '../../assets/images/home/category/textbooks.svg';
 import ElectronicsLogo from '../../assets/images/home/category/electronics.svg';
 import SporsLogo from '../../assets/images/home/category/sports.svg';
 import GamesLogo from '../../assets/images/home/category/games.svg';
+import axios from '../../axios';
 
 class CreateStore extends Component {
   state = {
@@ -27,7 +28,9 @@ class CreateStore extends Component {
     description: '',
     web_address: '',
     type: '',
-    active:"false"
+    active: 'false',
+    image: '',
+    imagePath: '',
   };
 
   componentDidMount() {
@@ -56,13 +59,13 @@ class CreateStore extends Component {
     this.setState({ showError: true });
 
     const stores = {
-        account: {
+      account: {
         name: this.state.name,
         description: this.state.description,
         web_address: '',
         image_path: '',
         address: this.state.web_address,
-        type: 'accounts',
+        type: this.state.type,
       },
     };
     // account: {
@@ -85,8 +88,8 @@ class CreateStore extends Component {
     //     type: 'accounts',
     //   },
 
-this.props.onCreateStore(stores, () =>
-  this.props.history.push(`/storesuccess?id=${this.props.isAuthenticated}`)
+    this.props.onCreateStore(stores, () =>
+      this.props.history.push(`/storesuccess?id=${this.props.isAuthenticated}`)
     );
   };
 
@@ -102,15 +105,106 @@ this.props.onCreateStore(stores, () =>
   getType = (e) => {
     this.setState({
       type: e,
-     });
+    });
     console.log(e);
   };
 
+  imageUploadClick = () => {
+    let fileInput = document.getElementById('fileInput');
+    fileInput.click();
+  };
+  imageUpload = async (e) => {
+    console.log(e.target.files[0]);
+
+    var imgParm = [];
+    var uploadBase64 = [];
+    if (e.target.files[0] != null) {
+      console.log('calling.......here');
+      let fileName = e.target.files[0].name;
+      if (fileName != null) {
+        var splashDict = {
+          name: e.target.files[0].name,
+          type: e.target.files[0].type,
+        };
+        uploadBase64.push({
+          file: 'data:image/png;base64,' + e.target.files[0],
+        });
+        imgParm.push(splashDict);
+      }
+    }
+    if (e.target.files[0] != null) {
+      let fileName = e.target.files[0].name;
+      if (fileName != null) {
+        var androidIconDict = {
+          name: e.target.files[0].name,
+          type: e.target.files[0].type,
+        };
+        uploadBase64.push({
+          file: 'data:image/png;base64,' + e.target.files[0].name,
+        });
+        imgParm.push(androidIconDict);
+      }
+    }
+    console.log('imgParm', imgParm);
+    if (imgParm != 0) {
+      const data = JSON.stringify(imgParm);
+      axios
+        .post('v1/utils/S3signedUploadURL', JSON.stringify({ files: imgParm }))
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      // networkService.networkCall(
+      //   APPURL.URLPaths.S3signedUploadURL, 'POST',  JSON.stringify({files: imgParm}),appConstant.bToken,appConstant.authKey );
+      // if (responseJson['status'] == true) {
+      //   var result = responseJson['data']['result'];
+      //   console.log('result', result);
+      //   var uploadIncrement = 0;
+      //   for (let i = 0; i < imgParm.length; i++) {
+      //     fetch(uploadBase64[i]['file']).then(async res => {
+      //       const file_upload_res = await networkService.uploadFileWithSignedURL(
+      //         result[i]['signedUrl'],
+      //         imgParm[i]['type'],
+      //         await res.blob(),
+      //       );
+      //       uploadIncrement++;
+      //       if (this.state.photo != null) {
+      //         if (this.state.photoURLPath.length == 0) {
+      //           this.state.photoURLPath = result[i]['fileUri'];
+      //         } else {
+      //           this.state.documentURLPath = result[i]['fileUri'];
+      //         }
+      //       } else {
+      //         this.state.documentURLPath = result[i]['fileUri'];
+      //       }
+      //       if (uploadIncrement === uploadBase64.length) {
+      //         this.createAccountApi()
+      //       }
+      //     });
+      //   }
+      // } else {
+      //   this.setState({ isVisible: false })
+      //    Alert.alert(responseJson);
+      // }
+    }
+    // else {
+    //   this.createAccountApi()
+    // }
+  };
   render() {
     let redirectUrl = null;
     // if(!this.props.isAuthentication){
     //     redirectUrl = <Redirect to="/sign-in"/>
     // }
+    const ActiveStyle = {
+      backgroundColor: '#e7f8f3',
+      border: '1px solid #13b58c',
+    };
+    const deactive = {
+      
+    }
 
     return (
       <Aux>
@@ -150,9 +244,22 @@ this.props.onCreateStore(stores, () =>
                   </div>
 
                   <div class="p-2">
-                    <Link to="#">
-                      <div className={classes.title}>Add your store photo</div>
-                    </Link>
+                    <div style={{ height: '0px', overflow: 'hidden' }}>
+                      <input
+                        type="file"
+                        id="fileInput"
+                        name="imageUpload"
+                        accept="image/*"
+                        onChange={this.imageUpload}
+                      />
+                    </div>
+                    <button
+                      className={classes.title}
+                      onClick={this.imageUploadClick}
+                      style={{ backgroundColor: 'white', border: 'none' }}
+                    >
+                      Add your store photo
+                    </button>
                   </div>
                 </div>
               </div>
@@ -202,16 +309,17 @@ this.props.onCreateStore(stores, () =>
               <div className="mt-2">
                 <div className="col-lg-12 col-md-12">
                   <div
-                    className="col-lg-12"
-                    style={{ paddingRight: '100px', paddingLeft: '100px' }}
+                    className="col-lg-12 category category-pills"
+                    style={{ paddingRight: '100px', paddingLeft: '100px',display:"flex",flexWrap:"wrap" }}
                   >
                     {this.props.categories.map((category, i) => {
                       return (
-                        <div className="col-sm-6 col-md-3" key={i}>
+                        <div className=" " key={i}>
                           <div
                             className={classes.wellCategory}
                             onClick={() => this.getType(category.name)}
-                           >
+                            style={this.state.type === category.name ? ActiveStyle : deactive}
+                          >
                             <img
                               src={category.image_path}
                               alt={category.name}

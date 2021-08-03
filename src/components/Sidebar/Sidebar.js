@@ -128,12 +128,12 @@ class Sidebar extends Component {
             <li>
               {!this.props.isAuthentication ? (
                 <Link to="#" onClick={(path) => this.authRedirectHandler('/store')}>
-                  <img className="img-fluid" src={StoreLogo} alt="Home" title="Home" />
+                  <img className="img-fluid"  src={url === "/store"?StoreActiveLogo:StoreLogo}  alt="store" title="store" />
                   <span>My Store</span>
                 </Link>
               ) : (
                 <Link to="/store">
-                  <img className="img-fluid" src={StoreLogo} alt="Home" title="Home" />
+                  <img className="img-fluid" src={url === "/store"?StoreActiveLogo:StoreLogo} alt="store" title="store" />
                   <span>My Store</span>
                 </Link>
               )}
