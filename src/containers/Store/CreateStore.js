@@ -20,6 +20,7 @@ import ElectronicsLogo from '../../assets/images/home/category/electronics.svg';
 import SporsLogo from '../../assets/images/home/category/sports.svg';
 import GamesLogo from '../../assets/images/home/category/games.svg';
 import axios from '../../axios';
+import axios2 from 'axios';
 
 class CreateStore extends Component {
   state = {
@@ -131,6 +132,17 @@ class CreateStore extends Component {
     reader.readAsDataURL(file);
     console.log(reader);
  
+    const contentType = file.type;
+      const options = {
+      params: {
+        Key: file.name,
+        ContentType: contentType
+      },
+      headers: {
+        'Content-Type': contentType
+      }
+    };
+
 
     var imgParm = [];
     var uploadBase64 = [];
@@ -170,21 +182,28 @@ class CreateStore extends Component {
             this.setState({ imagePath: response.data.data.result[0].fileUri });
             const path = response.data.data.result[0].signedUrl;
             // const res =  uploadBase64[0].file;
-           fetch( reader).then(async (res) => {
-                (async () => {
-               fetch(path, {
-                 method: 'PUT',
-                 headers: {
-                   'Content-Type': imgParm[0].type,
-                 },
-                 body: await res.blob(),
-               }).then((res) => {
-                 console.log(res);
-               });
-             })();
-           });
+          //  fetch( reader).then(async (res) => {
+          //       (async () => {
+          //      fetch(path, {
+          //        method: 'POST',
+          //        headers: {
+          //          'Content-Type': imgParm[0].type,
+          //        },
+          //        body: await res.blob(),
+          //      }).then((res) => {
+          //        console.log(res);
+          //      });
+          //    })();
+          //  });
 
-           
+           axios2
+             .put(path, reader.result, options)
+             .then(function (response) {
+               console.log(response);
+             })
+             .catch(function (error) {
+               console.log(error);
+             });   
  
 
           }
@@ -300,10 +319,7 @@ class CreateStore extends Component {
                       Add your store photo
                     </button>
                       
-                      <img
-                        src="https://tradly-paas-sandbox.s3.amazonaws.com/images/nammakada/19851/ceff4ed6-2411-457d-9ee4-dbfd41f835fe.png"
-                        alt="logo"
-                      />
+                       
                      
                   </div>
                 </div>

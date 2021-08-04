@@ -106,7 +106,7 @@ const Header = (props) => {
               </div>
             </div>
 
-            <div className={classes.cartArea}>
+            {/* <div className={classes.cartArea}>
               <Link to="/cart">
                 <span className={classes.cartIcon}>
                   <i className="fa fa-shopping-cart mr-10"></i>
@@ -114,7 +114,7 @@ const Header = (props) => {
                 Cart
                 <span className={classes.countCart}>0</span>
               </Link>
-            </div>
+            </div> */}
           </div>
         </div>
         <div

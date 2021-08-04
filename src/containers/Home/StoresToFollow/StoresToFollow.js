@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../../store/actions/index';
 import AllenSollyLogo from '../../../assets/images/home/store/allenSolly.svg';
 import { Link } from 'react-router-dom';
 import classes from './StoreToFollow.module.css';
 import ItemsCarousel from 'react-items-carousel';
 
-const StoresToFollow = () => {
+const StoresToFollow = ({ isAuthenticated }) => {
   const [activeItemIndex, setActiveItemIndex] = useState(0);
+  const dispatch = useDispatch();
 
   const categories = useSelector((state) => state.home.collections);
+  const followError = useSelector((state) => state.store.error);
+  // const [followSet,setFollowSet] = useState()
 
   let arrayListings = [];
   let title;
@@ -18,6 +21,7 @@ const StoresToFollow = () => {
       title = collection.title;
       arrayListings = collection.accounts.map((list, i) => {
         let imagePath = AllenSollyLogo;
+        var followSet ;
         if (list.images.length > 0) {
           imagePath = list.images[0];
         }
@@ -26,6 +30,25 @@ const StoresToFollow = () => {
         if (description.length > 25) {
           description = description.substring(0, 25) + '...';
         }
+
+        const postStoreFollow = (id) => {
+          const storeId =  id;
+          let IsFollowing = false;
+          if (list.following !== false) {
+            IsFollowing = true;
+          }
+          console.log(storeId);
+
+           setTimeout(() => {
+            dispatch(actions.postStoreFollow(storeId, IsFollowing));
+          }, 1000);
+
+            setTimeout(() => {
+              if (!followError) {
+               dispatch(actions.initHomeCollections());
+            }
+          }, 2000);
+        };
 
         return (
           <div className={classes.wellStore + ' col-lg-12'} key={i}>
@@ -37,8 +60,21 @@ const StoresToFollow = () => {
                 <p style={{ fontWeight: 'bold', marginBottom: '1em' }}>{list.name}</p>
                 <p>{description}</p>
               </div>
-              <button className={classes.btnGreenFollow + ' mt-5'}>Follow</button>
             </Link>
+            {isAuthenticated ? (
+              <button
+                className={classes.btnGreenFollow + ' mt-5'}
+                onClick={() => postStoreFollow(list.id)}
+              >
+                {list.following? 'following' : 'follow'}
+              </button>
+            ) : (
+              <Link to="/sign-in">
+                <button className={classes.btnGreenFollow + ' mt-5'} style={{ marginLeft: '15px' }}>
+                  follow
+                </button>
+              </Link>
+            )}
           </div>
         );
       });

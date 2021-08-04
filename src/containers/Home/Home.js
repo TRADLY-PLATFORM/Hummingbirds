@@ -25,6 +25,7 @@ import LatestProducts from './LatestProducts/LatestProducts';
 import Categories from './Categories/Categories';
 import { Helmet } from 'react-helmet';
 import PropTypes from 'prop-types';
+import { selectUserId } from '../../store/selectors/auth';
 
 
 class Home extends Component {
@@ -68,7 +69,7 @@ class Home extends Component {
     if (this.props.collections && this.props.collections.length > 0) {
       collectionContent = (
         <>
-          <StoresToFollow />
+          <StoresToFollow isAuthenticated={this.props.isAuthenticated} />
           <br />
           <br />
           <LatestProducts />
@@ -117,6 +118,7 @@ const mapStateToProps = (state) => {
     promo_banners: state.home.promo_banners,
     categories: state.home.categories,
     collections: state.home.collections,
+    isAuthenticated: selectUserId(state),
   };
 };
 

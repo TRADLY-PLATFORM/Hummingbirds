@@ -24,7 +24,7 @@ const WishList = () => {
         </div>
 
         <div className="col-md-2">
-          <div className={classes.SortbyMenu + ' dropdown'}>
+          {/* <div className={classes.SortbyMenu + ' dropdown'}>
             <button
               className={classes.SortbyMenu + ' dropdown-toggle '}
               data-toggle="dropdown"
@@ -45,13 +45,13 @@ const WishList = () => {
                 <a href="/#">C</a>
               </li>
             </ul>
-          </div>
+          </div> */}
         </div>
 
-        <div className="col-md-5 col-sm-12 col-xs-12">
+        {/* <div className="col-md-5 col-sm-12 col-xs-12">
           <span className="glyphicon glyphicon-search form-control-feedback"></span>
           <input type="text" className="form-control input-lg" placeholder="Search My Wishlist" />
-        </div>
+        </div> */}
       </div>
 
       <div className="row">

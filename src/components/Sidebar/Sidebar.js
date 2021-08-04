@@ -114,7 +114,7 @@ class Sidebar extends Component {
                 <span>Listings</span>
               </Link>
             </li>
-            <li className={url === '/my-transaction' ? 'active' : ''}>
+            {/* <li className={url === '/my-transaction' ? 'active' : ''}>
               <Link to="/my-transaction">
                 <img
                   className="img-fluid"
@@ -137,7 +137,7 @@ class Sidebar extends Component {
                   <span>My Store</span>
                 </Link>
               )}
-            </li>
+            </li> */}
             {/* <li>
               <Link to="/group">
                 <img className="img-fluid" src={GroupLogo} alt="Home" title="Home" />
