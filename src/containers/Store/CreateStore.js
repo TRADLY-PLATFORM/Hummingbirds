@@ -121,8 +121,17 @@ class CreateStore extends Component {
     fileInput.click();
   };
   imageUpload = async (e) => {
-    console.log(e.target.files[0]);
+    console.log(e.target.files);
+ 
     this.setState({image:URL.createObjectURL(e.target.files[0])})
+
+
+  const file = e.target.files[0];
+  const reader = new FileReader();
+    reader.readAsDataURL(file);
+    console.log(reader);
+ 
+
     var imgParm = [];
     var uploadBase64 = [];
     if (e.target.files[0] != null) {
@@ -133,29 +142,18 @@ class CreateStore extends Component {
           name: e.target.files[0].name,
           type: e.target.files[0].type,
         };
-        uploadBase64.push({
-          file: 'data:image/png;base64,' + e.target.files[0],
-        });
+         
         imgParm.push(splashDict);
       }
+      
     }
-    // if (e.target.files[0] != null) {
-    //   let fileName = e.target.files[0].name;
-    //   if (fileName != null) {
-    //     var androidIconDict = {
-    //       name: e.target.files[0].name,
-    //       type: e.target.files[0].type,
-    //     };
-    //     uploadBase64.push({
-    //       file: 'data:image/png;base64,' + e.target.files[0].name,
-    //     });
-    //     imgParm.push(androidIconDict);
-    //   }
-    // }
+
+    
+ 
     console.log('imgParm', imgParm);
+    console.log('check', uploadBase64);
     if (imgParm != 0) {
-      const data = JSON.stringify(imgParm);
-      var config = {
+       var config = {
         method: 'post',
         url: 'v1/utils/S3signedUploadURL',
         headers: {
@@ -170,6 +168,25 @@ class CreateStore extends Component {
             console.log(response);
             console.log(response.data.data.result[0].fileUri);
             this.setState({ imagePath: response.data.data.result[0].fileUri });
+            const path = response.data.data.result[0].signedUrl;
+            // const res =  uploadBase64[0].file;
+           fetch( reader).then(async (res) => {
+                (async () => {
+               fetch(path, {
+                 method: 'PUT',
+                 headers: {
+                   'Content-Type': imgParm[0].type,
+                 },
+                 body: await res.blob(),
+               }).then((res) => {
+                 console.log(res);
+               });
+             })();
+           });
+
+           
+ 
+
           }
         })
         .catch((error) => {
@@ -258,7 +275,11 @@ class CreateStore extends Component {
               <div className={classes.groupcard}>
                 <div className="row">
                   <div class="p-2">
-                    <img className={classes.groupAvatar} src={this.state.image?this.state.image:groupAvatar} alt="Stores" />
+                    <img
+                      className={classes.groupAvatar}
+                      src={this.state.image ? this.state.image : groupAvatar}
+                      alt="Stores"
+                    />
                   </div>
 
                   <div class="p-2">
@@ -278,7 +299,12 @@ class CreateStore extends Component {
                     >
                       Add your store photo
                     </button>
-                    {/* {this.state.image.length>0 && <img src={this.state.image[0]} alt="logo" />} */}
+                      
+                      <img
+                        src="https://tradly-paas-sandbox.s3.amazonaws.com/images/nammakada/19851/ceff4ed6-2411-457d-9ee4-dbfd41f835fe.png"
+                        alt="logo"
+                      />
+                     
                   </div>
                 </div>
               </div>
