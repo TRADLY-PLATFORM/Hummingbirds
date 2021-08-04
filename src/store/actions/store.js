@@ -70,6 +70,7 @@ export const userStoreLists = (userId) => {
       .get('/v1/accounts?page=1&type=accounts&user_id=' + userId)
       .then((response) => {
         if (response.data.status) {
+          console.log(response.data.data);
           dispatch(setStoreLists(response.data.data.accounts));
         } else {
           dispatch(fetchStoreListsFailed());
@@ -102,6 +103,7 @@ export const createStoreSuccess = () => {
 export const CreateStore = (store, callBack) => {
   return (dispatch) => {
     dispatch(initCreateStore());
+
     axios
       .post('/v1/accounts', store)
       .then((response) => {

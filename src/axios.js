@@ -6,6 +6,7 @@ const instance = axios.create({
   baseURL: URL,
 });
 
+
 instance.defaults.headers.common['Content-Type'] = 'application/json';
 instance.defaults.headers.common['Cache-Control'] = 'no-cache';
 instance.defaults.headers.common['Pragma'] = 'no-cache';

@@ -39,7 +39,7 @@ class Store extends Component {
                 description = description.substring(0, 35) + '...';
               }
               let storeName = list.name;
-              let storeOwner = list.name;
+              let storeOwner = list.user.first_name;
 
               return (
                 <div className=" " key={i}>
@@ -55,18 +55,10 @@ class Store extends Component {
                         <div className="col-lg-12">
                           <div className={classes.bannerText + ' col-sm-12'}>
                             <div className={classes.fashionStore + ' col-sm-6'}>
-                              {list.image_path ? (
-                                <img
-                                  src={list.image_path}
-                                  alt="Woman accesories"
-                                  title="Woman accesories"
-                                />
+                              {list.images[0] ? (
+                                <img src={list.images[0]} alt={storeName} title={storeName} />
                               ) : (
-                                <img
-                                  src={AllenSollyLogo}
-                                  alt="Woman accesories"
-                                  title="Woman accesories"
-                                />
+                                <img src={AllenSollyLogo} alt={storeName} title={storeName} />
                               )}
 
                               <h3>{storeName}</h3>

@@ -29,7 +29,7 @@ class CreateStore extends Component {
     web_address: '',
     type: '',
     active: 'false',
-    image: '',
+    image: null,
     imagePath: '',
   };
 
@@ -55,6 +55,12 @@ class CreateStore extends Component {
       }
       return false;
     }
+     else if (this.state.image_path === '') {
+      if (!toast.isActive(this.toastId)) {
+        this.toastId = toast.error('Image is required');
+      }
+      return false;
+    }
 
     this.setState({ showError: true });
 
@@ -63,7 +69,7 @@ class CreateStore extends Component {
         name: this.state.name,
         description: this.state.description,
         web_address: '',
-        image_path: '',
+        images: [this.state.imagePath],
         address: this.state.web_address,
         type: this.state.type,
       },
@@ -87,8 +93,9 @@ class CreateStore extends Component {
     //     ],
     //     type: 'accounts',
     //   },
+    console.log(stores)
 
-    this.props.onCreateStore(stores, () =>
+    this.props.onCreateStore( stores , () =>
       this.props.history.push(`/storesuccess?id=${this.props.isAuthenticated}`)
     );
   };
@@ -115,7 +122,7 @@ class CreateStore extends Component {
   };
   imageUpload = async (e) => {
     console.log(e.target.files[0]);
-
+    this.setState({image:URL.createObjectURL(e.target.files[0])})
     var imgParm = [];
     var uploadBase64 = [];
     if (e.target.files[0] != null) {
@@ -132,30 +139,43 @@ class CreateStore extends Component {
         imgParm.push(splashDict);
       }
     }
-    if (e.target.files[0] != null) {
-      let fileName = e.target.files[0].name;
-      if (fileName != null) {
-        var androidIconDict = {
-          name: e.target.files[0].name,
-          type: e.target.files[0].type,
-        };
-        uploadBase64.push({
-          file: 'data:image/png;base64,' + e.target.files[0].name,
-        });
-        imgParm.push(androidIconDict);
-      }
-    }
+    // if (e.target.files[0] != null) {
+    //   let fileName = e.target.files[0].name;
+    //   if (fileName != null) {
+    //     var androidIconDict = {
+    //       name: e.target.files[0].name,
+    //       type: e.target.files[0].type,
+    //     };
+    //     uploadBase64.push({
+    //       file: 'data:image/png;base64,' + e.target.files[0].name,
+    //     });
+    //     imgParm.push(androidIconDict);
+    //   }
+    // }
     console.log('imgParm', imgParm);
     if (imgParm != 0) {
       const data = JSON.stringify(imgParm);
-      axios
-        .post('v1/utils/S3signedUploadURL', JSON.stringify({ files: imgParm }))
+      var config = {
+        method: 'post',
+        url: 'v1/utils/S3signedUploadURL',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        data: JSON.stringify({ files: imgParm }),
+      };
+      axios(config)
         .then((response) => {
-          console.log(response);
+         
+          if (response.data.status) {
+            console.log(response);
+            console.log(response.data.data.result[0].fileUri);
+            this.setState({ imagePath: response.data.data.result[0].fileUri });
+          }
         })
         .catch((error) => {
           console.log(error);
         });
+        console.log(this.state.image)
       // networkService.networkCall(
       //   APPURL.URLPaths.S3signedUploadURL, 'POST',  JSON.stringify({files: imgParm}),appConstant.bToken,appConstant.authKey );
       // if (responseJson['status'] == true) {
@@ -202,9 +222,7 @@ class CreateStore extends Component {
       backgroundColor: '#e7f8f3',
       border: '1px solid #13b58c',
     };
-    const deactive = {
-      
-    }
+    const deactive = {};
 
     return (
       <Aux>
@@ -240,7 +258,7 @@ class CreateStore extends Component {
               <div className={classes.groupcard}>
                 <div className="row">
                   <div class="p-2">
-                    <img className={classes.groupAvatar} src={groupAvatar} alt="Stores" />
+                    <img className={classes.groupAvatar} src={this.state.image?this.state.image:groupAvatar} alt="Stores" />
                   </div>
 
                   <div class="p-2">
@@ -260,6 +278,7 @@ class CreateStore extends Component {
                     >
                       Add your store photo
                     </button>
+                    {/* {this.state.image.length>0 && <img src={this.state.image[0]} alt="logo" />} */}
                   </div>
                 </div>
               </div>
@@ -310,7 +329,12 @@ class CreateStore extends Component {
                 <div className="col-lg-12 col-md-12">
                   <div
                     className="col-lg-12 category category-pills"
-                    style={{ paddingRight: '100px', paddingLeft: '100px',display:"flex",flexWrap:"wrap" }}
+                    style={{
+                      paddingRight: '100px',
+                      paddingLeft: '100px',
+                      display: 'flex',
+                      flexWrap: 'wrap',
+                    }}
                   >
                     {this.props.categories.map((category, i) => {
                       return (
