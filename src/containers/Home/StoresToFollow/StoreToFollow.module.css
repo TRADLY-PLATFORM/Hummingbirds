@@ -9,8 +9,8 @@
   margin-bottom: 30px;
 }
 .wellStore {
-  min-height: 18.5em;
-  padding: 20px 40px;
+  min-height: 20.5em;
+  padding: 25px 40px;
   margin-bottom: 20px;
   background-color: #ffffff;
   border: 1px solid #e3e3e3;
@@ -20,14 +20,14 @@
 }
 .wellStoreDetails {
   font-style: normal;
-  margin-top: 15px;
+  margin-top: 25px;
 }
 
 .wellStoreDetails p {
   font-size: 15px;
   line-height: 22px;
   color: #4a4a4a;
-  height: 15px;
+  min-height: 15px;
 }
 
 .wellStore img {
