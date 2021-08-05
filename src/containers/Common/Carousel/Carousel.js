@@ -17,7 +17,7 @@ const Carousel = () => {
               .get('v1/configs?key_group=onboarding')
               .then((response) => {
                 if (response.status) {
-                    console.log(response.data.configs.intro_screens);
+                    console.log(response);
                     setOnboardingImage(response.data.configs.intro_screens);
                 } else {
                   console.log(response);
