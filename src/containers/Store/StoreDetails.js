@@ -157,9 +157,13 @@ class StoreDetails extends Component {
                   {/* <button className="btnGreenStyle pull-right mt-4" onClick={this.postStoreFollow}>
                     Follow
                   </button> */}
-                  {this.props.isAuthenticated  ? (
+                  {this.props.isAuthenticated ? (
                     <button
-                      className="btnGreenStyle pull-right mt-4"
+                      className={`${
+                        this.props.storeDetails.get('following')
+                          ? 'btnGreenStyle'
+                          : 'btnOutlineGreenStyle'
+                      } pull-right mt-4`}
                       onClick={this.postStoreFollow}
                     >
                       {this.props.storeDetails.get('following') ? 'following' : 'follow'}
@@ -167,7 +171,7 @@ class StoreDetails extends Component {
                   ) : (
                     <Link to="/sign-in">
                       <button
-                        className="btnGreenStyle pull-right mt-4 "
+                        className="btnOutlineGreenStyle pull-right mt-4 "
                         style={{ marginLeft: '15px' }}
                       >
                         follow

@@ -206,3 +206,33 @@
   padding: 20px 0px;
   margin-top: 1em;
 }
+
+
+.btnGreenFollow {
+  padding: 10px 13px;
+  border: none;
+  background: linear-gradient(180deg, #2bdbc0 0%, #13b58c 100%);
+  border-radius: 24px;
+  width: 100%;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  /* identical to box height */
+  color: #ffffff;
+  margin-top: 7px;
+}
+
+.btnGreenUnFollowing{
+  padding: 10px 13px;
+  border: 1px solid #13b58c;
+  background: white;
+  border-radius: 24px;
+  width: 100%;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 17px;
+  /* identical to box height */
+  color: #13b58c;
+}

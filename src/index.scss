@@ -27,6 +27,17 @@ $primaryBgColor: #ffffff;
   line-height: 17px;
   color: $primaryBgColor;
 }
+.btnOutlineGreenStyle {
+  padding: 8px 20px;
+  border: 1px solid $primaryColor;
+  background:white;
+  border-radius: 24px;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 17px;
+  color: $primaryColor;
+}
 
 .btnGreenStyle:hover {
   background: linear-gradient(180deg, #13b58c 0%, #2bdbc0 100%);

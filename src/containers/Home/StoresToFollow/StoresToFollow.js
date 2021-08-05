@@ -17,76 +17,77 @@ const StoresToFollow = ({ isAuthenticated }) => {
   const followError = useSelector((state) => state.store.error);
   const followLoading = useSelector((state) => state.store.loading);
   // const [followSet,setFollowSet] = useState()
-console.log(storesToFollow);
+  console.log(storesToFollow);
   let arrayListings = [];
   let title = 'Stores to Follow';
 
-      arrayListings = storesToFollow.map((list, i) => {
-        let imagePath = AllenSollyLogo;
-        var followSet;
-        if (list.images.length > 0) {
-          imagePath = list.images[0];
+  arrayListings = storesToFollow.map((list, i) => {
+    let imagePath = AllenSollyLogo;
+    var followSet;
+    if (list.images.length > 0) {
+      imagePath = list.images[0];
+    }
+
+    let description = list.description;
+    if (description.length > 25) {
+      description = description.substring(0, 25) + '...';
+    }
+
+    const postStoreFollow = (id) => {
+      const storeId = id;
+      let IsFollowing = false;
+      if (list.following !== false) {
+        IsFollowing = true;
+      }
+      console.log(storeId);
+
+      setTimeout(() => {
+        dispatch(actions.postStoreFollow(storeId, IsFollowing));
+      }, 500);
+
+      setTimeout(() => {
+        if (!followError) {
+          dispatch(actions.initStoresToFollow());
         }
+      }, 1000);
+    };
 
-        let description = list.description;
-        if (description.length > 25) {
-          description = description.substring(0, 25) + '...';
-        }
-
-        const postStoreFollow = (id) => {
-          const storeId = id;
-          let IsFollowing = false;
-          if (list.following !== false) {
-            IsFollowing = true;
-          }
-          console.log(storeId);
-
-          setTimeout(() => {
-            dispatch(actions.postStoreFollow(storeId, IsFollowing));
-          },500);
-
-          setTimeout(() => {
-            if (!followError) {
-              dispatch(actions.initStoresToFollow());
-            }
-          }, 700);
-        };
-
-        return (
-          <div className={classes.wellStore + ' col-lg-12'} key={i}>
-            <Link to={`/store-details/${list.id}/${list.name}`} style={{ textDecoration: 'none' }}>
-              <div className={classes.imageDiv}>
-                <img src={imagePath} alt={list.name} title={list.name} />
-              </div>
-              <div className={classes.wellStoreDetails}>
-                <p style={{ fontWeight: 'bold', marginBottom: '1em' }}>{list.name}</p>
-                <p>{description}</p>
-              </div>
-            </Link>
-            {isAuthenticated ? (
-              <button
-                className={classes.btnGreenFollow + ' mt-5'}
-                onClick={() => postStoreFollow(list.id)}
-              >
-                {list.following ? 'following' : 'follow'}
-              </button>
-            ) : (
-              <Link to="/sign-in">
-                <button className={classes.btnGreenFollow + ' mt-5'} style={{ marginLeft: '15px' }}>
-                  follow
-                </button>
-              </Link>
-            )}
+    return (
+      <div className={classes.wellStore + ' col-lg-12'} key={i}>
+        <Link to={`/store-details/${list.id}/${list.name}`} style={{ textDecoration: 'none' }}>
+          <div className={classes.imageDiv}>
+            <img src={imagePath} alt={list.name} title={list.name} />
           </div>
-        );
-      });
-    
-  
+          <div className={classes.wellStoreDetails}>
+            <p style={{ fontWeight: 'bold', marginBottom: '1em' }}>{list.name}</p>
+            <p>{description}</p>
+          </div>
+        </Link>
+        {isAuthenticated ? (
+          <button
+            className={
+              (list.following ? classes.btnGreenFollowing : classes.btnGreenUnFollowing) + ' mt-5'
+            }
+            onClick={() => postStoreFollow(list.id)}
+          >
+            {list.following ? 'following' : 'follow'}
+          </button>
+        ) : (
+          <Link to="/sign-in">
+            <button
+              className={classes.btnGreenUnFollowing + ' mt-5'}
+              style={{ marginLeft: '15px' }}
+            >
+              follow
+            </button>
+          </Link>
+        )}
+      </div>
+    );
+  });
 
   return (
-    
     <div className="row">
-     
       <div className="col-lg-6  ">
         <h3 className={classes.headingTitle}>{title}</h3>
       </div>

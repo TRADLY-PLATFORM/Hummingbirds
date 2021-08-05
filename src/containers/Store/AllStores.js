@@ -33,13 +33,13 @@ const postStoreFollow = (id,following) => {
 
   setTimeout(() => {
     dispatch(actions.postStoreFollow(storeId, IsFollowing));
-  }, 100);
+  }, 2000);
 
   setTimeout(() => {
     if (!followError) {
       dispatch(actions.getStores());
     }
-  }, 200);
+  }, 3000);
 };
 
   return (
@@ -49,8 +49,9 @@ const postStoreFollow = (id,following) => {
         <meta name="description" content=" All stores list . You can select a store" />
         <link rel="canonical" href={location.pathname} />
       </Helmet>
-      <backdrop show={ followLoading} />
-      <spinner show={ followLoading} />
+      {followLoading ? <div className={classes.Backdrop} ></div> : null}
+      
+      <spinner show={followLoading} />
       <div className={classes.storesStyle}>
         {stores?.map((store, i) => {
           let imagePath = AllenSollyLogo;
@@ -79,7 +80,10 @@ const postStoreFollow = (id,following) => {
               </Link>
               {isAuthenticated ? (
                 <button
-                  className={classes.btnGreenFollow + ' mt-5'}
+                  className={
+                    (store.following ? classes.btnGreenFollow : classes.btnGreenUnFollowing) +
+                    ' mt-5'
+                  }
                   onClick={() => postStoreFollow(store.id, store.following)}
                 >
                   {store.following ? 'following' : 'follow'}
@@ -87,7 +91,7 @@ const postStoreFollow = (id,following) => {
               ) : (
                 <Link to="/sign-in">
                   <button
-                    className={classes.btnGreenFollow + ' mt-5'}
+                    className={classes.btnGreenUnFollowing + ' mt-5'}
                     style={{ marginLeft: '15px' }}
                   >
                     follow

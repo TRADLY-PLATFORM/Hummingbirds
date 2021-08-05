@@ -50,3 +50,27 @@
   color: #ffffff;
   margin-top: 7px;
 }
+
+.btnGreenUnFollowing{
+  padding: 10px 13px;
+  border: 1px solid #13b58c;
+  background: white;
+  border-radius: 24px;
+  width: 100%;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 17px;
+  /* identical to box height */
+  color: #13b58c;
+}
+
+.Backdrop {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+}
