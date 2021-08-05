@@ -5,23 +5,25 @@ import AllenSollyLogo from '../../../assets/images/home/store/allenSolly.svg';
 import { Link } from 'react-router-dom';
 import classes from './StoreToFollow.module.css';
 import ItemsCarousel from 'react-items-carousel';
+import backdrop from '../../../components/UI/Backdrop/Backdrop';
+import spinner from '../../../components/UI/Spinner/Spinner';
 
 const StoresToFollow = ({ isAuthenticated }) => {
   const [activeItemIndex, setActiveItemIndex] = useState(0);
   const dispatch = useDispatch();
 
   const categories = useSelector((state) => state.home.collections);
+  const storesToFollow = useSelector((state) => state.home.stores);
   const followError = useSelector((state) => state.store.error);
+  const followLoading = useSelector((state) => state.store.loading);
   // const [followSet,setFollowSet] = useState()
-
+console.log(storesToFollow);
   let arrayListings = [];
-  let title;
-  categories.map((collection, index) => {
-    if (collection.title === 'Stores to Follow') {
-      title = collection.title;
-      arrayListings = collection.accounts.map((list, i) => {
+  let title = 'Stores to Follow';
+
+      arrayListings = storesToFollow.map((list, i) => {
         let imagePath = AllenSollyLogo;
-        var followSet ;
+        var followSet;
         if (list.images.length > 0) {
           imagePath = list.images[0];
         }
@@ -32,22 +34,22 @@ const StoresToFollow = ({ isAuthenticated }) => {
         }
 
         const postStoreFollow = (id) => {
-          const storeId =  id;
+          const storeId = id;
           let IsFollowing = false;
           if (list.following !== false) {
             IsFollowing = true;
           }
           console.log(storeId);
 
-           setTimeout(() => {
+          setTimeout(() => {
             dispatch(actions.postStoreFollow(storeId, IsFollowing));
-          }, 1000);
+          },500);
 
-            setTimeout(() => {
-              if (!followError) {
-               dispatch(actions.initHomeCollections());
+          setTimeout(() => {
+            if (!followError) {
+              dispatch(actions.initStoresToFollow());
             }
-          }, 2000);
+          }, 700);
         };
 
         return (
@@ -66,7 +68,7 @@ const StoresToFollow = ({ isAuthenticated }) => {
                 className={classes.btnGreenFollow + ' mt-5'}
                 onClick={() => postStoreFollow(list.id)}
               >
-                {list.following? 'following' : 'follow'}
+                {list.following ? 'following' : 'follow'}
               </button>
             ) : (
               <Link to="/sign-in">
@@ -78,11 +80,13 @@ const StoresToFollow = ({ isAuthenticated }) => {
           </div>
         );
       });
-    }
-  });
+    
+  
 
   return (
+    
     <div className="row">
+     
       <div className="col-lg-6  ">
         <h3 className={classes.headingTitle}>{title}</h3>
       </div>

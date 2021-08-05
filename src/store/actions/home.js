@@ -26,6 +26,12 @@ export const setBanners = (banners) => {
     bannersItems: banners,
   };
 };
+export const setStores = (stores) => {
+  return {
+    type: actionTypes.SET_STORES_TO_FOLLOW,
+    storesItems: stores,
+  };
+};
 
 export const initHomeCollections = () => {
   return (dispatch) => {
@@ -58,7 +64,7 @@ export const initHomeCollections = () => {
         });
     } else {
       let homeDetails = JSON.parse(DECRYPT(homeStorage));
-       let categories = homeDetails.categories;
+      let categories = homeDetails.categories;
       let collections = homeDetails.collections;
       dispatch(setCollections({ categories, collections }));
     }
@@ -74,6 +80,25 @@ export const initPromoBanners = () => {
           let promo_banners = response.data.data.promo_banners;
           console.log(promo_banners);
           dispatch(setBanners(response.data.data.promo_banners));
+        }
+      })
+      .catch((error) => {
+        dispatch(fetchCollectionsFailed());
+      });
+  };
+};
+
+export const initStoresToFollow = () => {
+  return (dispatch) => {
+    axios
+      .get('v1/accounts?page=1&type=accounts')
+      .then((response) => {
+        if (response.data.status) {
+          let stores = response.data.data.accounts.filter((list, i) => list.active === true);
+          console.log(stores);
+          dispatch(
+            setStores(response.data.data.accounts.filter((list, i) => list.active === true))
+          );
         }
       })
       .catch((error) => {

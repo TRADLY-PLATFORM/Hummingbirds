@@ -30,11 +30,8 @@ const ListingsByCategory = () => {
   return (
     <>
       <Helmet>
-        <title>Tradly Web - {categoryName} Products</title>
-        <meta
-          name="description"
-          content=" Collection of all  products. You can see different types of products by selecting according to your choice. You can easily find the product of your choice."
-        />
+        <title>Best {categoryName} products near me</title>
+        <meta name="description" content={`Buy and sell products online - ${categoryName} `} />
         <link rel="canonical" href={location.pathname} />
       </Helmet>
       <Aux>

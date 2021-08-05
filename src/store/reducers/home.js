@@ -8,7 +8,8 @@ const initialState = {
     message : null,
     promo_banners: [],
     categories: [],
-    collections: []
+  collections: [],
+    stores:[]
 }
 
 const initCollections= ( state, action ) => {
@@ -29,6 +30,11 @@ const setPromoBanners = (state, action) => {
        promo_banners: action.bannersItems,
      });
 }
+const setStoresToFollow = (state, action) => {
+     return updateObject(state, {
+       stores: action.storesItems,
+     });
+}
 
 const fetchCollectionsFailed = (state, action) => {
     return updateObject( state, { loading: false, error: true, message: 'Could not fetch collecions result.' } );
@@ -42,6 +48,8 @@ const homeReducer = ( state = initialState, action) =>{
         return setCollections(state, action);
       case actionTypes.SET_PROMO_BANNERS:
         return setPromoBanners(state, action);
+      case actionTypes.SET_STORES_TO_FOLLOW:
+        return setStoresToFollow(state, action);
       case actionTypes.FETCH_COLLECTIONS_FAILED:
         return fetchCollectionsFailed(state, action);
       default:

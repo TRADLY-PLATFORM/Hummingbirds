@@ -53,6 +53,7 @@ class Home extends Component {
     this.timer = setTimeout(() => {
       this.props.onInitHomeCollections();
       this.props.onInitPromoBanners();
+      this.props.onInitStoresToFollow();
     }, 3000);
 
     this.timer = setTimeout(() => {
@@ -85,15 +86,17 @@ class Home extends Component {
     return (
       <Aux>
         <Helmet>
-          <title>Tradly Web - Home Page</title>
+          <title>
+            {process.env.REACT_APP_TENANT_NAME} - Buy & Sell used items online from mobile app
+          </title>
           <meta
             name="description"
-            content="Tradly is a great business platform. Where there is a collection of various products. There are attractive offers and free shipping for different products. And you will get a lot of good pleasure in shopping."
+            content=" Buy & Sell used items online and preloved electronics, bikes, cycle, books, fashion, gadgets, etc"
           />
-          <link   href={location.pathname} />
+          <link href={location.pathname} />
         </Helmet>
-        <Backdrop show={this.props.loading} />
-        <Spinner show={this.props.loading} />
+        <Backdrop show={this.props.loading || this.props.followLoading} />
+        <Spinner show={this.props.loading || this.props.followLoading} />
         <HomeBanner images={this.props.promo_banners} />
         <div style={{ width: '100%' }}>
           <Categories />
@@ -115,6 +118,7 @@ const mapStateToProps = (state) => {
     userId: state.auth.userId,
     error: state.auth.error,
     loading: state.auth.loading,
+    followLoading:state.store.loading,
     message: state.auth.message,
     promo_banners: state.home.promo_banners,
     categories: state.home.categories,
@@ -127,6 +131,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onInitHomeCollections: () => dispatch(actions.initHomeCollections()),
     onInitPromoBanners: () => dispatch(actions.initPromoBanners()),
+    onInitStoresToFollow: () => dispatch(actions.initStoresToFollow()),
   };
 };
 

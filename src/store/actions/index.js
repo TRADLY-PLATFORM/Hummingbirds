@@ -8,7 +8,7 @@ export {
   setAuthRedirectPath,
 } from './auth';
 
-export { initHomeCollections, initPromoBanners } from './home';
+export { initHomeCollections, initPromoBanners, initStoresToFollow } from './home';
 
 export {
   initProductDetails,

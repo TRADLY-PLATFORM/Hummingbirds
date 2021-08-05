@@ -234,12 +234,10 @@ class StoreDetails extends Component {
     return (
       <>
         <Helmet>
-          <title>
-            Buy online from - {storeName} from your mobile via {buisnessName} app
-          </title>
+          <title>Find items sold by {storeName}. Buy online</title>
           <meta
             name="description"
-            content={`Find products sold by ${storeName} Only on ${buisnessName}`}
+            content={`Products sold by ${storeName}. Chat and buy from mobile app. `}
           />
           <link rel="canonical" href={location.pathname} />
         </Helmet>

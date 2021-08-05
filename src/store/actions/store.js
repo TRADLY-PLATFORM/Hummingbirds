@@ -177,12 +177,12 @@ export const getStores = () => {
   return (dispatch) => {
     dispatch(initStoreLists());
     axios
-      .get('/products/v1/home/')
+      .get('v1/accounts?page=1&type=accounts')
       .then((response) => {
         if (response.data.status) {
-          let stores = response.data.data.collections[0];
+          let stores = response.data.data.accounts;
           console.log(stores);
-          dispatch(setAllStores(response.data.data.collections[0]));
+          dispatch(setAllStores(response.data.data.accounts));
         } else {
           dispatch(fetchStoreListsFailed());
         }

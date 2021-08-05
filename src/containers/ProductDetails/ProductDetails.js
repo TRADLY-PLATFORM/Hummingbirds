@@ -255,7 +255,7 @@ class ProductDetails extends Component {
     return (
       <>
         <Helmet>
-          <title>Tradly Web - {productDetails.getIn(['listing', 'title'], 'N/A')} </title>
+          <title> {productDetails.getIn(['listing', 'title'], 'N/A')}- Buy Online </title>
           <meta
             name="description"
             content={productDetails.getIn(['listing', 'description'], 'N/A')}
@@ -407,10 +407,18 @@ class ProductDetails extends Component {
                 </div>
 
                 <br />
-                <button type="button" className="btn btn-addtocart btn-lg btn-block height70" onClick={()=>{javascript:window.open('https://play.google.com/store/apps/details?id=tradly.platform&hl=en_IN&gl=US',
-                  '_blank')}}>
-                Download App
-              </button>
+                <button
+                  type="button"
+                  className="btn btn-addtocart btn-lg btn-block height70"
+                  onClick={() => {
+                    javascript: window.open(
+                      'https://play.google.com/store/apps/details?id=tradly.platform&hl=en_IN&gl=US',
+                      '_blank'
+                    );
+                  }}
+                >
+                  Download App
+                </button>
                 {/* <div className="row">
                   <div className={classes.buttons}>
                     <button

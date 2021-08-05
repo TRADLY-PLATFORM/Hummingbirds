@@ -5,30 +5,54 @@ import AllenSollyLogo from '../../assets/images/home/store/allenSolly.svg';
 import classes from './AllStores.module.css';
 import { Link, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import Aux from '../../hoc/Auxiliary/Auxiliary';
+import backdrop from '../../components/UI/Backdrop/Backdrop';
+import spinner from '../../components/UI/Spinner/Spinner';
+import { selectUserId } from '../../store/selectors/auth';
 
 
 const AllStores = () => {
 
   const location = useLocation()
+  const followError = useSelector((state) => state.store.error);
+  const followLoading = useSelector((state) => state.store.loading);
+  const isAuthenticated = useSelector((state) => selectUserId(state));
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(actions.getStores());
   }, []);
   const stores = useSelector((state) => state.store.storesLists);
 
-  console.log(stores);
+  console.log(followLoading);
+
+const postStoreFollow = (id,following) => {
+  const storeId = id;
+  let IsFollowing = following;
+  
+  console.log(storeId);
+
+  setTimeout(() => {
+    dispatch(actions.postStoreFollow(storeId, IsFollowing));
+  }, 100);
+
+  setTimeout(() => {
+    if (!followError) {
+      dispatch(actions.getStores());
+    }
+  }, 200);
+};
+
   return (
-    <>
+    <Aux>
       <Helmet>
         <title>Tradly Web - Stores </title>
-        <meta
-          name="description"
-          content=" All stores list . You can select a store"
-        />
+        <meta name="description" content=" All stores list . You can select a store" />
         <link rel="canonical" href={location.pathname} />
       </Helmet>
+      <backdrop show={ followLoading} />
+      <spinner show={ followLoading} />
       <div className={classes.storesStyle}>
-        {stores.accounts?.map((store, i) => {
+        {stores?.map((store, i) => {
           let imagePath = AllenSollyLogo;
           if (store.images.length > 0) {
             imagePath = store.images[0];
@@ -52,13 +76,29 @@ const AllStores = () => {
                   <p style={{ fontWeight: 'bold', marginBottom: '1em' }}>{store.name}</p>
                   <p>{description}</p>
                 </div>
-                <button className={classes.btnGreenFollow }>Follow</button>
               </Link>
+              {isAuthenticated ? (
+                <button
+                  className={classes.btnGreenFollow + ' mt-5'}
+                  onClick={() => postStoreFollow(store.id, store.following)}
+                >
+                  {store.following ? 'following' : 'follow'}
+                </button>
+              ) : (
+                <Link to="/sign-in">
+                  <button
+                    className={classes.btnGreenFollow + ' mt-5'}
+                    style={{ marginLeft: '15px' }}
+                  >
+                    follow
+                  </button>
+                </Link>
+              )}
             </div>
           );
         })}
       </div>
-    </>
+    </Aux>
   );
 };
 
