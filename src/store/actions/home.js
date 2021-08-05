@@ -58,10 +58,9 @@ export const initHomeCollections = () => {
         });
     } else {
       let homeDetails = JSON.parse(DECRYPT(homeStorage));
-      let promo_banners = homeDetails.promo_banners;
-      let categories = homeDetails.categories;
+       let categories = homeDetails.categories;
       let collections = homeDetails.collections;
-      dispatch(setCollections({ promo_banners, categories, collections }));
+      dispatch(setCollections({ categories, collections }));
     }
   };
 };

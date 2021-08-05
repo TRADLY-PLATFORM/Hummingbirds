@@ -19,7 +19,6 @@ const initCollections= ( state, action ) => {
 
 const setCollections= ( state, action ) => {
     return updateObject( state, {
-        promo_banners: action.collectionItems.promo_banners,
         categories: action.collectionItems.categories,
         collections: action.collectionItems.collections,
         loading: false
