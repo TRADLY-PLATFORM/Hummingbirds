@@ -8,7 +8,7 @@ export {
   setAuthRedirectPath,
 } from './auth';
 
-export { initHomeCollections } from './home';
+export { initHomeCollections, initPromoBanners, initStoresToFollow } from './home';
 
 export {
   initProductDetails,
@@ -18,6 +18,12 @@ export {
   onProductLikeDisLike,
 } from './product';
 
-export { initStoreDetails, userStoreLists, CreateStore, postStoreFollow } from './store';
+export { initStoreDetails, userStoreLists, CreateStore, postStoreFollow, getStores } from './store';
 
 export { initGroupDetails, CreateGroup } from './group';
+
+export { getCartList, addToCart } from './cart';
+
+export { connectStripe } from './payment';
+
+export { getWishlist } from './wishList';

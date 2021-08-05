@@ -13,10 +13,16 @@
   border: 1px solid #e3e3e3;
   border-radius: 10px;
   box-sizing: border-box;
-  min-height: 259px;
+  min-height: 260px;
+  overflow: hidden;
+}
+.latestTrend:hover {
+  /* background-color: #4a4a4a; */
 }
 .latestTrend p {
-  padding: 3px;
+  padding: 2px 15px;
+  font-size: 17px;
+  color: black;
 }
 .storeImage {
   margin-bottom: 15px;
@@ -26,37 +32,38 @@
 .bottomDesc {
   margin-bottom: 10px;
   padding: 2px;
+  display: flex;
+  align-items: center;
+  position: relative;
 }
 .bottomDesc img {
-  width: 15%;
+  width: 25%;
   margin-left: 10px;
-
+  padding-right: 5px;
   border-radius: 50%;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   /* border: solid 1px #949ca2; */
-  padding: 3px;
   transition: all 0.5s;
 }
 
 .bottomDesc span {
   font-style: normal;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 17px;
   color: #4a4a4a;
-  opacity: 0.5;
-  position: relative;
-  left: 3px;
-  top: 3px;
+  opacity: 1;
+  left: 20%;
+  top: 30%;
+  position: absolute;
 }
 .amountTitle {
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 17px;
+  min-width: 100px;
+  font-weight: bold;
+  font-size: 17px;
   text-align: right;
-  float: right;
-  padding: 16px 8px;
+  padding: 8px 8px;
 
   color: #13b58c;
 }

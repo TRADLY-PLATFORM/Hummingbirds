@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Map, List } from 'immutable';
+import { Helmet } from 'react-helmet';
 
 import Backdrop from '../../components/UI/Backdrop/Backdrop';
 import Spinner from '../../components/UI/Spinner/Spinner';
@@ -16,7 +17,14 @@ import {
   selectListings,
   selectTotalListings,
 } from '../../store/selectors/product';
+import PropTypes from 'prop-types';
+
 class Listings extends Component {
+   static propTypes = {
+    match: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
+  };
   state = {
     selectedOption: {
       priceValue: null,
@@ -27,7 +35,6 @@ class Listings extends Component {
     },
     loadOnce: false,
   };
-
   handleChange = (selectedOption, selectedName) => {
     let name = selectedName.name;
     let selectedValue = { ...this.state.selectedOption };
@@ -121,12 +128,16 @@ class Listings extends Component {
   };
 
   render() {
+
+    console.log(this.props.match.params.categoryID);
+
     let listing = '';
     let showLoadButton = null;
     const { listings, total_records, loading } = this.props;
-    console.log('total_records', total_records);
+    console.log('total_records', total_records, listings);
     const { selectedOption } = this.state;
     const { categoryValue, supplierValue, locationValue } = selectedOption;
+    console.log(categoryValue, supplierValue, locationValue);
     const productsListing = listings
       .filter((item) =>
         categoryValue !== null
@@ -151,6 +162,7 @@ class Listings extends Component {
         </div>
       );
     }
+    console.log(productsListing);
     if (productsListing && productsListing.size > 0) {
       listing = <Listing listings={productsListing} total_records={total_records} />;
       if (total_records > totalCountOfProducts && productsListing.size !== total_records) {
@@ -183,22 +195,36 @@ class Listings extends Component {
       locationValue: this.state.selectedOption.locationValue,
       categoryValue: this.state.selectedOption.categoryValue,
     };
+            const { match, location, history } = this.props;
+
 
     return (
-      <Aux>
-        <Backdrop show={loading} />
-        <Spinner show={loading} />
-        <Filter
-          selectedOption={selectedOptionList}
-          options={options}
-          handleChange={this.handleChange}
-        />
-        {listing}
-        {showLoadButton}
-        <br />
-        <br />
-        <br />
-      </Aux>
+      <>
+        <Helmet>
+          <title>Tradly Web -  All Products</title>
+          <meta
+            name="description"
+            content=" Collection of all new products. You can see different types of products by selecting according to your choice. You can easily find the product of your choice."
+            
+          />
+          <link rel="canonical" href={location.pathname} />
+
+        </Helmet>
+        <Aux>
+          <Backdrop show={loading} />
+          <Spinner show={loading} />
+          <Filter
+            selectedOption={selectedOptionList}
+            options={options}
+            handleChange={this.handleChange}
+          />
+          {listing}
+          {showLoadButton}
+          <br />
+          <br />
+          <br />
+        </Aux>
+      </>
     );
   }
 }

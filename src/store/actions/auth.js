@@ -47,8 +47,11 @@ export const checkAuthTimeout = (expirationTime) => {
   //console.log(expirationTime);
   return (dispatch) => {
     setTimeout(() => {
-      //dispatch(logout());
-      //dispatch(refreshToken());
+      if (localStorage.getItem('response')) {
+        dispatch(refreshToken());
+        dispatch(logout());
+      }
+      
     }, expirationTime * 1000);
   };
 };
@@ -64,14 +67,14 @@ export const authVerification = (verificationData) => {
         if (response.data.status) {
           const setTimeExpiry = EXPIRY_TIME;
           const expirationDate = new Date(new Date().getTime() + setTimeExpiry * 1000);
-          //   localStorage.setItem('token', response.data.data.user.key.auth_key);
+          localStorage.setItem('token', response.data.data.user.key.auth_key);
           //   localStorage.setItem('refresh_key', response.data.data.user.key.refresh_key);
           //   localStorage.setItem('userId', response.data.data.user.id);
           //   localStorage.setItem('expirationDate', expirationDate);
           //   sessionStorage.setItem('userData', JSON.stringify(response.data.data.user));
 
           localStorage.setItem('response', JSON.stringify(response.data.data.user));
-          localStorage.setItem('token', response.data.data.user.id);
+          // localStorage.setItem('token', response.data.data.user.id);
           localStorage.setItem('expirationDate', expirationDate);
           dispatch(authSuccess(response.data.data.user));
           dispatch(setAuthRedirectPath('/', null));
@@ -85,24 +88,40 @@ export const authVerification = (verificationData) => {
 };
 
 export const auth = (userData, isSignup) => {
+  console.log(userData, isSignup);
   return (dispatch) => {
     dispatch(authStart());
     let url = '/v1/users/register';
     if (!isSignup) {
       url = '/v1/users/login';
     }
-    axios
-      .post(url, userData)
+    var config = {
+      method: 'post',
+      url: url,
+      headers: {
+        'Content-Type': 'application/json',
+        tenant_key: localStorage.getItem('tenant_key'),
+      },
+      data: JSON.stringify(userData),
+    };
+    axios(config)
       .then((response) => {
         if (isSignup) {
           if (response.data.status) {
+            console.log('====================================');
+            console.log(response);
+            console.log('====================================');
             let encodeVerifyId = btoa(response.data.data.verify_id);
+            console.log(encodeVerifyId);
             dispatch(setAuthRedirectPath('/verification/' + encodeVerifyId, encodeVerifyId));
           } else {
             dispatch(authFail('Invalid credentials'));
             return false;
           }
         } else {
+          console.log('====================================');
+          console.log(response);
+          console.log('====================================');
           const setTimeExpiry = EXPIRY_TIME;
           const expirationDate = new Date(new Date().getTime() + setTimeExpiry * 1000);
           //   localStorage.setItem('token', response.data.data.user.key.auth_key);
@@ -111,14 +130,15 @@ export const auth = (userData, isSignup) => {
           //   localStorage.setItem('expirationDate', expirationDate);
           //   sessionStorage.setItem('userData', JSON.stringify(response.data.data.user));
           localStorage.setItem('response', JSON.stringify(response.data.data.user));
-          localStorage.setItem('token', response.data.data.user.id);
+          // localStorage.setItem('token', response.data.data.user.id);
           localStorage.setItem('expirationDate', expirationDate);
           dispatch(authSuccess(response.data.data.user));
           dispatch(checkAuthTimeout(setTimeExpiry));
-          //dispatch(setAuthRedirectPath('/', null));
+          dispatch(setAuthRedirectPath('/', null));
         }
       })
       .catch((error) => {
+        console.log(error);
         dispatch(authFail('Invalid credentials or user not registered'));
       });
   };
@@ -198,18 +218,19 @@ export const initCountries = () => {
   return (dispatch) => {
     let countryStorage = localStorage.getItem('countryStorage');
     if (!countryStorage) {
-      dispatch(startCountries());
+      // dispatch(startCountries());
       axios
-        .get('/app/v1/countries', {
+        .get('/v1/tenants/countries', {
           headers: {
             Authorization: 'Bearer ' + localStorage.getItem('tenant_key') ?? ACCESS_TOKEN, // should be configured in axios
           },
         })
         .then((response) => {
+          console.log(response);
           var result = response.data.data.countries.map((v) => {
             return v;
           });
-          localStorage.setItem('countryStorage', ENCRYPT(JSON.stringify(result)));
+          // localStorage.setItem('countryStorage', ENCRYPT(JSON.stringify(result)));
           dispatch(setCountries(result));
         })
         .catch((error) => {
@@ -250,6 +271,7 @@ export const setTenantConfig = () => {
       axios
         .get(`/v1/tenants/${process.env.REACT_APP_TENANT_NAME}/configs`)
         .then((response) => {
+          console.log(response);
           localStorage.setItem('tenant_key', response.data.data.key.app_key);
           localStorage.setItem('tenant_data', JSON.stringify(response.data.data));
           dispatch(successTenantConfig(response.data.data));

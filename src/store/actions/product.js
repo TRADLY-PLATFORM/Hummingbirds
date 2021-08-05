@@ -27,6 +27,7 @@ export const initProductDetails = (id) => {
       .get('/products/v1/listings/' + id + '?locale=en')
       .then((response) => {
         if (response.data.status) {
+          console.log(response);
           dispatch(setProductDetails(response.data.data));
         } else {
           dispatch(fetchProductDetailsFailed());
@@ -173,21 +174,37 @@ export const startProductLikeDisLike = () => {
   };
 };
 
-export const onProductLikeDisLike = (id) => {
+export const onProductLikeDisLike = (id, isLiked) => {
   return (dispatch) => {
     dispatch(startProductLikeDisLike());
-    axios
-      .post('/products/v1/listings/' + id + '/likes')
-      .then((response) => {
-        console.log('response', response);
-        if (response.data.status) {
-          dispatch(setProductLikeDisLike('Product Liked Successfully'));
-        } else {
+    if (isLiked === false) {
+      axios
+        .post('/products/v1/listings/' + id + '/likes')
+        .then((response) => {
+          console.log('response', response);
+          if (response.data.status) {
+            dispatch(setProductLikeDisLike('Product Liked Successfully'));
+          } else {
+            dispatch(fetchProductLikeDisLike());
+          }
+        })
+        .catch((error) => {
           dispatch(fetchProductLikeDisLike());
-        }
-      })
-      .catch((error) => {
-        dispatch(fetchProductLikeDisLike());
-      });
+        });
+    } else {
+      axios
+        .delete('/products/v1/listings/' + id + '/likes')
+        .then((response) => {
+          console.log('response', response);
+          if (response.data.status) {
+            dispatch(setProductLikeDisLike('Product Liked Successfully'));
+          } else {
+            dispatch(fetchProductLikeDisLike());
+          }
+        })
+        .catch((error) => {
+          dispatch(fetchProductLikeDisLike());
+        });
+    }
   };
 };

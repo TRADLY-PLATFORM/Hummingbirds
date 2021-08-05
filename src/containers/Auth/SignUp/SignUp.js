@@ -9,14 +9,19 @@ import { toast, ToastContainer, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Backdrop from '../../../components/UI/Backdrop/Backdrop';
 import Spinner from '../../../components/UI/Spinner/Spinner';
-import { validateEmail } from '../../../shared/utility'; //countryFilter
+import { countryFilter, validateEmail } from '../../../shared/utility'; //countryFilter
 import * as actions from '../../../store/actions/index';
 import { selectUserId } from '../../../store/selectors/auth';
+import PhoneInput from 'react-phone-input-2';
+import { isPossiblePhoneNumber, isValidPhoneNumber } from 'libphonenumber-js';
+import { Helmet } from 'react-helmet';
+
+
 class SignUp extends Component {
   state = {
     firstName: '',
     lastName: '',
-    email: '',
+    dialCode: '',
     mobile: '',
     password: '',
     reTypePassword: '',
@@ -47,25 +52,24 @@ class SignUp extends Component {
         this.toastId = toast.error('Last name is required');
       }
       return false;
-    } else if (this.state.email === '') {
-      if (!toast.isActive(this.toastId)) {
-        this.toastId = toast.error('Email is required');
-      }
-      return false;
-    } else if (!validateEmail(this.state.email)) {
-      if (!toast.isActive(this.toastId)) {
-        this.toastId = toast.error('Enter valid email');
-      }
-      return false;
     }
-
-    // else if (this.state.mobile === '') {
+    // else if (this.state.email === '') {
     //   if (!toast.isActive(this.toastId)) {
-    //     this.toastId = toast.error('Phone number is required');
+    //     this.toastId = toast.error('Email is required');
+    //   }
+    //   return false;
+    // // } else if (!validateEmail(this.state.email)) {
+    //   if (!toast.isActive(this.toastId)) {
+    //     this.toastId = toast.error('Enter valid email');
     //   }
     //   return false;
     // }
-    else if (this.state.password === '') {
+    else if (this.state.mobile === '') {
+      if (!toast.isActive(this.toastId)) {
+        this.toastId = toast.error('Phone number is required');
+      }
+      return false;
+    } else if (this.state.password === '') {
       if (!toast.isActive(this.toastId)) {
         this.toastId = toast.error('Password is required');
       }
@@ -78,6 +82,15 @@ class SignUp extends Component {
     } else if (this.state.reTypePassword !== this.state.password) {
       if (!toast.isActive(this.toastId)) {
         this.toastId = toast.error('Password should be equal to Retype password');
+      }
+      return false;
+    }
+
+    let mobile = this.state.mobile;
+    let checkNumber = isValidPhoneNumber(`+${mobile}`);
+    if (checkNumber !== true) {
+      if (!toast.isActive(this.toastId)) {
+        this.toastId = toast.error('Invalid phone number.');
       }
       return false;
     }
@@ -103,9 +116,9 @@ class SignUp extends Component {
         uuid: uUid,
         first_name: this.state.firstName,
         last_name: this.state.lastName,
-        email: this.state.email,
+        mobile: this.state.mobile.slice(this.state.dialCode.length),
         password: this.state.password,
-        //dial_code: filterCountry.dial_code,
+        dial_code: this.state.dialCode,
         type: 'client',
       },
     };
@@ -113,7 +126,7 @@ class SignUp extends Component {
   };
 
   componentDidMount() {
-    //this.props.onInitCountries();
+    this.props.onInitCountries();
   }
 
   render() {
@@ -128,71 +141,81 @@ class SignUp extends Component {
       authRedirect = <Redirect to={this.props.authRedirectPath} />;
     }
 
-    // let defaultCountry = '';
-    // if (this.props.countryList && this.props.countryList.length > 0) {
-    //   let countryCode = this.props.countryList.map((country) => {
-    //     return country.code2.toLowerCase();
-    //   });
-    //   defaultCountry = (
-    //     <PhoneInput
-    //       onlyCountries={countryCode}
-    //       className={classes.input}
-    //       country={'in'}
-    //       value={this.state.mobile}
-    //       onChange={(mobile) => this.setState({ mobile })}
-    //       name="mobile"
-    //     />
-    //   );
-    // }
-
-    return (
-      <div className="row">
-        <Backdrop show={this.props.loading} />
-        <Spinner show={this.props.loading} />
-        <ToastContainer
-          autoClose={2000}
-          position="top-center"
-          transition={Slide}
-          closeOnClick
-          rtl={false}
-          pauseOnVisibilityChange
-          draggable
-          pauseOnHover
+    let defaultCountry = '';
+    if (this.props.countryList && this.props.countryList.length > 0) {
+      let countryCode = this.props.countryList.map((country) => {
+        return country.code2.toLowerCase();
+      });
+      defaultCountry = (
+        <PhoneInput
+          onlyCountries={countryCode}
+          className={classes.input}
+          country={'in'}
+          value={this.state.mobile}
+          onChange={(mobile, country, e) => {
+            this.setState({ mobile: mobile });
+            this.setState({ dialCode: country.dialCode });
+          }}
+          name="mobile"
         />
-        {authRedirect}
-        <div className={classes.title}>
-          Welcome to Tradly <br /> Marketplace
-        </div>
+      );
+    }
+    return (
+      <>
+        <Helmet>
+          <title>Tradly Web - Sign Up</title>
+          <meta
+            name="description"
+            content=" Widest Range of Mobile & Tablets, Home Appliances, Tv, Audio, Home & Living At Tradly | Best Prices ? Fast DELIVERY | Cash on Delivery ? Effortless Shopping ? Best Customer Care!"
+          />
+        </Helmet>
+        <div className="row">
+          <Backdrop show={this.props.loading} />
+          <Spinner show={this.props.loading} />
+          <ToastContainer
+            autoClose={2000}
+            position="top-center"
+            transition={Slide}
+            closeOnClick
+            rtl={false}
+            pauseOnVisibilityChange
+            draggable
+            pauseOnHover
+          />
+          {authRedirect}
+          <div className={classes.title}>
+            Welcome to Tradly <br /> Marketplace
+          </div>
 
-        <div className="col-lg-12 nopaddingLeft">
-          <h5 className={classes.titleAccount}>Create your account</h5>
-          <br />
-          <form action="" method="post" onSubmit={this.onSubmit}>
-            <div className="form-group">
-              <input
-                className={classes.input}
-                name="firstName"
-                type="text"
-                placeholder="First Name"
-                value={this.state.firstName}
-                onChange={this.handleChange}
-                autoComplete="off"
-              />
-            </div>
+          <div className="col-lg-12 nopaddingLeft">
+            <h5 className={classes.titleAccount}>Create your account</h5>
+            <br />
+            <form action="" method="post" onSubmit={this.onSubmit}>
+              <div className="form-group">
+                <input
+                  className={classes.input}
+                  name="firstName"
+                  type="text"
+                  placeholder="First Name"
+                  value={this.state.firstName}
+                  onChange={this.handleChange}
+                  autoComplete="off"
+                />
+              </div>
 
-            <div className="form-group mt-4">
-              <input
-                className={classes.input}
-                name="lastName"
-                type="text"
-                placeholder="Last Name"
-                value={this.state.lastName}
-                onChange={this.handleChange}
-                autoComplete="off"
-              />
-            </div>
+              <div className="form-group mt-4">
+                <input
+                  className={classes.input}
+                  name="lastName"
+                  type="text"
+                  placeholder="Last Name"
+                  value={this.state.lastName}
+                  onChange={this.handleChange}
+                  autoComplete="off"
+                />
+              </div>
 
-            <div className="form-group mt-4">
+              {/* <div className="form-group mt-4">
               <input
                 className={classes.input}
                 name="email"
@@ -202,52 +225,66 @@ class SignUp extends Component {
                 onChange={this.handleChange}
                 autoComplete="off"
               />
-            </div>
-            {/* <div className="form-group mt-4">{defaultCountry}</div> */}
-
-            <div className="form-group mt-4">
-              <input
+              </div> */}
+              <div className="form-group mt-4">
+                {/* <PhoneInput
+                // onlyCountries={countryCode}
                 className={classes.input}
-                type="password"
-                name="password"
-                placeholder="Password"
-                value={this.state.password}
-                onChange={this.handleChange}
-                autoComplete="off"
-              />
-            </div>
+                country={'bd'}
+                value={this.state.mobile}
+                onChange={(value, country, e) => {
+                  this.setState({ mobile: value });
+                  this.setState({ dialCode: country.dialCode });
+                }}
+                name="mobile"
+              /> */}
+                {defaultCountry}
+              </div>
 
-            <div className="form-group mt-4">
-              <input
-                className={classes.input}
-                type="password"
-                name="reTypePassword"
-                placeholder="Re Type Password"
-                value={this.state.reTypePassword}
-                onChange={this.handleChange}
-                autoComplete="off"
-              />
-            </div>
+              <div className="form-group mt-4">
+                <input
+                  className={classes.input}
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  value={this.state.password}
+                  onChange={this.handleChange}
+                  autoComplete="off"
+                />
+              </div>
 
-            <div className="form-group mt-5">
-              <button type="submit" className={classes.button}>
-                Sign Up
-              </button>
-            </div>
+              <div className="form-group mt-4">
+                <input
+                  className={classes.input}
+                  type="password"
+                  name="reTypePassword"
+                  placeholder="Re Type Password"
+                  value={this.state.reTypePassword}
+                  onChange={this.handleChange}
+                  autoComplete="off"
+                />
+              </div>
 
-            <div className="text-center mt-5">
-              <Link to="/sign-in" className="text-center whiteColor">
-                have an account ? Sign in
-              </Link>
-            </div>
-            <div className="text-center mt-5">
-              <Link to="/" className="text-center whiteColor">
-                <i className="fa fa-home fontIconSize"></i> Back to home
-              </Link>
-            </div>
-          </form>
+              <div className="form-group mt-5">
+                <button type="submit" className={classes.button}>
+                  Sign Up
+                </button>
+              </div>
+
+              <div className="text-center mt-5">
+                <Link to="/sign-in" className="text-center whiteColor">
+                  have an account ? Sign in
+                </Link>
+              </div>
+              <div className="text-center mt-5">
+                <Link to="/" className="text-center whiteColor">
+                  <i className="fa fa-home fontIconSize"></i> Back to home
+                </Link>
+              </div>
+            </form>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 }
@@ -267,7 +304,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onAuth: (userData, isSignUp) => dispatch(actions.auth(userData, isSignUp)),
-    //onInitCountries: () => dispatch(actions.initCountries()),
+    onInitCountries: () => dispatch(actions.initCountries()),
   };
 };
 

@@ -3,7 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { uuid } from 'uuidv4';
 import classes from './SignIn.module.css';
-//import PhoneInput from 'react-phone-input-2';
+import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/bootstrap.css';
 import { toast, ToastContainer, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,11 +12,16 @@ import Spinner from '../../../components/UI/Spinner/Spinner';
 import { validateEmail } from '../../../shared/utility'; //countryFilter
 import * as actions from '../../../store/actions/index';
 import { selectUserId } from '../../../store/selectors/auth';
+import { isPossiblePhoneNumber, isValidPhoneNumber } from 'libphonenumber-js';
+import { Helmet } from 'react-helmet';
+
+
 class SignIn extends Component {
   state = {
-    mobile: '',
     email: '',
+    mobile: '',
     password: '',
+    dialCode: '',
     isSignUp: false,
     showError: false,
   };
@@ -31,23 +36,34 @@ class SignIn extends Component {
     this.setState({ showError: false });
   };
 
+  componentDidMount() {
+    this.props.onInitCountries();
+  }
   onSubmit = (e) => {
     e.preventDefault();
 
-    // if (this.state.mobile === '') {
+    if (this.state.mobile === '') {
+      if (!toast.isActive(this.toastId)) {
+        this.toastId = toast.error('Phone number is required');
+      }
+      return false;
+    }
+    // if (this.state.email === '') {
     //   if (!toast.isActive(this.toastId)) {
-    //     this.toastId = toast.error('Phone number is required');
+    //     this.toastId = toast.error('Email is required');
+    //   }
+    //   return false;
+    // } else if (!validateEmail(this.state.email)) {
+    //   if (!toast.isActive(this.toastId)) {
+    //     this.toastId = toast.error('Enter valid email');
     //   }
     //   return false;
     // }
-    if (this.state.email === '') {
+    let mobile = this.state.mobile;
+    let checkNumber = isValidPhoneNumber(`+${mobile}`);
+    if (checkNumber !== true) {
       if (!toast.isActive(this.toastId)) {
-        this.toastId = toast.error('Email is required');
-      }
-      return false;
-    } else if (!validateEmail(this.state.email)) {
-      if (!toast.isActive(this.toastId)) {
-        this.toastId = toast.error('Enter valid email');
+        this.toastId = toast.error('Invalid phone number.');
       }
       return false;
     } else if (this.state.password === '') {
@@ -78,10 +94,10 @@ class SignIn extends Component {
     const users = {
       user: {
         uuid: uUid,
-        //mobile: phoneNumber,
-        email: this.state.email,
+        // email:this.state.email,
+        mobile: this.state.mobile.slice(this.state.dialCode.length),
         password: this.state.password,
-        //country_id: filterCountry.id,
+        dial_code: this.state.dialCode,
         type: 'client',
       },
     };
@@ -102,25 +118,39 @@ class SignIn extends Component {
       authRedirect = <Redirect to={this.props.authRedirectPath} />;
     }
 
-    // let defaultCountry = '';
-    // if (this.props.countryList && this.props.countryList.length > 0) {
-    //   let countryCode = this.props.countryList.map((country) => {
-    //     return country.code2.toLowerCase();
-    //   });
-    //   defaultCountry = (
-    //     <PhoneInput
-    //       onlyCountries={countryCode}
-    //       className={classes.input}
-    //       country={'in'}
-    //       value={this.state.mobile}
-    //       onChange={(mobile) => this.setState({ mobile })}
-    //       name="mobile"
-    //     />
-    //   );
+    // let authRedirect = null;
+    // if (this.props.isAuthenticated || this.props.verifyId) {
+    //   authRedirect = <Redirect to={this.props.authRedirectPath} />;
     // }
+
+    let defaultCountry = '';
+    if (this.props.countryList && this.props.countryList.length > 0) {
+      let countryCode = this.props.countryList.map((country) => {
+        return country.code2.toLowerCase();
+      });
+      defaultCountry = (
+        <PhoneInput
+          onlyCountries={countryCode}
+          className={classes.input}
+          country={'in'}
+          value={this.state.mobile}
+          onChange={(mobile, country, e) => {
+            this.setState({ mobile: mobile });
+            this.setState({ dialCode: country.dialCode });
+          }}
+          name="mobile"
+        />
+      );
+    }
     console.log('isAuthenticated', isAuthenticated);
     return (
+      <>
+      <Helmet> 
+       <title>Tradly Web - Sign In</title>
+          <meta name="description" content=" Widest Range of Mobile & Tablets, Home Appliances, Tv, Audio, Home & Living At Tradly | Best Prices ? Fast DELIVERY | Cash on Delivery ? Effortless Shopping ? Best Customer Care!" />
+         </Helmet>
       <div className="row">
+        
         <div className={classes.title}>
           Tradly <br /> Marketplace
         </div>
@@ -142,8 +172,8 @@ class SignIn extends Component {
           <h5 className={classes.titleAccount}>Login to your account</h5>
           <br />
           <form action="" method="post" onSubmit={this.onSubmit}>
-            {/* <div className="form-group mt-4">{defaultCountry}</div> */}
-            <div className="form-group mt-4">
+            <div className="form-group mt-4">{defaultCountry}</div>
+            {/* <div className="form-group mt-4">
               <input
                 className={classes.input}
                 name="email"
@@ -153,7 +183,20 @@ class SignIn extends Component {
                 onChange={this.handleChange}
                 autoComplete="off"
               />
-            </div>
+            </div> */}
+            {/* <div className="form-group mt-4">
+              <PhoneInput
+                // onlyCountries={countryCode}
+                className={classes.input}
+                country={'bd'}
+                value={this.state.mobile}
+                onChange={(value, country, e) => {
+                  this.setState({ mobile: value });
+                  this.setState({ dialCode: country.dialCode });
+                }}
+                name="mobile"
+              />
+            </div> */}
             <div className="form-group mt-4">
               <input
                 className={classes.input}
@@ -190,6 +233,7 @@ class SignIn extends Component {
           </form>
         </div>
       </div>
+      </>
     );
   }
 }
@@ -209,6 +253,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onAuth: (userData, isSignUp) => dispatch(actions.auth(userData, isSignUp)),
+    onInitCountries: () => dispatch(actions.initCountries()),
   };
 };
 

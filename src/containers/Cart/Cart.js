@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classes from './Cart.module.css';
 
 import axios from '../../axios';
@@ -6,14 +6,16 @@ import ShippingAddress from './ShippingAddress/ShippingAddress';
 import Payment from './PaymentMethod/Payment';
 import MyCart from './MyCart/MyCart';
 import CheckOut from './CheckOutPart/CheckOut';
+import Modal from '../../components/UI/Modal/Modal';
+import * as actions from '../../store/actions/index';
+import { useDispatch } from 'react-redux';
 
 const Cart = () => {
   const [cartList, setCartList] = useState(null);
-  axios.get('/v1/payments/stripe/products').then(function (response) {
-    // handle success
-
-    console.log(response);
-  });
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(actions.getCartList());
+  }, []);
   return (
     <div className="row">
       <MyCart />

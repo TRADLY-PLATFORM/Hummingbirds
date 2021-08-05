@@ -24,7 +24,7 @@ const LatestProducts = () => {
         }
 
         return (
-          <Link to={`/product-details/${list.id}/${list.title}`} key={i}>
+          <Link to={`/l/${list.id}-${list.title}`} key={i} style={{ textDecoration: 'none' }}>
             <div className={classes.latestTrend}>
               <img
                 src={imagePath}
@@ -35,19 +35,23 @@ const LatestProducts = () => {
               <p>{list.title}</p>
               <div className={classes.bottomDesc}>
                 {list.account !== undefined && list.account.images[0] ? (
-                  <>
+                  <div>
                     <img
                       src={list.account.images[0]}
                       alt={list.account.name}
                       title={list.account.name}
                     />
-                    <span>{list.account.name}</span>
-                  </>
+                    <span>
+                      {list.account.name.length < 15
+                        ? list.account.name
+                        : list.account.name.substring(0, 14) + '..'}
+                    </span>
+                  </div>
                 ) : (
-                  <>
+                  <div>
                     <img src={NoIamgeLogo} alt={list.title} title={list.title} />
                     <span>N/A</span>
-                  </>
+                  </div>
                 )}
 
                 <div className={classes.amountTitle}>
@@ -55,6 +59,7 @@ const LatestProducts = () => {
                 </div>
               </div>
             </div>
+            <div></div>
           </Link>
         );
       });
@@ -62,15 +67,15 @@ const LatestProducts = () => {
   });
   return (
     <div className="row">
-      <div className="col-lg-6 nopaddingLeft">
+      <div className="col-lg-6  ">
         <h3 className={classes.headingTitle}>{title}</h3>
       </div>
-      <div className="col-lg-6 nopaddingRight">
+      <div className="col-lg-6  ">
         <Link to="/listings">
           <button className={'btnGreenStyle pull-right'}>View All</button>
         </Link>
       </div>
-      <div style={{ marginTop: '60px' }}>
+      <div style={{ marginTop: '60px', marginLeft: '-10px', marginRight: '10px' }}>
         <ItemsCarousel
           infiniteLoop={false}
           gutter={12}

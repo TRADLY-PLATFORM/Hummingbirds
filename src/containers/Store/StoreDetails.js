@@ -17,20 +17,33 @@ import { selectStoreDetails } from '../../store/selectors/store';
 import { totalCountOfProducts } from '../../shared/constants';
 import Listing from '../../components/Listing/Listing';
 import { selectListings, selectTotalListings } from '../../store/selectors/product';
+import { selectUserId } from '../../store/selectors/auth';
+
+import { Helmet } from 'react-helmet';
+import PropTypes from 'prop-types';
+
+ 
+
 class StoreDetails extends Component {
   constructor(props) {
     super(props);
     const {
       match: {
-        params: { id, name },
+        params: { id},
       },
     } = props;
+
     this.state = {
-      storeId: id,
-      storeName: name,
+      storeId: id.split('-')[0],
+      storeName: id.split('-')[1],
       maps: false,
     };
   }
+  static propTypes = {
+    match: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
+  };
 
   componentDidMount() {
     const { storeId } = this.state;
@@ -60,9 +73,24 @@ class StoreDetails extends Component {
   postStoreFollow = () => {
     const { storeDetails } = this.props;
     const storeId = storeDetails.get('id');
-    this.props.postStoreFollow(storeId);
-  };
+    let IsFollowing = false;
+    if (storeDetails.get('following') !== false) {
+      IsFollowing = true;
+    }
+    console.log(storeId);
+    this.timer = setTimeout(() => {
+      this.props.postStoreFollow(storeId, IsFollowing);
+    }, 1000);
 
+    this.timer = setTimeout(() => {
+      if (!this.props.error) {
+        const { storeId } = this.state;
+        this.props.onInitStoreDetails(storeId);
+        const filter = '&account_id=' + storeId;
+        this.props.onInitListings(0, filter, totalCountOfProducts);
+      }
+    }, 2000);
+  };
   render() {
     const { storeDetails, listings, total_records, loading } = this.props;
     let listing = '';
@@ -127,9 +155,30 @@ class StoreDetails extends Component {
                   <p>@{storeOwner}</p>
                 </div>
                 <div className="col-sm-6">
-                  <button className="btnGreenStyle pull-right mt-4" onClick={this.postStoreFollow}>
+                  {/* <button className="btnGreenStyle pull-right mt-4" onClick={this.postStoreFollow}>
                     Follow
-                  </button>
+                  </button> */}
+                  {this.props.isAuthenticated ? (
+                    <button
+                      className={`${
+                        this.props.storeDetails.get('following')
+                          ? 'btnGreenStyle'
+                          : 'btnOutlineGreenStyle'
+                      } pull-right mt-4`}
+                      onClick={this.postStoreFollow}
+                    >
+                      {this.props.storeDetails.get('following') ? 'following' : 'follow'}
+                    </button>
+                  ) : (
+                    <Link to="/sign-in">
+                      <button
+                        className="btnOutlineGreenStyle pull-right mt-4 "
+                        style={{ marginLeft: '15px' }}
+                      >
+                        follow
+                      </button>
+                    </Link>
+                  )}
                 </div>
               </div>
             </div>
@@ -182,33 +231,57 @@ class StoreDetails extends Component {
         {listing}
       </Aux>
     );
+    console.log(this.props.isAuthenticated);
+    const { match, location, history } = this.props;
+    
+    const buisnessName = process.env.REACT_APP_BUSINESS_NAME;
 
     return (
-      <Aux>
-        <Backdrop show={this.props.loading} />
-        <Spinner show={this.props.loading} />
-        {storeContent}
-        <Modal show={this.state.maps} modalClosed={this.closeMaps}>
-          <Maps
-            lat={storeDetails.getIn(['coordinates', 'latitude'], '')}
-            lng={storeDetails.getIn(['coordinates', 'longitude'], '')}
+      <>
+        <Helmet>
+          <title>Find items sold by {storeName}. Buy online</title>
+          <meta
+            name="description"
+            content={`Products sold by ${storeName}. Chat and buy from mobile app. `}
           />
-        </Modal>
+          <link rel="canonical" href={location.pathname} />
+        </Helmet>
+        {/* <Helmet>
+          <title>
+           
+            Buy online from - {`${process.env.REACT_APP_BUSINESS_NAME}`} from your mobile via app 
+          </title>
+          <meta name="description" content={storeName + '-' + storeOwner} />
+          <link rel="canonical" href={location.pathname} />
+        </Helmet> */}
+        <Aux>
+          <Backdrop show={this.props.loading} />
+          <Spinner show={this.props.loading} />
+          {storeContent}
+          <Modal show={this.state.maps} modalClosed={this.closeMaps}>
+            <Maps
+              lat={storeDetails.getIn(['coordinates', 'latitude'], '')}
+              lng={storeDetails.getIn(['coordinates', 'longitude'], '')}
+            />
+          </Modal>
 
-        <br />
-        <br />
-        <br />
-      </Aux>
+          <br />
+          <br />
+          <br />
+        </Aux>
+      </>
     );
   }
 }
 
 const mapStateToProps = (state) => {
   return {
+    error: state.store.error,
     loading: state.store.loading,
     storeDetails: selectStoreDetails(state),
     storeLists: state.store.storeLists,
-    isAuthentication: state.auth.token !== null,
+    isAuthenticated: selectUserId(state),
+    // isAuthentication: state.auth.token !== null,
     userId: state.auth.userId,
     token: state.auth.token,
     total_records: selectTotalListings(state),
@@ -221,7 +294,8 @@ const mapDispatchToProps = (dispatch) => {
     onInitStoreDetails: (id) => dispatch(actions.initStoreDetails(id)),
     onInitListings: (count, filterValue, totalCountOfProducts) =>
       dispatch(actions.initListings(count, filterValue, totalCountOfProducts)),
-    postStoreFollow: (storeId) => dispatch(actions.postStoreFollow(storeId)),
+    postStoreFollow: (storeId, IsFollowing) =>
+      dispatch(actions.postStoreFollow(storeId, IsFollowing)),
   };
 };
 

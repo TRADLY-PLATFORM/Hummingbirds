@@ -14,6 +14,8 @@ import StoreActiveLogo from '../../assets/images/sidebar/active/store.svg';
 //import GroupLogo from '../../assets/images/sidebar/group.svg';
 import * as actions from '../../store/actions/index';
 
+import { selectTenantData, selectUserData, selectUserId } from '../../store/selectors/auth';
+
 class Sidebar extends Component {
   state = {
     redirect: false,
@@ -77,15 +79,27 @@ class Sidebar extends Component {
               </Link>
             </li>
             <li className={url === '/wishlist' ? 'active' : ''}>
-              <Link to="/wishlist">
-                <img
-                  className="img-fluid"
-                  src={url === '/wishlist' ? WishlistActiveLogo : WishlistLogo}
-                  alt="Home"
-                  title="Home"
-                />
-                <span>My Wishlist</span>
-              </Link>
+              {!this.props.isAuthentication ? (
+                <Link to="#" onClick={(path) => this.authRedirectHandler('/wishlist')}>
+                  <img
+                    className="img-fluid"
+                    src={url === '/wishlist' ? WishlistActiveLogo : WishlistLogo}
+                    alt="Home"
+                    title="Home"
+                  />
+                  <span>My Wishlist</span>
+                </Link>
+              ) : (
+                <Link to="/wishlist">
+                  <img
+                    className="img-fluid"
+                    src={url === '/wishlist' ? WishlistActiveLogo : WishlistLogo}
+                    alt="Home"
+                    title="Home"
+                  />
+                  <span>My Wishlist</span>
+                </Link>
+              )}
             </li>
             <li className={url === '/listings' || url.includes('/product') ? 'active' : ''}>
               <Link to="/listings">
@@ -110,21 +124,21 @@ class Sidebar extends Component {
                 />
                 <span>My Transaction</span>
               </Link>
-            </li> */}
-            {/* <li>
+            </li>
+            <li>
               {!this.props.isAuthentication ? (
                 <Link to="#" onClick={(path) => this.authRedirectHandler('/store')}>
-                  <img className="img-fluid" src={StoreLogo} alt="Home" title="Home" />
+                  <img className="img-fluid"  src={url === "/store"?StoreActiveLogo:StoreLogo}  alt="store" title="store" />
                   <span>My Store</span>
                 </Link>
               ) : (
                 <Link to="/store">
-                  <img className="img-fluid" src={StoreLogo} alt="Home" title="Home" />
+                  <img className="img-fluid" src={url === "/store"?StoreActiveLogo:StoreLogo} alt="store" title="store" />
                   <span>My Store</span>
                 </Link>
               )}
-            </li>
-            <li>
+            </li> */}
+            {/* <li>
               <Link to="/group">
                 <img className="img-fluid" src={GroupLogo} alt="Home" title="Home" />
                 <span>Group</span>
@@ -138,6 +152,13 @@ class Sidebar extends Component {
     );
   }
 }
+const mapStateToProps = (state) => {
+  return {
+    isAuthenticated: selectUserId(state),
+    tenantData: selectTenantData(state),
+    userData: selectUserData(state),
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -145,4 +166,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(withRouter(Sidebar));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Sidebar));

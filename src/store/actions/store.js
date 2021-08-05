@@ -20,6 +20,12 @@ export const startStoreDetails = () => {
     type: actionTypes.INIT_STORE_DETAILS,
   };
 };
+export const setAllStores = (stores) => {
+  return {
+    type: actionTypes.SET_ALL_STORES,
+    storesData: stores,
+  };
+};
 
 export const initStoreDetails = (id) => {
   return (dispatch) => {
@@ -57,20 +63,15 @@ export const initStoreLists = () => {
   };
 };
 
-export const userStoreLists = (userId, authKey) => {
+export const userStoreLists = (userId) => {
   return (dispatch) => {
     dispatch(initStoreLists());
     axios
-      .get('/v1/stores?page=1&user_id=' + userId, {
-        headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('tenant_key') ?? ACCESS_TOKEN,
-          'X-Auth_key': authKey,
-        },
-      })
+      .get('/v1/accounts?page=1&type=accounts&user_id=' + userId)
       .then((response) => {
-        console.log(response.data.data);
         if (response.data.status) {
-          dispatch(setStoreLists(response.data.data.stores));
+          console.log(response.data.data);
+          dispatch(setStoreLists(response.data.data.accounts));
         } else {
           dispatch(fetchStoreListsFailed());
         }
@@ -99,28 +100,22 @@ export const createStoreSuccess = () => {
   };
 };
 
-export const CreateStore = (store, token) => {
-  console.log(store);
-  console.log(token);
+export const CreateStore = (store, callBack) => {
   return (dispatch) => {
     dispatch(initCreateStore());
+
     axios
-      .post('/v1/stores', store, {
-        headers: {
-          Authorization: 'Bearer ' + localStorage.getItem('tenant_key') ?? ACCESS_TOKEN,
-          'X-Auth-Key': token,
-        },
-      })
+      .post('/v1/accounts', store)
       .then((response) => {
         if (response.data.status) {
           dispatch(createStoreSuccess());
+          callBack && callBack();
         } else {
           dispatch(createStoreFailed());
         }
       })
       .catch((error) => {
         dispatch(createStoreFailed());
-        console.log(error);
       });
   };
 };
@@ -143,20 +138,57 @@ export const postStoreFollowSuccess = () => {
   };
 };
 
-export const postStoreFollow = (storeId) => {
+export const postStoreFollow = (storeId, IsFollowing) => {
   return (dispatch) => {
     dispatch(postStoreFollowRequest());
+    if (IsFollowing === false) {
+      axios
+        .post(`/v1/accounts/${storeId}/follow`)
+        .then((response) => {
+          console.log(response);
+          if (response.data.status) {
+            dispatch(postStoreFollowSuccess());
+          } else {
+            dispatch(postStoreFollowFailed());
+          }
+        })
+        .catch((error) => {
+          dispatch(postStoreFollowFailed());
+        });
+    } else {
+      axios
+        .delete(`/v1/accounts/${storeId}/follow`)
+        .then((response) => {
+          console.log(response);
+          if (response.data.status) {
+            dispatch(postStoreFollowSuccess());
+          } else {
+            dispatch(postStoreFollowFailed());
+          }
+        })
+        .catch((error) => {
+          dispatch(postStoreFollowFailed());
+        });
+    }
+  };
+};
+
+export const getStores = () => {
+  return (dispatch) => {
+    dispatch(initStoreLists());
     axios
-      .post(`/v1/accounts/${storeId}/follow`, {})
+      .get('v1/accounts?page=1&type=accounts')
       .then((response) => {
         if (response.data.status) {
-          dispatch(postStoreFollowSuccess());
+          let stores = response.data.data.accounts;
+          console.log(stores);
+          dispatch(setAllStores(response.data.data.accounts));
         } else {
-          dispatch(postStoreFollowFailed());
+          dispatch(fetchStoreListsFailed());
         }
       })
       .catch((error) => {
-        dispatch(postStoreFollowFailed());
+        dispatch(fetchStoreListsFailed());
       });
   };
 };

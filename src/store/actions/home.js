@@ -20,6 +20,18 @@ export const initCollections = () => {
     type: actionTypes.INIT_HOME_COLLECTIONS,
   };
 };
+export const setBanners = (banners) => {
+  return {
+    type: actionTypes.SET_PROMO_BANNERS,
+    bannersItems: banners,
+  };
+};
+export const setStores = (stores) => {
+  return {
+    type: actionTypes.SET_STORES_TO_FOLLOW,
+    storesItems: stores,
+  };
+};
 
 export const initHomeCollections = () => {
   return (dispatch) => {
@@ -30,6 +42,7 @@ export const initHomeCollections = () => {
         .get('/products/v1/home/')
         .then((response) => {
           if (response.data.status) {
+            console.log(response);
             let promo_banners = response.data.data.promo_banners;
             let categories = response.data.data.categories;
             let collections = response.data.data.collections;
@@ -51,10 +64,45 @@ export const initHomeCollections = () => {
         });
     } else {
       let homeDetails = JSON.parse(DECRYPT(homeStorage));
-      let promo_banners = homeDetails.promo_banners;
       let categories = homeDetails.categories;
       let collections = homeDetails.collections;
-      dispatch(setCollections({ promo_banners, categories, collections }));
+      dispatch(setCollections({ categories, collections }));
     }
+  };
+};
+
+export const initPromoBanners = () => {
+  return (dispatch) => {
+    axios
+      .get('v1/promos?medium=web')
+      .then((response) => {
+        if (response.data.status) {
+          let promo_banners = response.data.data.promo_banners;
+          console.log(promo_banners);
+          dispatch(setBanners(response.data.data.promo_banners));
+        }
+      })
+      .catch((error) => {
+        dispatch(fetchCollectionsFailed());
+      });
+  };
+};
+
+export const initStoresToFollow = () => {
+  return (dispatch) => {
+    axios
+      .get('v1/accounts?page=1&type=accounts')
+      .then((response) => {
+        if (response.data.status) {
+          let stores = response.data.data.accounts.filter((list, i) => list.active === true);
+          console.log(stores);
+          dispatch(
+            setStores(response.data.data.accounts.filter((list, i) => list.active === true))
+          );
+        }
+      })
+      .catch((error) => {
+        dispatch(fetchCollectionsFailed());
+      });
   };
 };

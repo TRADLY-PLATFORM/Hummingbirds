@@ -6,6 +6,7 @@ const instance = axios.create({
   baseURL: URL,
 });
 
+
 instance.defaults.headers.common['Content-Type'] = 'application/json';
 instance.defaults.headers.common['Cache-Control'] = 'no-cache';
 instance.defaults.headers.common['Pragma'] = 'no-cache';
@@ -70,19 +71,15 @@ instance.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    if (error.response.status !== undefined && error.response.status === 401 && !check && false) {
+    if (error.response.status !== undefined && error.response.status === 401 && !check) {
       originalRequest._retry = true;
       return axios
-        .post(
-          URL + '/v1/users/token/refresh',
-          {},
-          {
-            headers: {
-              Authorization: 'Bearer ' + LocalStorageService.getApiToken(),
-              'X-Auth-Key': LocalStorageService.getRefreshToken(),
-            },
-          }
-        )
+        .get(URL + '/v1/users/token/refresh', {
+          headers: {
+            Authorization: 'Bearer ' + LocalStorageService.getApiToken(),
+            'X-Refresh-Key': LocalStorageService.getRefreshToken(),
+          },
+        })
         .then((res) => {
           if (res.status === 200) {
             const tokenObject = {

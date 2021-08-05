@@ -1,24 +1,31 @@
 .wellCategory {
-    min-height: 20px;
-    padding: 19px;
-    margin-bottom: 20px;
-    background-color: #ffffff;
-    border: 1px solid #e3e3e3;
-    border-radius: 10px;
-    text-align: center;
-    height: 120px;
-    box-sizing: border-box;
+  min-height: 150px;
+  width:150px;
+  margin: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  border: 1px solid #e3e3e3;
+  border-radius: 10px;
+  text-align: center;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .wellCategory p {
-    font-style: normal;
-    font-weight: normal;
-    font-size: 14px;
-    line-height: 17px;
-    color: #000000;
-    word-break: break-word;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  color: #000000;
+  word-break: break-word;
 }
 
-.wellCategory img { 
-    margin-bottom: 10px;
+.wellCategory img {
+  width: 20%;
+
+  margin-bottom: 10px;
 }

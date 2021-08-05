@@ -29,15 +29,12 @@
 
 .Details div {
   font-weight: bold;
-  font-size: 18px;
   line-height: 22px;
-
   color: #4a4a4a;
 }
 
 .Details span {
   font-weight: 500;
-  font-size: 12px;
   line-height: 15px;
   color: #4a4a4a;
   opacity: 0.4;
@@ -55,23 +52,32 @@
 }
 .Description {
   font-weight: 500 !important;
-  font-size: 12px !important;
-  line-height: 15px !important;
+  font-size: 13px;
+  line-height: 30px !important;
   color: #4a4a4a !important;
   text-align: justify;
-  margin-top: 1em;
-  padding-bottom: 2em;
+  padding-left: 19px;
+  padding-right: 19px;
 }
 
 .itemImg img {
   width: 100%;
+  padding-bottom: 20px;
+}
+.fashionStore {
+  width: 100%;
+  padding: 20px 35px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .fashionStore h3 {
   font-weight: bold;
-  font-size: 14px;
+  font-size: 17px;
   line-height: 17px;
   margin-top: 0px;
+  color: #13b58c;
 }
 
 .fashionStore h3 a {
@@ -86,13 +92,8 @@
   opacity: 0.5;
 }
 
-hr {
-  margin-top: 10px;
-  margin-bottom: 15px;
-}
-
 .DetailsLeft {
-  font-size: 14px;
+  font-size: 15px;
   line-height: 15px;
   color: #4a4a4a;
   mix-blend-mode: normal;
@@ -100,12 +101,58 @@ hr {
   margin-bottom: 15px;
   margin-top: 10px;
   clear: both;
+  padding-left: 0;
 }
 
 .DetailsRight {
-  font-size: 12px;
+  font-size: 15px;
   line-height: 15px;
-  color: #4a4a4a;
+  color: black;
   margin-bottom: 15px;
   margin-top: 10px;
+}
+
+/*  */
+.productImageBox {
+  background-color: #ffffff;
+  margin-bottom: 30px;
+  padding-bottom: 10px;
+}
+.productImageBox p {
+  font-size: 18px;
+  color: black;
+  padding-left: 30px;
+  padding-bottom: 5px;
+}
+.details {
+  padding: 20px 35px;
+}
+.additionalDetails {
+  padding: 20px 35px;
+}
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+}
+.buttons button {
+  font-size: 18px;
+}
+
+.heartDisable {
+  width: 40px;
+  height: 40px;
+  background-color: #13b58c;
+  padding: 10px;
+  border-radius: 50%;
+}
+
+.heartActive{
+  width: 40px;
+  height: 40px;
+  background-color: rgb(218, 216, 216);
+  padding: 10px;
+  border-radius: 50%;
+  border:1px solid rgba(224, 224, 224, 0.924), 0.924);
 }
