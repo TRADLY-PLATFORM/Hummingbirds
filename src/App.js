@@ -71,6 +71,7 @@ class App extends Component {
         <Route path="/logout" exact component={Logout} />
         <Route path="/listings" exact component={Listings} />
         <Route path="/category/:categoryName/:categoryID" exact component={ListingsByCategory} />
+        <Route path="/categories" exact component={AllCategory} />
         <Route path="/verification/:verifyID" exact component={PhoneVerification} />
         <Route path="/" exact component={Home} />
         <Route path="/product-details/:id/:name" exact component={ProductDetails} />
@@ -78,7 +79,7 @@ class App extends Component {
         <Route path="/stores" exact component={AllStores} />
         <Route path="/create-store" exact component={CreateStore} />
         <Route path="/store-details/:id/:name" exact component={StoreDetails} />
-        <Route path="/all-categories" exact component={AllCategory} />
+        {/* <Route path="/all-categories" exact component={AllCategory} /> */}
         <Route path="/wishlist" exact component={WishList} />
         <Route path="/my-transaction" exact component={MyTransactionst} />
         <Route path="/profile" exact component={MyProfile} />

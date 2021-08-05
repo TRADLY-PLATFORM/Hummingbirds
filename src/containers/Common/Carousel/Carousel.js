@@ -28,6 +28,7 @@ const Carousel = () => {
               });
 
     },[])
+    console.log(onboardingImage);
 
   const data = [
     {
@@ -40,15 +41,35 @@ const Carousel = () => {
     },
   ];
 
+const getHomeBannerControl = () => {
+   if (onboardingImage?.length > 0) {
+    return (
+      <>
+        {onboardingImage.map((_, index) => {
+          let active = '';
+          if (index === 0) {
+            active = 'active';
+          }
+          return (
+              <li key={index} data-target="#myCarousel" data-slide-to={index} className={active}></li>
+              
+          );
+        })}
+      </>
+    );
+  }
+  return <></>;
+};
+    
   return (
     <div>
       <div id="myCarousel" className={classes.carousel + ' slide'} data-ride="carousel">
         <div className="carousel-inner" role="listbox">
-                  {onboardingImage?.map((list, i) => {
-              let active = '';
-              if (i === 0) {
-                active = 'active';
-              }
+          {onboardingImage?.map((list, i) => {
+            let active = '';
+            if (i === 0) {
+              active = 'active';
+            }
             return (
               <div className={`item ${active}`} key={i}>
                 <img src={list.image} alt="Chania" style={{ width: '75%', margin: '0 auto' }} />
@@ -67,8 +88,7 @@ const Carousel = () => {
         </div>
 
         <ol className="carousel-indicators" style={{ position: 'relative' }}>
-          <li data-target="#myCarousel" data-slide-to="0" className="active"></li>
-          <li data-target="#myCarousel" data-slide-to="1"></li>
+          {getHomeBannerControl()}
         </ol>
       </div>
     </div>

@@ -36,8 +36,9 @@ const categoryHtmlHandler = (categories, categoryLength) => {
     let categoryName = category.name.replace(/\//g, '-');
 
     return (
+      
       <Link
-        to={`/category/${categoryName}/${category.id}`}
+        to={categoryName ==="More"?"/categories":`/category/${categoryName}/${category.id}`}
         key={category.id}
          style={{ textDecoration: 'none' }}
       >

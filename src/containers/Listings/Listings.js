@@ -207,7 +207,7 @@ class Listings extends Component {
             content=" Collection of all new products. You can see different types of products by selecting according to your choice. You can easily find the product of your choice."
             
           />
-                    <link rel="canonical" href={location.pathname} />
+          <link rel="canonical" href={location.pathname} />
 
         </Helmet>
         <Aux>

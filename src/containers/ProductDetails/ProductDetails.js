@@ -249,6 +249,7 @@ class ProductDetails extends Component {
     if (error || followError) {
       toastMessage = <Toast type="error" message={message || followMessage} />;
     }
+    const productDescription = productDetails.getIn(['listing', 'description'], 'N/A')
     console.log(productDetails.getIn(['listing']));
     console.log('isAuthenticated', isAuthenticated);
     console.log(this.props.token);
@@ -256,10 +257,7 @@ class ProductDetails extends Component {
       <>
         <Helmet>
           <title> {productDetails.getIn(['listing', 'title'], 'N/A')}- Buy Online </title>
-          <meta
-            name="description"
-            content={productDetails.getIn(['listing', 'description'], 'N/A')}
-          />
+          <meta name="description" content={`${productDescription}`} />
           <link rel="canonical" href={location.pathname} />
         </Helmet>
         <Aux>
