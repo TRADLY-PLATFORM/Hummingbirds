@@ -6,90 +6,86 @@ import classes from './Carousel.module.css';
 import axios from '../../../axios';
 import { useEffect } from 'react';
 
-
 // import { MDBCarousel, MDBCarouselInner, MDBCarouselItem, MDBRow, MDBCol, MDBCard, MDBCardImage,
 //     MDBCardBody, MDBCardTitle } from "mdbreact";
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+// Import Swiper styles
+import 'swiper/swiper.min.css';
+import 'swiper/components/pagination/pagination.min.css';
+import 'swiper/components/navigation/navigation.min.css';
+ 
+// import Swiper core and required modules
+import SwiperCore, { Autoplay, Pagination, Navigation } from 'swiper/core';
+
+// install Swiper modules
+SwiperCore.use([Autoplay, Pagination, Navigation]);
+
 
 const Carousel = () => {
-    const [onboardingImage, setOnboardingImage] = useState(null)
-    useEffect(() => {
-            axios
-              .get('v1/configs?key_group=onboarding')
-              .then((response) => {
-                if (response.status) {
-                    console.log(response.data.data.configs.intro_screens);
-                    setOnboardingImage(response.data.data.configs.intro_screens);
-                } else {
-                  console.log(response);
-                }
-              })
-              .catch((error) => {
-                 console.log(error)
-              });
+  const [onboardingImage, setOnboardingImage] = useState(null);
+  useEffect(() => {
+    axios
+      .get('v1/configs?key_group=onboarding')
+      .then((response) => {
+        if (response.status) {
+          console.log(response.data.data.configs.intro_screens);
+          setOnboardingImage(response.data.data.configs.intro_screens);
+        } else {
+          console.log(response);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+  console.log(onboardingImage);
 
-    },[])
-    console.log(onboardingImage);
+  // const data = [
+  //   {
+  //     image: SvgImage,
+  //     des: 'Empowering Artisans,  Farmers  & Micro Business',
+  //   },
+  //   {
+  //     image: SvgImage,
+  //     des: 'Empowering Artisans, Farmers & Micro Business .Buy Online',
+  //   },
+  // ];
 
-  const data = [
-    {
-      image: SvgImage,
-      des: 'Empowering Artisans,  Farmers  & Micro Business',
-    },
-    {
-      image: SvgImage,
-      des: 'Empowering Artisans, Farmers & Micro Business .Buy Online',
-    },
-  ];
+   
 
-const getHomeBannerControl = () => {
-   if (onboardingImage?.length > 0) {
-    return (
-      <>
-        {onboardingImage.map((_, index) => {
-          let active = '';
-          if (index === 0) {
-            active = 'active';
-          }
-          return (
-              <li key={index} data-target="#myCarousel" data-slide-to={index} className={active}></li>
-              
-          );
-        })}
-      </>
-    );
-  }
-  return <></>;
-};
-    
   return (
     <div>
       <div id="myCarousel" className={classes.carousel + ' slide'} data-ride="carousel">
-        <div className="carousel-inner" role="listbox">
-          {onboardingImage?.map((list, i) => {
-            let active = '';
-            if (i === 0) {
-              active = 'active';
-            }
-            return (
-              <div className={`item ${active}`} key={i}>
-                <img src={list.image} alt="Chania" style={{ width: '75%', margin: '0 auto' }} />
-                <div className={classes.carouselCaption + ' carousel-caption'}>
-                  <p className={classes.cardTitle}>{list.text}</p>
-                </div>
-              </div>
-              // <div className="item">
-              //     <img src={SvgImage} alt="Chania" style={{width:'75%',margin: '0 auto'}} />
-              //     <div className={ classes.carouselCaption + " carousel-caption" }>
-              //     <p className={ classes.cardTitle}>Empowering Artisans, <br/> Farmers &amp; Micro Business</p>
-              //     </div>
-              // </div>
-            );
-          })}
-        </div>
+        <Swiper
+          spaceBetween={30}
+          centeredSlides={true}
+          autoplay={{
+            delay: 2500,
+            disableOnInteraction: false,
+          }}
+          pagination={{
+            clickable: true,
+          }}
+           
+          className="mySwiper"
+        >
+         
+            {onboardingImage?.map((list, i) => {
+              
+              return (
+                <SwiperSlide key={i} className={classes.itemImg}>
+                  <img src={list.image} alt="Chania" style={{ width: '75%', margin: '0 auto' }} />
+                  <div className={classes.carouselCaption + ' carousel-caption'}>
+                    <p className={classes.cardTitle}>{list.text}</p>
+                  </div>
+                </SwiperSlide>
+              );
+            })}
+          
+        </Swiper>
 
-        <ol className="carousel-indicators" style={{ position: 'relative' }}>
-          {getHomeBannerControl()}
-        </ol>
+        
       </div>
     </div>
   );
