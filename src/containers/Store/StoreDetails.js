@@ -29,12 +29,13 @@ class StoreDetails extends Component {
     super(props);
     const {
       match: {
-        params: { id, name },
+        params: { id},
       },
     } = props;
+
     this.state = {
-      storeId: id,
-      storeName: name,
+      storeId: id.split('-')[0],
+      storeName: id.split('-')[1],
       maps: false,
     };
   }

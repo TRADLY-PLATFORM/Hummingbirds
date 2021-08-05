@@ -68,11 +68,7 @@ const WishList = () => {
               let price = list.list_price.formatted !== undefined ? list.list_price.formatted : '';
               console.log(storeName);
               return (
-                <Link
-                  to={`/product-details/${list.id}/${list.title}`}
-                  key={i}
-                  style={{ textDecoration: 'none' }}
-                >
+                <Link to={`/l/${list.id}-${list.title}`} key={i} style={{ textDecoration: 'none' }}>
                   <div className={'col-md-5th-1 col-sm-4 col-md-offset-0 col-sm-offset-2 '}>
                     <div className={classes.latestTrend}>
                       <img

@@ -24,11 +24,7 @@ const LatestProducts = () => {
         }
 
         return (
-          <Link
-            to={`/product-details/${list.id}/${list.title}`}
-            key={i}
-            style={{ textDecoration: 'none' }}
-          >
+          <Link to={`/l/${list.id}-${list.title}`} key={i} style={{ textDecoration: 'none' }}>
             <div className={classes.latestTrend}>
               <img
                 src={imagePath}

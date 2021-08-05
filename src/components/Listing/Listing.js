@@ -8,7 +8,7 @@ const listing = (props) => {
   let listArray = props.listings.map((list) => {
     return (
       <div key={list.get('id')}>
-        <Link to={`/product-details/${list.get('id')}/${list.get('title')}`}>
+        <Link to={`/l/${list.get('id')}-${list.get('title')}`}>
           <div className={'col-md-5th-1 col-sm-4 '}>
             <div className={classes.latestTrend}>
               <img

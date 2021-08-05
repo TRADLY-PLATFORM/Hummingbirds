@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector,  } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../store/actions/index';
 import AllenSollyLogo from '../../assets/images/home/store/allenSolly.svg';
 import classes from './AllStores.module.css';
@@ -10,10 +10,8 @@ import backdrop from '../../components/UI/Backdrop/Backdrop';
 import spinner from '../../components/UI/Spinner/Spinner';
 import { selectUserId } from '../../store/selectors/auth';
 
-
 const AllStores = () => {
-
-  const location = useLocation()
+  const location = useLocation();
   const followError = useSelector((state) => state.store.error);
   const followLoading = useSelector((state) => state.store.loading);
   const isAuthenticated = useSelector((state) => selectUserId(state));
@@ -25,22 +23,22 @@ const AllStores = () => {
 
   console.log(followLoading);
 
-const postStoreFollow = (id,following) => {
-  const storeId = id;
-  let IsFollowing = following;
-  
-  console.log(storeId);
+  const postStoreFollow = (id, following) => {
+    const storeId = id;
+    let IsFollowing = following;
 
-  setTimeout(() => {
-    dispatch(actions.postStoreFollow(storeId, IsFollowing));
-  }, 2000);
+    console.log(storeId);
 
-  setTimeout(() => {
-    if (!followError) {
-      dispatch(actions.getStores());
-    }
-  }, 3000);
-};
+    setTimeout(() => {
+      dispatch(actions.postStoreFollow(storeId, IsFollowing));
+    }, 2000);
+
+    setTimeout(() => {
+      if (!followError) {
+        dispatch(actions.getStores());
+      }
+    }, 3000);
+  };
 
   return (
     <Aux>
@@ -49,8 +47,8 @@ const postStoreFollow = (id,following) => {
         <meta name="description" content=" All stores list . You can select a store" />
         <link rel="canonical" href={location.pathname} />
       </Helmet>
-      {followLoading ? <div className={classes.Backdrop} ></div> : null}
-      
+      {followLoading ? <div className={classes.Backdrop}></div> : null}
+
       <spinner show={followLoading} />
       <div className={classes.storesStyle}>
         {stores?.map((store, i) => {
@@ -66,10 +64,7 @@ const postStoreFollow = (id,following) => {
 
           return (
             <div className={classes.wellStore + ' col-lg-12'} key={i}>
-              <Link
-                to={`/store-details/${store.id}/${store.name}`}
-                style={{ textDecoration: 'none' }}
-              >
+              <Link to={`/a/${store.id}-${store.name}`} style={{ textDecoration: 'none' }}>
                 <div className={classes.imageDiv}>
                   <img src={imagePath} alt={store.name} title={store.name} />
                 </div>

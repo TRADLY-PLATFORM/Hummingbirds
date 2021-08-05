@@ -135,7 +135,7 @@ const Header = (props) => {
                   }
                   return (
                     <Link
-                      to={`/product-details/${list.id}/${list.title}`}
+                      to={`/l/${list.id}-${list.title}`}
                       key={i}
                       style={{ textDecoration: 'none' }}
                       onClick={backClick}

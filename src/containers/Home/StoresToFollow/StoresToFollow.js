@@ -54,7 +54,7 @@ const StoresToFollow = ({ isAuthenticated }) => {
 
     return (
       <div className={classes.wellStore + ' col-lg-12'} key={i}>
-        <Link to={`/store-details/${list.id}/${list.name}`} style={{ textDecoration: 'none' }}>
+        <Link to={`/a/${list.id}-${list.name}`} style={{ textDecoration: 'none' }}>
           <div className={classes.imageDiv}>
             <img src={imagePath} alt={list.name} title={list.name} />
           </div>

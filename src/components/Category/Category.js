@@ -33,12 +33,12 @@ const categoryHtmlHandler = (categories, categoryLength) => {
     // if (category.link) {
     //   link = '/' + category.link;
     // }
-    let categoryName = category.name.replace(/\//g, '-');
+    let categoryName = category.name.replace(/\//g, '@');
 
     return (
       
       <Link
-        to={categoryName ==="More"?"/categories":`/category/${categoryName}/${category.id}`}
+        to={categoryName ==="More"?"/categories":`/lc/${category.id}-${categoryName}`}
         key={category.id}
          style={{ textDecoration: 'none' }}
       >

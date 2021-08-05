@@ -34,7 +34,8 @@ class ProductDetails extends Component {
   };
 
   componentDidMount() {
-    this.props.onInitProductDetails(this.props.match.params.id);
+    const id = this.props.match.params.id;
+    this.props.onInitProductDetails(id.split('-')[0]);
   }
 
   showMaps = () => {
@@ -124,7 +125,7 @@ class ProductDetails extends Component {
     if (productDetails.getIn(['listing', 'account', 'name'], '') !== '') {
       const store_name = productDetails.getIn(['listing', 'account', 'name'], '');
       const id = productDetails.getIn(['listing', 'account_id'], '');
-      return <Link to={`/store-details/${id}/${store_name}`}>{store_name}</Link>;
+      return <Link to={`/a/${id}-${store_name}`}>{store_name}</Link>;
     }
     return <Skeleton count={10} />;
   };

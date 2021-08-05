@@ -10,19 +10,16 @@ import NoIamgeLogo from '../../assets/images/home/store/noImage.svg';
 import backdrop from '../../components/UI/Backdrop/Backdrop';
 import spinner from '../../components/UI/Spinner/Spinner';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
- 
+
 import { Helmet } from 'react-helmet';
 
- 
-
 const ListingsByCategory = () => {
-
   const location = useLocation();
 
-  const {categoryName, categoryID } = useParams();
+  const { categoryName } = useParams();
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(actions.initListings(0, '&category_id=' + categoryID, totalCountOfProducts));
+    dispatch(actions.initListings(0, '&category_id=' + categoryName.split('-')[0], totalCountOfProducts));
   }, []);
   let listings = useSelector((state) => state.product.listings);
   let loading = useSelector((state) => state.product.loading);
@@ -30,8 +27,11 @@ const ListingsByCategory = () => {
   return (
     <>
       <Helmet>
-        <title>Best {categoryName} products near me</title>
-        <meta name="description" content={`Buy and sell products online - ${categoryName} `} />
+        <title>Best {categoryName.split('-')[1]} products near me</title>
+        <meta
+          name="description"
+          content={`Buy and sell products online - ${categoryName.split('-')[1]} `}
+        />
         <link rel="canonical" href={location.pathname} />
       </Helmet>
       <Aux>
@@ -45,11 +45,7 @@ const ListingsByCategory = () => {
                 imagePath = list.images[0];
               }
               return (
-                <Link
-                  to={`/product-details/${list.id}/${list.title}`}
-                  key={i}
-                  style={{ textDecoration: 'none' }}
-                >
+                <Link to={`/l/${list.id}-${list.title}`} key={i} style={{ textDecoration: 'none' }}>
                   <div className={classes.latestTrend}>
                     <img
                       src={imagePath}

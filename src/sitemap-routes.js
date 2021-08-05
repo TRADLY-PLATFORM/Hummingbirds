@@ -9,10 +9,10 @@ export default (
     <Route path="/listings" />
 
     <Route path="/" />
-    <Route path="/product-details/:id/:name" />
+    <Route path="/l/:id" />
     <Route path="/store" />
     <Route path="/create-store" />
-    <Route path="/store-details/:id/:name" />
+    <Route path="/a/:id" />
     <Route path="/all-categories" />
     <Route path="/profile" />
     <Route path="/group" />

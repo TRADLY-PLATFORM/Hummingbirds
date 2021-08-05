@@ -7,7 +7,7 @@
                         </div>
 
                         <div className="col-lg-6 nopaddingRight">
-                            <Link to="/product-details"><button className={"btnGreenStyle pull-right"}>View All</button></Link>
+                            <Link to="/l"><button className={"btnGreenStyle pull-right"}>View All</button></Link>
                         </div>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                         </div>
 
                         <div className="col-lg-6 nopaddingRight">
-                        <Link to="/product-details"><button className={"btnGreenStyle pull-right"}>View All</button></Link>
+                        <Link to="/l"><button className={"btnGreenStyle pull-right"}>View All</button></Link>
                         </div>
                     </div>
                 </div>
@@ -160,7 +160,7 @@
 //               </div>
 //               <div>{list.name}</div>
 //               <p>{description}</p>
-//               <Link to={`/store-details/${list.id}/${list.name}`}>
+//               <Link to={`/a/${list.id}/${list.name}`}>
 //                 <button className={classes.btnGreenFollow + ' mt-5'}>View Details</button>
 //               </Link>
 //             </div>
@@ -174,7 +174,7 @@
 //           }
 
 //           return (
-//             <Link to={`/product-details/${list.id}/${list.title}`} key={i}>
+//             <Link to={`/l/${list.id}/${list.title}`} key={i}>
 //               <div className={classes.latestTrend}>
 //                 <img
 //                   src={imagePath}
