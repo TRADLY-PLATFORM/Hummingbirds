@@ -407,10 +407,11 @@ class ProductDetails extends Component {
                 </div>
 
                 <br />
-                {/* <button type="button" className="btn btn-addtocart btn-lg btn-block height70">
+                <button type="button" className="btn btn-addtocart btn-lg btn-block height70" onClick={()=>{javascript:window.open('https://play.google.com/store/apps/details?id=tradly.platform&hl=en_IN&gl=US',
+                  '_blank')}}>
                 Download App
-              </button> */}
-                <div className="row">
+              </button>
+                {/* <div className="row">
                   <div className={classes.buttons}>
                     <button
                       type="button"
@@ -428,7 +429,7 @@ class ProductDetails extends Component {
                       Buy Now
                     </button>
                   </div>
-                </div>
+                </div> */}
                 <br />
                 <br />
               </div>

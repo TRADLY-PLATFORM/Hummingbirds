@@ -52,6 +52,7 @@ class Home extends Component {
   componentDidMount() {
     this.timer = setTimeout(() => {
       this.props.onInitHomeCollections();
+      this.props.onInitPromoBanners();
     }, 3000);
 
     this.timer = setTimeout(() => {
@@ -125,6 +126,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onInitHomeCollections: () => dispatch(actions.initHomeCollections()),
+    onInitPromoBanners: () => dispatch(actions.initPromoBanners()),
   };
 };
 
