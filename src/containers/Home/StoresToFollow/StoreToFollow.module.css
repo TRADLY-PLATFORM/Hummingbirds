@@ -64,3 +64,18 @@
   /* identical to box height */
   color: #13b58c;
 }
+
+
+
+@media only screen and (max-width: 780px) {
+  .wellStore img {
+  margin-bottom: 25px;
+  width: 130px;
+   border-radius: 100%;
+}
+.wellStoreDetails {
+  font-style: normal;
+  margin-top: 45px;
+}
+
+}

@@ -7,9 +7,12 @@ import NoIamgeLogo from '../../../assets/images/home/store/noImage.svg';
 import { Link } from 'react-router-dom';
 import NoProductImage from '../../../assets/images/rsz_noimage.png';
 import ItemsCarousel from 'react-items-carousel';
+import { size } from 'underscore';
+import useWindowSize from '../../../components/Hooks/WindowSize/WindowSize';
 
 const LatestProducts = () => {
   const [activeItemIndex, setActiveItemIndex] = useState(0);
+  const { width, height } = useWindowSize();
 
   const categories = useSelector((state) => state.home.collections);
   let arrayListings = [];
@@ -83,7 +86,7 @@ const LatestProducts = () => {
           chevronWidth={60}
           disableSwipe={false}
           alwaysShowChevrons={false}
-          numberOfCards={5}
+          numberOfCards={width < 780 ? 1 : 5}
           slidesToScroll={3}
           outsideChevron={false}
           showSlither={false}

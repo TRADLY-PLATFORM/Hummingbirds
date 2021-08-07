@@ -3,13 +3,19 @@ import { useSelector } from 'react-redux';
 import * as actions from '../../../store/actions/index';
 import MoreLogo from '../../../assets/images/home/category/more.svg';
 import Category from '../../../components/Category/Category';
+import classes from "./Categories.module.css"
+import useWindowSize from '../../../components/Hooks/WindowSize/WindowSize';
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
   const Categories = useSelector((state) => state.home.categories);
   console.log(Categories);
   const [categorySet, setCategorySet] = useState([]);
+    const { width, height } = useWindowSize();
 
+console.log('====================================');
+console.log(width);
+console.log('====================================');
   useEffect(() => {
     if (Categories && Categories.length > 0) {
       console.log(Categories);
@@ -20,8 +26,8 @@ const Categories = () => {
         firstCategorySet = copyCategories.slice(0, 4);
       } else if (lengthOfCategories <= 8) {
         firstCategorySet = copyCategories.slice(0, 8);
-      } else if (lengthOfCategories > 8) {
-        firstCategorySet = copyCategories.slice(0, 7);
+      } else if (lengthOfCategories > width>700?3:8) {
+        firstCategorySet = copyCategories.slice(0,  width>700?7:3);
         let moreCategory = {
           id: Math.random(),
           name: 'More',
@@ -65,7 +71,7 @@ const Categories = () => {
   return (
     <div style={{ marginTop: '20px', minHeight: '150px' }}>
       <div className="col-lg-12 col-md-12">
-        <div className="row" style={{display:'flex'}}>
+        <div className={classes.CategoryBox  }>
           <Category categories={categorySet} />
         </div>
       </div>

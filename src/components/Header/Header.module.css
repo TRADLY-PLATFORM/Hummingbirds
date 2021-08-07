@@ -202,3 +202,9 @@
 
   color: #13b58c;
 }
+
+
+@media screen and (max-width: 767px) {
+.header{margin-top: 70px;}
+
+}

@@ -280,7 +280,7 @@ class ProductDetails extends Component {
               </nav>
             </div>
 
-            <div className="col-xs-6 ">
+            <div className="col-xs-12 col-md-6  ">
               <div id="myCarousel" className="carousel slide" data-ride="carousel">
                 <div className={classes.productImageBox}>
                   <div className="carousel-inner" role="listbox">
@@ -305,7 +305,7 @@ class ProductDetails extends Component {
               </div>
             </div>
 
-            <div className="col-xs-6 ">
+            <div className="col-xs-12 col-md-6 ">
               <div className="col-lg-12 mt-4">
                 <div className="row bgColor">
                   <div className={classes.fashionStore}>

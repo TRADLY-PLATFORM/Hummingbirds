@@ -7,9 +7,12 @@ import classes from './StoreToFollow.module.css';
 import ItemsCarousel from 'react-items-carousel';
 import backdrop from '../../../components/UI/Backdrop/Backdrop';
 import spinner from '../../../components/UI/Spinner/Spinner';
+import useWindowSize from '../../../components/Hooks/WindowSize/WindowSize';
 
 const StoresToFollow = ({ isAuthenticated }) => {
   const [activeItemIndex, setActiveItemIndex] = useState(0);
+  const { width, height } = useWindowSize();
+
   const dispatch = useDispatch();
 
   const categories = useSelector((state) => state.home.collections);
@@ -105,7 +108,7 @@ const StoresToFollow = ({ isAuthenticated }) => {
           chevronWidth={60}
           disableSwipe={false}
           alwaysShowChevrons={false}
-          numberOfCards={5}
+          numberOfCards={width < 780 ? 1 : 5}
           slidesToScroll={3}
           outsideChevron={false}
           showSlither={false}
