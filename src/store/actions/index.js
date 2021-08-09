@@ -6,6 +6,7 @@ export {
   initCountries,
   setTenantConfig,
   setAuthRedirectPath,
+  setConfigsData,
 } from './auth';
 
 export { initHomeCollections, initPromoBanners, initStoresToFollow } from './home';

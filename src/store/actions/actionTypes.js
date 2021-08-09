@@ -4,6 +4,7 @@ export const AUTH_FAIL = 'AUTH_FAIL';
 export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 export const AUTH_VERIFY = 'AUTH_VERIFY';
 export const SET_AUTH_REDIRECT_PATH = 'SET_AUTH_REDIRECT_PATH';
+export const SET_CONFIGS = 'SET_CONFIGS';
 
 export const INIT_TENANT_CONFIG = 'INIT_TENANT_CONFIG';
 export const INIT_COUNTRIES = 'INIT_COUNTRIES';

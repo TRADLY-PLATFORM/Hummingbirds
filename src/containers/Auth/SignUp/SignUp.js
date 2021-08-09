@@ -23,6 +23,7 @@ class SignUp extends Component {
     lastName: '',
     dialCode: '',
     mobile: '',
+    email:'',
     password: '',
     reTypePassword: '',
     isSignUp: true,
@@ -42,94 +43,130 @@ class SignUp extends Component {
   onSubmit = (e) => {
     e.preventDefault();
 
-    if (this.state.firstName === '') {
-      if (!toast.isActive(this.toastId)) {
-        this.toastId = toast.error('First name is required');
+    const authType = this.props.configsData.auth_Type;
+    if (authType === 1) {
+      if (this.state.firstName === '') {
+        if (!toast.isActive(this.toastId)) {
+          this.toastId = toast.error('First name is required');
+        }
+        return false;
+      } else if (this.state.lastName === '') {
+        if (!toast.isActive(this.toastId)) {
+          this.toastId = toast.error('Last name is required');
+        }
+        return false;
+      } else if (this.state.email === '') {
+        if (!toast.isActive(this.toastId)) {
+          this.toastId = toast.error('Email is required');
+        }
+        return false;
+      } else if (!validateEmail(this.state.email)) {
+        if (!toast.isActive(this.toastId)) {
+          this.toastId = toast.error('Enter valid email');
+        }
+        return false;
+      } else if (this.state.password === '') {
+        if (!toast.isActive(this.toastId)) {
+          this.toastId = toast.error('Password is required');
+        }
+        return false;
+      } else if (this.state.reTypePassword === '') {
+        if (!toast.isActive(this.toastId)) {
+          this.toastId = toast.error('Retype password is required');
+        }
+        return false;
+      } else if (this.state.reTypePassword !== this.state.password) {
+        if (!toast.isActive(this.toastId)) {
+          this.toastId = toast.error('Password should be equal to Retype password');
+        }
+        return false;
       }
-      return false;
-    } else if (this.state.lastName === '') {
-      if (!toast.isActive(this.toastId)) {
-        this.toastId = toast.error('Last name is required');
+    } else {
+      if (this.state.firstName === '') {
+        if (!toast.isActive(this.toastId)) {
+          this.toastId = toast.error('First name is required');
+        }
+        return false;
+      } else if (this.state.lastName === '') {
+        if (!toast.isActive(this.toastId)) {
+          this.toastId = toast.error('Last name is required');
+        }
+        return false;
+      } else if (this.state.mobile === '') {
+        if (!toast.isActive(this.toastId)) {
+          this.toastId = toast.error('Phone number is required');
+        }
+        return false;
+      } else if (this.state.password === '') {
+        if (!toast.isActive(this.toastId)) {
+          this.toastId = toast.error('Password is required');
+        }
+        return false;
+      } else if (this.state.reTypePassword === '') {
+        if (!toast.isActive(this.toastId)) {
+          this.toastId = toast.error('Retype password is required');
+        }
+        return false;
+      } else if (this.state.reTypePassword !== this.state.password) {
+        if (!toast.isActive(this.toastId)) {
+          this.toastId = toast.error('Password should be equal to Retype password');
+        }
+        return false;
       }
-      return false;
+       let mobile = this.state.mobile;
+       let checkNumber = isValidPhoneNumber(`+${mobile}`);
+       if (checkNumber !== true) {
+         if (!toast.isActive(this.toastId)) {
+           this.toastId = toast.error('Invalid phone number.');
+         }
+         return false;
+       }
     }
-    // else if (this.state.email === '') {
-    //   if (!toast.isActive(this.toastId)) {
-    //     this.toastId = toast.error('Email is required');
-    //   }
-    //   return false;
-    // // } else if (!validateEmail(this.state.email)) {
-    //   if (!toast.isActive(this.toastId)) {
-    //     this.toastId = toast.error('Enter valid email');
-    //   }
-    //   return false;
-    // }
-    else if (this.state.mobile === '') {
-      if (!toast.isActive(this.toastId)) {
-        this.toastId = toast.error('Phone number is required');
-      }
-      return false;
-    } else if (this.state.password === '') {
-      if (!toast.isActive(this.toastId)) {
-        this.toastId = toast.error('Password is required');
-      }
-      return false;
-    } else if (this.state.reTypePassword === '') {
-      if (!toast.isActive(this.toastId)) {
-        this.toastId = toast.error('Retype password is required');
-      }
-      return false;
-    } else if (this.state.reTypePassword !== this.state.password) {
-      if (!toast.isActive(this.toastId)) {
-        this.toastId = toast.error('Password should be equal to Retype password');
-      }
-      return false;
-    }
-
-    let mobile = this.state.mobile;
-    let checkNumber = isValidPhoneNumber(`+${mobile}`);
-    if (checkNumber !== true) {
-      if (!toast.isActive(this.toastId)) {
-        this.toastId = toast.error('Invalid phone number.');
-      }
-      return false;
-    }
-
-    // let mobile = this.state.mobile;
-    // mobile = mobile.replace(/-/g, '');
-    // mobile = mobile.match(/^\s*(\S+)\s*(.*?)\s*$/).slice(1);
-    // let phoneCode = mobile[0].substring(1);
-    // let phoneNumber = mobile[1];
-    // let filterCountry = countryFilter(phoneCode, this.props.countryList);
-    // if (phoneNumber.length !== filterCountry.mobile_number_legth) {
-    //   let digits =
-    //     filterCountry.mobile_number_legth !== undefined ? filterCountry.mobile_number_legth : 10;
-    //   if (!toast.isActive(this.toastId)) {
-    //     this.toastId = toast.error('Phone number length should be ' + digits + ' digits');
-    //   }
-    //   return false;
-    // }
+ 
+    
     this.setState({ showError: true });
+
     const uUid = uuid();
-    const users = {
+    let users;
+    if (authType === 1) {
+       users = {
       user: {
         uuid: uUid,
         first_name: this.state.firstName,
         last_name: this.state.lastName,
-        mobile: this.state.mobile.slice(this.state.dialCode.length),
+        email: this.state.email,
         password: this.state.password,
-        dial_code: this.state.dialCode,
-        type: 'client',
+         type: 'client',
       },
     };
+    } else {
+      users = {
+        user: {
+          uuid: uUid,
+          first_name: this.state.firstName,
+          last_name: this.state.lastName,
+          mobile: this.state.mobile.slice(this.state.dialCode.length),
+          password: this.state.password,
+          dial_code: this.state.dialCode,
+          type: 'client',
+        },
+      };
+    }
+    
     this.props.onAuth(users, this.state.isSignUp);
   };
 
   componentDidMount() {
+        this.props.onSetConfigs();
+
     this.props.onInitCountries();
   }
 
   render() {
+    const authType = this.props.configsData.auth_type;
+    console.log('====================================');
+    console.log(authType);
+    console.log('====================================');
     if (this.props.error && this.state.showError) {
       if (!toast.isActive(this.toastId)) {
         this.toastId = toast.error(this.props.message);
@@ -214,33 +251,23 @@ class SignUp extends Component {
                   autoComplete="off"
                 />
               </div>
+              {authType === 1 ? (
+                <div className="form-group mt-4">
+                  <input
+                    className={classes.input}
+                    name="email"
+                    type="text"
+                    placeholder="Email"
+                    value={this.state.email}
+                    onChange={this.handleChange}
+                    autoComplete="off"
+                  />
+                </div>
+              ) : (
+                <div className="form-group mt-4">{defaultCountry}</div>
+              )}
 
-              {/* <div className="form-group mt-4">
-              <input
-                className={classes.input}
-                name="email"
-                type="text"
-                placeholder="Email"
-                value={this.state.email}
-                onChange={this.handleChange}
-                autoComplete="off"
-              />
-              </div> */}
-              <div className="form-group mt-4">
-                {/* <PhoneInput
-                // onlyCountries={countryCode}
-                className={classes.input}
-                country={'bd'}
-                value={this.state.mobile}
-                onChange={(value, country, e) => {
-                  this.setState({ mobile: value });
-                  this.setState({ dialCode: country.dialCode });
-                }}
-                name="mobile"
-              /> */}
-                {defaultCountry}
-              </div>
-
+ 
               <div className="form-group mt-4">
                 <input
                   className={classes.input}
@@ -296,6 +323,7 @@ const mapStateToProps = (state) => {
     message: state.auth.message,
     countryList: state.auth.countries,
     authRedirectPath: state.auth.authRedirectPath,
+    configsData: state.auth.configs,
     verifyId: state.auth.verify_id,
     isAuthenticated: selectUserId(state),
   };
@@ -305,6 +333,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onAuth: (userData, isSignUp) => dispatch(actions.auth(userData, isSignUp)),
     onInitCountries: () => dispatch(actions.initCountries()),
+    onSetConfigs: () => dispatch(actions.setConfigsData()),
   };
 };
 

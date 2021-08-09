@@ -48,7 +48,7 @@
     "build:production": "env-cmd -f .env.production react-scripts build",
     "start": "react-scripts start",
     "generate-sitemap": "node src/sitemap-generator.js",
-    "prebuild": "npm run generate-sitemap",
+    "prebuild": "npm run sitemap",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

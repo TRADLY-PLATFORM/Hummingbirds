@@ -6,8 +6,7 @@ import { connect } from 'react-redux';
 import Layout from './hoc/Layout/Layout';
 import BeforeAuth from './hoc/Layout/BeforeAuth/BeforeAuth';
 import SignUp from './containers/Auth/SignUp/SignUp';
-import SignIn from './containers/Auth/SignIn/SignIn';
-import Logout from './containers/Auth/Logout/Logout';
+ import Logout from './containers/Auth/Logout/Logout';
 import PhoneVerification from './containers/Auth/PhoneVerification/PhoneVerification';
 import Home from './containers/Home/Home';
 import Listings from './containers/Listings/Listings';
@@ -37,6 +36,7 @@ import reviewPage from './containers/Order/reviewPage';
 import detailOrder from './containers/Order/detailOrder';
 import ListingsByCategory from './containers/ListingsByCategory/ListingsByCategory';
 import AllStores from './containers/Store/AllStores';
+import SignIn from './containers/Auth/SignIn/SignIn';
 
 // const rollbarConfig = {
 //   accessToken: '3b6226f9262f4bc8bc2b9e3392f708e5',

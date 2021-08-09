@@ -6,7 +6,7 @@ import Category from '../../../components/Category/Category';
 import classes from "./Categories.module.css"
 import useWindowSize from '../../../components/Hooks/WindowSize/WindowSize';
 
-const Categories = () => {
+const Categories = () => { 
   const [categories, setCategories] = useState([]);
   const Categories = useSelector((state) => state.home.categories);
   console.log(Categories);

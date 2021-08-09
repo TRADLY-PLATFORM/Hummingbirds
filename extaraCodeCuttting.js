@@ -268,3 +268,21 @@
 //     }, this);
 //   }
 // };
+
+
+// sign In:
+
+    // let mobile = this.state.mobile;
+    // mobile = mobile.replace(/-/g, '');
+    // mobile = mobile.match(/^\s*(\S+)\s*(.*?)\s*$/).slice(1);
+    // let phoneCode = mobile[0].substring(1);
+    // let phoneNumber = mobile[1];
+    // let filterCountry = countryFilter(phoneCode, this.props.countryList);
+    // if (phoneNumber.length !== filterCountry.mobile_number_legth) {
+    //   let digits =
+    //     filterCountry.mobile_number_legth !== undefined ? filterCountry.mobile_number_legth : 10;
+    //   if (!toast.isActive(this.toastId)) {
+    //     this.toastId = toast.error('Phone number length should be ' + digits + ' digits');
+    //   }
+    //   return false;
+    // }
