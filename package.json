@@ -5,6 +5,8 @@
   "dependencies": {
     "@rollbar/react": "^0.8.0",
     "@sentry/browser": "^5.15.5",
+    "@sentry/react": "^6.11.0",
+    "@sentry/tracing": "^6.11.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
@@ -58,7 +60,7 @@
     "sitemap:development": "env-cmd -f .env.development babel-node ./src/sitemap-generator.js",
     "sitemap:sandbox": "env-cmd -f .env.sandbox babel-node ./src/sitemap-generator.js",
     "sitemap:production": "env-cmd -f .env.production babel-node ./src/sitemap-generator.js",
-    "sitemap":"env-cmd -f .env.production babel-node ./src/sitemap-generator.js"
+    "sitemap": "env-cmd -f .env.production babel-node ./src/sitemap-generator.js"
   },
   "browserslist": {
     "production": [
