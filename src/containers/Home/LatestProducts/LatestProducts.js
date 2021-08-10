@@ -72,7 +72,7 @@ const LatestProducts = ({collections}) => {
     });
   }
   return (
-    <div className={classes.latestProducts +'row'}>
+    <div className={classes.latestProducts + 'row'}>
       <div className="col-lg-6  ">
         <h3 className={classes.headingTitle}>{title}</h3>
       </div>
@@ -82,7 +82,7 @@ const LatestProducts = ({collections}) => {
         </Link>
       </div>
       <br />
-       <div style={{ marginTop: '60px', marginLeft: '-10px', marginRight: '10px' }}>
+      <div style={{ marginTop: '60px', marginLeft: '-10px', marginRight: '10px' }}>
         <ItemsCarousel
           infiniteLoop={false}
           gutter={12}
@@ -91,7 +91,7 @@ const LatestProducts = ({collections}) => {
           disableSwipe={false}
           alwaysShowChevrons={false}
           numberOfCards={width < 780 ? 1 : 5}
-          slidesToScroll={3}
+          slidesToScroll={width < 780 ? 1 : 3}
           outsideChevron={false}
           showSlither={false}
           firstAndLastGutter={true}

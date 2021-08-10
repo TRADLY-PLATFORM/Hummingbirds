@@ -98,7 +98,7 @@ const StoresToFollow = () => {
   });
 
   return (
-    <div className={classes.storePart +'row'}>
+    <div className={classes.storePart + 'row'}>
       <div className="col-lg-6  ">
         <h3 className={classes.headingTitle}>{title}</h3>
       </div>
@@ -108,7 +108,6 @@ const StoresToFollow = () => {
         </Link>
       </div>
       <br />
-      
 
       <div style={{ marginTop: '60px', marginLeft: '-10px', marginRight: '10px' }}>
         <ItemsCarousel
@@ -119,7 +118,7 @@ const StoresToFollow = () => {
           disableSwipe={false}
           alwaysShowChevrons={false}
           numberOfCards={width < 780 ? 1 : 5}
-          slidesToScroll={3}
+          slidesToScroll={width < 780 ? 1 : 3}
           outsideChevron={false}
           showSlither={false}
           firstAndLastGutter={true}
