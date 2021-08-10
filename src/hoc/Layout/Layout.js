@@ -94,6 +94,13 @@ const Layout = (props) => {
                     />
                     <span className={classes.spanName}>{getUserName()}</span>
                   </Link>
+                  <button
+                    className={classes.closeBtn}
+                    onClick={navButtonOff}
+                    style={{ display: isSiteNavOpen ? 'block' : 'none' }}
+                  >
+                    <img src={closeMenu} alt="" />
+                  </button>
 
                   <div className={classes.dropdownMenu + ' user-menu dropdown-menu'}>
                     {userData.get('id', '') === '' ? (
@@ -127,13 +134,13 @@ const Layout = (props) => {
             </div> */}
               </div>
             </div>
-            <button
+            {/* <button
               className={classes.closeBtn}
               onClick={navButtonOff}
               style={{ display: isSiteNavOpen ? 'block' : 'none' }}
             >
               <img src={closeMenu} alt="" />
-            </button>
+            </button> */}
             <div
               className={classes.bgEffect}
               style={{ display: isSiteNavOpen ? 'block' : 'none' }}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../../store/actions/index';
 import AllenSollyLogo from '../../../assets/images/home/store/allenSolly.svg';
@@ -8,17 +8,25 @@ import ItemsCarousel from 'react-items-carousel';
 import backdrop from '../../../components/UI/Backdrop/Backdrop';
 import spinner from '../../../components/UI/Spinner/Spinner';
 import useWindowSize from '../../../components/Hooks/WindowSize/WindowSize';
+import { selectUserId } from '../../../store/selectors/auth';
 
-const StoresToFollow = ({ isAuthenticated }) => {
+const StoresToFollow = () => {
   const [activeItemIndex, setActiveItemIndex] = useState(0);
   const { width, height } = useWindowSize();
 
   const dispatch = useDispatch();
+     useEffect(() => {
+      
+      dispatch(actions.initStoresToFollow());
+    }, [0]);
 
   const categories = useSelector((state) => state.home.collections);
   const storesToFollow = useSelector((state) => state.home.stores);
   const followError = useSelector((state) => state.store.error);
   const followLoading = useSelector((state) => state.store.loading);
+  const isAuthenticated = useSelector((state) => selectUserId(state));
+  console.log(storesToFollow);
+
   // const [followSet,setFollowSet] = useState()
   console.log(storesToFollow);
   let arrayListings = [];
@@ -90,7 +98,7 @@ const StoresToFollow = ({ isAuthenticated }) => {
   });
 
   return (
-    <div className="row">
+    <div className={classes.storePart +'row'}>
       <div className="col-lg-6  ">
         <h3 className={classes.headingTitle}>{title}</h3>
       </div>

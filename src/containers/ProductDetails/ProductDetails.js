@@ -20,6 +20,17 @@ import heartDisable from '../../assets/images/products/heartDisable.png';
 import { Helmet } from 'react-helmet';
 
 import PropTypes from 'prop-types';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+import 'swiper/swiper.min.css';
+import 'swiper/components/pagination/pagination.min.css';
+import 'swiper/components/navigation/navigation.min.css';
+
+// import Swiper core and required modules
+import SwiperCore, { Autoplay, Pagination, Navigation } from 'swiper/core';
+
+// install Swiper modules
+SwiperCore.use([Autoplay, Pagination, Navigation]);
 
 
 class ProductDetails extends Component {
@@ -197,7 +208,8 @@ class ProductDetails extends Component {
 
     this.timer = setTimeout(() => {
       if (!this.props.followError) {
-        this.props.onInitProductDetails(this.props.match.params.id);
+           const id = this.props.match.params.id;
+           this.props.onInitProductDetails(id.split('-')[0]);
       }
     }, 2000);
   };
@@ -217,7 +229,8 @@ class ProductDetails extends Component {
 
     this.timer = setTimeout(() => {
       if (!this.props.error) {
-        this.props.onInitProductDetails(this.props.match.params.id);
+            const id = this.props.match.params.id;
+            this.props.onInitProductDetails(id.split('-')[0]);
       }
     }, 2000);
   };
@@ -266,7 +279,7 @@ class ProductDetails extends Component {
           <Spinner show={this.props.loading || this.props.followLoading} />
           {toastMessage}
 
-          <div className="row ">
+          <div className={classes.rowBox + 'row   '}>
             <div className="col-lg-12">
               <nav aria-label="breadcrumb">
                 <ol className={classes.breadCrumb}>
@@ -280,18 +293,31 @@ class ProductDetails extends Component {
               </nav>
             </div>
 
-            <div className="col-xs-12 col-md-6  ">
-              <div id="myCarousel" className="carousel slide" data-ride="carousel">
-                <div className={classes.productImageBox}>
-                  <div className="carousel-inner" role="listbox">
-                    <ol className="carousel-indicators">{this.getHomeBannerControl()}</ol>
-
-                    {this.getHomeBanner()}
-                  </div>
-                  <div>
-                    <p>{productDetails.getIn(['listing', 'title'], 'N/A')}</p>
-                    <p style={{ fontWeight: 'bold' }}>{this.getPrices()}</p>
-                  </div>
+            <div className={classes.imageBox + ' col-xs-12 col-md-6 '}>
+              <div className={classes.productImageBox}>
+                <Swiper
+                  spaceBetween={30}
+                  centeredSlides={true}
+                  autoplay={{
+                    delay: 2500,
+                    disableOnInteraction: false,
+                  }}
+                  pagination={{
+                    clickable: true,
+                  }}
+                  className="mySwiper"
+                >
+                  {productDetails.getIn(['listing', 'images'], List()).map((img, index) => {
+                    return (
+                      <SwiperSlide key={index}>
+                        <img style={{ height: '450px' }} src={img} />
+                      </SwiperSlide>
+                    );
+                  })}
+                </Swiper>
+                <div className={classes.productTitle}>
+                  <p>{productDetails.getIn(['listing', 'title'], 'N/A')}</p>
+                  <p style={{ fontWeight: 'bold' }}>{this.getPrices()}</p>
                 </div>
               </div>
 
@@ -305,7 +331,7 @@ class ProductDetails extends Component {
               </div>
             </div>
 
-            <div className="col-xs-12 col-md-6 ">
+            <div className="col-xs-12 col-md-6 " style={{ padding: '0' }}>
               <div className="col-lg-12 mt-4">
                 <div className="row bgColor">
                   <div className={classes.fashionStore}>
@@ -338,31 +364,33 @@ class ProductDetails extends Component {
                         </Link>
                       )}
                       {isAuthenticated ? (
-                        <button
-                          onClick={this.productLike}
-                          className="  pull-right "
-                          style={{
-                            marginLeft: '15px',
-                            outline: 'none',
-                            border: 'none',
-                            backgroundColor: 'white',
-                          }}
-                        >
-                          {productDetails.getIn(['listing', 'liked'], '') ? (
-                            <img className={classes.heartActive} src={heartActive} alt="" />
-                          ) : (
-                            <img className={classes.heartDisable} src={heartDisable} alt="" />
-                          )}
-                        </button>
+                        <div className={classes.likeBtn}>
+                          <button
+                            onClick={this.productLike}
+                            className="pull-right"
+                            style={{
+                              marginLeft: '15px',
+                              outline: 'none',
+                              border: 'none',
+                              backgroundColor: 'transparent',
+                            }}
+                          >
+                            {productDetails.getIn(['listing', 'liked'], '') ? (
+                              <img className={classes.heartActive} src={heartActive} alt="" />
+                            ) : (
+                              <img className={classes.heartDisable} src={heartDisable} alt="" />
+                            )}
+                          </button>
+                        </div>
                       ) : (
-                        <Link to="/sign-in">
+                        <Link to="/sign-in" className={classes.likeBtn}>
                           <button
                             className="  pull-right "
                             style={{
                               marginLeft: '15px',
                               outline: 'none',
                               border: 'none',
-                              backgroundColor: 'white',
+                              backgroundColor: 'transparent',
                             }}
                           >
                             <img className={classes.heartDisable} src={heartDisable} alt="" />

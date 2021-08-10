@@ -85,7 +85,7 @@
 .closeBtn{
   position: absolute;
    top: 100px;
-  right: 0;
+   right: 10%;
    left: 80%;
    z-index: 20;
    background-color: transparent;
@@ -116,6 +116,8 @@ a {
 
 .rightTopMargin {
   margin-top: 32px;
+  padding-right: 0;
+  padding-left: 0;
 }
 
 .bgColor {
@@ -129,6 +131,7 @@ a {
 @media (max-width: 767px) {
   .rightPanel {
     margin-left: 0%;
+    padding: 0;
   }
 }
 

@@ -7,9 +7,10 @@ export {
   setTenantConfig,
   setAuthRedirectPath,
   setConfigsData,
+  
 } from './auth';
 
-export { initHomeCollections, initPromoBanners, initStoresToFollow } from './home';
+export { initHomeCollections, initPromoBanners, initStoresToFollow, initCategories } from './home';
 
 export {
   initProductDetails,

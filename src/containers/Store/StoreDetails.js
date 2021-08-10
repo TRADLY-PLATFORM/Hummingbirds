@@ -158,7 +158,7 @@ class StoreDetails extends Component {
                     <p>@{storeOwner}</p>
                   </div>
                 </div>
-                <div className="">
+                <div className={classes.followBtn}>
                   {/* <button className="btnGreenStyle pull-right mt-4" onClick={this.postStoreFollow}>
                     Follow
                   </button> */}

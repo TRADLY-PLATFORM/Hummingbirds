@@ -118,12 +118,19 @@
   margin-bottom: 30px;
   padding-bottom: 10px;
 }
+.productImageBox img{
+  width: 100%;
+}
+.productTitle{
+  margin-top: 20px;
+}
 .productImageBox p {
-  font-size: 18px;
+  font-size: 20px;
   color: black;
-  padding-left: 30px;
+  padding-left: 25px;
   padding-bottom: 5px;
 }
+
 .details {
   padding: 20px 35px;
 }
@@ -156,3 +163,35 @@
   border-radius: 50%;
   border:1px solid rgba(224, 224, 224, 0.924), 0.924);
 }
+
+@media only screen and (max-width: 700px) {
+  .rowBox{
+    padding: 0;
+    margin: 0;
+  }
+  .imageBox{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+
+   }
+   .productImageBox{
+     width: 100%;
+     margin-right: 0;
+     margin-bottom: 5px;
+
+   }
+   .productImageBox img{
+     height: 350px !important;
+     width: 100%;
+   }
+
+   .likeBtn{
+     position: absolute;
+     top: -35%;
+     z-index: 2;
+     margin-left: 15% !important;
+    }
+
+   
+}
+ 
