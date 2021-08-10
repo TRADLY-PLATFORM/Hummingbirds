@@ -81,7 +81,8 @@ const LatestProducts = ({collections}) => {
           <button className={'btnGreenStyle pull-right'}>View All</button>
         </Link>
       </div>
-      <div style={{ marginTop: '60px', marginLeft: '-10px', marginRight: '10px' }}>
+      <br />
+       <div style={{ marginTop: '60px', marginLeft: '-10px', marginRight: '10px' }}>
         <ItemsCarousel
           infiniteLoop={false}
           gutter={12}

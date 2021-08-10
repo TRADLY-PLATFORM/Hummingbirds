@@ -107,6 +107,8 @@ const StoresToFollow = () => {
           <button className={'btnGreenStyle pull-right'}>View All</button>
         </Link>
       </div>
+      <br />
+      
 
       <div style={{ marginTop: '60px', marginLeft: '-10px', marginRight: '10px' }}>
         <ItemsCarousel

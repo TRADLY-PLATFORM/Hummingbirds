@@ -49,10 +49,16 @@
     "start": "react-scripts start",
     "generate-sitemap": "node src/sitemap-generator.js",
     "prebuild": "npm run sitemap",
+    "prebuild:development": "npm run sitemap:development",
+    "prebuild:production": "npm run sitemap:production",
+    "prebuild:sandbox": "npm run sitemap:sandbox",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "sitemap": "babel-node ./src/sitemap-generator.js"
+    "sitemap:development": "env-cmd -f .env.development babel-node ./src/sitemap-generator.js",
+    "sitemap:sandbox": "env-cmd -f .env.sandbox babel-node ./src/sitemap-generator.js",
+    "sitemap:production": "env-cmd -f .env.production babel-node ./src/sitemap-generator.js",
+    "sitemap":"env-cmd -f .env.production babel-node ./src/sitemap-generator.js"
   },
   "browserslist": {
     "production": [
