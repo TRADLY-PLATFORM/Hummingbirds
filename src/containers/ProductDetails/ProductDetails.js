@@ -350,8 +350,8 @@ class ProductDetails extends Component {
                           onClick={this.storeFollow}
                         >
                           {this.props.productDetails.getIn(['listing', 'account', 'following'], '')
-                            ? 'following'
-                            : 'follow'}
+                            ? 'Following'
+                            : 'Follow'}
                         </button>
                       ) : (
                         <Link to="/sign-in">
@@ -359,7 +359,7 @@ class ProductDetails extends Component {
                             className="btnOutlineGreenStyle pull-right "
                             style={{ marginLeft: '15px' }}
                           >
-                            follow
+                            Follow
                           </button>
                         </Link>
                       )}

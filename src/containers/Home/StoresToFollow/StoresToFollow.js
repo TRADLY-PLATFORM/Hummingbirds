@@ -81,7 +81,7 @@ const StoresToFollow = () => {
             }
             onClick={() => postStoreFollow(list.id)}
           >
-            {list.following ? 'following' : 'follow'}
+            {list.following ? 'Following' : 'Follow'}
           </button>
         ) : (
           <Link to="/sign-in">
@@ -89,7 +89,7 @@ const StoresToFollow = () => {
               className={classes.btnGreenUnFollowing + ' mt-5'}
               style={{ marginLeft: '15px' }}
             >
-              follow
+              Follow
             </button>
           </Link>
         )}

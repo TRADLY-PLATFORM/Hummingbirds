@@ -81,7 +81,7 @@ const AllStores = () => {
                   }
                   onClick={() => postStoreFollow(store.id, store.following)}
                 >
-                  {store.following ? 'following' : 'follow'}
+                  {store.following ? 'Following' : 'Follow'}
                 </button>
               ) : (
                 <Link to="/sign-in">
@@ -89,7 +89,7 @@ const AllStores = () => {
                     className={classes.btnGreenUnFollowing + ' mt-5'}
                     style={{ marginLeft: '15px' }}
                   >
-                    follow
+                    Follow
                   </button>
                 </Link>
               )}
