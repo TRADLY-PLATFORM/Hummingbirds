@@ -22,15 +22,15 @@ import { Integrations } from '@sentry/tracing';
 //     dsn: "http://3f99218da0aa4b1ab32e13029b3b8895@ec2-54-175-98-88.compute-1.amazonaws.com/1"
 // });
 
-// Sentry.init({
-//   dsn: 'http://3f99218da0aa4b1ab32e13029b3b8895@ec2-54-175-98-88.compute-1.amazonaws.com/1',
-//   integrations: [new Integrations.BrowserTracing()],
+Sentry.init({
+  dsn: 'http://3f99218da0aa4b1ab32e13029b3b8895@ec2-54-175-98-88.compute-1.amazonaws.com/1',
+  integrations: [new Integrations.BrowserTracing()],
 
-//   // Set tracesSampleRate to 1.0 to capture 100%
-//   // of transactions for performance monitoring.
-//   // We recommend adjusting this value in production
-//   tracesSampleRate: 1.0,
-// });
+  // Set tracesSampleRate to 1.0 to capture 100%
+  // of transactions for performance monitoring.
+  // We recommend adjusting this value in production
+  tracesSampleRate: 1.0,
+});
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
