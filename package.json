@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@react-google-maps/api": "^2.2.0",
     "@rollbar/react": "^0.8.0",
     "@sentry/browser": "^5.15.5",
     "@sentry/react": "^6.11.0",
@@ -14,6 +15,7 @@
     "crypto-js": "^4.1.1",
     "custom-env": "^2.0.1",
     "google-map-react": "^1.1.7",
+    "google-maps-react": "^2.0.6",
     "http": "0.0.0",
     "immutable": "^4.0.0-rc.12",
     "libphonenumber-js": "^1.9.22",

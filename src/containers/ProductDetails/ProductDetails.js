@@ -266,7 +266,10 @@ class ProductDetails extends Component {
     const productDescription = productDetails.getIn(['listing', 'description'], 'N/A')
     console.log(productDetails.getIn(['listing']));
     console.log('isAuthenticated', isAuthenticated);
-    console.log(this.props.token);
+     console.log('====================================');
+    console.log(productDetails.getIn(['listing', 'coordinates', 'latitude'], ''));
+    console.log(productDetails.getIn(['listing', 'coordinates', 'longitude'], ''))
+     console.log('====================================');
     return (
       <>
         <Helmet>
