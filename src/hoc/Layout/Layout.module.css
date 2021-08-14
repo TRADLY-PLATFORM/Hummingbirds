@@ -1,39 +1,142 @@
+/* mobile navbar design */
+.navbar{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.navbar button{
+  background-color: white;
+  border: none;
+}
+.navbar button img{
+  height: 30px;
+}
+.mobileNavbar {
+  background-color: #ffffff;
+  position: fixed;
+   width: 100%;
+  margin-bottom: 100px;
+  z-index: 4;
+}
+.navbarMenu {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  background-color: #ffffff;
+  overflow: hidden;
+  padding-top: 10px;
+  transition: 0.5s;
+}
 
+.bgEffect {
+  background-color: black;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  opacity: 0.5;
+}
+.userArea {
+  float: right;
+  padding-right: 0;
+  position: relative;
+}
 
+.userAvatar {
+  margin-top: 4px;
+  width: 42px;
+
+  border-radius: 50% !important;
+}
+.spanName {
+  font-size: 18px;
+  line-height: 22px;
+  color: #4a4a4a;
+  mix-blend-mode: normal;
+  opacity: 0.5;
+  padding-left: 20px;
+  top: 5px;
+  position: relative;
+}
+
+.dropdownMenu {
+  border: none;
+  left: inherit !important;
+  right: 74px;
+  top: 55px !important;
+  margin: 0;
+  max-width: 150px;
+  padding: 5px 10px;
+  position: absolute;
+}
+
+.navLink {
+  color: #272c33;
+  display: block;
+  font-size: 14px;
+  line-height: 22px;
+  padding: 5px 0;
+}
+.closeBtn{
+  position: absolute;
+   top: 100px;
+   right: 10%;
+   left: 80%;
+   z-index: 20;
+   background-color: transparent;
+  border: none;
+}
+.closeBtn img{
+  height: 30px;
+}
+.logoImage {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+a {
+  color: #000000;
+}
 /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-.row.content {height: 550px}
- 
-    
+.row.content {
+  height: 550px;
+}
+
 /* On small screens, set height to 'auto' for the grid */
 @media screen and (max-width: 767px) {
-  .row.content {height: auto;} 
+  .row.content {
+    height: auto;
+  }
 }
 
-
-
-.rightTopMargin{
+.rightTopMargin {
   margin-top: 32px;
+  padding-right: 0;
+  padding-left: 0;
 }
 
-
-.bgColor{
+.bgColor {
   background-color: #f6f9ff;
 }
 
-.rightPanel{
-    margin-left: 16.66666667%;
+.rightPanel {
+  margin-left: 16.66666667%;
 }
 
-@media (max-width: 767px){
-  .rightPanel{
+@media (max-width: 767px) {
+  .rightPanel {
     margin-left: 0%;
+    padding: 0;
   }
-
 }
 
-@media (min-width: 767px) and (max-width: 1199px){
-  .rightPanel{
+@media (min-width: 767px) and (max-width: 1199px) {
+  .rightPanel {
     margin-left: 24%;
   }
-
 }

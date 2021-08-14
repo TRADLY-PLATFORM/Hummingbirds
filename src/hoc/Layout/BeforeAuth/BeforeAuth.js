@@ -10,12 +10,12 @@ class BeforeAuth extends Component {
         return (
             <Aux>    
                 <div className={"container-fluid " + classes.BeforeAuth}>
-                    <div className="row content">
-                        <div className={"col-sm-6 text-center " + classes.leftDiv}>
+                    <div className="row  ">
+                        <div className={"  col-md-6 text-center " + classes.leftDiv}>
                             <Carousel/>                        
                         </div>
 
-                        <div className={"col-sm-6 " + classes.rightDiv}>                       
+                        <div className={"   col-md-6 " + classes.rightDiv}>                       
                             {this.props.children}               
                         </div>  
                     </div>

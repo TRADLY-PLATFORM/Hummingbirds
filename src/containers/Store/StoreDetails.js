@@ -140,21 +140,25 @@ class StoreDetails extends Component {
           <div className={classes.bannerimages + ' row'}>
             <div className="col-lg-12">
               <div className={classes.bannerText + ' col-sm-12'}>
-                <div className={classes.fashionStore + ' col-sm-6'}>
-                  {storeDetails.getIn(['images', 0], '') !== '' ? (
-                    <img
-                      src={storeDetails.getIn(['images', 0], '')}
-                      alt="Woman accesories"
-                      title="Woman accesories"
-                    />
-                  ) : (
-                    <img src={AllenSollyLogo} alt="Woman accesories" title="Woman accesories" />
-                  )}
+                <div className={classes.fashionStore}>
+                  <div>
+                    {storeDetails.getIn(['images', 0], '') !== '' ? (
+                      <img
+                        src={storeDetails.getIn(['images', 0], '')}
+                        alt="Woman accesories"
+                        title="Woman accesories"
+                      />
+                    ) : (
+                      <img src={AllenSollyLogo} alt="Woman accesories" title="Woman accesories" />
+                    )}
+                  </div>
 
-                  <h3>{storeName}</h3>
-                  <p>@{storeOwner}</p>
+                  <div>
+                    <h3>{storeName}</h3>
+                    <p>@{storeOwner}</p>
+                  </div>
                 </div>
-                <div className="col-sm-6">
+                <div className={classes.followBtn}>
                   {/* <button className="btnGreenStyle pull-right mt-4" onClick={this.postStoreFollow}>
                     Follow
                   </button> */}
@@ -164,18 +168,18 @@ class StoreDetails extends Component {
                         this.props.storeDetails.get('following')
                           ? 'btnGreenStyle'
                           : 'btnOutlineGreenStyle'
-                      } pull-right mt-4`}
+                      } pull-right  `}
                       onClick={this.postStoreFollow}
                     >
-                      {this.props.storeDetails.get('following') ? 'following' : 'follow'}
+                      {this.props.storeDetails.get('following') ? 'Following' : 'Follow'}
                     </button>
                   ) : (
                     <Link to="/sign-in">
                       <button
-                        className="btnOutlineGreenStyle pull-right mt-4 "
+                        className="btnOutlineGreenStyle pull-right "
                         style={{ marginLeft: '15px' }}
                       >
-                        follow
+                        Follow
                       </button>
                     </Link>
                   )}

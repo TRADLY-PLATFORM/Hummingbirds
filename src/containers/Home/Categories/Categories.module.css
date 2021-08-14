@@ -1,0 +1,16 @@
+.CategoryBox{
+  display: flex!important ;
+  flex-wrap: wrap;
+  justify-content: start;
+  margin-left: -12%px;
+}
+
+@media only screen and (max-width: 780px) {
+  .CategoryBox {
+    margin-left: 0px;
+    display: flex  ;
+    flex-wrap: wrap ;
+    justify-content: center;
+   }
+}
+ 

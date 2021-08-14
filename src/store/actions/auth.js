@@ -42,6 +42,12 @@ export const logout = () => {
     type: actionTypes.AUTH_LOGOUT,
   };
 };
+export const getConfigs = (data) => {
+  return {
+    type: actionTypes.SET_CONFIGS,
+    data: data,
+  };
+};
 
 export const checkAuthTimeout = (expirationTime) => {
   //console.log(expirationTime);
@@ -51,7 +57,6 @@ export const checkAuthTimeout = (expirationTime) => {
         dispatch(refreshToken());
         dispatch(logout());
       }
-      
     }, expirationTime * 1000);
   };
 };
@@ -282,5 +287,21 @@ export const setTenantConfig = () => {
     } else {
       dispatch(successTenantConfig(JSON.parse(tenantData)));
     }
+  };
+};
+
+export const setConfigsData = () => {
+  return (dispatch) => {
+    axios
+      .get('v1/configs?key_group=general')
+      .then((response) => {
+        console.log(response);
+        if (response.status) {
+          dispatch(getConfigs(response.data.data.configs));
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 };

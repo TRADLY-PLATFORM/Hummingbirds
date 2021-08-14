@@ -68,7 +68,7 @@ const Header = (props) => {
             />
           </div>
 
-          <div className="col-sm-6 ">
+          <div className="col-sm-6  hidden-xs">
             <div className={classes.userArea + ' dropdown'}>
               <Link
                 to="#"

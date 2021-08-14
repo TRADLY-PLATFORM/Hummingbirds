@@ -32,6 +32,12 @@ export const setStores = (stores) => {
     storesItems: stores,
   };
 };
+export const setCategories = (categories) => {
+  return {
+    type: actionTypes.SET_CATEGORIES,
+    categories: categories,
+  };
+};
 
 export const initHomeCollections = () => {
   return (dispatch) => {
@@ -43,11 +49,13 @@ export const initHomeCollections = () => {
         .then((response) => {
           if (response.data.status) {
             console.log(response);
-            let promo_banners = response.data.data.promo_banners;
             let categories = response.data.data.categories;
             let collections = response.data.data.collections;
+            console.log('====================================');
+            console.log(categories, collections);
+            console.log('====================================');
 
-            dispatch(setCollections({ promo_banners, categories, collections }));
+            dispatch(setCollections({ categories, collections }));
 
             // let data = {
             //   promo_banners: promo_banners,
@@ -64,9 +72,8 @@ export const initHomeCollections = () => {
         });
     } else {
       let homeDetails = JSON.parse(DECRYPT(homeStorage));
-      let categories = homeDetails.categories;
-      let collections = homeDetails.collections;
-      dispatch(setCollections({ categories, collections }));
+       let collections = homeDetails.collections;
+      dispatch(setCollections({   collections }));
     }
   };
 };
@@ -103,6 +110,22 @@ export const initStoresToFollow = () => {
       })
       .catch((error) => {
         dispatch(fetchCollectionsFailed());
+      });
+  };
+};
+
+export const initCategories = () => {
+  return (dispatch) => {
+    axios('v1/categories?parent=0&type=listings')
+      .then((response) => {
+        if (response.data.status) {
+          console.log(response);
+
+          dispatch(setCategories(response.data.data.categories));
+        }
+      })
+      .catch((error) => {
+        console.log(error);
       });
   };
 };

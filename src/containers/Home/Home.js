@@ -3,8 +3,8 @@ import Aux from '../../hoc/Auxiliary/Auxiliary';
 import HomeBanner from '../../components/HomeBanner/HomeBanner';
 import Category from '../../components/Category/Category';
 import classes from './Home.module.css';
-import { Link, withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { Link, useLocation, withRouter } from 'react-router-dom';
+import { connect, useDispatch, useSelector } from 'react-redux';
 
 import Backdrop from '../../components/UI/Backdrop/Backdrop';
 import Spinner from '../../components/UI/Spinner/Spinner';
@@ -26,113 +26,106 @@ import Categories from './Categories/Categories';
 import { Helmet } from 'react-helmet';
 import PropTypes from 'prop-types';
 import { selectUserId } from '../../store/selectors/auth';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import reactLoaderSpinner from 'react-loader-spinner';
 
+import Loader from 'react-loader-spinner';
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+ 
+const Home = () => {
+ 
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [activeItemIndex, setActiveItemIndex] = useState(0);
+  const [show, setShow] = useState(true);
+  const [loadOnce, setLoadOnce] = useState(true);
+  const [categorySet, setCategorySet] = useState([]);
+  const[categoryLength,setCategoryLength]=useState(0)
 
-class Home extends Component {
-  static propTypes = {
-    match: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired,
-    history: PropTypes.object.isRequired,
-  };
-  state = {
-    selectedOption: null,
-    activeItemIndex: 0,
-    show: true,
-    loadOnce: true,
-    categorySet: [],
-    categoryLength: 0,
-  };
+  const dispatch = useDispatch()
+  useEffect(() => {
+         
+    dispatch(actions.initHomeCollections());
+    dispatch(actions.initPromoBanners());
+    dispatch(actions.initStoresToFollow());
+           
+        
+   
+  },[0])
 
-  handleChange = (selectedOption) => {
-    this.setState({ selectedOption }, () =>
-      console.log(`Option selected:`, this.state.selectedOption)
-    );
-  };
+const location = useLocation()
 
-  componentDidMount() {
-    this.timer = setTimeout(() => {
-      this.props.onInitHomeCollections();
-      this.props.onInitPromoBanners();
-      this.props.onInitStoresToFollow();
-    }, 3000);
-
-    this.timer = setTimeout(() => {
-      this.setState({ show: false });
-    }, 6000);
-  }
-  redirectListing = () => {
-    this.props.history.push('/listings');
-  };
-
-  render() {
-    const { match, location, history } = this.props;
-    let collectionContent = <Spinner show={true} styles="SpinnerCenter" />;
-    console.log(this.props.collections);
-    if (this.props.collections && this.props.collections.length > 0) {
+   const token = useSelector((state) => state.auth.token);
+  const userId = useSelector((state) => state.auth.userId);
+  const error = useSelector((state) => state.auth.error);
+  const loading = useSelector((state)=>state.auth.loading);
+  const followLoading = useSelector((state) => state.store.loading);
+  const message = useSelector((state) => state.auth.message);
+  const promo_banners = useSelector((state) => state.home.promo_banners);
+  const categories = useSelector((state) => state.home.categories);
+  const collections = useSelector((state) => state.home.collections);
+  const isAuthenticated = useSelector((state) => selectUserId(state));
+console.log(isAuthenticated);
+     let collectionContent = <Spinner show={true} styles="SpinnerCenter" />;
+    console.log( collections);
+    if ( collections && collections.length > 0) {
       collectionContent = (
         <>
-          <StoresToFollow isAuthenticated={this.props.isAuthenticated} />
+          <StoresToFollow />
           <br />
           <br />
-          <LatestProducts />
+          <LatestProducts collections={collections} />
         </>
       );
     } else {
-      if (!this.state.show) {
+      if ( show) {
         collectionContent = '';
       }
     }
-    console.log(this.props.token);
-    return (
-      <Aux>
-        <Helmet>
-          <title>
-            {process.env.REACT_APP_TENANT_NAME} - Buy & Sell used items online from mobile app
-          </title>
-          <meta
-            name="description"
-            content=" Buy & Sell used items online and preloved electronics, bikes, cycle, books, fashion, gadgets, etc"
-          />
-          <link href={location.pathname} />
-        </Helmet>
-        <Backdrop show={this.props.loading || this.props.followLoading} />
-        <Spinner show={this.props.loading || this.props.followLoading} />
-        <HomeBanner images={this.props.promo_banners} />
-        <div style={{ width: '100%' }}>
+    console.log("loading:",loading);
+    console.log("follow-loading:",followLoading);
+    
+  // redirectListing = () => {
+  //    history.push('/listings');
+  // };
+  return (
+    <Aux className={classes.HomePage}>
+      <Helmet>
+        <title>
+          {process.env.REACT_APP_TENANT_NAME} - Buy & Sell used items online from mobile app
+        </title>
+        <meta
+          name="description"
+          content=" Buy & Sell used items online and preloved electronics, bikes, cycle, books, fashion, gadgets, etc"
+        />
+        <link href={location.pathname} />
+      </Helmet>
+      <Backdrop show={loading || followLoading} />
+      <Spinner show={loading || followLoading} />
+      {  !categories.length>0? (
+        <Loader
+          type="ThreeDots"
+          color="#13B58C"
+          height={100}
+          width={100}
+          style={{ display: 'flex', justifyContent: 'center' }}
+        />
+      ) : (
+        <>
+          <HomeBanner images={promo_banners} />
           <Categories />
-        </div>
-        <br />
-        <div>{collectionContent}</div>
-
-        <br />
-        <br />
-        <br />
-      </Aux>
-    );
-  }
-}
-
-const mapStateToProps = (state) => {
-  return {
-    token: state.auth.token,
-    userId: state.auth.userId,
-    error: state.auth.error,
-    loading: state.auth.loading,
-    followLoading:state.store.loading,
-    message: state.auth.message,
-    promo_banners: state.home.promo_banners,
-    categories: state.home.categories,
-    collections: state.home.collections,
-    isAuthenticated: selectUserId(state),
-  };
+          <br />
+          <StoresToFollow />
+          <br />
+          <br />
+          <LatestProducts collections={collections} />
+          <br />
+          <br />
+          <br />
+        </>
+      )}
+    </Aux>
+  );
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onInitHomeCollections: () => dispatch(actions.initHomeCollections()),
-    onInitPromoBanners: () => dispatch(actions.initPromoBanners()),
-    onInitStoresToFollow: () => dispatch(actions.initStoresToFollow()),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default Home;

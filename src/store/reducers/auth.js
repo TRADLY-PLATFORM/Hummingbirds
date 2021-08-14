@@ -10,6 +10,7 @@ const initialState = {
   message: null,
   verify_id: null,
   countries: null,
+  configs:{},
   authRedirectPath: '/',
   userData: {},
   tenantData: {},
@@ -53,6 +54,15 @@ const startCountries = (state, action) => {
 const setCountries = (state, action) => {
   return updateObject(state, {
     countries: action.countries,
+    loading: false,
+  });
+};
+const setConfigs = (state, action) => {
+  console.log('====================================');
+  console.log(action);
+  console.log('====================================');
+  return updateObject(state, {
+    configs: action.data,
     loading: false,
   });
 };
@@ -105,6 +115,8 @@ const authReducer = (state = initialState, action) => {
       return startCountries(state, action);
     case actionTypes.SET_COUNTRIES:
       return setCountries(state, action);
+    case actionTypes.SET_CONFIGS:
+      return setConfigs(state, action);
     case actionTypes.FETCH_COUNTRIES_FAILED:
       return fetchCountriesFailed(state, action);
     case actionTypes.SET_AUTH_REDIRECT_PATH:

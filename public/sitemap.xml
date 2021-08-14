@@ -6,10 +6,10 @@
 <url> <loc>https://web.tradly.app/logout</loc> </url>
 <url> <loc>https://web.tradly.app/listings</loc> </url>
 <url> <loc>https://web.tradly.app/</loc> </url>
-<url> <loc>https://web.tradly.app/l/:id/:name</loc> </url>
+<url> <loc>https://web.tradly.app/l/:id</loc> </url>
 <url> <loc>https://web.tradly.app/store</loc> </url>
 <url> <loc>https://web.tradly.app/create-store</loc> </url>
-<url> <loc>https://web.tradly.app/a/:id/:name</loc> </url>
+<url> <loc>https://web.tradly.app/a/:id</loc> </url>
 <url> <loc>https://web.tradly.app/all-categories</loc> </url>
 <url> <loc>https://web.tradly.app/profile</loc> </url>
 <url> <loc>https://web.tradly.app/group</loc> </url>
