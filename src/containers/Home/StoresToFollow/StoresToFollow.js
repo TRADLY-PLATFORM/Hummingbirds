@@ -31,8 +31,7 @@ const StoresToFollow = ({ storesToFollow }) => {
 
   arrayListings = storesToFollow.map((list, i) => {
     let imagePath = AllenSollyLogo;
-    var followSet;
-    if (list.images.length > 0) {
+     if (list.images.length > 0) {
       imagePath = list.images[0];
     }
 
