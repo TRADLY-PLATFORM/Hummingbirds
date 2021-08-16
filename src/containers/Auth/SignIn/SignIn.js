@@ -44,7 +44,8 @@ class SignIn extends Component {
   }
   onSubmit = (e) => {
     e.preventDefault();
-    const authType = this.props.configsData.auth_Type;
+    const authType = this.props.configsData.auth_type;
+    console.log("dekkho:",authType)
     if (authType === 1) {
       if (this.state.email === '') {
         if (!toast.isActive(this.toastId)) {
@@ -57,6 +58,12 @@ class SignIn extends Component {
         }
         return false;
       }
+      else  if (this.state.password === '') {
+          if (!toast.isActive(this.toastId)) {
+            this.toastId = toast.error('Password is required');
+          }
+          return false;
+        }
     } else {
         if (this.state.mobile === '') {
       if (!toast.isActive(this.toastId)) {
@@ -64,6 +71,12 @@ class SignIn extends Component {
       }
       return false;
       }
+      else  if (this.state.password === '') {
+          if (!toast.isActive(this.toastId)) {
+            this.toastId = toast.error('Password is required');
+          }
+          return false;
+        }
       let mobile = this.state.mobile;
       let checkNumber = isValidPhoneNumber(`+${mobile}`);
       if (checkNumber !== true) {
@@ -74,12 +87,7 @@ class SignIn extends Component {
       } 
     
     }
-  if (this.state.password === '') {
-        if (!toast.isActive(this.toastId)) {
-          this.toastId = toast.error('Password is required');
-        }
-        return false;
-      }
+
   
     
     this.setState({ showError: true });

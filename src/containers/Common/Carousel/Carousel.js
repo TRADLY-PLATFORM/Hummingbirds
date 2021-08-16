@@ -28,6 +28,7 @@ const Carousel = () => {
     axios
       .get('v1/configs?key_group=onboarding')
       .then((response) => {
+        console.log(response)
         if (response.status) {
           console.log(response.data.data.configs.intro_screens);
           setOnboardingImage(response.data.data.configs.intro_screens);

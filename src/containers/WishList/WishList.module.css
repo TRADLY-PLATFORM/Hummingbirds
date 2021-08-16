@@ -14,7 +14,7 @@
 
 .wishList {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   justify-content: center;
 }
 
@@ -31,12 +31,20 @@
 }
 
 .latestTrend {
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   background-color: #ffffff;
   border: 1px solid #e3e3e3;
   border-radius: 10px;
   box-sizing: border-box;
-  min-height: 235px;
+  min-height: 205px;
+  width: 250px;
+  margin-left: 10px;
+  margin-right: 10px;
+  overflow: hidden;
+}
+.storeImage {
+  margin-bottom: 15px;
+  width: 100%;
 }
 
 .latestTrend p {
@@ -46,47 +54,46 @@
   line-height: 20px;
   color: #4a4a4a;
   padding: 10px;
-  height: 50px;
+  min-height: 10px;
 }
 
 .bottomDesc {
   margin-bottom: 10px;
+  padding: 2px;
+  display: flex;
+  align-items: center;
+  position: relative;
 }
-
 .bottomDesc img {
-  width: 15%;
+  width: 25%;
   margin-left: 10px;
+  padding-right: 5px;
   border-radius: 50%;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   /* border: solid 1px #949ca2; */
-  padding: 3px;
   transition: all 0.5s;
 }
 
 .bottomDesc span {
   font-style: normal;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 17px;
   color: #4a4a4a;
-  opacity: 0.5;
-  position: relative;
-  left: 3px;
-  top: 3px;
+  opacity: 1;
+  left: 20%;
+  top: 30%;
+  position: absolute;
 }
-
-.storeImage {
-  margin-bottom: 15px;
-  width: 100%;
-}
-
 .amountTitle {
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 17px;
-  text-align: center;
-  float: right;
-  padding: 8px;
+  min-width: 100px;
+  font-weight: bold;
+  font-size: 17px;
+  text-align: right;
+  padding: 8px 8px;
+  margin-right: 0;
+
   color: #13b58c;
 }
+
