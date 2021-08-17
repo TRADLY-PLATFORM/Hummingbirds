@@ -31,7 +31,9 @@ Sentry.init({
   // We recommend adjusting this value in production
   tracesSampleRate: 1.0,
 });
-
+const sentryReduxEnhancer = Sentry.createReduxEnhancer({
+  // Optionally pass options listed below
+});
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -44,7 +46,11 @@ const rootReducer = combineReducers({
   wishList: wishListReducer,
 });
 
-const store = createStore(rootReducer, Map(), composeEnhancers(applyMiddleware(thunk)));
+const store = createStore(
+  rootReducer,
+  Map(),
+  composeEnhancers(applyMiddleware(thunk), sentryReduxEnhancer)
+);
 
 const app = (
   <Provider store={store}>

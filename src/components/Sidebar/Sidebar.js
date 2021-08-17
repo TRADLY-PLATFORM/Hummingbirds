@@ -31,10 +31,7 @@ class Sidebar extends Component {
    
     console.log(tenantData, location);
     let appLogo = tenantData.get('logo_path', '');
-     console.log('==========dekchis tui==========================');
-    console.log(tenantData);
-    console.log(appLogo)
-     console.log('====================================');
+ 
     let redirectUrl = null;
     if (this.state.redirect) {
       redirectUrl = <Redirect to="/sign-in" />;

@@ -38,6 +38,7 @@ import detailOrder from './containers/Order/detailOrder';
 import ListingsByCategory from './containers/ListingsByCategory/ListingsByCategory';
 import AllStores from './containers/Store/AllStores';
 import SignIn from './containers/Auth/SignIn/SignIn';
+import { ErrorBoundary } from '@sentry/react';
 
 class App extends Component {
   componentDidMount() {
@@ -85,7 +86,7 @@ class App extends Component {
     );
 
     return (
-      <div>
+      <ErrorBoundary>
         {this.props.location.pathname === '/sign-up' ||
         this.props.location.pathname === '/sign-in' ||
         this.props.location.pathname === '/verification/' + this.props.verifyId ? (
@@ -93,7 +94,7 @@ class App extends Component {
         ) : (
           <Layout>{routes}</Layout>
         )}
-      </div>
+      </ErrorBoundary>
     );
   }
 }
