@@ -74,9 +74,7 @@ const Layout = (props) => {
               <button type="button" onClick={navButtonClick}>
                 <img src={menubarIcon} alt="" />
               </button>
-              <Link className="navbar-brand" to="#">
-                Logo
-              </Link>
+              
 
               <div className="col-sm-6 ">
                 <div className={classes.userArea + ' dropdown'} onClick={navButtonOff}>
