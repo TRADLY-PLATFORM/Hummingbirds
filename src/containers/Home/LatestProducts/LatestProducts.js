@@ -29,7 +29,7 @@ const LatestProducts = ({ products }) => {
     }
 
     return (
-      <Link to={`/l/${list.id}-${list.title}`} key={i} style={{ textDecoration: 'none' }}>
+      <Link to={`/l/${list.id}-${`${list.title.replace("%","")}`}`} key={i} style={{ textDecoration: 'none' }}>
         <div className={classes.latestTrend}>
           <img src={imagePath} className={classes.storeImage} alt={list.title} title={list.title} />
           <p>{list.title.length < 20

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 
 import { connect } from 'react-redux';
@@ -38,25 +39,6 @@ import ListingsByCategory from './containers/ListingsByCategory/ListingsByCatego
 import AllStores from './containers/Store/AllStores';
 import SignIn from './containers/Auth/SignIn/SignIn';
 
-// const rollbarConfig = {
-//   accessToken: '3b6226f9262f4bc8bc2b9e3392f708e5',
-//   environment: 'production',
-//   // server: {
-//   //   root: 'http://localhost:3000/',
-//   //   branch: 'main',
-//   // },
-//   // code_version: '0.13.7',
-//   // person: {
-//   //   id: 117,
-//   //   email: 'ahsan@tradly.app',
-//   //   username: 'Ahsan Ullah',
-//   // },
-// };
-
-const rollbarConfig = {
-  accessToken: '3b6226f9262f4bc8bc2b9e3392f708e5',
-  environment: 'production',
-};
 class App extends Component {
   componentDidMount() {
     this.props.onTryAuthSignUp();

@@ -78,6 +78,7 @@ export const initListings = (count, filterValue, totalCountOfProducts) => {
       })
       .catch((error) => {
         dispatch(fetchListingsFailed());
+        
       });
   };
 };
