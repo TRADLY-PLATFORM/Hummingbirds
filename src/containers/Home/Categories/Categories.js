@@ -6,42 +6,63 @@ import Category from '../../../components/Category/Category';
 import classes from './Categories.module.css';
 import useWindowSize from '../../../components/Hooks/WindowSize/WindowSize';
 
-const Categories = () => {
-  const Categories = useSelector((state) => state.home.categories);
+const Categories = ({ categories }) => {
+  // const Categories = useSelector((state) => state.home.categories);
   console.log('====================================');
   console.log(Categories);
   console.log('====================================');
-  const [categorySet, setCategorySet] = useState([]);
+  const [categorySet, setCategorySet] = useState([...categories]);
   const { width, height } = useWindowSize();
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(actions.initCategories());
-  }, [0]);
-
-  useEffect(() => {
-    if (Categories && Categories.length > 0) {
-      console.log(Categories);
-      let copyCategories = [...Categories];
-      let lengthOfCategories = Categories.length;
-      let firstCategorySet = '';
-      if (lengthOfCategories <= 4) {
-        firstCategorySet = copyCategories.slice(0, 4);
-      } else if (lengthOfCategories <= 8) {
-        firstCategorySet = copyCategories.slice(0, 8);
-      } else if (lengthOfCategories > width > 700 ? 3 : 8) {
-        firstCategorySet = copyCategories.slice(0, width > 700 ? 7 : 3);
-        let moreCategory = {
+   // useEffect(() => {
+  //   dispatch(actions.initCategories());
+  // }, [0]);
+  
+ 
+  const sendCategories = () => {
+   
+    if (categorySet.length <= 8) {
+      return (
+        <Category categories={categorySet} />)
+        
+          
+    }
+    else {
+      const sliceLength = width > 700 ?7:3;
+      let updatedCategories = categorySet.slice(0, sliceLength);
+      let moreCategory = {
           id: Math.random(),
           name: 'More',
           image_path: MoreLogo,
           has_sub_category: true,
           link: 'all-categories',
         };
-        firstCategorySet.push(moreCategory);
-      }
-      setCategorySet(firstCategorySet);
+        updatedCategories.push(moreCategory);
+       return <Category categories={updatedCategories} />;
     }
-  }, [Categories]);
+  }
+      // console.log(categories);
+      // let copyCategories = [...categories];
+      // let lengthOfCategories = categories.length;
+      
+      // if (lengthOfCategories > 8) {
+      //  const sliceLength = width > 700 ? 3 : 7;
+ 
+      //   let  firstCategorySet = copyCategories.slice(0, sliceLength);
+      //   let moreCategory = {
+      //     id: Math.random(),
+      //     name: 'More',
+      //     image_path: MoreLogo,
+      //     has_sub_category: true,
+      //     link: 'all-categories',
+      //   };
+      //   firstCategorySet.push(moreCategory);
+       
+       
+      // }  
+       
+      
+    
+  
 
   // let categoryContent;
   // if (categorySet && categorySet.length > 0) {
@@ -74,7 +95,9 @@ const Categories = () => {
     <div style={{ marginTop: '20px', minHeight: '150px' }}>
       <div className="col-lg-12 col-md-12">
         <div className={classes.CategoryBox}>
-          <Category categories={categorySet} />
+          {
+            sendCategories()
+         }
         </div>
       </div>
     </div>

@@ -2293,13 +2293,6 @@
   resolved "https://registry.yarnpkg.com/@react-google-maps/marker-clusterer/-/marker-clusterer-2.2.0.tgz#a1d635ce9a5b55f1e48fddc6acafc0e1128a6476"
   integrity sha512-QaQAfY/FdaSwPmm0JnW9AW+t0ocfUYmuso9WmeIMwTRCqcqNxc4GFe5uT0LDLmsYt/wxAeYoGWVaD8sd/Vquig==
 
-"@rollbar/react@^0.8.0":
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/@rollbar/react/-/react-0.8.0.tgz#8c8967a158b4e1544350bf936cbea6dbf05a2c37"
-  integrity sha512-GX2I6WuR54FqEB6UTrn5vCfwIP9DkrsJu23ljxcqUmrHXdyPundjZKwnJ0RODDyXuGWtxb6Fk74HeaYTpKeGrA==
-  dependencies:
-    tiny-invariant "^1.1.0"
-
 "@sentry/browser@6.11.0":
   version "6.11.0"
   resolved "https://registry.yarnpkg.com/@sentry/browser/-/browser-6.11.0.tgz#9e90bbc0488ebcdd1e67937d8d5b4f13c3f6dee0"
@@ -13367,7 +13360,7 @@ timsort@^0.3.0:
   resolved "https://registry.npmjs.org/timsort/-/timsort-0.3.0.tgz"
   integrity sha1-QFQRqOfmM5/mTbmiNN4R3DHgK9Q=
 
-tiny-invariant@^1.0.2, tiny-invariant@^1.1.0:
+tiny-invariant@^1.0.2:
   version "1.1.0"
   resolved "https://registry.npmjs.org/tiny-invariant/-/tiny-invariant-1.1.0.tgz"
   integrity sha512-ytxQvrb1cPc9WBEI/HSeYYoGD0kWnGEOR8RY6KomWLBVhqz0RgTwVO9dLrGz7dC+nN9llyI7OKAgRq8Vq4ZBSw==

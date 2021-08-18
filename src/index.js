@@ -23,13 +23,17 @@ import { Integrations } from '@sentry/tracing';
 // });
 
 Sentry.init({
-  dsn: 'http://3f99218da0aa4b1ab32e13029b3b8895@ec2-54-175-98-88.compute-1.amazonaws.com/1',
+  dsn: 'https://ab22fdcc8ad24c7babc4d07ae7d20642@o396771.ingest.sentry.io/5284098',
   integrations: [new Integrations.BrowserTracing()],
 
+  environment: "production",
   // Set tracesSampleRate to 1.0 to capture 100%
   // of transactions for performance monitoring.
   // We recommend adjusting this value in production
   tracesSampleRate: 1.0,
+});
+const sentryReduxEnhancer = Sentry.createReduxEnhancer({
+  // Optionally pass options listed below
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -43,7 +47,11 @@ const rootReducer = combineReducers({
   wishList: wishListReducer,
 });
 
-const store = createStore(rootReducer, Map(), composeEnhancers(applyMiddleware(thunk)));
+const store = createStore(
+  rootReducer,
+  Map(),
+  composeEnhancers(applyMiddleware(thunk), sentryReduxEnhancer)
+);
 
 const app = (
   <Provider store={store}>

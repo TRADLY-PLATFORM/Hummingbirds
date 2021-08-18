@@ -32,59 +32,58 @@ import reactLoaderSpinner from 'react-loader-spinner';
 
 import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
- 
+
 const Home = () => {
- 
   const [selectedOption, setSelectedOption] = useState(null);
   const [activeItemIndex, setActiveItemIndex] = useState(0);
   const [show, setShow] = useState(true);
   const [loadOnce, setLoadOnce] = useState(true);
   const [categorySet, setCategorySet] = useState([]);
-  const[categoryLength,setCategoryLength]=useState(0)
+  const [categoryLength, setCategoryLength] = useState(0);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   useEffect(() => {
-         
     dispatch(actions.initHomeCollections());
     dispatch(actions.initPromoBanners());
-    dispatch(actions.initStoresToFollow());
-           
-        
-   
-  },[0])
+  }, [0]);
 
-const location = useLocation()
+  const location = useLocation();
 
-   const token = useSelector((state) => state.auth.token);
+  const token = useSelector((state) => state.auth.token);
   const userId = useSelector((state) => state.auth.userId);
   const error = useSelector((state) => state.auth.error);
-  const loading = useSelector((state)=>state.auth.loading);
+  const loading = useSelector((state) => state.auth.loading);
   const followLoading = useSelector((state) => state.store.loading);
   const message = useSelector((state) => state.auth.message);
   const promo_banners = useSelector((state) => state.home.promo_banners);
   const categories = useSelector((state) => state.home.categories);
   const collections = useSelector((state) => state.home.collections);
   const isAuthenticated = useSelector((state) => selectUserId(state));
-console.log(isAuthenticated);
-     let collectionContent = <Spinner show={true} styles="SpinnerCenter" />;
-    console.log( collections);
-    if ( collections && collections.length > 0) {
-      collectionContent = (
-        <>
-          <StoresToFollow />
-          <br />
-          <br />
-          <LatestProducts collections={collections} />
-        </>
-      );
-    } else {
-      if ( show) {
-        collectionContent = '';
-      }
-    }
-    console.log("loading:",loading);
-    console.log("follow-loading:",followLoading);
-    
+  const products = useSelector((state) => state.home.latestProducts);
+    const storesToFollow = useSelector((state) => state.home.stores);
+
+
+
+  // console.log(isAuthenticated);
+  // let collectionContent = <Spinner show={true} styles="SpinnerCenter" />;
+  // console.log(collections);
+  // if (collections && collections.length > 0) {
+  //   collectionContent = (
+  //     <>
+  //       <StoresToFollow />
+  //       <br />
+  //       <br />
+  //       <LatestProducts />
+  //     </>
+  //   );
+  // } else {
+  //   if (show) {
+  //     collectionContent = '';
+  //   }
+  // }
+  console.log('loading:', loading);
+  console.log('follow-loading:', followLoading);
+
   // redirectListing = () => {
   //    history.push('/listings');
   // };
@@ -102,7 +101,8 @@ console.log(isAuthenticated);
       </Helmet>
       <Backdrop show={loading || followLoading} />
       <Spinner show={loading || followLoading} />
-      {  !categories.length>0? (
+
+      {!categories.length > 0 ? (
         <Loader
           type="ThreeDots"
           color="#13B58C"
@@ -113,12 +113,12 @@ console.log(isAuthenticated);
       ) : (
         <>
           <HomeBanner images={promo_banners} />
-          <Categories />
+            <Categories categories={categories}/>
           <br />
-          <StoresToFollow />
+          <StoresToFollow storesToFollow={storesToFollow} />
           <br />
           <br />
-          <LatestProducts collections={collections} />
+          <LatestProducts products={products} />
           <br />
           <br />
           <br />

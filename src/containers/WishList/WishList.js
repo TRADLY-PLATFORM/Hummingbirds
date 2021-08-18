@@ -55,7 +55,7 @@ const WishList = () => {
       </div>
 
       <div className="row">
-        <div className={classes.wishList + 'container-fluid mt-5'}>
+        <div className={classes.wishList }>
           {wishList &&
             wishList.map((list, i) => {
               let productImage = NoProductImage;
@@ -69,7 +69,7 @@ const WishList = () => {
               console.log(storeName);
               return (
                 <Link to={`/l/${list.id}-${list.title}`} key={i} style={{ textDecoration: 'none' }}>
-                  <div className={'col-md-5th-1 col-sm-4 col-md-offset-0 col-sm-offset-2 '}>
+                  <div className={''}>
                     <div className={classes.latestTrend}>
                       <img
                         src={productImage}
@@ -77,19 +77,21 @@ const WishList = () => {
                         alt="Woman accesories"
                         title="Woman accesories"
                       />
-                      <p>{title}</p>
+                      <p>{list.title}</p>
                       <div className={classes.bottomDesc}>
-                        <img
-                          src={storelogo || NoIamgeLogo}
-                          alt="Woman accesories"
-                          title="Woman accesories"
-                        />{' '}
-                        <span>
-                          {' '}
-                          {list.account.name.length < 15
-                            ? list.account.name
-                            : list.account.name.substring(0, 14) + '..'}
-                        </span>
+                        <div className=''>
+                          <img
+                            src={storelogo || NoIamgeLogo}
+                            alt="Woman accesories"
+                            title="Woman accesories"
+                          />{' '}
+                          <span>
+                            {' '}
+                            {list.account.name.length < 10
+                              ? list.account.name
+                              : list.account.name.substring(0, 10) + '..'}
+                          </span>
+                        </div>
                         <div className={classes.amountTitle}>{price}</div>
                       </div>
                     </div>

@@ -38,6 +38,12 @@ export const setCategories = (categories) => {
     categories: categories,
   };
 };
+export const setLatestProducts = (products) => {
+  return {
+  type: actionTypes.SET_LATEST_PRODUCTS,
+    products: products,
+}
+}
 
 export const initHomeCollections = () => {
   return (dispatch) => {
@@ -49,13 +55,26 @@ export const initHomeCollections = () => {
         .then((response) => {
           if (response.data.status) {
             console.log(response);
+            // categories
             let categories = response.data.data.categories;
-            let collections = response.data.data.collections;
-            console.log('====================================');
-            console.log(categories, collections);
-            console.log('====================================');
+            dispatch(setCategories( categories));
 
-            dispatch(setCollections({ categories, collections }));
+            // collections
+            let collections = response.data.data.collections;
+              dispatch(setCollections({ collections }));
+
+            //  console.log(categories, collections);
+            // stores
+            let stores = response.data.data.collections.find(
+              (item, i) => item.title === 'Stores to Follow'
+            );
+            dispatch(setStores(stores.accounts));
+         //  products
+             let products = response.data.data.collections.find(
+               (item, i) => item.title === 'Latest Products'
+             );
+
+             dispatch(setLatestProducts(products.listings));
 
             // let data = {
             //   promo_banners: promo_banners,
@@ -98,13 +117,12 @@ export const initPromoBanners = () => {
 export const initStoresToFollow = () => {
   return (dispatch) => {
     axios
-      .get('v1/accounts?page=1&type=accounts')
+      .get('/products/v1/home/')
       .then((response) => {
         if (response.data.status) {
-          let stores = response.data.data.accounts.filter((list, i) => list.active === true);
-          console.log(stores);
-          dispatch(
-            setStores(response.data.data.accounts.filter((list, i) => list.active === true))
+          let stores = response.data.data.collections.find((item,i)=>item.title === "Stores to Follow")
+           dispatch(
+            setStores(stores.accounts)
           );
         }
       })
@@ -129,3 +147,30 @@ export const initCategories = () => {
       });
   };
 };
+
+export const initLatestProducts = () => {
+  return (dispatch) => {
+   
+      dispatch(initCollections());
+      axios
+        .get('/products/v1/home/')
+        .then((response) => {
+          if (response.data.status) {
+            console.log(response);
+            let products = response.data.data.collections.find(
+              (item, i) => item.title === 'Latest Products'
+            );
+
+            dispatch(setLatestProducts(products.listings));
+
+           
+          } else {
+            dispatch(fetchCollectionsFailed());
+          }
+        })
+        .catch((error) => {
+          dispatch(fetchCollectionsFailed());
+        });
+   
+  };
+}

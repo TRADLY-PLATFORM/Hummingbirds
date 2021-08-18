@@ -43,7 +43,7 @@ class SignUp extends Component {
   onSubmit = (e) => {
     e.preventDefault();
 
-    const authType = this.props.configsData.auth_Type;
+    const authType = this.props.configsData.auth_type;
     if (authType === 1) {
       if (this.state.firstName === '') {
         if (!toast.isActive(this.toastId)) {

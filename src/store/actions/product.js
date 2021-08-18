@@ -20,9 +20,11 @@ export const startProductDetails = () => {
   };
 };
 
-export const initProductDetails = (id) => {
+export const initProductDetails = (id,isLoading) => {
   return (dispatch) => {
-    dispatch(startProductDetails());
+    if (isLoading === true) {
+      dispatch(startProductDetails());
+    }
     axios
       .get('/products/v1/listings/' + id + '?locale=en')
       .then((response) => {
@@ -76,6 +78,7 @@ export const initListings = (count, filterValue, totalCountOfProducts) => {
       })
       .catch((error) => {
         dispatch(fetchListingsFailed());
+        
       });
   };
 };

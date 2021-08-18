@@ -10,7 +10,13 @@ export {
   
 } from './auth';
 
-export { initHomeCollections, initPromoBanners, initStoresToFollow, initCategories } from './home';
+export {
+  initHomeCollections,
+  initPromoBanners,
+  initStoresToFollow,
+  initCategories,
+  initLatestProducts,
+} from './home';
 
 export {
   initProductDetails,

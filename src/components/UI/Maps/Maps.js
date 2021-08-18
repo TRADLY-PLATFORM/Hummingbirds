@@ -90,10 +90,7 @@ const containerStyle = {
     <LoadScript googleMapsApiKey="AIzaSyCXCZxpNJ3Y8KzXGkrJUkdZ7vyT2M9T-c4">
       <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={10}>
         {/* Child components, such as markers, info windows, etc. */}
-        <Marker
-           
-          position={center}
-        />
+        
       </GoogleMap>
     </LoadScript>
   );

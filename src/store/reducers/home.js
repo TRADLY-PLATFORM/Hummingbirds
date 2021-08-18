@@ -10,6 +10,7 @@ const initialState = {
   categories: [],
   collections: [],
   stores: [],
+  latestProducts:[]
 };
 
 const initCollections = (state, action) => {
@@ -20,8 +21,7 @@ const initCollections = (state, action) => {
 
 const setCollections = (state, action) => {
   return updateObject(state, {
-    categories: action.collectionItems.categories,
-    collections: action.collectionItems.collections,
+     collections: action.collectionItems.collections,
     loading: false,
   });
 };
@@ -39,6 +39,11 @@ const setPromoBanners = (state, action) => {
 const setStoresToFollow = (state, action) => {
   return updateObject(state, {
     stores: action.storesItems,
+  });
+};
+const setLatestProducts = (state, action) => {
+  return updateObject(state, {
+    latestProducts: action.products,
   });
 };
 
@@ -62,6 +67,8 @@ const homeReducer = (state = initialState, action) => {
       return setPromoBanners(state, action);
     case actionTypes.SET_STORES_TO_FOLLOW:
       return setStoresToFollow(state, action);
+    case actionTypes.SET_LATEST_PRODUCTS:
+      return setLatestProducts(state, action);
     case actionTypes.FETCH_COLLECTIONS_FAILED:
       return fetchCollectionsFailed(state, action);
     default:
