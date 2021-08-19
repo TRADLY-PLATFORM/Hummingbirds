@@ -17,16 +17,12 @@ import StoreActiveLogo from '../../assets/images/sidebar/active/store.svg';
 import PropTypes from 'prop-types';
 import * as actions from '../../store/actions/index';
 import { useState } from 'react';
-import menubarIcon from "../../assets/images/mobilemenu/menu (1).png"
+import menubarIcon from "../../assets/images/mobilemenu/menu.png"
 import closeMenu from "../../assets/images/mobilemenu/close.png"
 import profileUser from '../../assets/images/header/profile-user.png';
+import arrow from '../../assets/images/mobilemenu/down-arrow.png';
 
 
-// const mapDispatchToProps = (dispatch) => {
-//   return {
-//     onSetAuthRedirectPath: (path) => dispatch(actions.setAuthRedirectPath(path, null)),
-//   };
-// };
 
 const Layout = (props) => {
   const isAuthenticated = useSelector((state) => selectUserId(state));
@@ -35,9 +31,7 @@ const Layout = (props) => {
   const dispatch = useDispatch();
 
   const url = useLocation().pathname;
-  console.log('====================================');
-  console.log(url);
-  console.log('====================================');
+ 
   const [isSiteNavOpen, setIsSiteNavOpen] = useState(false);
 
   const authRedirectHandler = (path) => {
@@ -46,7 +40,7 @@ const Layout = (props) => {
   };
   function navButtonClick() {
     
-      document.getElementById('navbarMenu').style.width = '350px';
+      document.getElementById('navbarMenu').style.width = '60%';
       setIsSiteNavOpen(true);
     
      
@@ -57,6 +51,8 @@ const Layout = (props) => {
       setIsSiteNavOpen(false);
    
   }
+
+  // Logo path:
     let appLogo = tenantData.get('logo_path', '');
   function getUserImage() {
     return userData.get('profile_pic', '');
@@ -68,37 +64,47 @@ const Layout = (props) => {
   return (
     <div>
       <Aux>
+        <div
+          className={classes.bgEffect}
+          style={{ display: isSiteNavOpen ? 'block' : 'none' }}
+        ></div>
         <nav className={classes.mobileNavbar + '  visible-xs '}>
-          <div className="container-fluid">
+          <div className=" ">
             <div className={classes.navbar}>
               <button type="button" onClick={navButtonClick}>
                 <img src={menubarIcon} alt="" />
               </button>
-              
+              <div className="logo" style={{ marginLeft: '7%' }}>
+                {appLogo !== '' ? (
+                  <img
+                    className="img-fluid"
+                    src={appLogo}
+                    style={{ width: '90px', height: '90px' }}
+                    alt="Tradly"
+                    title="Tradly"
+                  />
+                ) : (
+                  'Loading...'
+                )}
+              </div>
 
-              <div className="col-sm-6 ">
-                <div className={classes.userArea + ' dropdown'} onClick={navButtonOff}>
+              <div className="col-sm-6  pull-right" style={{ marginLeft: 'auto' }}>
+                <div className={classes.userArea + ' dropdown'}>
                   <Link
                     to="#"
                     className="dropdown-toggle"
                     data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false"
+                    style={{ display: 'flex', alignItems: 'center' }}
                   >
                     <img
                       className={classes.userAvatar}
                       src={getUserImage() !== '' ? getUserImage() : profileUser}
                       alt="User Avatar"
                     />
-                    <span className={classes.spanName}>{getUserName()}</span>
+                    <img style={{ height: '20px', marginLeft: '5px' }} src={arrow} alt="" />
                   </Link>
-                  <button
-                    className={classes.closeBtn}
-                    onClick={navButtonOff}
-                    style={{ display: isSiteNavOpen ? 'block' : 'none' }}
-                  >
-                    <img src={closeMenu} alt="" />
-                  </button>
 
                   <div className={classes.dropdownMenu + ' user-menu dropdown-menu'}>
                     {userData.get('id', '') === '' ? (
@@ -120,31 +126,22 @@ const Layout = (props) => {
                     )}
                   </div>
                 </div>
-
-                {/* <div className={classes.cartArea}>
-              <Link to="/cart">
-                <span className={classes.cartIcon}>
-                  <i className="fa fa-shopping-cart mr-10"></i>
-                </span>
-                Cart
-                <span className={classes.countCart}>0</span>
-              </Link>
-            </div> */}
               </div>
             </div>
-            {/* <button
-              className={classes.closeBtn}
-              onClick={navButtonOff}
-              style={{ display: isSiteNavOpen ? 'block' : 'none' }}
-            >
-              <img src={closeMenu} alt="" />
-            </button> */}
-            <div
-              className={classes.bgEffect}
-              style={{ display: isSiteNavOpen ? 'block' : 'none' }}
-            ></div>
+            <div className="col-sm-6" style={{ marginTop: '20px' }}>
+              <span className="glyphicon glyphicon-search form-control-feedback"></span>
+              <input type="text" className="form-control input-lg" placeholder="Search Product" />
+            </div>
+
             <div className={classes.navbarMenu} id="navbarMenu">
               {/*  */}
+              <button
+                className={classes.closeBtn}
+                onClick={navButtonOff}
+                style={{ display: isSiteNavOpen ? 'block' : 'none' }}
+              >
+                <img style={{ width: '20px',height:"20px" }} src={closeMenu} alt="" />
+              </button>
               <div className={classes.logoImage}>
                 <Link to="/home">
                   {appLogo !== '' ? (
@@ -206,36 +203,6 @@ const Layout = (props) => {
                     <span>Listings</span>
                   </Link>
                 </li>
-                {/* <li className={url === '/my-transaction' ? 'active' : ''}>
-              <Link to="/my-transaction">
-                <img
-                  className="img-fluid"
-                  src={url === '/my-transaction' ? TransactionActiveLogo : TransactionLogo}
-                  alt="Home"
-                  title="Home"
-                />
-                <span>My Transaction</span>
-              </Link>
-            </li>
-            <li>
-              {!this.props.isAuthentication ? (
-                <Link to="#" onClick={(path) => this.authRedirectHandler('/store')}>
-                  <img className="img-fluid"  src={url === "/store"?StoreActiveLogo:StoreLogo}  alt="store" title="store" />
-                  <span>My Store</span>
-                </Link>
-              ) : (
-                <Link to="/store">
-                  <img className="img-fluid" src={url === "/store"?StoreActiveLogo:StoreLogo} alt="store" title="store" />
-                  <span>My Store</span>
-                </Link>
-              )}
-            </li> */}
-                {/* <li>
-              <Link to="/group">
-                <img className="img-fluid" src={GroupLogo} alt="Home" title="Home" />
-                <span>Group</span>
-              </Link>
-            </li> */}
               </ul>
             </div>
           </div>
@@ -246,7 +213,7 @@ const Layout = (props) => {
             <Sidebar isAuthentication={isAuthenticated} tenantData={tenantData} />
 
             <div className={classes.rightPanel + ' col-lg-10'}>
-              <Header userData={userData} />
+              {/* <Header userData={userData} /> */}
               <main className={classes.rightTopMargin + ' col-lg-12'}>{props.children}</main>
             </div>
           </div>
