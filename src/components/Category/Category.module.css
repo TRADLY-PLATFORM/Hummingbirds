@@ -48,22 +48,21 @@
 }
 .wellCategory p {
   margin-top: 10px;
-  font-style: normal;
-  font-weight: normal;
+   font-weight: 500;
   font-size: 15px;
   height: 40px;
   line-height: 14px;
   overflow: hidden;
   font-family: Montserrat;
   color: #15B790;
-  word-break: break-word;
-  text-align: center;
+     display: flex;
+   align-items: center;
+   justify-content: center;
 }
 
 .wellCategory img {
   width: 60px;
   height: 60px;
-
   margin-bottom: 10px;
 }
 }

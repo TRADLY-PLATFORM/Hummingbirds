@@ -140,7 +140,7 @@ a {
   }
 }
 
-@media only screen and (max-width: 700px) {
+@media only screen and (max-width: 780px) {
    .rightTopMargin {
   margin-top: 20px;
   padding-right: 7%;
