@@ -213,7 +213,7 @@ const Layout = (props) => {
             <Sidebar isAuthentication={isAuthenticated} tenantData={tenantData} />
 
             <div className={classes.rightPanel + ' col-lg-10'}>
-              {/* <Header userData={userData} /> */}
+              <Header userData={userData} />
               <main className={classes.rightTopMargin + ' col-lg-12'}>{props.children}</main>
             </div>
           </div>

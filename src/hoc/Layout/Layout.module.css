@@ -139,3 +139,13 @@ a {
     margin-left: 24%;
   }
 }
+
+@media only screen and (max-width: 700px) {
+   .rightTopMargin {
+  margin-top: 20px;
+  padding-right: 7%;
+  padding-left: 7%;
+}
+
+}
+ 

@@ -113,7 +113,7 @@ const Home = () => {
       ) : (
         <>
           <HomeBanner images={promo_banners} />
-            <Categories categories={categories}/>
+          <Categories categories={categories}/>
           <br />
           <StoresToFollow storesToFollow={storesToFollow} />
           <br />
