@@ -47,7 +47,6 @@
   border: 1px solid #15B790;
 }
 .wellCategory p {
-  margin-top: 10px;
    font-weight: 500;
   font-size: 15px;
   height: 40px;
@@ -55,7 +54,7 @@
   overflow: hidden;
   font-family: Montserrat;
   color: #15B790;
-     display: flex;
+    display: flex;
    align-items: center;
    justify-content: center;
 }

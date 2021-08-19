@@ -72,14 +72,14 @@ const Layout = (props) => {
           <div className=" ">
             <div className={classes.navbar}>
               <button type="button" onClick={navButtonClick}>
-                <img src={menubarIcon} alt="" />
+                <img style={{width:"35px"}} src={menubarIcon} alt="" />
               </button>
               <div className="logo" style={{ marginLeft: '7%' }}>
                 {appLogo !== '' ? (
                   <img
                     className="img-fluid"
                     src={appLogo}
-                    style={{ width: '90px', height: '90px' }}
+                    style={{ width: '40px', height: '40px' }}
                     alt="Tradly"
                     title="Tradly"
                   />
@@ -128,7 +128,7 @@ const Layout = (props) => {
                 </div>
               </div>
             </div>
-            <div className="col-sm-6" style={{ marginTop: '20px' }}>
+            <div className="col-sm-6" style={{ marginTop: '40px' }}>
               <span className="glyphicon glyphicon-search form-control-feedback"></span>
               <input type="text" className="form-control input-lg" placeholder="Search Product" />
             </div>

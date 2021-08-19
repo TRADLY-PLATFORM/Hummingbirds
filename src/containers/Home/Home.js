@@ -112,16 +112,18 @@ const Home = () => {
         />
       ) : (
         <>
-          <HomeBanner images={promo_banners} />
-          <Categories categories={categories}/>
-          <br />
-          <StoresToFollow storesToFollow={storesToFollow} />
-          <br />
-          <br />
-          <LatestProducts products={products} />
-          <br />
-          <br />
-          <br />
+          <div className={classes.homeContent}>
+            <HomeBanner images={promo_banners} />
+            <Categories categories={categories} />
+            <br />
+            <StoresToFollow storesToFollow={storesToFollow} />
+            <br />
+            <br />
+            <LatestProducts products={products} />
+            <br />
+            <br />
+            <br />
+          </div>
         </>
       )}
     </Aux>

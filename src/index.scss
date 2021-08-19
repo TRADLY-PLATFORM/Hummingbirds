@@ -626,3 +626,14 @@ span.glyphicon.glyphicon-search.form-control-feedback {
 .float-right {
   float: right;
 }
+
+
+.swiper-button-next ,.swiper-button-prev {
+
+}
+
+.swiper-button-next:after,.swiper-button-prev:after {
+  color: #e6e6e6;
+   font-size: 30px !important;
+  font-weight: bold !important;
+}

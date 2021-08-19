@@ -2,11 +2,12 @@
   display: flex!important ;
   flex-wrap: wrap;
   justify-content: start;
-  margin-left: 0.9%;
+  margin-left: -0.5%;
 }
 
 @media only screen and (max-width: 780px) {
   .CategoryBox {
+    padding: 0 7%;
     margin-left: 0px;
     display: grid  !important;
     grid-template-columns: 46% 46%;
