@@ -97,10 +97,11 @@ export const initHomeCollections = () => {
   };
 };
 
-export const initPromoBanners = () => {
+export const initPromoBanners = (size ) => {
+  console.log("May eha hu",size);
   return (dispatch) => {
     axios
-      .get('v1/promos?medium=web')
+      .get('v1/promos?medium=' + size)
       .then((response) => {
         if (response.data.status) {
           let promo_banners = response.data.data.promo_banners;

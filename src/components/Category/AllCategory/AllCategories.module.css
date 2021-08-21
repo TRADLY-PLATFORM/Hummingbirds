@@ -7,8 +7,10 @@
 
 @media only screen and (max-width: 780px) {
   .categoryBox{
-    display: flex;
-   
+    padding: 0 7%;
+     display: grid  !important;
+    grid-template-columns: 46% 46%;
+    grid-column-gap: 8%;   
   }
 }
  

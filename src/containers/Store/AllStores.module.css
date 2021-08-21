@@ -5,15 +5,19 @@
 }
 .wellStore {
   min-height: 18.5em;
-  padding: 20px 30px;
+  width: 250px;
+  margin: 10px;
+  padding: 20px 20px;
   margin-bottom: 20px;
   background-color: #ffffff;
   border: 1px solid #e3e3e3;
   border-radius: 10px;
   text-align: center;
   box-sizing: border-box;
-  width: 250px;
-  margin: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .wellStoreDetails {
   font-style: normal;
@@ -34,7 +38,8 @@
   border-radius: 100%;
 }
 .imageDiv {
-  height: 90px;
+   height: 100px;
+  width:200px;
 }
 .btnGreenFollow {
   padding: 10px 13px;
@@ -73,4 +78,40 @@
     left: 0;
     top: 0;
     background-color: rgba(0, 0, 0, 0.5);
+}
+
+@media only screen and (max-width: 780px) {
+  .storesStyle {
+  display: grid;
+     grid-template-columns: 48% 48%;
+     grid-column-gap: 4%;
+      padding: 0 4%; 
+   margin: 0;
+}
+  
+ 
+  .wellStore{
+   width: 100%;
+  margin:  10px 0;
+  }
+  .wellStoreDetails{
+    margin-top: 5px;
+  }
+  .wellStoreDetails p {
+  font-size: 10px;
+  line-height: 12px;
+  color: #4a4a4a;
+  min-height: 15px;
+  padding:0 20px;
+}
+  .wellStore img {
+  margin-bottom: 25px;
+  width:50%;
+   border-radius: 100%;
+}
+.wellStoreDetails {
+  font-style: normal;
+  margin-top: 45px;
+}
+
 }

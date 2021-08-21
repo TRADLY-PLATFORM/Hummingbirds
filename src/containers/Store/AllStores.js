@@ -58,9 +58,13 @@ const AllStores = () => {
           }
 
           let description = store.description;
-          if (description.length > 25) {
-            description = description.substring(0, 25) + '...';
+          if (description.length > 15) {
+            description = description.substring(0, 15) + '..';
           }
+          let name = store.name;
+          // if (description.length > 15) {
+          //   name = name.substring(0, 15) + '..';
+          // }
 
           return (
             <div className={classes.wellStore + ' col-lg-12'} key={i}>
@@ -69,7 +73,7 @@ const AllStores = () => {
                   <img src={imagePath} alt={store.name} title={store.name} />
                 </div>
                 <div className={classes.wellStoreDetails}>
-                  <p style={{ fontWeight: 'bold', marginBottom: '1em' }}>{store.name}</p>
+                  <p style={{ fontWeight: 'bold', marginBottom: '1em' }}>{name}</p>
                   <p>{description}</p>
                 </div>
               </Link>
@@ -87,7 +91,7 @@ const AllStores = () => {
                 <Link to="/sign-in">
                   <button
                     className={classes.btnGreenUnFollowing + ' mt-5'}
-                    style={{ marginLeft: '15px' }}
+                     
                   >
                     Follow
                   </button>

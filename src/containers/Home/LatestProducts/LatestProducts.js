@@ -95,13 +95,33 @@ const LatestProducts = ({ products }) => {
           <br />
           <div style={{ marginTop: '60px' }}>
             <Swiper
-              slidesPerView={width < 780 ? 1 : 5}
-              slidesPerGroup={width < 780 ? 1 : 5}
+              slidesPerView={1}
+              slidesPerGroup={1}
               spaceBetween={width < 780 ? -10 : 10}
               loop={false}
               navigation={width < 780 ? false : true}
               className="mySwiper"
               style={{ marginTop: '60px' }}
+              breakpoints={{
+                600: {
+                  slidesPerView: 2,
+                  spaceBetween: 10,
+                },
+
+                950: {
+                  slidesPerView: 3,
+                  spaceBetween: 10,
+                },
+                1200: {
+                  slidesPerView: 4,
+                  spaceBetween: 10,
+                },
+
+                1400: {
+                  slidesPerView: 5,
+                  spaceBetween: 10,
+                },
+              }}
             >
               {arrayListings?.map((list, i) => (
                 <SwiperSlide>{list}</SwiperSlide>

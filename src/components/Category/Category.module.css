@@ -1,65 +1,62 @@
 .wellCategory {
-  min-height: 150px;
-  width:150px;
-  margin: 8px;
-  padding: 20px;
+  height: 100px;
+  width: 100px;
+  margin-right : 16px;
+  padding: 16px 4px;
   margin-bottom: 20px;
   background-color: #ffffff;
-  border: 1px solid #e3e3e3;
-  border-radius: 10px;
+   border-radius: 10px;
   text-align: center;
   box-sizing: border-box;
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-}
+    border: 1px solid transparent;
 
+}
+  .wellCategory:hover {
+    background-color: #dffbf4;
+    border: 1px solid #15b790;
+  }
 .wellCategory p {
   font-style: normal;
   font-weight: normal;
-  font-size: 14px;
-  color: #000000;
- }
+  font-size: 10px;
+  line-height: 12px;
+  color: #15b790;
+
+  margin: 0;
+}
 
 .wellCategory img {
-   width: 32px;
-   height: 32px;
-
+  width: 32px;
+  height: 32px;
  }
-
 
 @media only screen and (max-width: 780px) {
- .wellCategory {
-  min-height: 160px;
-  width:100%;
-  margin: 13px 0;
-  padding: 0px;
- border: none;
+  .wellCategory {
+     height: 135px;
+    width: 100%;
+    padding: 25px 4px;
+   }
  
- 
-}
-.wellCategory:hover{
-  background-color: #DFFBF4;
-  border: 1px solid #15B790;
-}
-.wellCategory p {
-   font-weight: 500;
-  font-size: 15px;
-  height: unset;
-  line-height: 14px;
-  overflow: hidden;
-  font-family: Montserrat;
-  color: #15B790;
+  .wellCategory p {
+    font-weight: 500;
+    font-size: 15px;
+    height: unset;
+    line-height: 14px;
+    overflow: hidden;
+    font-family: Montserrat;
+    color: #15b790;
     display: flex;
-   align-items: center;
-   justify-content: center;
-}
+    align-items: center;
+    justify-content: center;
+  }
 
-.wellCategory img {
-  width: 60px;
-  height: 60px;
- }
+  .wellCategory img {
+    width: 46px;
+    height: 46px;
+  }
 }
- 

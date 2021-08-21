@@ -20,14 +20,14 @@ const Categories = ({ categories }) => {
  
   const sendCategories = () => {
    
-    if (categorySet.length <= 8) {
+    if (categorySet.length <= 10) {
       return (
         <Category categories={categorySet} />)
         
           
     }
     else {
-      const sliceLength =7;
+      const sliceLength =9;
       let updatedCategories = categorySet.slice(0, sliceLength);
       let moreCategory = {
           id: Math.random(),

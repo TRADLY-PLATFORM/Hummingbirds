@@ -4,23 +4,24 @@
   flex-wrap: wrap;
 }
 .latestTrend {
-  margin-bottom: 20px;
-  margin-top: 20px;
   background-color: #ffffff;
   border: 1px solid #e3e3e3;
   border-radius: 10px;
   box-sizing: border-box;
-  min-height: 260px;
+  min-height: 263px;
   overflow: hidden;
-  width: 250px;
+  width: 190px;
+  margin: 15px 5px;
 }
 .latestTrend:hover {
   /* background-color: #4a4a4a; */
 }
 .latestTrend p {
-  padding: 2px 15px;
-  font-size: 17px;
-  color: black;
+   padding: 2px 8px;
+font-weight: 600;
+font-size: 12px;
+line-height: 15px;
+color: #15B790;
 }
 .storeImage {
   margin-bottom: 15px;
@@ -28,19 +29,17 @@
   height: 190px;
 }
 .bottomDesc {
-  margin-bottom: 10px;
-  padding: 2px;
-  width: 100%;
+ margin-bottom: 10px;
+ 
   display: flex;
   align-items: center;
-  position: relative;
   justify-content: space-between;
+   padding:2px 8px;
+  position: relative;
 }
 .bottomDesc img {
-  width: 25%;
-  margin-left: 10px;
-  padding-right: 5px;
-  border-radius: 50%;
+   width: 15%;
+    border-radius: 50%;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   /* border: solid 1px #949ca2; */
@@ -50,20 +49,37 @@
 .bottomDesc span {
   font-style: normal;
   font-weight: 500;
-  font-size: 16px;
-  line-height: 17px;
+  font-size: 12px;
+  line-height: 12px;
   color: #4a4a4a;
   opacity: 1;
-  left: 20%;
-  top: 30%;
-  position: absolute;
 }
 .amountTitle {
-  min-width: 100px;
-  font-weight: bold;
-  font-size: 17px;
+   min-width: 50px;
+   font-weight: bold;
+  font-size: 15px;
   text-align: right;
-  padding: 8px 8px;
-  margin-right: 0;
   color: #13b58c;
+  margin: auto 0;
+}
+
+
+@media only screen and (max-width: 780px) {
+   .listArray{
+     display: grid;
+     grid-template-columns: 48% 48%;
+     grid-column-gap: 4%;
+      padding: 0 5%; 
+      margin: 0;
+   }
+   .latestTrend{
+     width: 100%;
+      margin:  10px 0;
+
+   }
+ 
+.bottomDesc img{
+  width: 14px;
+  height: 14px;
+}
 }

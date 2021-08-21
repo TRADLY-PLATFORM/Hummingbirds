@@ -71,37 +71,43 @@ const StoresToFollow = ({ storesToFollow }) => {
         }
       }, 1000);
     };
-
-    return (
-      <div className={classes.wellStore } key={i} id={list.id}>
-        <Link to={`/a/${list.id}-${list.name}`} style={{ textDecoration: 'none' }}>
-          <div className={classes.imageDiv}>
-            <img src={imagePath} alt={list.name} title={list.name} />
-          </div>
-          <div className={classes.wellStoreDetails}>
-            <p style={{ fontWeight: 'bold', marginBottom: '1em' }}>
-              {list.name.length < 10 ? list.name : list.name.substring(0, 15) + '..'}
-            </p>
-            <p>{description}</p>
-          </div>
-        </Link>
-        {isAuthenticated ? (
-          <button
-            id="followBtn"
-            className={
-              (list.following ? classes.btnGreenFollowing : classes.btnGreenUnFollowing) + ' mt-5'
-            }
-            onClick={(e) => postStoreFollow(e, list.id)}
-          >
-            {list.following ? 'Following' : 'Follow'}
-          </button>
-        ) : (
-          <Link to="/sign-in">
-            <button className={classes.btnGreenUnFollowing + ' mt-5'}>Follow</button>
+    let slideView;
+    if (width > 780) {
+      slideView =1
+    }
+    else if (width > 1180) {
+      slideView = 5;
+    }
+      return (
+        <div className={classes.wellStore} key={i} id={list.id}>
+          <Link to={`/a/${list.id}-${list.name}`} style={{ textDecoration: 'none' }}>
+            <div className={classes.imageDiv}>
+              <img src={imagePath} alt={list.name} title={list.name} />
+            </div>
+            <div className={classes.wellStoreDetails}>
+              <p style={{ fontWeight: 'bold', marginBottom: '1em' }}>
+                {list.name.length < 10 ? list.name : list.name.substring(0, 15) + '..'}
+              </p>
+              <p>{description}</p>
+            </div>
           </Link>
-        )}
-      </div>
-    );
+          {isAuthenticated ? (
+            <button
+              id="followBtn"
+              className={
+                (list.following ? classes.btnGreenFollowing : classes.btnGreenUnFollowing) + ' mt-5'
+              }
+              onClick={(e) => postStoreFollow(e, list.id)}
+            >
+              {list.following ? 'Following' : 'Follow'}
+            </button>
+          ) : (
+            <Link to="/sign-in">
+              <button className={classes.btnGreenUnFollowing + ' mt-5'}>Follow</button>
+            </Link>
+          )}
+        </div>
+      );
   });
 
   return (
@@ -122,13 +128,33 @@ const StoresToFollow = ({ storesToFollow }) => {
 
           <div style={{ marginTop: '60px' }}>
             <Swiper
-              slidesPerView={width < 780 ? 1 : 5}
+              slidesPerView={1}
               slidesPerGroup={width < 780 ? 1 : 5}
               spaceBetween={width < 780 ? -10 : 10}
               loop={false}
               navigation={width < 780 ? false : true}
               className="mySwiper"
               style={{ marginTop: '60px' }}
+              breakpoints={{
+                 "600": {
+                  slidesPerView: 2,
+                  spaceBetween: 10,
+                },
+                
+                "950": {
+                  slidesPerView: 3,
+                  spaceBetween: 10,
+                },
+                "1160": {
+                  slidesPerView: 4,
+                  spaceBetween: 10,
+                },
+                
+                "1300": {
+                  slidesPerView: 5,
+                  spaceBetween: 10,
+                },
+              }}
             >
               {arrayListings?.map((list, i) => (
                 <SwiperSlide>{list}</SwiperSlide>

@@ -1,42 +1,50 @@
 
 import React from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import classes from './HomeBanner.module.css'
+
+// Import Swiper styles
+import 'swiper/swiper.min.css';
+import 'swiper/components/pagination/pagination.min.css';
+
+// import Swiper core and required modules
+import SwiperCore, { Navigation, Pagination } from 'swiper/core';
+
+// install Swiper modules
+SwiperCore.use([Navigation, Pagination]);
 const homeBanner = (props) => {
-    let imageBanner = '';
-    if(props.images.length > 0){
-        imageBanner = props.images.map((image,index) => {
-            let active ='';
-            if(index === 0){
-                active = 'active';
-            }
-
-            return (<div className={"item "+ active} key={index}>
-                        <img src={image.image_path} alt="Chania" />
-                        <div className="carousel-caption">
-                        {/* <h3>Chania</h3>
-                            <p>The atmosphere in Chania has a touch of Florence and Venice.</p> */}
-                        </div>
-                    </div>)
-        })
-    }
+    console.log('====================================');
+    console.log(props);
+    console.log('====================================');
+      
     return (
-            <>
-            { imageBanner !== '' && 
-            <div id="myCarousel" className="carousel slide" data-ride="carousel" style={{    background: 'rgba(160, 160, 160, 0.5)'}}>
-                <div className="carousel-inner" role="listbox">
-                    {imageBanner}          
-                </div>
-
-                <a className="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-                    <span className="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                    <span className="sr-only">Previous</span>
-                </a>
-                <a className="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-                    <span className="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                    <span className="sr-only">Next</span>
-                </a>
-            </div>
-            }
-            </>
-    )
+      <>
+        <div className={classes.BannerSlider}>
+          {props?.images.length>0 && (
+            <Swiper
+              slidesPerView={1}
+              slidesPerGroup={1}
+              spaceBetween={10}
+              loop={false}
+              pagination={{
+                clickable: true,
+              }}
+              className="mySwiper"
+              style={{ paddingBottom: '20px ' }}
+            >
+              {props?.images?.map((image, index) => {
+                return (
+                  <SwiperSlide key={index}>
+                    <div className={classes.banner}>
+                      <img src={image.image_path} alt={image.reference} />
+                    </div>
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
+          )}
+        </div>
+      </>
+    );
 }
 export default homeBanner;

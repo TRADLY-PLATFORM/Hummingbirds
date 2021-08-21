@@ -16,11 +16,11 @@ import * as actions from '../../../store/actions/index';
      return (
        <div>
          <div style={{ marginTop: '20px', minHeight: '150px',  }}>
-           <div className="col-lg-12 col-md-12">
+           
              <div className={classes.categoryBox} >
                <Category categories={Categories} />
              </div>
-           </div>
+            
          </div>
        </div>
      );

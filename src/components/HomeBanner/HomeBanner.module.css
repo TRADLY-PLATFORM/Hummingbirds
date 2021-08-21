@@ -1,0 +1,19 @@
+ 
+.banner{
+ 
+}
+.banner img{
+  width: 100%;
+  height: 180px;
+  padding-bottom: 20px;
+}
+
+@media only screen and (max-width: 780px) {
+  .banner{
+    margin:0 7%;
+   }
+  .banner img{
+    height: 174px;
+    
+  }
+}

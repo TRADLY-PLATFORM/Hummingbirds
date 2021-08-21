@@ -72,7 +72,7 @@ const Layout = (props) => {
           <div className=" ">
             <div className={classes.navbar}>
               <button type="button" onClick={navButtonClick}>
-                <img style={{width:"35px"}} src={menubarIcon} alt="" />
+                <img style={{width:"20px", height:"12px"}} src={menubarIcon} alt="" />
               </button>
               <div className="logo" style={{ marginLeft: '7%' }}>
                 {appLogo !== '' ? (
@@ -88,7 +88,7 @@ const Layout = (props) => {
                 )}
               </div>
 
-              <div className="col-sm-6  pull-right" style={{ marginLeft: 'auto' }}>
+              <div className="  pull-right" style={{ marginLeft: 'auto' }}>
                 <div className={classes.userArea + ' dropdown'}>
                   <Link
                     to="#"

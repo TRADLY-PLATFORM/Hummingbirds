@@ -56,28 +56,34 @@ const ListingsByCategory = () => {
                     <p>{list.title}</p>
                     <div className={classes.bottomDesc}>
                       {list.account !== undefined && list.account.images[0] ? (
-                        <div>
+                        <>
                           <img
                             src={list.account.images[0]}
                             alt={list.account.name}
                             title={list.account.name}
                           />
                           <span>
-                            {list.account.name.length < 15
+                            {list.account.name.length < 10
                               ? list.account.name
-                              : list.account.name.substring(0, 14) + '..'}
+                              : list.account.name.substring(0, 10) + '..'}
                           </span>
-                        </div>
+                          <p className={classes.amountTitle}>
+                            {list.list_price.formatted !== undefined
+                              ? list.list_price.formatted
+                              : ''}
+                          </p>
+                        </>
                       ) : (
-                        <div>
+                        <>
                           <img src={NoIamgeLogo} alt={list.title} title={list.title} />
                           <span>N/A</span>
-                        </div>
+                          <p className={classes.amountTitle}>
+                            {list.list_price.formatted !== undefined
+                              ? list.list_price.formatted
+                              : ''}
+                          </p>
+                        </>
                       )}
-
-                      <div className={classes.amountTitle}>
-                        {list.list_price.formatted !== undefined ? list.list_price.formatted : ''}
-                      </div>
                     </div>
                   </div>
                   <div></div>

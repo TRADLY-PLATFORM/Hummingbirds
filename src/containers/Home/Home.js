@@ -32,20 +32,31 @@ import reactLoaderSpinner from 'react-loader-spinner';
 
 import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+import useWindowSize from '../../components/Hooks/WindowSize/WindowSize';
 
 const Home = () => {
+
   const [selectedOption, setSelectedOption] = useState(null);
   const [activeItemIndex, setActiveItemIndex] = useState(0);
   const [show, setShow] = useState(true);
   const [loadOnce, setLoadOnce] = useState(true);
   const [categorySet, setCategorySet] = useState([]);
   const [categoryLength, setCategoryLength] = useState(0);
+      const { width, height } = useWindowSize();
+
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(actions.initHomeCollections());
-    dispatch(actions.initPromoBanners());
-  }, [0]);
+    setTimeout(() => {
+
+      let size = width < 780 ? 'app' : 'web';
+            console.log('================Achi ekhane====================');
+            console.log(size);
+            console.log('====================================');
+      dispatch(actions.initHomeCollections());
+      dispatch(actions.initPromoBanners(size));
+    }, 1000);
+  }, [width]);
 
   const location = useLocation();
 
