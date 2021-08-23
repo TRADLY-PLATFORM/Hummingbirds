@@ -8,9 +8,9 @@ const listing = (props) => {
   let listArray = props.listings.map((list) => {
     return (
       <div key={list.get('id')}>
-        <Link to={`/l/${list.get('id')}-${list.get('title').replace('%', '')}`}>
+        <Link to={`/l/${list.get('id')}-${list.get('title').replace('%', '')}`} style={{textDecoration:"none"}}>
           
-            <div className={classes.latestTrend}>
+            <div className={classes.latestTrend}> 
               <img
                 src={list.getIn(['images', 0])}
                 className={classes.storeImage}
@@ -28,7 +28,7 @@ const listing = (props) => {
                   <span>
                     {list.getIn(['account', 'name']).length < 10
                       ? list.getIn(['account', 'name'])
-                      : list.getIn(['account', 'name']).substring(0, 10) + '..'}
+                      : list.getIn(['account', 'name']).substring(0, 8) + '..'}
                   </span>
                   <p className={classes.amountTitle}>
                     {list.getIn(['offer_price', 'formatted'])} 

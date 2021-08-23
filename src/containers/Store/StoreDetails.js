@@ -209,6 +209,13 @@ class StoreDetails extends Component {
               </div>
               <div className="col-lg-9">
                 {storeDetails.getIn(['location', 'formatted_address'], 'N/A')}
+                <Modal show={this.state.maps} modalClosed={this.closeMaps}>
+                  <Maps
+                    lat={storeDetails.getIn(['coordinates', 'latitude'], '')}
+                    lng={storeDetails.getIn(['coordinates', 'longitude'], '')}
+                    address={storeDetails.getIn(['location', 'formatted_address'], 'N/A')}
+                  />
+                </Modal>
                 <button
                   type="button"
                   className="btn btn-outline-success float-right"
@@ -262,12 +269,7 @@ class StoreDetails extends Component {
           <Backdrop show={this.props.loading} />
           <Spinner show={this.props.loading} />
           {storeContent}
-          <Modal show={this.state.maps} modalClosed={this.closeMaps}>
-            <Maps
-              lat={storeDetails.getIn(['coordinates', 'latitude'], '')}
-              lng={storeDetails.getIn(['coordinates', 'longitude'], '')}
-            />
-          </Modal>
+          
 
           <br />
           <br />

@@ -48,6 +48,12 @@ export const getConfigs = (data) => {
     data: data,
   };
 };
+export const getOnboardingConfigs = (data) => {
+  return {
+    type: actionTypes.SET_ONBOARDING_CONFIGS,
+    data: data,
+  };
+};
 
 export const checkAuthTimeout = (expirationTime) => {
   //console.log(expirationTime);
@@ -55,7 +61,7 @@ export const checkAuthTimeout = (expirationTime) => {
     setTimeout(() => {
       if (localStorage.getItem('response')) {
         dispatch(refreshToken());
-        dispatch(logout());
+        // dispatch(logout());
       }
     }, expirationTime * 1000);
   };
@@ -290,7 +296,7 @@ export const setTenantConfig = () => {
   };
 };
 
-export const setConfigsData = () => {
+export const setGeneralConfigsData = () => {
   return (dispatch) => {
     axios
       .get('v1/configs?key_group=general')
@@ -298,6 +304,23 @@ export const setConfigsData = () => {
         console.log(response);
         if (response.status) {
           dispatch(getConfigs(response.data.data.configs));
+           
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+export const setOnboardingConfigsData = () => {
+  return (dispatch) => {
+    axios
+      .get('v1/configs?key_group=onboarding')
+      .then((response) => {
+        console.log(response);
+        if (response.status) {
+          dispatch(getOnboardingConfigs(response.data.data.configs));
+          localStorage.setItem('configs_data', JSON.stringify(response.data.data.configs));
         }
       })
       .catch((error) => {

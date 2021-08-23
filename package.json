@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@react-google-maps/api": "^2.2.0",
-    "@sentry/browser": "^5.15.5",
+     "@sentry/browser": "^5.15.5",
     "@sentry/react": "^6.11.0",
     "@sentry/tracing": "^6.11.0",
     "@testing-library/jest-dom": "^4.2.4",
@@ -17,15 +17,18 @@
     "google-maps-react": "^2.0.6",
     "http": "0.0.0",
     "immutable": "^4.0.0-rc.12",
+    "leaflet": "^1.7.1",
     "libphonenumber-js": "^1.9.22",
     "node-sass": "^4.14.1",
     "paralleljs": "^0.2.1",
     "puppeteer": "^1.14.0",
-    "react": "^16.13.0",
-    "react-dom": "^16.13.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-helmet": "^6.1.0",
     "react-images-upload": "^1.2.8",
     "react-items-carousel": "^2.8.0",
+    "react-leaflet": ">=3.1.0 <3.2.0 || ^3.2.1",
+"@react-leaflet/core": ">=1.0.0 <1.1.0 || ^1.1.1",
     "react-loader-spinner": "^3.1.14",
     "react-loading-skeleton": "^2.0.1",
     "react-phone-input-2": "^2.12.1",
@@ -63,18 +66,11 @@
     "sitemap:production": "env-cmd -f .env.production babel-node ./src/sitemap-generator.js",
     "sitemap": "env-cmd -f .env.production babel-node ./src/sitemap-generator.js"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
+  "browserslist": [
+   ">0.2%",
+  "not dead",
+  "not op_mini all"
+],
   "devDependencies": {
     "@babel/core": "^7.14.6",
     "@babel/node": "^7.14.7",

@@ -5,6 +5,7 @@ import SvgImage from '../../../assets/images/leftimage.svg';
 import classes from './Carousel.module.css';
 import axios from '../../../axios';
 import { useEffect } from 'react';
+import * as actions from '../../../store/actions/index'
 
 // import { MDBCarousel, MDBCarouselInner, MDBCarouselItem, MDBRow, MDBCol, MDBCard, MDBCardImage,
 //     MDBCardBody, MDBCardTitle } from "mdbreact";
@@ -17,42 +18,21 @@ import 'swiper/components/navigation/navigation.min.css';
  
 // import Swiper core and required modules
 import SwiperCore, { Autoplay, Pagination, Navigation } from 'swiper/core';
+import { useDispatch, useSelector } from 'react-redux';
 
 // install Swiper modules
 SwiperCore.use([Autoplay, Pagination, Navigation]);
 
 
 const Carousel = () => {
-  const [onboardingImage, setOnboardingImage] = useState(null);
+  // const [onboardingImage, setOnboardingImage] = useState(null);
+  const onboardingImage = useSelector((state) => state.auth.onboarding_configs.intro_screens);
+  const dispatch = useDispatch( )
   useEffect(() => {
-    axios
-      .get('v1/configs?key_group=onboarding')
-      .then((response) => {
-        console.log(response)
-        if (response.status) {
-          console.log(response.data.data.configs.intro_screens);
-          setOnboardingImage(response.data.data.configs.intro_screens);
-        } else {
-          console.log(response);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+ dispatch(actions.setOnboardingConfigsData())  }, []);
   console.log(onboardingImage);
 
-  // const data = [
-  //   {
-  //     image: SvgImage,
-  //     des: 'Empowering Artisans,  Farmers  & Micro Business',
-  //   },
-  //   {
-  //     image: SvgImage,
-  //     des: 'Empowering Artisans, Farmers & Micro Business .Buy Online',
-  //   },
-  // ];
-
+ 
    
 
   return (

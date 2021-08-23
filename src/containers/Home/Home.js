@@ -50,12 +50,10 @@ const Home = () => {
     setTimeout(() => {
 
       let size = width < 780 ? 'app' : 'web';
-            console.log('================Achi ekhane====================');
-            console.log(size);
-            console.log('====================================');
+ 
       dispatch(actions.initHomeCollections());
       dispatch(actions.initPromoBanners(size));
-    }, 1000);
+    }, 2000);
   }, [width]);
 
   const location = useLocation();
@@ -73,25 +71,7 @@ const Home = () => {
   const products = useSelector((state) => state.home.latestProducts);
     const storesToFollow = useSelector((state) => state.home.stores);
 
-
-
-  // console.log(isAuthenticated);
-  // let collectionContent = <Spinner show={true} styles="SpinnerCenter" />;
-  // console.log(collections);
-  // if (collections && collections.length > 0) {
-  //   collectionContent = (
-  //     <>
-  //       <StoresToFollow />
-  //       <br />
-  //       <br />
-  //       <LatestProducts />
-  //     </>
-  //   );
-  // } else {
-  //   if (show) {
-  //     collectionContent = '';
-  //   }
-  // }
+ 
   console.log('loading:', loading);
   console.log('follow-loading:', followLoading);
 

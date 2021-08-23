@@ -41,15 +41,17 @@ const LatestProducts = ({ products }) => {
     }
 
     return (
-      <Link to={`/l/${list.id}-${`${list.title.replace("%","")}`}`} key={i} style={{ textDecoration: 'none' }}>
+      <Link
+        to={`/l/${list.id}-${`${list.title.replace('%', '')}`}`}
+        key={i}
+        style={{ textDecoration: 'none' }}
+      >
         <div className={classes.latestTrend}>
           <img src={imagePath} className={classes.storeImage} alt={list.title} title={list.title} />
-          <p>{list.title.length < 20
-                    ? list.title 
-                    : list.title.substring(0, 20) + '..'}</p>
-          <div className={classes.bottomDesc}>
+          <p>{list.title.length < 20 ? list.title : list.title.substring(0, 20) + '..'}</p>
+          <div>
             {list.account !== undefined && list.account.images[0] ? (
-              <div>
+              <div className={classes.bottomDesc}>
                 <img
                   src={list.account.images[0]}
                   alt={list.account.name}
@@ -60,17 +62,19 @@ const LatestProducts = ({ products }) => {
                     ? list.account.name
                     : list.account.name.substring(0, 10) + '..'}
                 </span>
+                <p className={classes.amountTitle}>
+                  {list.list_price.formatted !== undefined ? list.list_price.formatted : ''}
+                </p>
               </div>
             ) : (
-              <div>
+              <div className={classes.bottomDesc}>
                 <img src={NoIamgeLogo} alt={list.title} title={list.title} />
                 <span>N/A</span>
+                <p className={classes.amountTitle}>
+                  {list.list_price.formatted !== undefined ? list.list_price.formatted : ''}
+                </p>
               </div>
             )}
-
-            <div className={classes.amountTitle}>
-              {list.list_price.formatted !== undefined ? list.list_price.formatted : ''}
-            </div>
           </div>
         </div>
         <div></div>

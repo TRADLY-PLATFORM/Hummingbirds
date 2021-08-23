@@ -6,8 +6,8 @@ export {
   initCountries,
   setTenantConfig,
   setAuthRedirectPath,
-  setConfigsData,
-  
+  setGeneralConfigsData,
+  setOnboardingConfigsData,
 } from './auth';
 
 export {

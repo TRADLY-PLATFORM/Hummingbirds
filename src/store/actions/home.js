@@ -98,7 +98,6 @@ export const initHomeCollections = () => {
 };
 
 export const initPromoBanners = (size ) => {
-  console.log("May eha hu",size);
   return (dispatch) => {
     axios
       .get('v1/promos?medium=' + size)

@@ -13,7 +13,9 @@ instance.defaults.headers.common['Pragma'] = 'no-cache';
 instance.defaults.headers.common['Expires'] = '0';
 
 instance.interceptors.request.use(
+  
   (config) => {
+  
     const token = LocalStorageService.getApiToken();
     if (token) {
       config.headers['Authorization'] = 'Bearer ' + token;
@@ -31,6 +33,7 @@ instance.interceptors.request.use(
 var check = false;
 instance.interceptors.response.use(
   (response) => {
+ 
     const originalRequest = response.config;
     if (
       response.status === 200 &&

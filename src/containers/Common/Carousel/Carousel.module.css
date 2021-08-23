@@ -1,12 +1,17 @@
 .borderNone {
     border: none !important;
 }
-
+.itemImg{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
 .cardTitle{    
     height: 60px;
-    margin-top: 2em;
-    margin-bottom: 2em;
+    padding: 10px 20px;
+     margin-bottom: 2em;
     font-weight: 500;
     font-size: 24px;
     line-height: 30px;
@@ -18,6 +23,7 @@
 
 .item img{
     width: 75%; 
+    height: 80%;
 }
 
 .carousel {
@@ -28,4 +34,5 @@
     position: relative;
     left: auto;
     right: auto;
+    padding: 10px 30px;
 }

@@ -12,4 +12,4 @@ export const sortByOptions = [
 
 export const totalCountOfProducts = 25;
 
-export const MapKey = 'AIzaSyCXCZxpNJ3Y8KzXGkrJUkdZ7vyT2M9T-c4';
+export const MapKey = 'AIzaSyBAV63gkOE0d0eSV_3rIagJfzMwDcbzPnM';

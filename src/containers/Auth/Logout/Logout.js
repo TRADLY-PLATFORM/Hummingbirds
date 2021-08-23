@@ -6,7 +6,10 @@ import * as actions from '../../../store/actions/index';
 class Logout extends Component {
   componentDidMount() {
     this.props.onLogout();
-    this.props.onSetTenantConfig();
+    setTimeout(() => {
+         this.props.onSetTenantConfig();
+     }, 1000);
+    
   }
   render() {
     return <Redirect to="/" />;

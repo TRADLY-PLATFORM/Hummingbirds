@@ -15,7 +15,6 @@ import { selectUserId } from '../../../store/selectors/auth';
 import { isPossiblePhoneNumber, isValidPhoneNumber } from 'libphonenumber-js';
 import { Helmet } from 'react-helmet';
 
-
 class SignIn extends Component {
   state = {
     email: '',
@@ -36,8 +35,6 @@ class SignIn extends Component {
     this.setState({ showError: false });
   };
 
-  
-
   componentDidMount() {
     this.props.onSetConfigs();
     this.props.onInitCountries();
@@ -45,7 +42,7 @@ class SignIn extends Component {
   onSubmit = (e) => {
     e.preventDefault();
     const authType = this.props.configsData.auth_type;
-    console.log("dekkho:",authType)
+    console.log('dekkho:', authType);
     if (authType === 1) {
       if (this.state.email === '') {
         if (!toast.isActive(this.toastId)) {
@@ -57,26 +54,24 @@ class SignIn extends Component {
           this.toastId = toast.error('Enter valid email');
         }
         return false;
-      }
-      else  if (this.state.password === '') {
-          if (!toast.isActive(this.toastId)) {
-            this.toastId = toast.error('Password is required');
-          }
-          return false;
+      } else if (this.state.password === '') {
+        if (!toast.isActive(this.toastId)) {
+          this.toastId = toast.error('Password is required');
         }
+        return false;
+      }
     } else {
-        if (this.state.mobile === '') {
-      if (!toast.isActive(this.toastId)) {
-        this.toastId = toast.error('Phone number is required');
-      }
-      return false;
-      }
-      else  if (this.state.password === '') {
-          if (!toast.isActive(this.toastId)) {
-            this.toastId = toast.error('Password is required');
-          }
-          return false;
+      if (this.state.mobile === '') {
+        if (!toast.isActive(this.toastId)) {
+          this.toastId = toast.error('Phone number is required');
         }
+        return false;
+      } else if (this.state.password === '') {
+        if (!toast.isActive(this.toastId)) {
+          this.toastId = toast.error('Password is required');
+        }
+        return false;
+      }
       let mobile = this.state.mobile;
       let checkNumber = isValidPhoneNumber(`+${mobile}`);
       if (checkNumber !== true) {
@@ -84,36 +79,32 @@ class SignIn extends Component {
           this.toastId = toast.error('Invalid phone number.');
         }
         return false;
-      } 
-    
+      }
     }
 
-  
-    
     this.setState({ showError: true });
     const uUid = uuid();
     let users;
     if (authType === 1) {
-          users = {
-           user: {
-             uuid: uUid,
-             email:this.state.email,
-             password: this.state.password,
-             type: 'client',
-           },
-         };
-     } else {
-           users = {
-            user: {
-              uuid: uUid,
-              mobile: this.state.mobile.slice(this.state.dialCode.length),
-              password: this.state.password,
-              dial_code: this.state.dialCode,
-              type: 'client',
-            },
-          };
+      users = {
+        user: {
+          uuid: uUid,
+          email: this.state.email,
+          password: this.state.password,
+          type: 'client',
+        },
+      };
+    } else {
+      users = {
+        user: {
+          uuid: uUid,
+          mobile: this.state.mobile.slice(this.state.dialCode.length),
+          password: this.state.password,
+          dial_code: this.state.dialCode,
+          type: 'client',
+        },
+      };
     }
-    
 
     this.props.onAuth(users, this.state.isSignUp);
   };
@@ -131,7 +122,7 @@ class SignIn extends Component {
     if (this.props.isAuthenticated) {
       authRedirect = <Redirect to={this.props.authRedirectPath} />;
     }
-   console.log(this.props.configsData.auth_type)
+    console.log(this.props.configsData.auth_type);
     // let authRedirect = null;
     // if (this.props.isAuthenticated || this.props.verifyId) {
     //   authRedirect = <Redirect to={this.props.authRedirectPath} />;
@@ -166,9 +157,9 @@ class SignIn extends Component {
             content=" Widest Range of Mobile & Tablets, Home Appliances, Tv, Audio, Home & Living At Tradly | Best Prices ? Fast DELIVERY | Cash on Delivery ? Effortless Shopping ? Best Customer Care!"
           />
         </Helmet>
-        <div className="row">
+        <div className="">
           <div className={classes.title}>
-            Tradly <br /> Marketplace
+            <p>{this.props.configsData.registration_title}</p>
           </div>
           <Backdrop show={this.props.loading} />
           <Spinner show={this.props.loading} />
@@ -253,7 +244,7 @@ const mapStateToProps = (state) => {
     countryList: state.auth.countries,
     authRedirectPath: state.auth.authRedirectPath,
     verifyId: state.auth.verify_id,
-    configsData:state.auth.configs,
+    configsData: state.auth.general_configs,
     isAuthenticated: selectUserId(state),
   };
 };
@@ -262,7 +253,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onAuth: (userData, isSignUp) => dispatch(actions.auth(userData, isSignUp)),
     onInitCountries: () => dispatch(actions.initCountries()),
-    onSetConfigs: () => dispatch(actions.setConfigsData()),
+    onSetConfigs: () => dispatch(actions.setGeneralConfigsData()),
   };
 };
 

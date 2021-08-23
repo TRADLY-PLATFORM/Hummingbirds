@@ -10,7 +10,8 @@ const initialState = {
   message: null,
   verify_id: null,
   countries: null,
-  configs:{},
+  general_configs: {},
+  onboarding_configs:{},
   authRedirectPath: '/',
   userData: {},
   tenantData: {},
@@ -57,12 +58,17 @@ const setCountries = (state, action) => {
     loading: false,
   });
 };
-const setConfigs = (state, action) => {
-  console.log('====================================');
-  console.log(action);
-  console.log('====================================');
+const setGeneralConfigs = (state, action) => {
+  
   return updateObject(state, {
-    configs: action.data,
+    general_configs: action.data,
+    loading: false,
+  });
+};
+const setOnboardingConfigs = (state, action) => {
+  
+  return updateObject(state, {
+    onboarding_configs: action.data,
     loading: false,
   });
 };
@@ -116,7 +122,9 @@ const authReducer = (state = initialState, action) => {
     case actionTypes.SET_COUNTRIES:
       return setCountries(state, action);
     case actionTypes.SET_CONFIGS:
-      return setConfigs(state, action);
+      return setGeneralConfigs(state, action);
+    case actionTypes.SET_ONBOARDING_CONFIGS:
+      return setOnboardingConfigs(state, action);
     case actionTypes.FETCH_COUNTRIES_FAILED:
       return fetchCountriesFailed(state, action);
     case actionTypes.SET_AUTH_REDIRECT_PATH:

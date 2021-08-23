@@ -27,6 +27,7 @@ import 'swiper/components/navigation/navigation.min.css';
 
 // import Swiper core and required modules
 import SwiperCore, { Autoplay, Pagination, Navigation } from 'swiper/core';
+import useWindowSize from '../../components/Hooks/WindowSize/WindowSize';
 
 // install Swiper modules
 SwiperCore.use([Autoplay, Pagination, Navigation]);
@@ -34,9 +35,10 @@ SwiperCore.use([Autoplay, Pagination, Navigation]);
 const ProductDetails = () => {
   const [maps, setMaps] = useState(false);
   const [like, setLike] = useState(false);
+  const { width, height } = useWindowSize();
 
   const location = useLocation();
-  const {id} = useParams();
+  const { id } = useParams();
 
   const error = useSelector((state) => state.product.error);
   const loading = useSelector((state) => state.product.loading);
@@ -47,14 +49,13 @@ const ProductDetails = () => {
   const followLoading = useSelector((state) => state.store.loading);
   const followError = useSelector((state) => state.store.error);
   const followMessage = useSelector((state) => state.store.message);
-  const configsData = useSelector((state) => state.auth.configs);
- 
+  const configsData = useSelector((state) => state.auth.general_configs);
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(actions.initProductDetails(id.split('-')[0]),true);
-    dispatch(actions.setConfigsData());
-  },[0]);
+    dispatch(actions.initProductDetails(id.split('-')[0]), true);
+    dispatch(actions.setGeneralConfigsData());
+  }, [0]);
 
   const showMaps = () => {
     setMaps(true);
@@ -182,6 +183,7 @@ const ProductDetails = () => {
             <Maps
               lat={productDetails.getIn(['listing', 'coordinates', 'latitude'], '')}
               lng={productDetails.getIn(['listing', 'coordinates', 'longitude'], '')}
+              address={productDetails.getIn(['listing', 'location', 'formatted_address'], '')}
             />
           </Modal>
           <button type="button" className="btn btn-outline-success" onClick={showMaps}>
@@ -200,9 +202,9 @@ const ProductDetails = () => {
       IsFollowing = true;
     }
     console.log(storeId);
-   
-      dispatch(actions.postStoreFollow(storeId, IsFollowing));
-     
+
+    dispatch(actions.postStoreFollow(storeId, IsFollowing));
+
     if (!followError) {
       const btn = document.getElementById('followBtn');
       btn.innerText = IsFollowing ? 'Follow' : 'Following';
@@ -212,26 +214,25 @@ const ProductDetails = () => {
 
     setTimeout(() => {
       if (!followError) {
-         dispatch(actions.initProductDetails(id.split('-')[0],false));
+        dispatch(actions.initProductDetails(id.split('-')[0], false));
       }
     }, 1000);
   };
 
   const productLike = () => {
- 
     let isLiked = false;
     if (productDetails.getIn(['listing', 'liked'], '') !== isLiked) {
       isLiked = true;
     }
     const productId = productDetails.getIn(['listing', 'id'], '');
     console.log('productDetails', productDetails, productId);
-      setTimeout(() => {
-         dispatch(actions.onProductLikeDisLike(productId, isLiked));
+    setTimeout(() => {
+      dispatch(actions.onProductLikeDisLike(productId, isLiked));
     }, 1000);
 
-     setTimeout(() => {
+    setTimeout(() => {
       if (!error) {
-        dispatch(actions.initProductDetails(id.split('-')[0],false));
+        dispatch(actions.initProductDetails(id.split('-')[0], false));
       }
     }, 2000);
   };
@@ -248,9 +249,13 @@ const ProductDetails = () => {
   const getImage = () => {
     return <h2>Hello</h2>;
   };
+  //
+  const goBack = () => {
+    window.history.back();
+  };
 
   //
-  
+
   let toastMessage = null;
   if (error || followError) {
     toastMessage = <Toast type="error" message={message || followMessage} />;
@@ -271,18 +276,18 @@ const ProductDetails = () => {
         <link rel="canonical" href={location.pathname} />
       </Helmet>
       <Aux>
-        <Backdrop show={ loading ||  followLoading} />
-        <Spinner show={ loading ||  followLoading} />
+        <Backdrop show={loading || followLoading} />
+        <Spinner show={loading || followLoading} />
         {toastMessage}
 
-        <div className={classes.rowBox + 'row   '}>
+        <div className={classes.rowBox}>
           <div className="col-lg-12">
             <nav aria-label="breadcrumb">
               <ol className={classes.breadCrumb}>
                 <li className="breadcrumb-item active" aria-current="page">
-                  <Link to="/home">
+                  <Link onClick={goBack}>
                     <img src={ArrowLogo} alt="Back" style={{ marginRight: '10px' }} />
-                    Back to profile
+                    Back to previous
                   </Link>
                 </li>
               </ol>
@@ -306,20 +311,48 @@ const ProductDetails = () => {
                 {productDetails.getIn(['listing', 'images'], List()).map((img, index) => {
                   return (
                     <SwiperSlide key={index}>
-                      <img style={{ height: '450px' }} src={img} />
+                      <img
+                        style={width > 780 ? { height: '450px' } : { height: '180px' }}
+                        src={img}
+                      />
                     </SwiperSlide>
                   );
                 })}
               </Swiper>
-              <div className={classes.productTitle}>
-                <p>{productDetails.getIn(['listing', 'title'], 'N/A')}</p>
-                <p style={{ fontWeight: 'bold' }}>{getPrices()}</p>
+              <div
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
+              >
+                <div className={classes.productTitle}>
+                  <p>{productDetails.getIn(['listing', 'title'], 'N/A')}</p>
+                  <p style={{ fontWeight: 'bold' }}>{getPrices()}</p>
+                </div>
+                {width < 1200 && (
+                  <>
+                    {isAuthenticated ? (
+                      <div className={classes.likeBtn}>
+                        <button onClick={productLike} className="pull-right">
+                          {productDetails.getIn(['listing', 'liked'], '') ? (
+                            <img className={classes.heartActive} src={heartActive} alt="" />
+                          ) : (
+                            <img className={classes.heartDisable} src={heartDisable} alt="" />
+                          )}
+                        </button>
+                      </div>
+                    ) : (
+                      <Link to="/sign-in" className={classes.likeBtn}>
+                        <button>
+                          <img className={classes.heartDisable} src={heartDisable} alt="" />
+                        </button>
+                      </Link>
+                    )}
+                  </>
+                )}
               </div>
             </div>
 
-            <div className={classes.Details + ' col-lg-12'}>
+            <div>
               <div className={classes.Description}>
-                <span style={{ fontSize: '15px', marginBottom: '20px' }}>Product Description</span>
+                <span>Product Description</span>
                 <p>{productDetails.getIn(['listing', 'description'], 'N/A')}</p>
               </div>
             </div>
@@ -330,21 +363,21 @@ const ProductDetails = () => {
               <div className="row bgColor">
                 <div className={classes.fashionStore}>
                   <div className="  ">
-                    <h3>{ getStoreName()}</h3>
-                    <div>@{ getStoreOwner()}</div>
+                    <h3>{getStoreName()}</h3>
+                    <div>@{getStoreOwner()}</div>
                   </div>
                   <div className=" " style={{ display: 'flex', alignItems: 'center' }}>
                     {isAuthenticated ? (
                       <button
-                        id='followBtn'
+                        id="followBtn"
                         className={`${
-                           productDetails.getIn(['listing', 'account', 'following'], '')
+                          productDetails.getIn(['listing', 'account', 'following'], '')
                             ? 'btnGreenStyle'
                             : 'btnOutlineGreenStyle'
                         }`}
-                        onClick={ storeFollow}
+                        onClick={storeFollow}
                       >
-                        { productDetails.getIn(['listing', 'account', 'following'], '')
+                        {productDetails.getIn(['listing', 'account', 'following'], '')
                           ? 'Following'
                           : 'Follow'}
                       </button>
@@ -358,39 +391,26 @@ const ProductDetails = () => {
                         </button>
                       </Link>
                     )}
-                    {isAuthenticated ? (
-                      <div className={classes.likeBtn}>
-                        <button
-                          onClick={ productLike}
-                          className="pull-right"
-                          style={{
-                            marginLeft: '15px',
-                            outline: 'none',
-                            border: 'none',
-                            backgroundColor: 'transparent',
-                          }}
-                        >
-                          {productDetails.getIn(['listing', 'liked'], '') ? (
-                            <img className={classes.heartActive} src={heartActive} alt="" />
-                          ) : (
-                            <img className={classes.heartDisable} src={heartDisable} alt="" />
-                          )}
-                        </button>
-                      </div>
-                    ) : (
-                      <Link to="/sign-in" className={classes.likeBtn}>
-                        <button
-                          className="  pull-right "
-                          style={{
-                            marginLeft: '15px',
-                            outline: 'none',
-                            border: 'none',
-                            backgroundColor: 'transparent',
-                          }}
-                        >
-                          <img className={classes.heartDisable} src={heartDisable} alt="" />
-                        </button>
-                      </Link>
+                    {width > 1200 && (
+                      <>
+                        {isAuthenticated ? (
+                          <div className={classes.likeBtn}>
+                            <button onClick={productLike} className="pull-right">
+                              {productDetails.getIn(['listing', 'liked'], '') ? (
+                                <img className={classes.heartActive} src={heartActive} alt="" />
+                              ) : (
+                                <img className={classes.heartDisable} src={heartDisable} alt="" />
+                              )}
+                            </button>
+                          </div>
+                        ) : (
+                          <Link to="/sign-in" className={classes.likeBtn}>
+                            <button>
+                              <img className={classes.heartDisable} src={heartDisable} alt="" />
+                            </button>
+                          </Link>
+                        )}
+                      </>
                     )}
                   </div>
                 </div>
@@ -407,7 +427,7 @@ const ProductDetails = () => {
                     Category
                   </div>
                   <div className={classes.DetailsRight + ' col-lg-6 col-sm-6 col-md-6'}>
-                    { getCategoryIds()}
+                    {getCategoryIds()}
                   </div>
 
                   <div className={classes.DetailsLeft + ' col-lg-6 col-sm-6 col-md-6'}>
@@ -417,7 +437,7 @@ const ProductDetails = () => {
                     {productDetails.getIn(['listing', 'location', 'formatted_address'], '')}
                   </div>
                   <div className={classes.DetailsLeft + ' col-lg-6'}></div>
-                  { getCoOrdinates()}
+                  {getCoOrdinates()}
                 </div>
               </div>
 
