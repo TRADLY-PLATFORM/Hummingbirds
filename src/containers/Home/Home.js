@@ -90,7 +90,7 @@ const Home = () => {
         />
         <link href={location.pathname} />
       </Helmet>
-      <Backdrop show={loading || followLoading} />
+      {/* <Backdrop show={loading || followLoading} /> */}
       <Spinner show={loading || followLoading} />
 
       {!categories.length > 0 ? (

@@ -93,6 +93,9 @@ color: #15B790;
 
 
 @media only screen and (max-width: 780px) {
+  .pageTitle{
+      padding: 0 5%;
+  }
    .wishList{
      display: grid;
      grid-template-columns: 48% 48%;
