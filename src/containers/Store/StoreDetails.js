@@ -191,24 +191,24 @@ class StoreDetails extends Component {
 
         <div class="container-fluid">
           <div className={classes.bannerDescText + ' row'}>
-            <div className="col-lg-12 mb1">
-              <div className="col-lg-3">
+            <div className=" col-lg-12 mb1">
+              <div className="col-xs-5 col-lg-3">
                 Descriptions <span className="float-right">:</span>
               </div>
-              <div className="col-lg-9">{storeDetails.get('description', '')}</div>
+              <div className="col-xs-7 col-lg-9">{storeDetails.get('description', '')||"N/A"}</div>
             </div>
             <div className="col-lg-12 mb1">
-              <div className="col-lg-3">
+              <div className="col-xs-5 col-lg-3">
                 categories <span className="float-right">:</span>
               </div>
-              <div className="col-lg-9">{this.getCategory()}</div>
+              <div className="col-xs-7 col-lg-9">{this.getCategory()}</div>
             </div>
             <div className="col-lg-12 mb1">
-              <div className="col-lg-3">
+              <div className="col-xs-5 col-lg-3">
                 Location <span className="float-right">:</span>
               </div>
-              <div className="col-lg-9">
-                {storeDetails.getIn(['location', 'formatted_address'], 'N/A')}
+              <div className="col-xs-7 col-lg-9">
+                <span> {storeDetails.getIn(['location', 'formatted_address'], 'N/A')}</span>
                 <Modal show={this.state.maps} modalClosed={this.closeMaps}>
                   <Maps
                     lat={storeDetails.getIn(['coordinates', 'latitude'], '')}
@@ -225,17 +225,17 @@ class StoreDetails extends Component {
                 </button>
               </div>
             </div>
-            <div className="col-lg-12 mb1">
-              <div className="col-lg-3">
+            <div className=" col-lg-12 mb1">
+              <div className="col-xs-5 col-lg-3">
                 Total Followers <span className="float-right">:</span>
               </div>
-              <div className="col-lg-9">{storeDetails.get('total_followers', '')}</div>
+              <div className="col-xs-7 col-lg-9">{storeDetails.get('total_followers', '')}</div>
             </div>
             <div className="col-lg-12 mb1">
-              <div className="col-lg-3">
+              <div className="col-xs-5  col-lg-3">
                 Total Listings <span className="float-right">:</span>
               </div>
-              <div className="col-lg-9">{storeDetails.get('total_listings', '')}</div>
+              <div className="col-xs-7 col-lg-9">{storeDetails.get('total_listings', '')}</div>
             </div>
           </div>
         </div>

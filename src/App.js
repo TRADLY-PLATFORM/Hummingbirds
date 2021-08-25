@@ -39,6 +39,7 @@ import ListingsByCategory from './containers/ListingsByCategory/ListingsByCatego
 import AllStores from './containers/Store/AllStores';
 import SignIn from './containers/Auth/SignIn/SignIn';
 import { ErrorBoundary } from '@sentry/react';
+import ForgotPassword from './containers/Auth/ForgotPassword/ForgotPassword';
 
 class App extends Component {
   componentDidMount() {
@@ -52,14 +53,13 @@ class App extends Component {
     let root = document.documentElement;
     const color = localStorage.getItem('primary_color');
     root.style.setProperty("--primary_color",color);
-console.log('============এeটা রুট ফাইল========================');
-console.log(color);
-console.log('====================================');
+ 
 
     let routes = (
       <Switch>
         <Route path="/sign-up" exact component={SignUp} />
         <Route path="/sign-in" exact component={SignIn} />
+        <Route path="/forgot-password" exact component={ForgotPassword} />
         <Route path="/logout" exact component={Logout} />
         <Route path="/listings" exact component={Listings} />
         <Route path="/lc/:categoryName" exact component={ListingsByCategory} />
@@ -98,6 +98,7 @@ console.log('====================================');
       <ErrorBoundary>
         {this.props.location.pathname === '/sign-up' ||
         this.props.location.pathname === '/sign-in' ||
+        this.props.location.pathname === '/forgot-password' ||
         this.props.location.pathname === '/verification/' + this.props.verifyId ? (
           <BeforeAuth>{routes}</BeforeAuth>
         ) : (

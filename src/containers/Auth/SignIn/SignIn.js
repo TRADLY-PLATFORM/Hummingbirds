@@ -213,7 +213,7 @@ class SignIn extends Component {
               </div>
 
               <div className="text-center mt-5">
-                <Link to="/sign-in" className="text-center whiteColor">
+                <Link to="/forgot-password" className="text-center whiteColor">
                   Forgot Password ?
                 </Link>
               </div>
