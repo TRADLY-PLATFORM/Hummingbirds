@@ -23,8 +23,7 @@
 .latestTrend p {
   padding: 2px 15px;
   font-size: 17px;
-  color: black;
-}
+ }
 .storeImage {
   margin-bottom: 15px;
   width: 100%;
@@ -62,7 +61,7 @@
    font-weight: bold;
   font-size: 15px;
   text-align: right;
-  color: #13b58c;
+  color: var(--primary_color)  ;
   margin: auto 0;
 }
 

@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+ 
 
 
-$primaryColor: #13b58c;
+$primaryColor:  var(--primary_color);
 $primaryBgColor: #ffffff;
 
 * {

@@ -46,7 +46,16 @@ class App extends Component {
     this.props.onSetTenantConfig();
   }
 
+
   render() {
+
+    let root = document.documentElement;
+    const color = localStorage.getItem('primary_color');
+    root.style.setProperty("--primary_color",color);
+console.log('============এeটা রুট ফাইল========================');
+console.log(color);
+console.log('====================================');
+
     let routes = (
       <Switch>
         <Route path="/sign-up" exact component={SignUp} />
