@@ -161,11 +161,11 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [contributors-shield]: https://img.shields.io/github/contributors/TRADLY-PLATFORM/Hummingbirds 
 [contributors-url]: https://github.com/TRADLY-PLATFORM/Hummingbirds/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/TRADLY-PLATFORM/repo.svg?style=for-the-badge
+[forks-shield]: https://img.shields.io/github/forks/TRADLY-PLATFORM/Hummingbirdse
 [forks-url]: https://github.com/TRADLY-PLATFORM/Hummingbirds/network/members
-[stars-shield]: https://img.shields.io/github/stars/TRADLY-PLATFORM/repo.svg?style=for-the-badge
+[stars-shield]: https://img.shields.io/github/stars/TRADLY-PLATFORM/Hummingbirds
 [stars-url]: https://github.com/TRADLY-PLATFORM/Hummingbirds/stargazers
-[issues-shield]: https://img.shields.io/github/issues/TRADLY-PLATFORM/repo.svg?style=for-the-badge
+[issues-shield]: https://img.shields.io/github/issues/TRADLY-PLATFORM/Hummingbirds
 [issues-url]: https://github.com/TRADLY-PLATFORM/Hummingbirds/issues
 [license-shield]: https://img.shields.io/github/license/TRADLY-PLATFORM/repo.svg?style=for-the-badge
 [license-url]: https://github.com/TRADLY-PLATFORM/Hummingbirds/blob/master/LICENSE.txt
