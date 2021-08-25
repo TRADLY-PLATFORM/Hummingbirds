@@ -159,7 +159,7 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/TRADLY-PLATFORM 
+[contributors-shield]: https://img.shields.io/github/contributors/TRADLY-PLATFORM/Hummingbirds 
 [contributors-url]: https://github.com/TRADLY-PLATFORM/Hummingbirds/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/TRADLY-PLATFORM/repo.svg?style=for-the-badge
 [forks-url]: https://github.com/TRADLY-PLATFORM/Hummingbirds/network/members
