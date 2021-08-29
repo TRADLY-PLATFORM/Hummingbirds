@@ -14,7 +14,7 @@
   <h3 align="center">Tradly Platform</h3>
 
   <p align="center">
-     An open source business platform website.
+     An open source ReactJS Template. Contents served from Tradly Headless API
     <br />
     <a href="https://portal.tradly.app/docs/introduction"><strong>Explore the docs »</strong></a>
     <br />
