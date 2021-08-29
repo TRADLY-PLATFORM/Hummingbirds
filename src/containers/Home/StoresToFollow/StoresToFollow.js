@@ -10,6 +10,20 @@ import spinner from '../../../components/UI/Spinner/Spinner';
 import useWindowSize from '../../../components/Hooks/WindowSize/WindowSize';
 import { selectUserId } from '../../../store/selectors/auth';
 
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+// Import Swiper styles
+import 'swiper/swiper.min.css';
+import 'swiper/components/pagination/pagination.min.css';
+
+ 
+
+// import Swiper core and required modules
+import SwiperCore, { Navigation, Pagination } from 'swiper/core';
+
+// install Swiper modules
+SwiperCore.use([Navigation, Pagination]);
+
 const StoresToFollow = ({ storesToFollow }) => {
   const [activeItemIndex, setActiveItemIndex] = useState(0);
   const { width, height } = useWindowSize();
@@ -57,85 +71,95 @@ const StoresToFollow = ({ storesToFollow }) => {
         }
       }, 1000);
     };
-
-    return (
-      <div className={classes.wellStore + ' col-lg-12'} key={i} id={list.id}>
-        <Link to={`/a/${list.id}-${list.name}`} style={{ textDecoration: 'none' }}>
-          <div className={classes.imageDiv}>
-            <img src={imagePath} alt={list.name} title={list.name} />
-          </div>
-          <div className={classes.wellStoreDetails}>
-            <p style={{ fontWeight: 'bold', marginBottom: '1em' }}>
-              {list.name.length < 10 ? list.name : list.name.substring(0, 15) + '..'}
-            </p>
-            <p>{description}</p>
-          </div>
-        </Link>
-        {isAuthenticated ? (
-          <button
-            id="followBtn"
-            className={
-              (list.following ? classes.btnGreenFollowing : classes.btnGreenUnFollowing) + ' mt-5'
-            }
-            onClick={(e) => postStoreFollow(e, list.id)}
-          >
-            {list.following ? 'Following' : 'Follow'}
-          </button>
-        ) : (
-          <Link to="/sign-in">
-            <button className={classes.btnGreenUnFollowing + ' mt-5'}>Follow</button>
+    let slideView;
+    if (width > 780) {
+      slideView =1
+    }
+    else if (width > 1180) {
+      slideView = 5;
+    }
+      return (
+        <div className={classes.wellStore} key={i} id={list.id}>
+          <Link to={`/a/${list.id}-${list.name}`} style={{ textDecoration: 'none' }}>
+            <div className={classes.imageDiv}>
+              <img src={imagePath} alt={list.name} title={list.name} />
+            </div>
+            <div className={classes.wellStoreDetails}>
+              <p style={{ fontWeight: 'bold', marginBottom: '1em' }}>
+                {list.name.length < 10 ? list.name : list.name.substring(0, 15) + '..'}
+              </p>
+              <p>{description}</p>
+            </div>
           </Link>
-        )}
-      </div>
-    );
+          {isAuthenticated ? (
+            <button
+              id="followBtn"
+              className={
+                (list.following ? classes.btnGreenFollowing : classes.btnGreenUnFollowing) + ' mt-5'
+              }
+              onClick={(e) => postStoreFollow(e, list.id)}
+            >
+              {list.following ? 'Following' : 'Follow'}
+            </button>
+          ) : (
+            <Link to="/sign-in">
+              <button className={classes.btnGreenUnFollowing + ' mt-5'}>Follow</button>
+            </Link>
+          )}
+        </div>
+      );
   });
 
   return (
     <>
       {arrayListings.length > 0 && (
-        <div className={classes.storePart + 'row'}>
-          <div className="col-lg-6  ">
-            <h3 className={classes.headingTitle}>{title}</h3>
-          </div>
-          <div className="col-lg-6  ">
-            <Link to="/stores">
-              <button className={'btnGreenStyle pull-right'}>View All</button>
-            </Link>
+        <div className={classes.storePart}>
+          <div className={classes.storePartHeader}>
+            <div className="  ">
+              <h3 className={classes.headingTitle}>{title}</h3>
+            </div>
+            <div className="  " style={{ marginRight: '0.4%' }}>
+              <Link to="/stores">
+                <button className={'btnGreenStyle pull-right'}>View All</button>
+              </Link>
+            </div>
           </div>
           <br />
 
-          <div style={{ marginTop: '60px', marginLeft: '-10px', marginRight: '10px' }}>
-            <ItemsCarousel
-              infiniteLoop={false}
-              gutter={12}
-              activePosition={'center'}
-              chevronWidth={60}
-              disableSwipe={false}
-              alwaysShowChevrons={false}
-              numberOfCards={width < 780 ? 1 : 5}
-              slidesToScroll={width < 780 ? 1 : 3}
-              outsideChevron={false}
-              showSlither={false}
-              firstAndLastGutter={true}
-              requestToChangeActive={setActiveItemIndex}
-              activeItemIndex={activeItemIndex}
-              rightChevron={
-                <span
-                  className="glyphicon glyphicon-chevron-right"
-                  style={{ fontSize: '30px', color: '#e6e6e6' }}
-                  aria-hidden="true"
-                ></span>
-              }
-              leftChevron={
-                <span
-                  className="glyphicon glyphicon-chevron-left"
-                  style={{ fontSize: '30px', color: '#e6e6e6' }}
-                  aria-hidden="true"
-                ></span>
-              }
+          <div style={{ marginTop: '60px' }}>
+            <Swiper
+              slidesPerView={1}
+              slidesPerGroup={width < 780 ? 1 : 5}
+              spaceBetween={width < 780 ? -10 : 10}
+              loop={false}
+              navigation={width < 780 ? false : true}
+              className="mySwiper"
+              style={{ marginTop: '60px' }}
+              breakpoints={{
+                 "600": {
+                  slidesPerView: 2,
+                  spaceBetween: 10,
+                },
+                
+                "950": {
+                  slidesPerView: 3,
+                  spaceBetween: 10,
+                },
+                "1160": {
+                  slidesPerView: 4,
+                  spaceBetween: 10,
+                },
+                
+                "1300": {
+                  slidesPerView: 5,
+                  spaceBetween: 10,
+                },
+              }}
             >
-              {arrayListings}
-            </ItemsCarousel>
+              {arrayListings?.map((list, i) => (
+                <SwiperSlide>{list}</SwiperSlide>
+              ))}
+            </Swiper>
           </div>
         </div>
       )}
@@ -144,3 +168,36 @@ const StoresToFollow = ({ storesToFollow }) => {
 };
 
 export default StoresToFollow;
+
+
+// <ItemsCarousel
+//   infiniteLoop={false}
+//   gutter={12}
+//   activePosition={'center'}
+//   chevronWidth={60}
+//   disableSwipe={false}
+//   alwaysShowChevrons={false}
+//   numberOfCards={width < 780 ? 1 : 5}
+//   slidesToScroll={width < 780 ? 1 : 3}
+//   outsideChevron={false}
+//   showSlither={false}
+//   firstAndLastGutter={true}
+//   requestToChangeActive={setActiveItemIndex}
+//   activeItemIndex={activeItemIndex}
+//   rightChevron={
+//     <span
+//       className="glyphicon glyphicon-chevron-right"
+//       style={{ fontSize: '30px', color: '#e6e6e6' }}
+//       aria-hidden="true"
+//     ></span>
+//   }
+//   leftChevron={
+//     <span
+//       className="glyphicon glyphicon-chevron-left"
+//       style={{ fontSize: '30px', color: '#e6e6e6' }}
+//       aria-hidden="true"
+//     ></span>
+//   }
+// >
+//   {arrayListings}
+// </ItemsCarousel>;

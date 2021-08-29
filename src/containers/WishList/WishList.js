@@ -18,12 +18,12 @@ const WishList = () => {
   console.log(wishList);
   return (
     <div>
-      <div className="row">
-        <div className={classes.pageTitle + ' col-md-5 '}>
+      <div className="">
+        <div >
           <h2 className={classes.pageTitle}>My Wishlist </h2>
         </div>
 
-        <div className="col-md-2">
+        <div className="">
           {/* <div className={classes.SortbyMenu + ' dropdown'}>
             <button
               className={classes.SortbyMenu + ' dropdown-toggle '}
@@ -54,7 +54,7 @@ const WishList = () => {
         </div> */}
       </div>
 
-      <div className="row">
+      <div className="">
         <div className={classes.wishList }>
           {wishList &&
             wishList.map((list, i) => {
@@ -79,7 +79,7 @@ const WishList = () => {
                       />
                       <p>{list.title}</p>
                       <div className={classes.bottomDesc}>
-                        <div className=''>
+                         
                           <img
                             src={storelogo || NoIamgeLogo}
                             alt="Woman accesories"
@@ -89,10 +89,11 @@ const WishList = () => {
                             {' '}
                             {list.account.name.length < 10
                               ? list.account.name
-                              : list.account.name.substring(0, 10) + '..'}
+                              : list.account.name.substring(0, 8) + '..'}
                           </span>
-                        </div>
-                        <div className={classes.amountTitle}>{price}</div>
+                          <p className={classes.amountTitle}>{price}</p>
+                        
+                       
                       </div>
                     </div>
                   </div>

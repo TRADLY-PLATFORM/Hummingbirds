@@ -32,20 +32,29 @@ import reactLoaderSpinner from 'react-loader-spinner';
 
 import Loader from 'react-loader-spinner';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+import useWindowSize from '../../components/Hooks/WindowSize/WindowSize';
 
 const Home = () => {
+
   const [selectedOption, setSelectedOption] = useState(null);
   const [activeItemIndex, setActiveItemIndex] = useState(0);
   const [show, setShow] = useState(true);
   const [loadOnce, setLoadOnce] = useState(true);
   const [categorySet, setCategorySet] = useState([]);
   const [categoryLength, setCategoryLength] = useState(0);
+      const { width, height } = useWindowSize();
+
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(actions.initHomeCollections());
-    dispatch(actions.initPromoBanners());
-  }, [0]);
+    setTimeout(() => {
+
+      let size = width < 780 ? 'app' : 'web';
+ 
+      dispatch(actions.initHomeCollections());
+      dispatch(actions.initPromoBanners(size));
+    }, 2000);
+  }, [width]);
 
   const location = useLocation();
 
@@ -62,25 +71,7 @@ const Home = () => {
   const products = useSelector((state) => state.home.latestProducts);
     const storesToFollow = useSelector((state) => state.home.stores);
 
-
-
-  // console.log(isAuthenticated);
-  // let collectionContent = <Spinner show={true} styles="SpinnerCenter" />;
-  // console.log(collections);
-  // if (collections && collections.length > 0) {
-  //   collectionContent = (
-  //     <>
-  //       <StoresToFollow />
-  //       <br />
-  //       <br />
-  //       <LatestProducts />
-  //     </>
-  //   );
-  // } else {
-  //   if (show) {
-  //     collectionContent = '';
-  //   }
-  // }
+ 
   console.log('loading:', loading);
   console.log('follow-loading:', followLoading);
 
@@ -99,7 +90,7 @@ const Home = () => {
         />
         <link href={location.pathname} />
       </Helmet>
-      <Backdrop show={loading || followLoading} />
+      {/* <Backdrop show={loading || followLoading} /> */}
       <Spinner show={loading || followLoading} />
 
       {!categories.length > 0 ? (
@@ -112,16 +103,18 @@ const Home = () => {
         />
       ) : (
         <>
-          <HomeBanner images={promo_banners} />
-            <Categories categories={categories}/>
-          <br />
-          <StoresToFollow storesToFollow={storesToFollow} />
-          <br />
-          <br />
-          <LatestProducts products={products} />
-          <br />
-          <br />
-          <br />
+          <div className={classes.homeContent}>
+            <HomeBanner images={promo_banners} />
+            <Categories categories={categories} />
+            <br />
+            <StoresToFollow storesToFollow={storesToFollow} />
+            <br />
+            <br />
+            <LatestProducts products={products} />
+            <br />
+            <br />
+            <br />
+          </div>
         </>
       )}
     </Aux>

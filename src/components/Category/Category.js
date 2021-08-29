@@ -36,20 +36,16 @@ const categoryHtmlHandler = (categories, categoryLength) => {
     let categoryName = category.name.replace(/\//g, '@');
 
     return (
-      
       <Link
-        to={categoryName ==="More"?"/categories":`/lc/${category.id}-${categoryName}`}
+        to={categoryName === 'More' ? '/categories' : `/lc/${category.id}-${categoryName}`}
         key={category.id}
-         style={{ textDecoration: 'none' }}
+        style={{ textDecoration: 'none' }}
       >
         <div className={classes.wellCategory}>
-          <img
-            src={category.image_path}
-            alt={category.name}
-            title={category.name}
-            style={{ width: '32px', height: '32px' }}
-          />
-          <p>{category.name}</p>
+          <img src={category.image_path} alt={category.name} title={category.name} />
+          <p>{category.name.length < 10 ? category.name : category.name.substring(0, 10) + '..'}</p>
+
+          {/* .length < 16 ? category.name : category.name.substring(0, 10) + '..' */}
         </div>
       </Link>
     );

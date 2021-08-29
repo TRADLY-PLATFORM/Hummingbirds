@@ -1,56 +1,35 @@
 .BeforeAuth {
-  margin: 0;
+   display: grid;
+   width: 100%;
+   height:500px;
+   grid-template-columns: 50% 50%;
+   height: 100%;
 }
 
-.BeforeAuth .leftDiv {
-  height: 100%;
-  z-index: 1;
-   overflow: hidden;
-  padding-top: 8%;
-   position: absolute;
-}
+ .leftDiv {
+   z-index: 1;
+   margin: auto 0;
+    }
 
-.BeforeAuth .rightDiv {
-  height: 100%;
-  z-index: 1;
-   overflow: hidden;
-  padding: 10em 8%;
-  color: white;
-  right: 0;
-  background: linear-gradient(180deg, #2bdbc0 0%, #13b58c 100%);
-  position: absolute;
-}
-@media only screen and (max-width: 900px) {
-  .BeforeAuth .leftDiv {
-    min-height: 400px;
-    z-index: 1;
-     overflow: auto;
-    padding-top: 8%;
-     position: relative;
-  }
+.rightDiv {
+   z-index: 1;
+   color: white;
+   padding: 10% 15%;
+    background: linear-gradient(180deg, #2bdbc0 0%, #13b58c 100%);
+ }
 
-  .BeforeAuth .rightDiv {
-    min-height: 400px;
-    z-index: 0;
-     overflow: auto;
-    padding: 10em 8%;
-    color: white;
-     background: linear-gradient(180deg, #2bdbc0 0%, #13b58c 100%);
-    position: relative;
-  }
+@media only screen and (max-width: 800px) {
+   .BeforeAuth {
+   display: grid;
+   width: 100%;
+   height:500px;
+   grid-template-columns: 100%;
+  
 }
-@media only screen and (max-width: 700px) {
-  .BeforeAuth .leftDiv {
-     display: none;
-  }
-
-  .BeforeAuth .rightDiv {
-    min-height: 400px;
-    z-index: 0;
-     overflow: auto;
-    padding: 10em 8%;
-    color: white;
-     background: linear-gradient(180deg, #2bdbc0 0%, #13b58c 100%);
-    position: relative;
-  }
+.leftDiv{
+   display: none;
+}
+.rightDiv{
+  padding: 5%;
+}
 }

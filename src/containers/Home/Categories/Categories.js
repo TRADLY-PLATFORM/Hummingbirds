@@ -20,14 +20,14 @@ const Categories = ({ categories }) => {
  
   const sendCategories = () => {
    
-    if (categorySet.length <= 8) {
+    if (categorySet.length <= 10) {
       return (
         <Category categories={categorySet} />)
         
           
     }
     else {
-      const sliceLength = width > 700 ?7:3;
+      const sliceLength =9;
       let updatedCategories = categorySet.slice(0, sliceLength);
       let moreCategory = {
           id: Math.random(),
@@ -92,8 +92,8 @@ const Categories = ({ categories }) => {
   //   }
   // }
   return (
-    <div style={{ marginTop: '20px', minHeight: '150px' }}>
-      <div className="col-lg-12 col-md-12">
+    <div style={{ marginTop: '10px', minHeight: '150px' }}>
+      <div className="">
         <div className={classes.CategoryBox}>
           {
             sendCategories()

@@ -12,4 +12,5 @@ export const sortByOptions = [
 
 export const totalCountOfProducts = 25;
 
-export const MapKey = 'AIzaSyCXCZxpNJ3Y8KzXGkrJUkdZ7vyT2M9T-c4';
+export const MapKey = 'AIzaSyBAV63gkOE0d0eSV_3rIagJfzMwDcbzPnM';
+export const dsn = 'https://ab22fdcc8ad24c7babc4d07ae7d20642@o396771.ingest.sentry.io/5284098';

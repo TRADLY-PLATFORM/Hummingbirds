@@ -1,68 +1,172 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+ [![Contributors][contributors-shield]][contributors-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+  
 
-## Available Scripts
 
-In the project directory, you can run:
+<!-- PROJECT LOGO -->
+<br />
+<p align="center">
+  <a href="https://github.com/TRADLY-PLATFORM/Hummingbirds">
+    <img src="./src/assets/images/logo.svg" alt="Logo" width="80" height="80">
+  </a>
+ 
+  <h3 align="center">Tradly Platform</h3>
 
-### `npm start`
+  <p align="center">
+     An open source business platform website.
+    <br />
+    <a href="https://portal.tradly.app/docs/introduction"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://tradly.netlify.app/">View Demo</a>
+    ·
+    <a href="https://github.com/TRADLY-PLATFORM/Hummingbirds/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/TRADLY-PLATFORM/Hummingbirds/issues">Request Feature</a>
+  </p>
+</p>
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
 
-### `npm test`
+<!-- TABLE OF CONTENTS -->
+<details open="open">
+  <summary><h2 style="display: inline-block">Table of Contents</h2></summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <!-- <li><a href="#acknowledgements">Acknowledgements</a></li> -->
+  </ol>
+</details>
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<!-- ABOUT THE PROJECT -->
+## About The Project
+This is an open source business web site. Which you can easily use for your business platform by changing a little bit.It has all the features of a business website. The benefits of SEO have also been added. Which is Google friendly. And you can easily optimize your website.
+<!-- [![Product Name Screen Shot][product-screenshot]](https://example.com) -->
+ 
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+### Built With
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+* [React](https://reactjs.org/)
+* [Bootstrap3](https://getbootstrap.com/)
+ 
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+<!-- GETTING STARTED -->
+## Getting Started
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+To get a local copy up and running follow these simple steps.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Prerequisites
 
-## Learn More
+This is an example of how to list things you need to use the software and how to install them.
+* npm
+  ```sh
+  npm install npm@latest -g
+  ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Installation
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. Clone the repo
+   ```sh
+   git clone https://github.com/TRADLY-PLATFORM/Hummingbirds.git
+   ```
+2. Install NPM packages
+   ```sh
+   npm install
+   ```
 
-### Code Splitting
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
 
-### Analyzing the Bundle Size
+<!-- USAGE EXAMPLES -->
+## Usage
+There are some things you need to know to work on this open source.
+There are three environment files that can be run and built separately.
+1. Create a sentry profile for error handles. And change the sentry dsn from constant file .
+2. Change "REACT_APP_DOMAIN_URL" from environment files and add your website url there.
+3. If you are a marketplace client of tradly then change the "REACT_APP_TENANT_NAME" from environment files and add your tenant name.
+ 
+<!-- _For more examples, please refer to the [Documentation](https://example.com)_ -->
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
 
-### Making a Progressive Web App
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+<!-- ROADMAP -->
+## Roadmap
 
-### Advanced Configuration
+See the [open issues](https://github.com/github_username/repo_name/issues) for a list of proposed features (and known issues).
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
 
-### Deployment
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+<!-- CONTRIBUTING -->
+## Contributing
 
-### `npm run build` fails to minify
+Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+
+
+<!-- LICENSE -->
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+
+
+<!-- CONTACT -->
+## Contact
+
+Tradly Platform   -  hitradly@gmail.com
+
+Project Link: [https://github.com/github_username/repo_name](https://github.com/TRADLY-PLATFORM/Hummingbirds)
+
+
+
+<!-- ACKNOWLEDGEMENTS -->
+<!-- ## Acknowledgements
+
+* []()
+* []()
+* []()
+ -->
+
+
+
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/TRADLY-PLATFORM/Hummingbirds 
+[contributors-url]: https://github.com/TRADLY-PLATFORM/Hummingbirds/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/TRADLY-PLATFORM/Hummingbirdse
+[forks-url]: https://github.com/TRADLY-PLATFORM/Hummingbirds/network/members
+[stars-shield]: https://img.shields.io/github/stars/TRADLY-PLATFORM/Hummingbirds
+[stars-url]: https://github.com/TRADLY-PLATFORM/Hummingbirds/stargazers
+[issues-shield]: https://img.shields.io/github/issues/TRADLY-PLATFORM/Hummingbirds
+[issues-url]: https://github.com/TRADLY-PLATFORM/Hummingbirds/issues
+[license-shield]: https://img.shields.io/github/license/TRADLY-PLATFORM/repo.svg?style=for-the-badge
+[license-url]: https://github.com/TRADLY-PLATFORM/Hummingbirds/blob/master/LICENSE.txt
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://linkedin.com/in/github_username

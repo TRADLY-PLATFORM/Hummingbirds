@@ -1,99 +1,47 @@
-import React, { Component } from 'react';
-import GoogleMapReact from 'google-map-react';
-import { MapKey } from '../../../shared/constants';
- import { GoogleMap, useJsApiLoader, LoadScript, Marker } from '@react-google-maps/api';
+import React from 'react';
+ import Leaflet from 'leaflet';
 
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
-// class Maps extends Component {
-//   static defaultProps = {
-//     center: {
-//       lat: 59.95,
-//       lng: 30.33,
-//     },
-//     zoom: 11,
-//   };
+ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 
-//   render() {
-//     return (
-//       // Important! Always set the container height explicitly
+  import 'leaflet/dist/leaflet.css';
+Leaflet.Icon.Default.imagePath = '../node_modules/leaflet';
+  delete Leaflet.Icon.Default.prototype._getIconUrl;
 
-//       <div style={{ height: '50vh', width: '100%' }}>
-//         <GoogleMapReact
-//           bootstrapURLKeys={{ key: MapKey }}
-//           defaultCenter={this.props?this.props:this.props.center}
-//           defaultZoom={this.props.zoom}
-//         >
-//           <AnyReactComponent lat={this.props.lat} lng={this.props.lng} text="My Marker" />
-//         </GoogleMapReact>
-//       </div>
-//     );
-//   }
-// }
-
-// export default Maps;
-
- 
-// const Maps = ({ lat, lng }) => {
-//   console.log('====================================');
-//   console.log(lat,lng);
-//   console.log('====================================');
-//    const renderMarkers = (map, maps) => {
-//      let marker = new maps.Marker({
-//        position: { lat: lat, lng: lng },
-//        map,
-//        title: 'Hello World!',
-//      });
-//      return marker;
-//    };
-
-//   return (
-//     <div style={{ height: '50vh', width: '100%' }}>
-//       <GoogleMapReact
-//         bootstrapURLKeys={{ key: MapKey }}
-//         defaultCenter={{ lat: lat, lng: lng }}
-//         defaultZoom={12}
-//         yesIWantToUseGoogleMapApiInternals
-//         onGoogleApiLoaded={({ map, maps }) => renderMarkers(map, maps)}
-//       >
-//         <AnyReactComponent lat={ lat} lng={ lng} text="My Marker" />
-//       </GoogleMapReact>
-//     </div>
-//   );
-// };
-
-// export default Maps;
-
- 
- 
+  Leaflet.Icon.Default.mergeOptions({
+    iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+    iconUrl: require('leaflet/dist/images/marker-icon.png'),
+    shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
+  });
 
 
 
+const Maps = ({ lat, lng, address }) => {
+  console.log('=================এখানে আসবে===================');
+  console.log(lat, lng);
+  console.log('====================================');
+  const containerStyle = {};
 
-function Maps({lat,lng}) {
-  
-    const [map, setMap] = React.useState(null);
-
-const center = {
-  lat: lat,
-  lng: lng,
-};
-
- 
-const containerStyle = {
-  width: '100%',
-  height: '50vh',
-};
- 
-
+  const position = [51.505, -0.09];
   return (
-    <LoadScript googleMapsApiKey="AIzaSyCXCZxpNJ3Y8KzXGkrJUkdZ7vyT2M9T-c4">
-      <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={10}>
-        {/* Child components, such as markers, info windows, etc. */}
-        
-      </GoogleMap>
-    </LoadScript>
+    <>
+      <MapContainer
+        style={{ width: '100%', height: '50vh', overflow: 'hidden' }}
+        center={[lat, lng]}
+        zoom={1}
+        scrollWheelZoom={true}
+      >
+        <TileLayer
+          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <Marker position={[lat, lng]}>
+          <Popup>{address}</Popup>
+        </Marker>
+      </MapContainer>
+    </>
   );
-}
-
-export default  Maps;
+};
+ 
+ export default Maps;
+ 

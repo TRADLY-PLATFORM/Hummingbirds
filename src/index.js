@@ -16,17 +16,17 @@ import GroupReducer from './store/reducers/group';
 import wishListReducer from './store/reducers/wishList';
 import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
+import { dsn } from './shared/constants';
 // import * as Sentry from "@sentry/browser";
 
 // Sentry.init({
 //     dsn: "http://3f99218da0aa4b1ab32e13029b3b8895@ec2-54-175-98-88.compute-1.amazonaws.com/1"
 // });
-
-Sentry.init({
-  dsn: 'https://ab22fdcc8ad24c7babc4d07ae7d20642@o396771.ingest.sentry.io/5284098',
+ Sentry.init({
+  dsn: dsn,
   integrations: [new Integrations.BrowserTracing()],
 
-  environment: "production",
+  environment: 'production',
   // Set tracesSampleRate to 1.0 to capture 100%
   // of transactions for performance monitoring.
   // We recommend adjusting this value in production

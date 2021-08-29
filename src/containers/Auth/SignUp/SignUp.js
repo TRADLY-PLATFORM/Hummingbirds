@@ -15,7 +15,7 @@ import { selectUserId } from '../../../store/selectors/auth';
 import PhoneInput from 'react-phone-input-2';
 import { isPossiblePhoneNumber, isValidPhoneNumber } from 'libphonenumber-js';
 import { Helmet } from 'react-helmet';
-
+import primary_color from '../../../commonCss';
 
 class SignUp extends Component {
   state = {
@@ -23,7 +23,7 @@ class SignUp extends Component {
     lastName: '',
     dialCode: '',
     mobile: '',
-    email:'',
+    email: '',
     password: '',
     reTypePassword: '',
     isSignUp: true,
@@ -113,32 +113,31 @@ class SignUp extends Component {
         }
         return false;
       }
-       let mobile = this.state.mobile;
-       let checkNumber = isValidPhoneNumber(`+${mobile}`);
-       if (checkNumber !== true) {
-         if (!toast.isActive(this.toastId)) {
-           this.toastId = toast.error('Invalid phone number.');
-         }
-         return false;
-       }
+      let mobile = this.state.mobile;
+      let checkNumber = isValidPhoneNumber(`+${mobile}`);
+      if (checkNumber !== true) {
+        if (!toast.isActive(this.toastId)) {
+          this.toastId = toast.error('Invalid phone number.');
+        }
+        return false;
+      }
     }
- 
-    
+
     this.setState({ showError: true });
 
     const uUid = uuid();
     let users;
     if (authType === 1) {
-       users = {
-      user: {
-        uuid: uUid,
-        first_name: this.state.firstName,
-        last_name: this.state.lastName,
-        email: this.state.email,
-        password: this.state.password,
-         type: 'client',
-      },
-    };
+      users = {
+        user: {
+          uuid: uUid,
+          first_name: this.state.firstName,
+          last_name: this.state.lastName,
+          email: this.state.email,
+          password: this.state.password,
+          type: 'client',
+        },
+      };
     } else {
       users = {
         user: {
@@ -152,21 +151,19 @@ class SignUp extends Component {
         },
       };
     }
-    
+
     this.props.onAuth(users, this.state.isSignUp);
   };
 
   componentDidMount() {
-        this.props.onSetConfigs();
+    this.props.onSetConfigs('general');
 
     this.props.onInitCountries();
   }
 
   render() {
     const authType = this.props.configsData.auth_type;
-    console.log('====================================');
-    console.log(authType);
-    console.log('====================================');
+
     if (this.props.error && this.state.showError) {
       if (!toast.isActive(this.toastId)) {
         this.toastId = toast.error(this.props.message);
@@ -221,7 +218,7 @@ class SignUp extends Component {
           />
           {authRedirect}
           <div className={classes.title}>
-            Welcome to Tradly <br /> Marketplace
+            <p style={{ color: `{primary_color}` }}>{this.props.configsData.registration_title}</p>
           </div>
 
           <div className="col-lg-12 nopaddingLeft">
@@ -267,7 +264,6 @@ class SignUp extends Component {
                 <div className="form-group mt-4">{defaultCountry}</div>
               )}
 
- 
               <div className="form-group mt-4">
                 <input
                   className={classes.input}
@@ -323,7 +319,7 @@ const mapStateToProps = (state) => {
     message: state.auth.message,
     countryList: state.auth.countries,
     authRedirectPath: state.auth.authRedirectPath,
-    configsData: state.auth.configs,
+    configsData: state.auth.general_configs,
     verifyId: state.auth.verify_id,
     isAuthenticated: selectUserId(state),
   };
@@ -333,7 +329,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onAuth: (userData, isSignUp) => dispatch(actions.auth(userData, isSignUp)),
     onInitCountries: () => dispatch(actions.initCountries()),
-    onSetConfigs: () => dispatch(actions.setConfigsData()),
+    onSetConfigs: (key) => dispatch(actions.setGeneralConfigsData(key)),
   };
 };
 
