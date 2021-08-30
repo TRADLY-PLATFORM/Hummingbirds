@@ -47,8 +47,8 @@
 }
 
 .userAvatar {
-  margin-top: 4px;
-  width: 42px;
+   width: 25px;
+  height: 25px;
 
   border-radius: 50% !important;
 }

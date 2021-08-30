@@ -320,7 +320,7 @@ export const setOnboardingConfigsData = () => {
         console.log(response);
         if (response.status) {
           dispatch(getOnboardingConfigs(response.data.data.configs));
-          localStorage.setItem('configs_data', JSON.stringify(response.data.data.configs));
+          localStorage.setItem('primary_color', response.data.data.configs.app_color_primary);
         }
       })
       .catch((error) => {

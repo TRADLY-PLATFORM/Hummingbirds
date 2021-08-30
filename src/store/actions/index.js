@@ -35,3 +35,5 @@ export { getCartList, addToCart } from './cart';
 export { connectStripe } from './payment';
 
 export { getWishlist } from './wishList';
+
+export { getSearchingResult } from './Search';

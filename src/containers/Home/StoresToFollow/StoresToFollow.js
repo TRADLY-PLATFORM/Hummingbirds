@@ -50,8 +50,8 @@ const StoresToFollow = ({ storesToFollow }) => {
     }
 
     let description = list.description;
-    if (description.length > 20) {
-      description = description.substring(0, 16) + '...';
+    if (description.length > 15) {
+      description = description.substring(0, 13) + '..';
     }
 
     const postStoreFollow = (e, id) => {
@@ -79,8 +79,8 @@ const StoresToFollow = ({ storesToFollow }) => {
       slideView = 5;
     }
       return (
-        <div className={classes.wellStore} key={i} id={list.id}>
-          <Link to={`/a/${list.id}-${list.name}`} style={{ textDecoration: 'none' }}>
+        <Link className={classes.wellStore} key={i} id={list.id} to={`/a/${list.id}-${list.name}`}>
+           
             <div className={classes.imageDiv}>
               <img src={imagePath} alt={list.name} title={list.name} />
             </div>
@@ -90,23 +90,24 @@ const StoresToFollow = ({ storesToFollow }) => {
               </p>
               <p>{description}</p>
             </div>
-          </Link>
+        
           {isAuthenticated ? (
-            <button
+            <Link
               id="followBtn"
+               
               className={
-                (list.following ? classes.btnGreenFollowing : classes.btnGreenUnFollowing) + ' mt-5'
+                (list.following ? classes.btnGreenFollowing : classes.btnGreenUnFollowing)  
               }
               onClick={(e) => postStoreFollow(e, list.id)}
             >
               {list.following ? 'Following' : 'Follow'}
-            </button>
+            </Link>
           ) : (
             <Link to="/sign-in">
-              <button className={classes.btnGreenUnFollowing + ' mt-5'}>Follow</button>
+              <button className={classes.btnGreenUnFollowing  }>Follow</button>
             </Link>
           )}
-        </div>
+        </Link>
       );
   });
 

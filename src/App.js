@@ -40,11 +40,13 @@ import AllStores from './containers/Store/AllStores';
 import SignIn from './containers/Auth/SignIn/SignIn';
 import { ErrorBoundary } from '@sentry/react';
 import ForgotPassword from './containers/Auth/ForgotPassword/ForgotPassword';
+import SearchResult from './components/Seacrh/SearchResult';
 
 class App extends Component {
   componentDidMount() {
     this.props.onTryAuthSignUp();
     this.props.onSetTenantConfig();
+    this.props.onSetOnboardingConfigsData();
   }
 
 
@@ -90,6 +92,8 @@ class App extends Component {
         <Route path="/addproduct" excat component={addProduct} />
         <Route path="/reviewpage" excat component={reviewPage} />
         <Route path="/detailorder" excat component={detailOrder} />
+        <Route path="/search/:key" excat component={SearchResult} />
+        
         <Redirect to="/" />
       </Switch>
     );
@@ -119,6 +123,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onTryAuthSignUp: () => dispatch(actions.authCheckState()),
     onSetTenantConfig: () => dispatch(actions.setTenantConfig()),
+    onSetOnboardingConfigsData: () => dispatch(actions.setOnboardingConfigsData()),
     // onInitCountries: () => dispatch(actions.initCountries())
   };
 };

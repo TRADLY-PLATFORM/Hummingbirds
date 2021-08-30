@@ -17,6 +17,7 @@ import wishListReducer from './store/reducers/wishList';
 import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
 import { dsn } from './shared/constants';
+import SearchReducer from './store/reducers/Search';
 // import * as Sentry from "@sentry/browser";
 
 // Sentry.init({
@@ -45,6 +46,7 @@ const rootReducer = combineReducers({
   store: StoreReducer,
   group: GroupReducer,
   wishList: wishListReducer,
+  Search:SearchReducer,
 });
 
 const store = createStore(

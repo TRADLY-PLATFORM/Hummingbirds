@@ -75,3 +75,7 @@ export const DELETE_FROM_CART = 'DELETE_FROM_CART';
 export const DELETE_ALL_CART_DETAILS = 'DELETE_ALL_CART_DETAILS';
 
 export const GET_WISH_LIST = 'GET_WISH_LIST';
+
+
+export const INIT_SEARCH = 'INIT_SEARCH';
+export const SET_SEARCH = 'SET_SEARCH';

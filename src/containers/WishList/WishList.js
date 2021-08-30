@@ -19,7 +19,7 @@ const WishList = () => {
   return (
     <div>
       <div className="">
-        <div >
+        <div>
           <h2 className={classes.pageTitle}>My Wishlist </h2>
         </div>
 
@@ -55,8 +55,8 @@ const WishList = () => {
       </div>
 
       <div className="">
-        <div className={classes.wishList }>
-          {wishList &&
+        <div className={classes.wishList}>
+          {wishList.length > 0 ? (
             wishList.map((list, i) => {
               let productImage = NoProductImage;
               if (list.images[0] !== undefined) {
@@ -79,27 +79,35 @@ const WishList = () => {
                       />
                       <p>{list.title}</p>
                       <div className={classes.bottomDesc}>
-                         
-                          <img
-                            src={storelogo || NoIamgeLogo}
-                            alt="Woman accesories"
-                            title="Woman accesories"
-                          />{' '}
-                          <span>
-                            {' '}
-                            {list.account.name.length < 10
-                              ? list.account.name
-                              : list.account.name.substring(0, 8) + '..'}
-                          </span>
-                          <p className={classes.amountTitle}>{price}</p>
-                        
-                       
+                        <img
+                          src={storelogo || NoIamgeLogo}
+                          alt="Woman accesories"
+                          title="Woman accesories"
+                        />{' '}
+                        <span>
+                          {' '}
+                          {list.account.name.length < 10
+                            ? list.account.name
+                            : list.account.name.substring(0, 8) + '..'}
+                        </span>
+                        <p className={classes.amountTitle}>{price}</p>
                       </div>
                     </div>
                   </div>
                 </Link>
               );
-            })}
+            })
+          ) : (
+            <div
+              style={{ marginTop: '2em' }}
+              className="alert  alert-info fade in alert-dismissible"
+            >
+              <Link to="#" className="close" data-dismiss="alert" aria-label="close" title="close">
+                ×
+              </Link>
+              You haven't added an item to wishlist
+            </div>
+          )}
         </div>
       </div>
     </div>

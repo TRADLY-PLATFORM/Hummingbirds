@@ -12,6 +12,7 @@ import axios from '../../axios';
 import CartImage from '../../assets/images/header/cart.svg';
 import NoProductImage from '../../assets/images/rsz_noimage.png';
 import NoIamgeLogo from '../../assets/images/home/store/noImage.svg';
+import { Search } from '../Seacrh/Search';
 
 // import Skeleton from '../UI/Skeleton/Skeleton';
 
@@ -54,19 +55,7 @@ const Header = (props) => {
     <>
       <header className={classes.header}>
         <div className="header-menu">
-          <div className="col-sm-6">
-            <span className="glyphicon glyphicon-search form-control-feedback"></span>
-            <input
-              type="text"
-              value={searchText}
-              className="form-control input-lg"
-              placeholder="Search Product"
-              onChange={handleChange}
-              onKeyPress={(e) => {
-                handleKeypress(e);
-              }}
-            />
-          </div>
+          <Search/>
 
           <div className="col-sm-6  hidden-xs">
             <div className={classes.userArea + ' dropdown'}>
@@ -92,12 +81,12 @@ const Header = (props) => {
                   </Link>
                 ) : (
                   <Aux>
-                    <Link className={classes.navLink} to="#">
+                    {/* <Link className={classes.navLink} to="#">
                       <i className="fa fa-user"></i> My Profile
                     </Link>
                     <Link className={classes.navLink} to="#">
                       <i className="fa fa-cog"></i> Settings
-                    </Link>
+                    </Link> */}
                     <Link className={classes.navLink} to="/logout">
                       <i className="fa fa-power-off"></i> Logout
                     </Link>
@@ -117,77 +106,7 @@ const Header = (props) => {
             </div> */}
           </div>
         </div>
-        <div
-          className={classes.searchResultShowing}
-          style={{ display: showSearchResult ? 'block' : 'none' }}
-        >
-          <button className={classes.closeBtn} onClick={backClick}>
-            <i className="fa fa-arrow-left "></i> Back
-          </button>
-
-          <div>
-            {searchResult.length != 0 ? (
-              <div className={classes.find}>
-                {searchResult.map((list, i) => {
-                  let imagePath = NoProductImage;
-                  if (list.images[0] !== undefined) {
-                    imagePath = list.images[0];
-                  }
-                  return (
-                    <Link
-                      to={`/l/${list.id}-${list.title}`}
-                      key={i}
-                      style={{ textDecoration: 'none' }}
-                      onClick={backClick}
-                    >
-                      <div className={classes.latestTrend}>
-                        <img
-                          src={imagePath}
-                          className={classes.storeImage}
-                          alt={list.title}
-                          title={list.title}
-                        />
-                        <p>{list.title}</p>
-                        <div className={classes.bottomDesc}>
-                          {list.account !== undefined && list.account.images[0] ? (
-                            <div>
-                              <img
-                                src={list.account.images[0]}
-                                alt={list.account.name}
-                                title={list.account.name}
-                              />
-                              <span>
-                                {list.account.name.length < 15
-                                  ? list.account.name
-                                  : list.account.name.substring(0, 14) + '..'}
-                              </span>
-                            </div>
-                          ) : (
-                            <div>
-                              <img src={NoIamgeLogo} alt={list.title} title={list.title} />
-                              <span>N/A</span>
-                            </div>
-                          )}
-
-                          <div className={classes.amountTitle}>
-                            {list.list_price.formatted !== undefined
-                              ? list.list_price.formatted
-                              : ''}
-                          </div>
-                        </div>
-                      </div>
-                      <div></div>
-                    </Link>
-                  );
-                })}
-              </div>
-            ) : (
-              <div className={classes.notFound}>
-                Oops!! The product you searched for was not found
-              </div>
-            )}
-          </div>
-        </div>
+        
       </header>
     </>
   );

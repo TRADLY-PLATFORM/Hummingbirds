@@ -1,0 +1,15 @@
+.searchBar{
+  /* z-index: 20; */
+  position: relative;
+  }
+.shortResult{
+  width: 95%;
+  height: 202px !important;
+  background-color: #FEFEFE;
+  border-radius: 15px;
+   position: absolute;
+   z-index: 5;
+   top: 10px;
+   padding : 45px 10px 10px 10px;
+   display: none;
+ }

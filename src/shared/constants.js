@@ -5,7 +5,7 @@ export const priceOptions = [
 
 export const sortByOptions = [
   { value: 'relevance', label: 'Relevance' },
-  { value: 'price_high_to_low', label: 'Price higt to low' },
+  { value: 'price_high_to_low', label: 'Price high to low' },
   { value: 'price_low_to_high', label: 'Price low to high' },
   { value: 'newest_first', label: 'Newest first' },
 ];
