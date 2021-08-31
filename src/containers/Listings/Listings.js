@@ -36,6 +36,9 @@ class Listings extends Component {
     loadOnce: false,
   };
   handleChange = (selectedOption, selectedName) => {
+    console.log('====================================');
+    console.log(selectedOption, selectedName);
+    console.log('====================================');
     let name = selectedName.name;
     let selectedValue = { ...this.state.selectedOption };
     if (selectedOption?.value === null) {
@@ -44,7 +47,7 @@ class Listings extends Component {
       selectedValue[name] = selectedOption;
     }
 
-    if (['priceValue', 'sortValue'].includes(name)) {
+    if (['priceValue', 'sortValue', 'categoryValue'].includes(name)) {
       this.setState({ selectedOption: selectedValue, loadOnce: true });
     } else {
       this.setState({ selectedOption: selectedValue });
@@ -87,12 +90,12 @@ class Listings extends Component {
     return [];
   };
 
-  formattedLocation = () => {
-    const { supplierLists } = this.props;
-    if (supplierLists.size > 0) {
+   formattedLocation = () => {
+    const { listings } = this.props;
+    if (listings.size > 0) {
       return [
         { label: 'All', value: null },
-        ...supplierLists
+        ...listings
           .filter((item) => !item.get('location', Map()).isEmpty())
           .map((item) => {
             return {
@@ -116,6 +119,10 @@ class Listings extends Component {
   loadMore = () => {
     let count = totalCountOfProducts;
     let filter = '';
+    if (this.state.selectedOption.categoryValue !== null) {
+       filter += '&category_id=' + this.state.selectedOption.categoryValue.value;
+    }
+    
     if (this.state.selectedOption.sortValue !== null) {
       filter += '&sort=' + this.state.selectedOption.sortValue.value;
     }
@@ -139,11 +146,6 @@ class Listings extends Component {
     const { categoryValue, supplierValue, locationValue } = selectedOption;
     console.log(categoryValue, supplierValue, locationValue);
     const productsListing = listings
-      .filter((item) =>
-        categoryValue !== null
-          ? item.get('category_id', List()).toJS().includes(categoryValue.value)
-          : item
-      )
       .filter((item) =>
         supplierValue !== null ? item.getIn(['account', 'id'], '') === supplierValue.value : item
       )
@@ -245,7 +247,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onInitListings: (count, filterValue, totalCountOfProducts) =>
-      dispatch(actions.initListings(count, filterValue, totalCountOfProducts)),
+    dispatch(actions.initListings(count, filterValue, totalCountOfProducts)),
     onCategoryLists: () => dispatch(actions.initCategoryLists()),
     onSupplierLists: () => dispatch(actions.initSupplierLists()),
   };

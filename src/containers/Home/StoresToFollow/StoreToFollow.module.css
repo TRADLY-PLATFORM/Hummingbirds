@@ -83,24 +83,35 @@ text-decoration: none !important;
 
 
 
-@media only screen and (max-width: 780px) {
-  .storePart{
+@media only screen and (max-width: 600px) {
+  
+
+  .wellStore img {
+  /* margin-bottom: 25px;
+  width: 130px;
+   border-radius: 100%; */
+}
+.wellStoreDetails {
+  /* font-style: normal;
+  margin-top: 45px; */
+}
+
+}
+
+@media only screen and (max-width: 600px) {
+.storePart{
     padding-Left: 7%;
   }
   .storePartHeader{
-    padding-right: 7%;
+    padding-right: 4%;
   }
-  .wellStore{
-  width: 93%;
-  }
-  .wellStore img {
-  margin-bottom: 25px;
-  width: 130px;
-   border-radius: 100%;
+  .swiperSlide{
+    width: 60% !important;
+   }
 }
-.wellStoreDetails {
-  font-style: normal;
-  margin-top: 45px;
-}
+@media only screen and (max-width: 480px) {
 
+  .swiperSlide{
+    width: 80% !important;
+   }
 }

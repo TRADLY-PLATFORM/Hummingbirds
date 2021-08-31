@@ -129,9 +129,9 @@ const StoresToFollow = ({ storesToFollow }) => {
 
           <div style={{ marginTop: '60px' }}>
             <Swiper
-              slidesPerView={1}
-              slidesPerGroup={width < 780 ? 1 : 5}
-              spaceBetween={width < 780 ? -10 : 10}
+              slidesPerView={width < 600 ?"auto":2}
+              slidesPerGroup={1}
+              spaceBetween={10}
               loop={false}
               navigation={width < 780 ? false : true}
               className="mySwiper"
@@ -158,7 +158,7 @@ const StoresToFollow = ({ storesToFollow }) => {
               }}
             >
               {arrayListings?.map((list, i) => (
-                <SwiperSlide>{list}</SwiperSlide>
+                <SwiperSlide className={classes.swiperSlide}>{list}</SwiperSlide>
               ))}
             </Swiper>
           </div>

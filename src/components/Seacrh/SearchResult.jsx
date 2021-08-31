@@ -20,15 +20,20 @@ const SearchResult = () => {
      };
   return (
     <>
-      <div div className={classes.find}>
-        {listings.length > 0 ? (
-          listings.map((list, i) => {
+     
+      {listings.length > 0 ? (
+         <div div className={classes.find}>
+          {listings.map((list, i) => {
             let imagePath = NoProductImage;
             if (list.images[0] !== undefined) {
               imagePath = list.images[0];
             }
             return (
-              <Link to={`/l/${list.id}-${list.title}`} key={i} style={{ textDecoration: 'none' }}>
+              <Link
+                to={`/l/${list.id}-${list.title.replace('%', '')}`}
+                key={i}
+                style={{ textDecoration: 'none' }}
+              >
                 <div className={classes.latestTrend}>
                   <img
                     src={imagePath}
@@ -68,7 +73,8 @@ const SearchResult = () => {
                 <div></div>
               </Link>
             );
-          })
+          })}
+          </div>
         ) : (
           <div
             style={{ marginTop: '2em' }}
@@ -80,7 +86,7 @@ const SearchResult = () => {
             <strong>oops!</strong> No listings found.
           </div>
         )}
-      </div>
+       
     </>
   );
 };

@@ -55,9 +55,9 @@ const WishList = () => {
       </div>
 
       <div className="">
-        <div className={classes.wishList}>
-          {wishList.length > 0 ? (
-            wishList.map((list, i) => {
+        {wishList.length > 0 ? (
+          <div className={classes.wishList}>
+            {wishList.map((list, i) => {
               let productImage = NoProductImage;
               if (list.images[0] !== undefined) {
                 productImage = list.images[0];
@@ -96,19 +96,16 @@ const WishList = () => {
                   </div>
                 </Link>
               );
-            })
-          ) : (
-            <div
-              style={{ marginTop: '2em' }}
-              className="alert  alert-info fade in alert-dismissible"
-            >
-              <Link to="#" className="close" data-dismiss="alert" aria-label="close" title="close">
-                ×
-              </Link>
-              You haven't added an item to wishlist
-            </div>
-          )}
-        </div>
+            })}
+          </div>
+        ) : (
+          <div style={{ marginTop: '2em' }} className="alert  alert-info fade in alert-dismissible">
+            <Link to="#" className="close" data-dismiss="alert" aria-label="close" title="close">
+              ×
+            </Link>
+            You haven't added an item to wishlist
+          </div>
+        )}
       </div>
     </div>
   );

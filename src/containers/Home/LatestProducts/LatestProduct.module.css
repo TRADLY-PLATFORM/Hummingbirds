@@ -68,16 +68,9 @@
 
 
 @media only screen and (max-width: 780px) {
-  .latestProducts{
-        padding-left: 7%;
-
-  }
-  .latestProductsHeader{
-    padding-right: 7%;
-  }
+ 
   .latestTrend{
-    width: 93%;
-    min-height: 350px;
+     min-height: 350px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -105,5 +98,28 @@
  
  
 }
+
 }
  
+@media only screen and (max-width: 600px) {
+ .latestProducts{
+        padding-left: 7%;
+
+  }
+  .latestProductsHeader{
+    padding-right: 4%;
+  }
+.swiperSlider{
+  width: 60% !important;
+}
+
+}
+ 
+ 
+@media only screen and (max-width: 480px) {
+
+.swiperSlider{
+  width: 80% !important;
+}
+
+}
