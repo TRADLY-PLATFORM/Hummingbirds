@@ -32,10 +32,11 @@ export {
   CreateStore,
   postStoreFollow,
   getStores,
-  addressSearch, 
+  addressSearch,
   accountCategories,
   initFile,
-  initAttribute
+  initAttribute,
+  failedMessage,
 } from './store';
 
 export { initGroupDetails, CreateGroup } from './group';

@@ -19,6 +19,7 @@ import imageToBase64 from 'image-to-base64/browser';
 import Toast from '../../../components/UI/Toast/Toast';
 
 import locationImage from '../../../assets/images/store/location.png';
+import locationListImage from '../../../assets/images/store/locationList.png';
 
 import closeImage from '../../../assets/images/store/close.png';
 import { useEffect } from 'react';
@@ -55,7 +56,9 @@ const CreateStore = () => {
   const fileURL = useSelector((state) => state.store.file);
   const attribute = useSelector((state) => state.store.attribute);
   const isAuthenticated = useSelector((state) => selectUserId(state));
+ const errorMessage = useSelector((state) => state.store.message);
 
+   
   // function
   const createStore = (e) => {
     e.preventDefault();
@@ -87,7 +90,7 @@ const CreateStore = () => {
           description,
           coordinates,
           base64,
-          history.push(`/storesuccess?id=${isAuthenticated}`)
+          () => history.push(`/storesuccess?id=${isAuthenticated}`)
         )
       );
  
@@ -111,7 +114,7 @@ const CreateStore = () => {
       console.log(stores);
 
       dispatch(
-        actions.CreateStore(stores, history.push(`/storesuccess?id=${isAuthenticated}`))
+        actions.CreateStore(stores, () => history.push(`/storesuccess?id=${isAuthenticated}`))
       );
     }
 
@@ -195,6 +198,9 @@ const CreateStore = () => {
       {redirectUrl}
       <Backdrop show={loading} />
       <Spinner show={loading} />
+      {errorMessage && <Toast message={errorMessage} type="error" />}
+
+            
       <ToastContainer
         autoClose={2000}
         position="top-center"
@@ -299,7 +305,7 @@ const CreateStore = () => {
                               <div>
                                 <img
                                   className={classes.listLocationImage}
-                                  src={locationImage}
+                                  src={locationListImage}
                                   alt=""
                                 />
                               </div>

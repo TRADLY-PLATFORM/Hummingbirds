@@ -15,9 +15,22 @@ const initialState = {
 
 };
 
+
+
 const initStoreDetails = (state, action) => {
   return updateObject(state, {
     loading: true,
+  });
+};
+const setLoading = (state, action) => {
+  return updateObject(state, {
+    loading: true,
+  });
+};
+const errorMessage = (state, action) => {
+  return updateObject(state, {
+    loading: false,
+    message:action.msg
   });
 };
 
@@ -60,6 +73,7 @@ const setStoresLists = (state, action) => {
 const fetchStoreListsFailed = (state, action) => {
   return updateObject(state, { loading: false, error: true, message: 'Could not fetch result.' });
 };
+
 
 const initCreateStore = (state, action) => {
   return updateObject(state, {
@@ -119,13 +133,10 @@ const setCategories = (state, action) => {
 
 
 const setFile = (state, action) => {
-  console.log('====================================');
-  console.log(action.filesURL);
-  console.log('====================================');
   return updateObject(state, {
     file: action.filesURL,
-    
-   });
+    message:null ,
+  });
 };
 const setAttribute = (state, action) => {
   return updateObject(state, {
@@ -136,6 +147,12 @@ const setAttribute = (state, action) => {
 const storeReducer = (state = initialState, action) => {
   console.log(action);
   switch (action.type) {
+    case actionTypes.ERROR_MESSAGE:
+      return errorMessage(state, action);
+
+    case actionTypes.START_LOADING:
+      return setLoading(state, action);
+
     case actionTypes.INIT_STORE_DETAILS:
       return initStoreDetails(state, action);
     case actionTypes.SET_STORE_DETAILS:

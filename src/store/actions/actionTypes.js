@@ -84,3 +84,7 @@ export const GET_WISH_LIST = 'GET_WISH_LIST';
 
 export const INIT_SEARCH = 'INIT_SEARCH';
 export const SET_SEARCH = 'SET_SEARCH';
+
+export const ERROR_MESSAGE = 'ERROR_MESSAGE';
+
+export const START_LOADING = 'START_LOADING';

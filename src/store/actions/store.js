@@ -2,6 +2,20 @@ import * as actionTypes from './actionTypes';
 import axios from '../../axios';
 import { ACCESS_TOKEN } from '../../shared/utility';
 
+
+export const  failedMessage = (msg) => {
+  return {
+    type: actionTypes.ERROR_MESSAGE,
+    msg: msg,
+  }; 
+}
+export const  startLoading = () => {
+  return {
+    type: actionTypes.START_LOADING,
+   }; 
+}
+ 
+
 export const setStoreDetails = (storeDetails) => {
   return {
     type: actionTypes.SET_STORE_DETAILS,
@@ -116,7 +130,7 @@ export const CreateStore = (store, callBack) => {
       .then((response) => {
         if (response.data.status) {
           dispatch(createStoreSuccess());
-           callBack && callBack();
+          callBack && callBack();
         } else {
           dispatch(createStoreFailed());
         }
@@ -268,8 +282,18 @@ export const SetFiles = (file) => {
   };
 };
 
-export const initFile = (fileName, contentType, name, categoryId, description, coordinates, base64, callBack ) => {
+export const initFile = (
+  fileName,
+  contentType,
+  name,
+  categoryId,
+  description,
+  coordinates,
+  base64,
+  callBack
+) => {
   return (dispatch) => {
+    dispatch(startLoading());
     var config = {
       method: 'post',
       url: 'v1/utils/S3signedUploadURL',
@@ -301,25 +325,32 @@ export const initFile = (fileName, contentType, name, categoryId, description, c
                 ContentType: contentType,
               },
               body: await res.blob(),
-            }).then((res) => {
-              if (res.status) {
-                const stores = {
-                  account: {
-                    name: name,
-                    category_id: [categoryId],
-                    description: description,
-                    web_address: '',
-                    image_path: ImagePath,
-                    coordinates: coordinates,
-                    type: 'accounts',
-                  },
-                };
+            })
+              .then((res) => {
+                if (res.status) {
+                  console.log(res);
+                  
+                  const stores = {
+                    account: {
+                      name: name,
+                      category_id: [categoryId],
+                      description: description,
+                      web_address: '',
+                      image_path: ImagePath,
+                      coordinates: coordinates,
+                      type: 'accounts',
+                    },
+                  };
 
-                console.log(stores);
+                  console.log(stores);
 
-                dispatch(CreateStore(stores,callBack));
-              }
-            });
+                  dispatch(CreateStore(stores,callBack));
+                }
+              })
+              .catch((error) => {
+                console.log('Error:' + error.message);
+                dispatch(failedMessage('Some problem occurred in image upload. Please try again later.'))
+              }); 
           });
         }
       })
