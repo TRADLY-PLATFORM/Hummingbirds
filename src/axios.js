@@ -16,10 +16,10 @@ instance.interceptors.request.use(
   
   (config) => {
   
-    const token = LocalStorageService.getApiToken();
-    if (token) {
+    const token = process.env.REACT_APP_API_KEY;
+     
       config.headers['Authorization'] = 'Bearer ' + token;
-    }
+    
     const authKey = LocalStorageService.getAccessToken();
     if (authKey) {
       config.headers['X-Auth-Key'] = authKey;
@@ -35,32 +35,16 @@ instance.interceptors.response.use(
   (response) => {
  
     const originalRequest = response.config;
-    if (
-      response.status === 200 &&
-      [`/v1/tenants/${process.env.REACT_APP_TENANT_NAME}/configs`].includes(originalRequest.url)
-    ) {
-      const tokenObject = {
-        access_token: response.data.data.key.app_key,
-        refresh_token: response.data.data.key.app_key,
-        x_api_key: response.data.data.key.app_key,
-      };
-      LocalStorageService.setToken(tokenObject);
-      instance.defaults.headers.common['Authorization'] =
-        'Bearer ' + LocalStorageService.getApiToken();
-      instance.defaults.headers.common['X-Auth-Key'] = LocalStorageService.getAccessToken();
-      return response;
-    } else if (
+     if (
       response.status === 200 &&
       [`/v1/users/verify`, `/v1/users/login`].includes(originalRequest.url)
     ) {
       const tokenObject = {
         access_token: response.data.data.user.key.auth_key,
         refresh_token: response.data.data.user.key.refresh_key,
-        x_api_key: LocalStorageService.getApiToken(),
-      };
+       };
       LocalStorageService.setToken(tokenObject);
-      instance.defaults.headers.common['Authorization'] =
-        'Bearer ' + LocalStorageService.getApiToken();
+      instance.defaults.headers.common['Authorization'] = 'Bearer ' + process.env.REACT_APP_API_KEY;
       instance.defaults.headers.common['X-Auth-Key'] = LocalStorageService.getAccessToken();
       return response;
     }
@@ -79,7 +63,7 @@ instance.interceptors.response.use(
       return axios
         .get(URL + '/v1/users/token/refresh', {
           headers: {
-            Authorization: 'Bearer ' + LocalStorageService.getApiToken(),
+            Authorization: 'Bearer ' + process.env.REACT_APP_API_KEY,
             'X-Refresh-Key': LocalStorageService.getRefreshToken(),
           },
         })
@@ -88,10 +72,9 @@ instance.interceptors.response.use(
             const tokenObject = {
               access_token: res.data.data.user.key.auth_key,
               refresh_token: res.data.data.user.key.refresh_key,
-              x_api_key: LocalStorageService.getApiToken(),
-            };
+             };
             LocalStorageService.setToken(tokenObject);
-            originalRequest.headers['Authorization'] = 'Bearer ' + tokenObject.x_api_key;
+            originalRequest.headers['Authorization'] = 'Bearer ' + process.env.REACT_APP_API_KEY;
             originalRequest.headers['X-Auth-Key'] = LocalStorageService.getAccessToken();
             return axios(originalRequest);
           }
@@ -106,3 +89,27 @@ instance.interceptors.response.use(
 );
 
 export default instance;
+
+
+
+
+
+
+
+
+
+// if (
+//       response.status === 200 &&
+//       [`/v1/tenants/${process.env.REACT_APP_TENANT_NAME}/configs`].includes(originalRequest.url)
+//     ) {
+//       const tokenObject = {
+//         access_token: response.data.data.key.app_key,
+//         refresh_token: response.data.data.key.app_key,
+//         x_api_key: response.data.data.key.app_key,
+//       };
+//       LocalStorageService.setToken(tokenObject);
+//       instance.defaults.headers.common['Authorization'] =
+//         'Bearer ' + LocalStorageService.getApiToken();
+//       instance.defaults.headers.common['X-Auth-Key'] = LocalStorageService.getAccessToken();
+//       return response;
+//     } else

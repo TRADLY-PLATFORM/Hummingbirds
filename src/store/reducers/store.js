@@ -6,8 +6,13 @@ const initialState = {
   storeDetails: {},
   storeLists: [],
   storesLists: [],
+  addresses: [],
+  categories: [],
+  attribute:null,
+  file:[],
   error: false,
   message: null,
+
 };
 
 const initStoreDetails = (state, action) => {
@@ -61,6 +66,18 @@ const initCreateStore = (state, action) => {
     loading: true,
   });
 };
+const initSearch = (state, action) => {
+  return updateObject(state, {
+    loading: true,
+  });
+};
+
+ const setSearchAddresses = (state, action) => {
+  return updateObject(state, {
+    addresses: action.addresses,
+    loading:false,
+  });
+};
 
 const createStoreFailed = (state, action) => {
   return updateObject(state, {
@@ -93,8 +110,31 @@ const postStoreFollowSuccess = (state, action) => {
     loading: false,
   });
 };
+const setCategories = (state, action) => {
+  return updateObject(state, {
+    categories: action.categories,
+    loading: false,
+  });
+};
+
+
+const setFile = (state, action) => {
+  console.log('====================================');
+  console.log(action.filesURL);
+  console.log('====================================');
+  return updateObject(state, {
+    file: action.filesURL,
+    
+   });
+};
+const setAttribute = (state, action) => {
+  return updateObject(state, {
+    attribute: action.attribute,
+   });
+};
 
 const storeReducer = (state = initialState, action) => {
+  console.log(action);
   switch (action.type) {
     case actionTypes.INIT_STORE_DETAILS:
       return initStoreDetails(state, action);
@@ -126,6 +166,20 @@ const storeReducer = (state = initialState, action) => {
 
     case actionTypes.SET_ALL_STORES:
       return setStoresLists(state, action);
+
+    case actionTypes.START_SEARCHING:
+      return initSearch(state, action);
+    case actionTypes.ADDRESS_SEARCH:
+      return setSearchAddresses(state, action);
+
+    case actionTypes.SET_ACCOUNTS_CATEGORIES:
+      return setCategories(state, action);
+
+    case actionTypes.SET_IMAGE_FILE:
+      return setFile(state, action);
+
+    case actionTypes.SET_ATTRIBUTE:
+      return setAttribute(state, action);
 
     default:
       return state;

@@ -43,14 +43,14 @@ class Store extends Component {
 
               return (
                 <div className=" " key={i}>
-                  <div className="row">
+                  <div>
+                    <img
+                      src={StoreBanner}
+                      className={classes.storeImage}
+                      alt="Woman accesories"
+                      title="Woman accesories"
+                    />
                     <div class="container-fluid">
-                      <img
-                        src={StoreBanner}
-                        className={classes.storeImage}
-                        alt="Woman accesories"
-                        title="Woman accesories"
-                      />
                       <div className={classes.bannerimages + ' row'}>
                         <div className="col-lg-12">
                           <div className={classes.bannerText + ' col-sm-12'}>
@@ -61,41 +61,17 @@ class Store extends Component {
                                 <img src={AllenSollyLogo} alt={storeName} title={storeName} />
                               )}
 
-                              <h3>{storeName}</h3>
-                              <p>@{storeOwner}</p>
+                              <div>
+                                <h3>{storeName}</h3>
+                                <p>@{storeOwner}</p>
+                              </div>
                             </div>
-                            <div className="col-sm-6">
-                              <button className="btnGreenStyle pull-right mt-4">
+                            <div className={classes.followBtn}>
+                              <button className="btnGreenStyle pull-right  ">
                                 Go to profile store
                               </button>
                             </div>
-                            {/* <div className="col-sm-6">
-                              <button
-                                className="btnGreenStyle pull-right mt-4"
-                                onClick={this.postStoreFollow}
-                              >
-                                Follow
-                              </button>
-                              {this.props.isAuthenticated ? (
-                                <button
-                                  className="btnGreenStyle pull-right mt-4"
-                                  onClick={this.postStoreFollow}
-                                >
-                                  {this.props.storeDetails.get('following')
-                                    ? 'following'
-                                    : 'follow'}
-                                </button>
-                              ) : (
-                                <Link to="/sign-in">
-                                  <button
-                                    className="btnGreenStyle pull-right mt-4 "
-                                    style={{ marginLeft: '15px' }}
-                                  >
-                                    follow
-                                  </button>
-                                </Link>
-                              )}
-                            </div> */}
+                             
                           </div>
                         </div>
                       </div>

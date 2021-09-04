@@ -7,7 +7,7 @@ class Logout extends Component {
   componentDidMount() {
     this.props.onLogout();
     setTimeout(() => {
-         this.props.onSetTenantConfig();
+         this.props.onSetOnboardingConfigsData();
      }, 1000);
     
   }
@@ -19,7 +19,7 @@ class Logout extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     onLogout: () => dispatch(actions.logout()),
-    onSetTenantConfig: () => dispatch(actions.setTenantConfig()),
+    onSetOnboardingConfigsData: () => dispatch(actions.setOnboardingConfigsData()),
   };
 };
 

@@ -26,7 +26,17 @@ export {
   onProductLikeDisLike,
 } from './product';
 
-export { initStoreDetails, userStoreLists, CreateStore, postStoreFollow, getStores } from './store';
+export {
+  initStoreDetails,
+  userStoreLists,
+  CreateStore,
+  postStoreFollow,
+  getStores,
+  addressSearch, 
+  accountCategories,
+  initFile,
+  initAttribute
+} from './store';
 
 export { initGroupDetails, CreateGroup } from './group';
 
