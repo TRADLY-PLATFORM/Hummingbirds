@@ -14,7 +14,7 @@
   <h3 align="center">Tradly Platform</h3>
 
   <p align="center">
-     An open source business platform website.
+     An open source ReactJS Template. Contents served from Tradly Headless API
     <br />
     <a href="https://portal.tradly.app/docs/introduction"><strong>Explore the docs »</strong></a>
     <br />
@@ -103,7 +103,7 @@ There are some things you need to know to work on this open source.
 There are three environment files that can be run and built separately.
 1. Create a sentry profile for error handles. And change the sentry dsn from constant file .
 2. Change "REACT_APP_DOMAIN_URL" from environment files and add your website url there.
-3. If you are a marketplace client of tradly then change the "REACT_APP_TENANT_NAME" from environment files and add your tenant name.
+3. Once you sign up with [Tradly Sandbox](https://superadmin.sandbox.tradly.app), you can get your tenant name (It is the app name you entered when you signup) change the "REACT_APP_TENANT_NAME" from environment files and add your tenant name.
  
 <!-- _For more examples, please refer to the [Documentation](https://example.com)_ -->
 
