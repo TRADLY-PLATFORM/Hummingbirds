@@ -21,6 +21,7 @@ import SporsLogo from '../../assets/images/home/category/sports.svg';
 import GamesLogo from '../../assets/images/home/category/games.svg';
 import axios from '../../axios';
 import axios2 from 'axios';
+import imageToBase64 from 'image-to-base64/browser';
 
 class CreateStore extends Component {
   state = {
@@ -32,6 +33,7 @@ class CreateStore extends Component {
     active: 'false',
     image: null,
     imagePath: '',
+    base64: '',
   };
 
   componentDidMount() {
@@ -55,8 +57,7 @@ class CreateStore extends Component {
         this.toastId = toast.error('Type is required');
       }
       return false;
-    }
-     else if (this.state.image_path === '') {
+    } else if (this.state.image_path === '') {
       if (!toast.isActive(this.toastId)) {
         this.toastId = toast.error('Image is required');
       }
@@ -75,28 +76,10 @@ class CreateStore extends Component {
         type: this.state.type,
       },
     };
-    // account: {
-    //     category_id: ['251'],
-    //     image_path:
-    //       'https://storage.googleapis.com/tradlyapp/images/42979/02465724-e97b-40a8-af4a-95fdacb31ad0.jpeg',
-    //     name: 'Heello 124',
-    //     description: 'Mark',
-    //     coordinates: {
-    //       latitude: 26.444,
-    //       longitude: 50.1235,
-    //     },
-    //     shipping_methods: [1],
-    //     attributes: [
-    //       {
-    //         values: ['9626137045'],
-    //         id: 52,
-    //       },
-    //     ],
-    //     type: 'accounts',
-    //   },
-    console.log(stores)
 
-    this.props.onCreateStore( stores , () =>
+    console.log(stores);
+
+    this.props.onCreateStore(stores, () =>
       this.props.history.push(`/storesuccess?id=${this.props.isAuthenticated}`)
     );
   };
@@ -123,131 +106,68 @@ class CreateStore extends Component {
   };
   imageUpload = async (e) => {
     console.log(e.target.files);
- 
-    this.setState({image:URL.createObjectURL(e.target.files[0])})
+    this.setState({ image: URL.createObjectURL(e.target.files[0]) });
 
-
-  const file = e.target.files[0];
-  const reader = new FileReader();
-    reader.readAsDataURL(file);
-    console.log(reader);
- 
+    const file = e.target.files[0];
     const contentType = file.type;
-      const options = {
-      params: {
-        Key: file.name,
-        ContentType: contentType
-      },
-      headers: {
-        'Content-Type': contentType
-      }
-    };
+    let fileName = e.target.files[0].name;
 
+    imageToBase64(e.target.files[0]) // Path to the image
+      .then((response) => {
+        this.setState({ base64: { file: 'data:' + file.type + ';base64,' + response } });
+        console.log({ file: 'data:' + file.type + ';base64,' + response });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
-    var imgParm = [];
-    var uploadBase64 = [];
-    if (e.target.files[0] != null) {
-      console.log('calling.......here');
-      let fileName = e.target.files[0].name;
-      if (fileName != null) {
-        var splashDict = {
-          name: e.target.files[0].name,
-          type: e.target.files[0].type,
-        };
-         
-        imgParm.push(splashDict);
-      }
-      
-    }
-
-    
- 
-    console.log('imgParm', imgParm);
-    console.log('check', uploadBase64);
-    if (imgParm != 0) {
-       var config = {
+    if (file) {
+      var config = {
         method: 'post',
         url: 'v1/utils/S3signedUploadURL',
         headers: {
           'Content-Type': 'application/json',
         },
-        data: JSON.stringify({ files: imgParm }),
+        data: JSON.stringify({
+          files: [
+            {
+              name: fileName,
+              type: contentType,
+            },
+          ],
+        }),
       };
       axios(config)
         .then((response) => {
-         
           if (response.data.status) {
             console.log(response);
+
             console.log(response.data.data.result[0].fileUri);
-            this.setState({ imagePath: response.data.data.result[0].fileUri });
+
             const path = response.data.data.result[0].signedUrl;
-            // const res =  uploadBase64[0].file;
-          //  fetch( reader).then(async (res) => {
-          //       (async () => {
-          //      fetch(path, {
-          //        method: 'POST',
-          //        headers: {
-          //          'Content-Type': imgParm[0].type,
-          //        },
-          //        body: await res.blob(),
-          //      }).then((res) => {
-          //        console.log(res);
-          //      });
-          //    })();
-          //  });
 
-           axios2
-             .put(path, reader.result, options)
-             .then(function (response) {
-               console.log(response);
-             })
-             .catch(function (error) {
-               console.log(error);
-             });   
- 
-
+            fetch(this.state.base64['file']).then(async (res) => {
+              console.log(res);
+              fetch(path, {
+                method: 'put',
+                headers: {
+                  ContentType: contentType,
+                },
+                body: await res.blob(),
+              }).then((res) => {
+                if (res.status) {
+                  this.setState({ imagePath: response.data.data.result[0].fileUri });
+                  console.log(res);
+                }
+              });
+            });
           }
         })
         .catch((error) => {
           console.log(error);
         });
-        console.log(this.state.image)
-      // networkService.networkCall(
-      //   APPURL.URLPaths.S3signedUploadURL, 'POST',  JSON.stringify({files: imgParm}),appConstant.bToken,appConstant.authKey );
-      // if (responseJson['status'] == true) {
-      //   var result = responseJson['data']['result'];
-      //   console.log('result', result);
-      //   var uploadIncrement = 0;
-      //   for (let i = 0; i < imgParm.length; i++) {
-      //     fetch(uploadBase64[i]['file']).then(async res => {
-      //       const file_upload_res = await networkService.uploadFileWithSignedURL(
-      //         result[i]['signedUrl'],
-      //         imgParm[i]['type'],
-      //         await res.blob(),
-      //       );
-      //       uploadIncrement++;
-      //       if (this.state.photo != null) {
-      //         if (this.state.photoURLPath.length == 0) {
-      //           this.state.photoURLPath = result[i]['fileUri'];
-      //         } else {
-      //           this.state.documentURLPath = result[i]['fileUri'];
-      //         }
-      //       } else {
-      //         this.state.documentURLPath = result[i]['fileUri'];
-      //       }
-      //       if (uploadIncrement === uploadBase64.length) {
-      //         this.createAccountApi()
-      //       }
-      //     });
-      //   }
-      // } else {
-      //   this.setState({ isVisible: false })
-      //    Alert.alert(responseJson);
-      // }
+      console.log(this.state.image);
     }
-    // else {
-    //   this.createAccountApi()
-    // }
   };
   render() {
     let redirectUrl = null;
@@ -295,13 +215,14 @@ class CreateStore extends Component {
                 <div className="row">
                   <div class="p-2">
                     <img
+                      id="imageid"
                       className={classes.groupAvatar}
                       src={this.state.image ? this.state.image : groupAvatar}
                       alt="Stores"
                     />
                   </div>
 
-                  <div class="p-2">
+                  <div className="p-2">
                     <div style={{ height: '0px', overflow: 'hidden' }}>
                       <input
                         type="file"
@@ -318,11 +239,9 @@ class CreateStore extends Component {
                     >
                       Add your store photo
                     </button>
-                      
-                       
-                     
                   </div>
                 </div>
+                {this.state.imagePath && <img src={this.state.imagePath} alt="Hello" />}
               </div>
 
               <div className={classes.addgroup}>

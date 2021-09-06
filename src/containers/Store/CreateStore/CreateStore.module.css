@@ -1,0 +1,194 @@
+.breadCrumb {
+  padding: 0px 8px 15px;
+  margin-bottom: 8px;
+  list-style: none;
+}
+
+.breadCrumb li a {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: -0.385882px;
+  color: #13b58c;
+  opacity: 0.7;
+}
+
+.mycontainer {
+  background-color: #fff;
+  width: 70%;
+  margin: 10px auto;
+  border-radius: 10px;
+}
+
+.title {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #13b58c;
+  margin-top: 1em;
+}
+
+.addgroup {
+  padding: 2rem 4rem 3rem;
+  color: #000;
+  border-radius: 10px;
+}
+
+.groupcard {
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  padding: 4rem;
+  text-align: center;
+}
+
+.input {
+  width: 100%;
+  margin: 0 auto;
+  border: 1px solid #ececec;
+  border-radius: 24px;
+  padding: 10px 20px;
+  background: #fff;
+  color: #000;
+}
+
+.groupAvatar {
+  margin-top: 4px;
+  width: 82px;
+  border-radius: 50% !important;
+}
+.categoryBox {
+  padding-right: 80px;
+  padding-left: 80px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.wellCategory {
+  height: 100px;
+  width: 100px;
+  margin-right : 16px;
+  padding: 16px 4px;
+  margin-bottom: 20px;
+  background-color: #f6f9ff;
+   border-radius: 10px;
+  text-align: center;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+    border: 1px solid transparent;
+
+}
+  .wellCategory:hover {
+    background-color: #dffbf4;
+    border: 1px solid #15b790;
+  }
+.wellCategory p {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 12px;
+  color: #15b790;
+
+  margin: 0;
+}
+
+.wellCategory img {
+  width: 32px;
+  height: 32px;
+ }
+
+.locationImage {
+  position: absolute;
+  top: 0%;
+  right: 0;
+  margin: 12px;
+}
+.closeImage {
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  top: 0%;
+  right: 0;
+  margin: 17px;
+  cursor: pointer;
+}
+.searchResult {
+  height: 200px;
+  width: 100%;
+  border: 1px solid #ececec;
+  border-radius: 24px;
+  padding: 10px 20px;
+  background: #fff;
+  position: absolute;
+  top: 50px;
+  overflow-y: scroll;
+}
+.addressList {
+  display: flex;
+  align-items: center !important;
+  padding: 10px;
+  margin: auto 0;
+  cursor: pointer;
+  border-radius: 25px;
+}
+.addressList:hover {
+  background-color: rgba(197, 197, 197, 0.397);
+}
+
+.addressList p {
+  margin: auto 10px;
+}
+.listLocationImage {
+  height: 30px;
+  width: 30px;
+  padding: 5px;
+  border-radius: 100%;
+  background-color: #ececec;
+}
+
+@media only screen and (max-width: 1300px) {
+  .mycontainer {
+    width: 90%;
+  }
+}
+@media only screen and (max-width: 700px) {
+  .mycontainer {
+    width: 100%;
+  }
+  
+}
+@media only screen and (max-width: 500px) {
+  .categoryBox {
+    padding: 0;
+    display: grid  !important;
+    grid-template-columns: 46% 46%;
+    grid-column-gap: 8%;
+    }
+  .wellCategory {
+     height: 135px;
+    width: 100%;
+    padding: 25px 4px;
+   }
+ 
+  .wellCategory p {
+    font-weight: 500;
+    font-size: 15px;
+    height: unset;
+    line-height: 14px;
+    overflow: hidden;
+    font-family: Montserrat;
+    color: #15b790;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .wellCategory img {
+    width: 46px;
+    height: 46px;
+  }
+}

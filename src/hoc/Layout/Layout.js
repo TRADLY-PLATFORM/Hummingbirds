@@ -21,6 +21,7 @@ import menubarIcon from "../../assets/images/mobilemenu/menu.png"
 import closeMenu from "../../assets/images/mobilemenu/close.png"
 import profileUser from '../../assets/images/header/profile-user.png';
 import arrow from '../../assets/images/mobilemenu/down-arrow.png';
+import { Search } from '../../components/Seacrh/Search';
 
 
 
@@ -103,7 +104,7 @@ const Layout = (props) => {
                       src={getUserImage() !== '' ? getUserImage() : profileUser}
                       alt="User Avatar"
                     />
-                    <img style={{ height: '20px', marginLeft: '5px' }} src={arrow} alt="" />
+                    <img style={{ width: '7px',height:"7px", marginLeft: '5px' }} src={arrow} alt="" />
                   </Link>
 
                   <div className={classes.dropdownMenu + ' user-menu dropdown-menu'}>
@@ -113,12 +114,12 @@ const Layout = (props) => {
                       </Link>
                     ) : (
                       <Aux>
-                        <Link className={classes.navLink} to="#">
+                        {/* <Link className={classes.navLink} to="#">
                           <i className="fa fa-user"></i> My Profile
                         </Link>
                         <Link className={classes.navLink} to="#">
                           <i className="fa fa-cog"></i> Settings
-                        </Link>
+                        </Link> */}
                         <Link className={classes.navLink} to="/logout">
                           <i className="fa fa-power-off"></i> Logout
                         </Link>
@@ -128,9 +129,8 @@ const Layout = (props) => {
                 </div>
               </div>
             </div>
-            <div className="col-sm-6" style={{ marginTop: '40px' }}>
-              <span className="glyphicon glyphicon-search form-control-feedback"></span>
-              <input type="text" className="form-control input-lg" placeholder="Search Product" />
+            <div   style={{ marginTop: '40px' }}>
+               <Search/>
             </div>
 
             <div className={classes.navbarMenu} id="navbarMenu">

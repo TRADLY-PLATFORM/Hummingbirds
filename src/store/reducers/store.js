@@ -6,13 +6,31 @@ const initialState = {
   storeDetails: {},
   storeLists: [],
   storesLists: [],
+  addresses: [],
+  categories: [],
+  attribute:null,
+  file:[],
   error: false,
   message: null,
+
 };
+
+
 
 const initStoreDetails = (state, action) => {
   return updateObject(state, {
     loading: true,
+  });
+};
+const setLoading = (state, action) => {
+  return updateObject(state, {
+    loading: true,
+  });
+};
+const errorMessage = (state, action) => {
+  return updateObject(state, {
+    loading: false,
+    message:action.msg
   });
 };
 
@@ -56,9 +74,22 @@ const fetchStoreListsFailed = (state, action) => {
   return updateObject(state, { loading: false, error: true, message: 'Could not fetch result.' });
 };
 
+
 const initCreateStore = (state, action) => {
   return updateObject(state, {
     loading: true,
+  });
+};
+const initSearch = (state, action) => {
+  return updateObject(state, {
+    loading: true,
+  });
+};
+
+ const setSearchAddresses = (state, action) => {
+  return updateObject(state, {
+    addresses: action.addresses,
+    loading:false,
   });
 };
 
@@ -93,9 +124,35 @@ const postStoreFollowSuccess = (state, action) => {
     loading: false,
   });
 };
+const setCategories = (state, action) => {
+  return updateObject(state, {
+    categories: action.categories,
+    loading: false,
+  });
+};
+
+
+const setFile = (state, action) => {
+  return updateObject(state, {
+    file: action.filesURL,
+    message:null ,
+  });
+};
+const setAttribute = (state, action) => {
+  return updateObject(state, {
+    attribute: action.attribute,
+   });
+};
 
 const storeReducer = (state = initialState, action) => {
+  console.log(action);
   switch (action.type) {
+    case actionTypes.ERROR_MESSAGE:
+      return errorMessage(state, action);
+
+    case actionTypes.START_LOADING:
+      return setLoading(state, action);
+
     case actionTypes.INIT_STORE_DETAILS:
       return initStoreDetails(state, action);
     case actionTypes.SET_STORE_DETAILS:
@@ -126,6 +183,20 @@ const storeReducer = (state = initialState, action) => {
 
     case actionTypes.SET_ALL_STORES:
       return setStoresLists(state, action);
+
+    case actionTypes.START_SEARCHING:
+      return initSearch(state, action);
+    case actionTypes.ADDRESS_SEARCH:
+      return setSearchAddresses(state, action);
+
+    case actionTypes.SET_ACCOUNTS_CATEGORIES:
+      return setCategories(state, action);
+
+    case actionTypes.SET_IMAGE_FILE:
+      return setFile(state, action);
+
+    case actionTypes.SET_ATTRIBUTE:
+      return setAttribute(state, action);
 
     default:
       return state;

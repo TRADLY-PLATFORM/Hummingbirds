@@ -195,7 +195,9 @@ class StoreDetails extends Component {
               <div className="col-xs-5 col-lg-3">
                 Descriptions <span className="float-right">:</span>
               </div>
-              <div className="col-xs-7 col-lg-9">{storeDetails.get('description', '')||"N/A"}</div>
+              <div className="col-xs-7 col-lg-9">
+                {storeDetails.get('description', '') || 'N/A'}
+              </div>
             </div>
             <div className="col-lg-12 mb1">
               <div className="col-xs-5 col-lg-3">

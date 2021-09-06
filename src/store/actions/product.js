@@ -67,7 +67,7 @@ export const initListings = (count, filterValue, totalCountOfProducts) => {
       .get(
         '/products/v1/listings?page=1&per_page=' +
           (parseInt(count) + totalCountOfProducts) +
-          filterValue
+          filterValue 
       )
       .then((response) => {
         if (response.data.status) {

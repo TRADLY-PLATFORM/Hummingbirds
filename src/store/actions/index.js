@@ -26,7 +26,18 @@ export {
   onProductLikeDisLike,
 } from './product';
 
-export { initStoreDetails, userStoreLists, CreateStore, postStoreFollow, getStores } from './store';
+export {
+  initStoreDetails,
+  userStoreLists,
+  CreateStore,
+  postStoreFollow,
+  getStores,
+  addressSearch,
+  accountCategories,
+  initFile,
+  initAttribute,
+  failedMessage,
+} from './store';
 
 export { initGroupDetails, CreateGroup } from './group';
 
@@ -35,3 +46,5 @@ export { getCartList, addToCart } from './cart';
 export { connectStripe } from './payment';
 
 export { getWishlist } from './wishList';
+
+export { getSearchingResult } from './Search';

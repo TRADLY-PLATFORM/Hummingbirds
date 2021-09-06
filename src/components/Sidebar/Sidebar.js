@@ -30,7 +30,7 @@ class Sidebar extends Component {
     const { tenantData, location } = this.props;
    
     console.log(tenantData, location);
-    let appLogo = tenantData.get('logo_path', '');
+    let appLogo = localStorage.getItem("logo_path");
  
     let redirectUrl = null;
     if (this.state.redirect) {
@@ -128,19 +128,30 @@ class Sidebar extends Component {
                 <span>My Transaction</span>
               </Link>
             </li>
+             */}
             <li>
               {!this.props.isAuthentication ? (
                 <Link to="#" onClick={(path) => this.authRedirectHandler('/store')}>
-                  <img className="img-fluid"  src={url === "/store"?StoreActiveLogo:StoreLogo}  alt="store" title="store" />
+                  <img
+                    className="img-fluid"
+                    src={url === '/store' ? StoreActiveLogo : StoreLogo}
+                    alt="store"
+                    title="store"
+                  />
                   <span>My Store</span>
                 </Link>
               ) : (
                 <Link to="/store">
-                  <img className="img-fluid" src={url === "/store"?StoreActiveLogo:StoreLogo} alt="store" title="store" />
+                  <img
+                    className="img-fluid"
+                    src={url === '/store' ? StoreActiveLogo : StoreLogo}
+                    alt="store"
+                    title="store"
+                  />
                   <span>My Store</span>
                 </Link>
               )}
-            </li> */}
+            </li>
             {/* <li>
               <Link to="/group">
                 <img className="img-fluid" src={GroupLogo} alt="Home" title="Home" />
