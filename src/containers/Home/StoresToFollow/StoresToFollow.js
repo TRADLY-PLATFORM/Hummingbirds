@@ -41,9 +41,9 @@ const StoresToFollow = ({ storesToFollow }) => {
 
   // const [followSet,setFollowSet] = useState()
   let arrayListings = [];
-  let title = 'Stores to Follow';
+  let title = storesToFollow.title;
 
-  arrayListings = storesToFollow.map((list, i) => {
+  arrayListings = storesToFollow?.accounts?.map((list, i) => {
     let imagePath = AllenSollyLogo;
      if (list.images.length > 0) {
       imagePath = list.images[0];
@@ -113,7 +113,7 @@ const StoresToFollow = ({ storesToFollow }) => {
 
   return (
     <>
-      {arrayListings.length > 0 && (
+      {arrayListings?.length > 0 && (
         <div className={classes.storePart}>
           <div className={classes.storePartHeader}>
             <div className="  ">

@@ -25,7 +25,11 @@ SwiperCore.use([Navigation, Pagination]);
 const LatestProducts = ({ products }) => {
   const [activeItemIndex, setActiveItemIndex] = useState(0);
   const { width, height } = useWindowSize();
+  const collections = useSelector((state) => state.home.collections);
 
+  console.log('====================================');
+  console.log(products);
+  console.log('====================================');
   const dispatch = useDispatch();
   // useEffect(() => {
   //    dispatch(actions.initLatestProducts());
@@ -33,8 +37,8 @@ const LatestProducts = ({ products }) => {
   // const products = useSelector((state) => state.home.latestProducts);
 
   let arrayListings = [];
-  let title = 'Latest Products';
-  arrayListings = products.map((list, i) => {
+  let title = products.title;
+  arrayListings = products?.listings?.map((list, i) => {
     let imagePath = NoProductImage;
     if (list.images[0] !== undefined) {
       imagePath = list.images[0];
@@ -84,7 +88,7 @@ const LatestProducts = ({ products }) => {
 
   return (
     <>
-      {arrayListings.length > 0 && (
+      {arrayListings?.length > 0 && (
         <div className={classes.latestProducts}>
           <div className={classes.latestProductsHeader}>
             <div className="  ">

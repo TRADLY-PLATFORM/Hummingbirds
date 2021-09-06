@@ -13,8 +13,7 @@ import Home from './containers/Home/Home';
 import Listings from './containers/Listings/Listings';
 import AllCategory from './components/Category/AllCategory/AllCategory';
 import ProductDetails from './containers/ProductDetails/ProductDetails';
-import Store from './containers/Store/Store';
-import * as actions from '../src/store/actions/index';
+ import * as actions from '../src/store/actions/index';
 import WishList from './containers/WishList/WishList';
 import MyTransactionst from './containers/MyTransactionst/MyTransactionst';
 import MyProfile from './containers/MyProfile/MyProfile';
@@ -41,6 +40,7 @@ import { ErrorBoundary } from '@sentry/react';
 import ForgotPassword from './containers/Auth/ForgotPassword/ForgotPassword';
 import SearchResult from './components/Seacrh/SearchResult';
 import CreateStore from './containers/Store/CreateStore/CreateStore';
+import Store from './containers/Store/MyStore/Store';
 
 class App extends Component {
   componentDidMount() {

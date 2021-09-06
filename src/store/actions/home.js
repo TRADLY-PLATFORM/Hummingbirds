@@ -66,15 +66,15 @@ export const initHomeCollections = () => {
             //  console.log(categories, collections);
             // stores
             let stores = response.data.data.collections.find(
-              (item, i) => item.title === 'Stores to Follow'
+              (item, i) => item.scope_type === 1
             );
-            dispatch(setStores(stores.accounts));
+            dispatch(setStores(stores));
          //  products
              let products = response.data.data.collections.find(
-               (item, i) => item.title === 'Latest Products'
+               (item, i) => item.scope_type === 4
              );
 
-             dispatch(setLatestProducts(products.listings));
+             dispatch(setLatestProducts(products));
 
             // let data = {
             //   promo_banners: promo_banners,
