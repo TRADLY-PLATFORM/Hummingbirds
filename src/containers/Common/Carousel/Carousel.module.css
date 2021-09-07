@@ -6,6 +6,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    height: 100vh !important;
 }
 
 .cardTitle{    
@@ -21,9 +22,9 @@
 }
 
 
-.item img{
+.itemImg img{
     width: 75%; 
-    height: 80%;
+    height: 75% !important;
 }
 
 .carousel {

@@ -9,12 +9,13 @@
  .leftDiv {
    z-index: 1;
    margin: auto 0;
+   min-height: 100vh !important;
  }
 
 .rightDiv {
    z-index: 1;
    color: white;
-   height: 100vh;
+   min-height: 100vh;
     padding: 10% 15%;
     background: linear-gradient(180deg, #2bdbc0 0%, #13b58c 100%);
  }
