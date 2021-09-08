@@ -149,7 +149,7 @@ class SignIn extends Component {
     }
     console.log('isAuthenticated', isAuthenticated);
     return (
-      <div >
+      <div>
         <Helmet>
           <title>Tradly Web - Sign In</title>
           <meta
@@ -157,7 +157,7 @@ class SignIn extends Component {
             content=" Widest Range of Mobile & Tablets, Home Appliances, Tv, Audio, Home & Living At Tradly | Best Prices ? Fast DELIVERY | Cash on Delivery ? Effortless Shopping ? Best Customer Care!"
           />
         </Helmet>
-        <div className="" >
+        <div className="">
           <div className={classes.title}>
             <p>{this.props.configsData.registration_title}</p>
           </div>

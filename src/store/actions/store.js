@@ -290,6 +290,7 @@ export const initFile = (
   description,
   coordinates,
   base64,
+  attributeData,
   callBack
 ) => {
   return (dispatch) => {
@@ -300,14 +301,14 @@ export const initFile = (
       headers: {
         'Content-Type': 'application/json',
       },
-      data: JSON.stringify({
+      data: {
         files: [
           {
             name: fileName,
             type: contentType,
           },
         ],
-      }),
+      },
     };
     axios(config)
       .then((response) => {
@@ -338,6 +339,7 @@ export const initFile = (
                       web_address: '',
                       image_path: ImagePath,
                       coordinates: coordinates,
+                      attributes: attributeData,
                       type: 'accounts',
                     },
                   };
