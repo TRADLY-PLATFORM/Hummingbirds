@@ -30,8 +30,7 @@ import StoreSuccess from './containers/Store/StoreSuccess';
 import ProductSuccess from './containers/Store/ProductSuccess';
 import NoProduct from './containers/Store/NoProduct';
 import withProduct from './containers/Store/withProduct';
-import addProduct from './containers/Store/addProduct';
-import reviewPage from './containers/Order/reviewPage';
+ import reviewPage from './containers/Order/reviewPage';
 import detailOrder from './containers/Order/detailOrder';
 import ListingsByCategory from './containers/ListingsByCategory/ListingsByCategory';
 import AllStores from './containers/Store/AllStores';
@@ -40,7 +39,8 @@ import { ErrorBoundary } from '@sentry/react';
 import ForgotPassword from './containers/Auth/ForgotPassword/ForgotPassword';
 import SearchResult from './components/Seacrh/SearchResult';
 import CreateStore from './containers/Store/CreateStore/CreateStore';
-import Store from './containers/Store/MyStore/Store';
+import Store from './containers/Store/MyStore/Stor';
+ import CreateProduct from './containers/Store/CreateProduct/CreateProduct';
 
 class App extends Component {
   componentDidMount() {
@@ -89,7 +89,7 @@ class App extends Component {
         <Route path="/productsuccess" excat component={ProductSuccess} />
         <Route path="/noproduct" excat component={NoProduct} />
         <Route path="/withproduct" excat component={withProduct} />
-        <Route path="/addproduct" excat component={addProduct} />
+        <Route path="/addproduct/:accountId" excat component={CreateProduct} />
         <Route path="/reviewpage" excat component={reviewPage} />
         <Route path="/detailorder" excat component={detailOrder} />
         <Route path="/search/:key" excat component={SearchResult} />

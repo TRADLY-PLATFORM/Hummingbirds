@@ -103,13 +103,13 @@ const CreateStore = () => {
       const stores = {
         account: {
           name: name,
-           category_id: [type.id],
+          category_id: [type.id],
           description: description,
           image_path: '',
           web_address: '',
           coordinates: coordinates,
           type: 'accounts',
-          attributes: attributeData,
+          attributes: attributeData ? attributeData : [{}],
         },
       };
 
@@ -138,9 +138,9 @@ const CreateStore = () => {
 
   // Get Category Type:
   const getType = (category) => {
+    setAttributeData(null);
     setType(category);
-    console.log(category);
-    dispatch(actions.initAttribute(category.id));
+     dispatch(actions.initAttribute(category.id,'accounts'));
   };
 
   const imageUploadClick = () => {

@@ -22,15 +22,15 @@
 
 }
 
-.addProductImg{
-        width: 150px;
+.productImage{
+        width: 100px;
         height: 100px;
-        left: 819px;
-        top: 266px;
-        margin-top: -13px;
+        margin: 10px;
+        border: 1px solid #13B58C;
 }
 
 .productImgRule {
+    margin-top: 10px;
     font-size: 14px;
     line-height: 16px;
     color: #4F4F4F;
@@ -38,23 +38,21 @@
 
 }
 
-
-
-
 .input {
     width: 100%;
     margin: 0 auto;
-    border: 1px solid #13B58C;
-    border-radius: 24px;
+    border: none;
+    border-bottom: 1px solid #13B58C;
     padding: 10px;
-    background: #fff;
     color: #000;
-}
-
+    outline: none;
+ }
+ 
 .productDetails {
     padding-top: 4rem;
     color: #000;
     border-radius: 10px;
+
 }
 
 .btnGreenStyle {
@@ -75,5 +73,54 @@
     margin-top: 30px;
 }
 
+
+.locationImage {
+  position: absolute;
+  top: 0%;
+  right: 0;
+  margin: 30px 12px;
+}
+.closeImage {
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  top: 0%;
+  right: 0;
+  margin: 35px 17px;
+  cursor: pointer;
+}
+.searchResult {
+  height: 200px;
+  width: 100%;
+  border: 1px solid #13B58C;
+  border-radius:5px;
+  padding: 10px 20px;
+  background: #fff;
+  position: absolute;
+  top: 70px;
+  overflow-y: scroll;
+}
+.addressList {
+  display: flex;
+  align-items: center !important;
+  padding: 10px;
+  margin: auto 0;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.addressList:hover {
+  background-color: rgba(197, 197, 197, 0.397);
+}
+
+.addressList p {
+  margin: auto 10px;
+}
+.listLocationImage {
+  height: 30px;
+  width: 30px;
+  padding: 5px;
+  border-radius: 100%;
+  background-color: #ececec;
+}
 
 

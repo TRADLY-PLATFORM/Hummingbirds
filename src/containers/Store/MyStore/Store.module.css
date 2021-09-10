@@ -25,13 +25,7 @@
   margin-top: 3em;
 }
 
-.mycontainer {
-  background-color: #fff;
-  width: 70%;
-  margin: 10px auto;
-  border-radius: 10px;
-}
-
+ 
 .title {
   font-weight: 500;
   font-size: 14px;
@@ -41,69 +35,7 @@
   margin-top: 1em;
 }
 
-.addgroup {
-  padding: 2rem 4rem 3rem;
-  color: #000;
-  border-radius: 10px;
-}
-
-.groupcard {
-  border: 1px solid #ffffff;
-  border-radius: 10px;
-  padding: 4rem;
-  text-align: center;
-}
-
-.input {
-  width: 100%;
-  margin: 0 auto;
-  border: 1px solid #ececec;
-  border-radius: 24px;
-  padding: 10px 20px;
-  background: #fff;
-  color: #000;
-}
-.inputDescription {
-  width: 100%;
-  height: 150px;
-}
-
-.groupAvatar {
-  margin-top: 4px;
-  width: 82px;
-  border-radius: 50% !important;
-}
-
-.wellCategory {
-  min-height: 30px;
-  width: 150px;
-  padding: 20px;
-  margin: 20px;
-  background-color: #ffffff;
-  border: 1px solid #e3e3e3;
-  border-radius: 10px;
-  text-align: center;
-  box-sizing: border-box;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.wellCategory p {
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 17px;
-  color: #000000;
-  word-break: break-word;
-}
-
-.wellCategory img {
-  width: 30%;
-  margin-bottom: 10px;
-}
+ 
 
  .fashionStore{
    display: flex;
@@ -152,101 +84,109 @@
   background-size: cover;
   height: 217px;
 }
-.latestTrend {
-  margin-bottom: 5px;
-  background-color: #ffffff;
-  border: 1px solid #e3e3e3;
-  border-radius: 10px;
-  box-sizing: border-box;
-  min-height: 235px;
-}
-
-.latestTrend p {
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 20px;
-  color: #4a4a4a;
-  padding: 10px;
-  height: 50px;
-}
-.bottomDesc {
-  margin-bottom: 10px;
-}
-.bottomDesc img {
-  width: 15%;
-  margin-left: 10px;
-}
-
-.bottomDesc span {
-  font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 17px;
-  color: #4a4a4a;
-  opacity: 0.5;
-  position: relative;
-  left: 3px;
-  top: 3px;
-}
+ 
 
 .storeImage {
   margin-bottom: 15px;
   width: 100%;
 }
+ 
+ .noListingBox{
+   margin: 50px auto;
+   width: 80%;
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
 
-.amountTitle {
-  font-weight: 600;
-  font-size: 14px;
-  line-height: 17px;
-  text-align: center;
+ }
 
-  float: right;
-  padding: 8px;
+ .noListingBox h3{
+   color: black;
+   font: 500;
+   font-size: 36px;
+   margin: 15px 0;
+ }
+ .noListingBox button{
+   color: white;
+   margin: 25px 0;
+ }
+ .noListingBox img{
+   width: 30%;
+ }
 
-  color: #13b58c;
+
+ .find {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+  padding: 10px;
+  background-color: #f6f9ff;
 }
 
-.bannerDescText {
-  background: #ffffff;
-  box-shadow: 0px 0px 20px rgb(0 0 0 / 5%);
+ 
+.latestTrend {
+  background-color: #ffffff;
+  border: 1px solid #e3e3e3;
   border-radius: 10px;
-  padding: 20px 0px;
-  margin-top: 1em;
+  box-sizing: border-box;
+  min-height: 263px;
+  overflow: hidden;
+  width: 190px;
+  margin: 15px 10px;
+}
+.latestTrend:hover {
+  /* background-color: #4a4a4a; */
+}
+.latestTrend p {
+  padding: 2px 8px;
+font-weight: 600;
+font-size: 12px;
+line-height: 15px;
+color: #15B790;
+}
+.productImage {
+  margin-bottom: 15px;
+  width: 100%;
+  height: 190px;
+}
+.bottomDesc {
+  margin-bottom: 10px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+   padding:2px 8px;
+  position: relative;
+}
+.bottomDesc img {
+  width: 15%;
+  height: 100%;
+    border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  /* border: solid 1px #949ca2; */
+  transition: all 0.5s;
 }
 
-
-.btnGreenFollow {
-  padding: 10px 13px;
-  border: none;
-  background: linear-gradient(180deg, #2bdbc0 0%, #13b58c 100%);
-  border-radius: 24px;
-  width: 100%;
+.bottomDesc span {
   font-style: normal;
   font-weight: 500;
-  font-size: 14px;
-  line-height: 17px;
-  /* identical to box height */
-  color: #ffffff;
-  margin-top: 7px;
+  font-size: 12px;
+  line-height: 12px;
+  color: #4a4a4a;
+  opacity: 1;
+ 
 }
-
-.btnGreenUnFollowing{
-  padding: 10px 13px;
-  border: 1px solid #13b58c;
-  background: white;
-  border-radius: 24px;
-  width: 100%;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 18px;
-  line-height: 17px;
-  /* identical to box height */
+.amountTitle {
+  min-width: 50px;
+   font-weight: bold;
+  font-size: 15px;
+  text-align: right;
   color: #13b58c;
+  margin: auto 0;
 }
-
-
-
 
 @media only screen and (max-width: 600px) {
    .bannerText {
@@ -260,4 +200,22 @@
    display: flex;
    justify-content: center;
  }
+
+ .find{
+     display: grid;
+     grid-template-columns: 48% 48%;
+     grid-column-gap: 4%;
+      padding: 0 5%; 
+      margin: 0;
+   }
+   .latestTrend{
+     width: 100%;
+       margin:  10px 0;
+
+   }
+ 
+.bottomDesc img{
+  width: 15%;
+  height: 100%;
+}
 }
