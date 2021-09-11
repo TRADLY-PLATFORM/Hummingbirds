@@ -30,7 +30,7 @@ class Sidebar extends Component {
     const { tenantData, location } = this.props;
    
     console.log(tenantData, location);
-    let appLogo = localStorage.getItem("logo_path");
+    let appLogo = localStorage.getItem('logo_path') || this.props.onboarding_configs.splash_image;
  
     let redirectUrl = null;
     if (this.state.redirect) {
@@ -186,6 +186,7 @@ const mapStateToProps = (state) => {
     isAuthenticated: selectUserId(state),
     tenantData: selectTenantData(state),
     userData: selectUserData(state),
+    onboarding_configs: state.auth.onboarding_configs,
   };
 };
 
