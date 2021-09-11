@@ -61,7 +61,7 @@
   font-size: 14px;
   line-height: 17px;
   /* identical to box height */
-  color: #ffffff;
+  color: #ffffff !important;
   z-index: 10;
   text-decoration: none !important;
 }
@@ -76,7 +76,7 @@
   font-size: 14px;
   line-height: 17px;
   /* identical to box height */
-  color: #13b58c;
+  color: var(--primary_color) !important;
     z-index: 10;
 text-decoration: none !important;
 }
