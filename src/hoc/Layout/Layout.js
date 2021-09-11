@@ -54,7 +54,7 @@ const Layout = (props) => {
   }
 
   // Logo path:
-    let appLogo = tenantData.get('logo_path', '');
+     let appLogo = localStorage.getItem('logo_path') || this.props.onboarding_configs.splash_image;
   function getUserImage() {
     return userData.get('profile_pic', '');
   }
@@ -129,7 +129,7 @@ const Layout = (props) => {
                 </div>
               </div>
             </div>
-            <div   style={{ marginTop: '40px' }}>
+            <div   style={{ marginTop: '27px' }}>
                <Search/>
             </div>
 
