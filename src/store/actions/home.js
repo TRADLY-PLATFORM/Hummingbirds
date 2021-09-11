@@ -120,9 +120,9 @@ export const initStoresToFollow = () => {
       .get('/products/v1/home/')
       .then((response) => {
         if (response.data.status) {
-          let stores = response.data.data.collections.find((item,i)=>item.title === "Stores to Follow")
+          let stores = response.data.data.collections.find((item, i) => item.scope_type === 1);
            dispatch(
-            setStores(stores.accounts)
+            setStores(stores)
           );
         }
       })
@@ -157,11 +157,9 @@ export const initLatestProducts = () => {
         .then((response) => {
           if (response.data.status) {
             console.log(response);
-            let products = response.data.data.collections.find(
-              (item, i) => item.title === 'Latest Products'
-            );
+            let products = response.data.data.collections.find((item, i) => item.scope_type === 4);
 
-            dispatch(setLatestProducts(products.listings));
+            dispatch(setLatestProducts(products));
 
            
           } else {

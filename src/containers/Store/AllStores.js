@@ -31,13 +31,13 @@ const AllStores = () => {
 
     setTimeout(() => {
       dispatch(actions.postStoreFollow(storeId, IsFollowing));
-    }, 2000);
+    }, 1000);
 
     setTimeout(() => {
       if (!followError) {
         dispatch(actions.getStores());
       }
-    }, 3000);
+    }, 2000);
   };
 
   return (
@@ -67,37 +67,38 @@ const AllStores = () => {
           // }
 
           return (
-            <div className={classes.wellStore + ' col-lg-12'} key={i}>
-              <Link to={`/a/${store.id}-${store.name}`} style={{ textDecoration: 'none' }}>
-                <div className={classes.imageDiv}>
-                  <img src={imagePath} alt={store.name} title={store.name} />
-                </div>
-                <div className={classes.wellStoreDetails}>
-                  <p style={{ fontWeight: 'bold', marginBottom: '1em' }}>{name}</p>
-                  <p>{description}</p>
-                </div>
-              </Link>
+            <Link
+              className={classes.wellStore + ' col-lg-12'}
+              key={i}
+              to={`/a/${store.id}-${store.name}`}
+              style={{ textDecoration: 'none' }}
+            >
+              <div className={classes.imageDiv}>
+                <img src={imagePath} alt={store.name} title={store.name} />
+              </div>
+              <div className={classes.wellStoreDetails}>
+                <p style={{ fontWeight: 'bold', marginBottom: '1em' }}>{name}</p>
+                <p>{description}</p>
+              </div>
+
               {isAuthenticated ? (
-                <button
+                <Link
+                  style={{textDecoration:"none"}}
                   className={
                     (store.following ? classes.btnGreenFollow : classes.btnGreenUnFollowing) +
                     ' mt-5'
                   }
                   onClick={() => postStoreFollow(store.id, store.following)}
+                  to='/stores'
                 >
                   {store.following ? 'Following' : 'Follow'}
-                </button>
+                </Link>
               ) : (
                 <Link to="/sign-in">
-                  <button
-                    className={classes.btnGreenUnFollowing + ' mt-5'}
-                     
-                  >
-                    Follow
-                  </button>
+                  <button className={classes.btnGreenUnFollowing + ' mt-5'}>Follow</button>
                 </Link>
               )}
-            </div>
+            </Link>
           );
         })}
       </div>

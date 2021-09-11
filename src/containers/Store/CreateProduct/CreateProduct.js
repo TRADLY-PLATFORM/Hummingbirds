@@ -299,15 +299,16 @@ const CreateProduct = () => {
               id="selling-price"
               value={price}
               className={classes.input}
-              style={{ display: 'inline', width: '75%' }}
+              style={{ display: 'inline', width: '70%' }}
               name="Selling Price"
               type="number"
               placeholder=""
               onChange={(e) => handleChange(e)}
             />
+            
             <select
               className={classes.input}
-              style={{ display: 'inline', width: '20%', marginLeft: '10px' }}
+              style={{ display: 'inline', width: '25%', marginLeft: '10px' }}
               name=""
               id="currency"
               onChange={selectCurrency}
