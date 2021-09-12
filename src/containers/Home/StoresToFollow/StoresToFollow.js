@@ -41,9 +41,9 @@ const StoresToFollow = ({ storesToFollow }) => {
 
   // const [followSet,setFollowSet] = useState()
   let arrayListings = [];
-  let title = 'Stores to Follow';
+  let title = storesToFollow.title;
 
-  arrayListings = storesToFollow.map((list, i) => {
+  arrayListings = storesToFollow?.accounts?.map((list, i) => {
     let imagePath = AllenSollyLogo;
      if (list.images.length > 0) {
       imagePath = list.images[0];
@@ -80,31 +80,28 @@ const StoresToFollow = ({ storesToFollow }) => {
     }
       return (
         <Link className={classes.wellStore} key={i} id={list.id} to={`/a/${list.id}-${list.name}`}>
-           
-            <div className={classes.imageDiv}>
-              <img src={imagePath} alt={list.name} title={list.name} />
-            </div>
-            <div className={classes.wellStoreDetails}>
-              <p style={{ fontWeight: 'bold', marginBottom: '1em' }}>
-                {list.name.length < 10 ? list.name : list.name.substring(0, 15) + '..'}
-              </p>
-              <p>{description}</p>
-            </div>
-        
+          <div className={classes.imageDiv}>
+            <img src={imagePath} alt={list.name} title={list.name} />
+          </div>
+          <div className={classes.wellStoreDetails}>
+            <p style={{ fontWeight: 'bold', marginBottom: '1em' }}>
+              {list.name.length < 10 ? list.name : list.name.substring(0, 15) + '..'}
+            </p>
+            <p>{description}</p>
+          </div>
+
           {isAuthenticated ? (
             <Link
               id="followBtn"
-               
-              className={
-                (list.following ? classes.btnGreenFollowing : classes.btnGreenUnFollowing)  
-              }
+              className={list.following ? classes.btnGreenFollowing : classes.btnGreenUnFollowing}
               onClick={(e) => postStoreFollow(e, list.id)}
+              to="/"
             >
               {list.following ? 'Following' : 'Follow'}
             </Link>
           ) : (
             <Link to="/sign-in">
-              <button className={classes.btnGreenUnFollowing  }>Follow</button>
+              <button className={classes.btnGreenUnFollowing}>Follow</button>
             </Link>
           )}
         </Link>
@@ -113,7 +110,7 @@ const StoresToFollow = ({ storesToFollow }) => {
 
   return (
     <>
-      {arrayListings.length > 0 && (
+      {arrayListings?.length > 0 && (
         <div className={classes.storePart}>
           <div className={classes.storePartHeader}>
             <div className="  ">
@@ -170,35 +167,4 @@ const StoresToFollow = ({ storesToFollow }) => {
 
 export default StoresToFollow;
 
-
-// <ItemsCarousel
-//   infiniteLoop={false}
-//   gutter={12}
-//   activePosition={'center'}
-//   chevronWidth={60}
-//   disableSwipe={false}
-//   alwaysShowChevrons={false}
-//   numberOfCards={width < 780 ? 1 : 5}
-//   slidesToScroll={width < 780 ? 1 : 3}
-//   outsideChevron={false}
-//   showSlither={false}
-//   firstAndLastGutter={true}
-//   requestToChangeActive={setActiveItemIndex}
-//   activeItemIndex={activeItemIndex}
-//   rightChevron={
-//     <span
-//       className="glyphicon glyphicon-chevron-right"
-//       style={{ fontSize: '30px', color: '#e6e6e6' }}
-//       aria-hidden="true"
-//     ></span>
-//   }
-//   leftChevron={
-//     <span
-//       className="glyphicon glyphicon-chevron-left"
-//       style={{ fontSize: '30px', color: '#e6e6e6' }}
-//       aria-hidden="true"
-//     ></span>
-//   }
-// >
-//   {arrayListings}
-// </ItemsCarousel>;
+ 

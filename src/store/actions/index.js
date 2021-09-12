@@ -37,6 +37,8 @@ export {
   initFile,
   initAttribute,
   failedMessage,
+  initCurrencies,
+  initFiles,
 } from './store';
 
 export { initGroupDetails, CreateGroup } from './group';

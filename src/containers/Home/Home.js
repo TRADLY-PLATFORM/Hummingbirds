@@ -68,7 +68,7 @@ const Home = () => {
   const categories = useSelector((state) => state.home.categories);
   const collections = useSelector((state) => state.home.collections);
   const isAuthenticated = useSelector((state) => selectUserId(state));
-  const products = useSelector((state) => state.home.latestProducts);
+  const products = useSelector((state) => state.home.products);
     const storesToFollow = useSelector((state) => state.home.stores);
 
  
@@ -82,7 +82,7 @@ const Home = () => {
     <Aux className={classes.HomePage}>
       <Helmet>
         <title>
-          {process.env.REACT_APP_TENANT_NAME} - Buy & Sell used items online from mobile app
+           Buy & Sell used items online from mobile app
         </title>
         <meta
           name="description"

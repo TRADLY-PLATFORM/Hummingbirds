@@ -4,13 +4,15 @@
   list-style: none;
 }
 
-.breadCrumb li a {
+.breadCrumb li button{
   font-weight: 500;
   font-size: 18px;
   line-height: 22px;
   letter-spacing: -0.385882px;
-  color: #13b58c;
+  color: var(--primary_color);
   opacity: 0.7;
+  border: none;
+  background-color: transparent;
 }
 /* 
 .Details {
@@ -90,11 +92,11 @@ color: #4a4a4a;
   font-size: 17px;
   line-height: 17px;
   margin-top: 0px;
-  color: #13b58c;
+  color: var(--primary_color);
 }
 
 .fashionStore h3 a {
-  color: #13b58c;
+  color: var(--primary_color);
 }
 
 .fashionStore p {

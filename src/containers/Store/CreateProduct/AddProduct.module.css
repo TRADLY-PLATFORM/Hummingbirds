@@ -1,0 +1,151 @@
+.mycontainer {
+    background-color: #fff;
+    width: 70%;
+    margin: 10px auto;
+    border-radius: 10px;
+    padding: 4rem;
+}
+
+.button {
+    font-size: 2rem;
+    background: none;
+    border: 1.1px solid transparent;
+    color: #13B58C;
+    padding-top: 25px;
+}
+
+.productImg{
+    width: 150px;
+    height: 150px;
+    left: 819px;
+    top: 266px;
+
+}
+
+.productImage{
+        width: 100px;
+        height: 100px;
+        margin: 10px;
+        border: 1px solid #13B58C;
+}
+
+.productImgRule {
+    margin-top: 10px;
+    font-size: 14px;
+    line-height: 16px;
+    color: #4F4F4F;
+    padding-left: 28px;
+
+}
+
+.input {
+    width: 100%;
+    margin: 0 auto;
+    border: none;
+    border-bottom: 1px solid #13B58C;
+    padding: 10px;
+    color: #000;
+    outline: none;
+ }
+ 
+.productDetails {
+    padding-top: 4rem;
+    color: #000;
+    border-radius: 10px;
+
+}
+
+.priceBox{
+  display: flex;
+ flex-direction: column;
+  
+}
+.currency_input {
+     margin: 0 auto;
+    border: none;
+    border-bottom: 1px solid #13B58C;
+    padding: 10px;
+    color: #000;
+    outline: none;
+ }
+
+.btnGreenStyle {
+    padding: 8px 13px;
+    border: none;
+    background: linear-gradient(180deg, #2BDBC0 0%, #13B58C 100%);
+    border-radius: 24px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    /* identical to box height */
+    color: #FFFFFF;
+    width: 164px;
+    height: 32px;
+    left: 835px;
+    top: 954px;
+    margin-top: 30px;
+}
+
+
+.locationImage {
+  position: absolute;
+  top: 0%;
+  right: 0;
+  margin: 30px 12px;
+}
+.closeImage {
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  top: 0%;
+  right: 0;
+  margin: 35px 17px;
+  cursor: pointer;
+}
+.searchResult {
+  height: 200px;
+  width: 100%;
+  border: 1px solid #13B58C;
+  border-radius:5px;
+  padding: 10px 20px;
+  background: #fff;
+  position: absolute;
+  top: 70px;
+  overflow-y: scroll;
+}
+.addressList {
+  display: flex;
+  align-items: center !important;
+  padding: 10px;
+  margin: auto 0;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.addressList:hover {
+  background-color: rgba(197, 197, 197, 0.397);
+}
+
+.addressList p {
+  margin: auto 10px;
+}
+.listLocationImage {
+  height: 30px;
+  width: 30px;
+  padding: 5px;
+  border-radius: 100%;
+  background-color: #ececec;
+}
+
+
+@media only screen and (max-width: 1300px) {
+  .mycontainer {
+    width: 90%;
+  }
+}
+@media only screen and (max-width: 700px) {
+  .mycontainer {
+    width: 100%;
+  }
+  
+}

@@ -9,8 +9,8 @@ const initialState = {
   promo_banners: [],
   categories: [],
   collections: [],
-  stores: [],
-  latestProducts:[]
+  stores: {},
+  products:{}
 };
 
 const initCollections = (state, action) => {
@@ -41,9 +41,9 @@ const setStoresToFollow = (state, action) => {
     stores: action.storesItems,
   });
 };
-const setLatestProducts = (state, action) => {
+const setproducts = (state, action) => {
   return updateObject(state, {
-    latestProducts: action.products,
+    products: action.products,
   });
 };
 
@@ -68,7 +68,7 @@ const homeReducer = (state = initialState, action) => {
     case actionTypes.SET_STORES_TO_FOLLOW:
       return setStoresToFollow(state, action);
     case actionTypes.SET_LATEST_PRODUCTS:
-      return setLatestProducts(state, action);
+      return setproducts(state, action);
     case actionTypes.FETCH_COLLECTIONS_FAILED:
       return fetchCollectionsFailed(state, action);
     default:

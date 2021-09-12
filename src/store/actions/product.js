@@ -102,7 +102,7 @@ export const startCategoryLists = () => {
   };
 };
 
-export const initCategoryLists = (count) => {
+export const initCategoryLists = () => {
   return (dispatch) => {
     dispatch(startCategoryLists());
     axios

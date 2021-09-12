@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
-import Aux from '../../hoc/Auxiliary/Auxiliary';
+import Aux from '../../../hoc/Auxiliary/Auxiliary';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { selectUserId } from '../../store/selectors/auth';
-import noStoreLogo from '../../assets/images/store/noStore.svg';
+import { selectUserId } from '../../../store/selectors/auth';
+import noStoreLogo from '../../../assets/images/store/noStore.svg';
 
-import Backdrop from '../../components/UI/Backdrop/Backdrop';
-import Spinner from '../../components/UI/Spinner/Spinner';
-import * as actions from '../../store/actions/index';
+import Backdrop from '../../../components/UI/Backdrop/Backdrop';
+import Spinner from '../../../components/UI/Spinner/Spinner';
+import * as actions from '../../../store/actions/index';
 import classes from './Store.module.css';
-import AllenSollyLogo from '../../assets/images/home/store/allenSolly.svg';
-import StoreBanner from '../../assets/images/store/store.svg';
+import AllenSollyLogo from '../../../assets/images/home/store/allenSolly.svg';
+import StoreBanner from '../../../assets/images/store/store.svg';
+import { totalCountOfProducts } from '../../../shared/constants';
 
 class Store extends Component {
   componentDidMount() {
@@ -71,7 +72,6 @@ class Store extends Component {
                                 Go to profile store
                               </button>
                             </div>
-                             
                           </div>
                         </div>
                       </div>
@@ -80,6 +80,7 @@ class Store extends Component {
                 </div>
               );
             })}
+            <div></div>
           </React.Fragment>
         );
       } else {
@@ -147,6 +148,8 @@ const mapDispatchToProps = (dispatch) => {
     onInitStoreDetails: (id) => dispatch(actions.initStoreDetails(id)),
     onSetAuthRedirectPath: (path) => dispatch(actions.setAuthRedirectPath(path, null)),
     getUserStoreLists: (userId) => dispatch(actions.userStoreLists(userId)),
+    onInitListings: (count, filterValue, totalCountOfProducts) =>
+      dispatch(actions.initListings(count, filterValue, totalCountOfProducts)),
   };
 };
 

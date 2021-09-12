@@ -88,3 +88,7 @@ export const SET_SEARCH = 'SET_SEARCH';
 export const ERROR_MESSAGE = 'ERROR_MESSAGE';
 
 export const START_LOADING = 'START_LOADING';
+
+export const INIT_CURRENCIES = 'INIT_CURRENCIES';
+
+export const ADD_PRODUCT = 'ADD_PRODUCT';

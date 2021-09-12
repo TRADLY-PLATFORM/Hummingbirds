@@ -3,6 +3,7 @@
   flex-wrap: wrap;
   justify-content: center;
 }
+
 .wellStore {
   min-height: 18.5em;
   width: 250px;
@@ -19,6 +20,11 @@
   justify-content: center;
   align-items: center;
 }
+ 
+.wellStore a:hover{
+  text-decoration: none;
+}
+
 .wellStoreDetails {
   font-style: normal;
   margin-top: 15px;
@@ -44,31 +50,32 @@
 .btnGreenFollow {
   padding: 10px 13px;
   border: none;
-  background: linear-gradient(180deg, #2bdbc0 0%, #13b58c 100%);
+  background: linear-gradient(180deg,var(--primary_color) 0%, var(--primary_color) 100%);
   border-radius: 24px;
   width: 100%;
   font-style: normal;
-  font-weight: 500;
-  font-size: 14px;
+  font-weight: 500; 
+  font-size: 18px;
   line-height: 17px;
   /* identical to box height */
-  color: #ffffff;
+  color: #ffffff !important;
   margin-top: 7px;
 }
-
+ 
 .btnGreenUnFollowing{
   padding: 10px 13px;
-  border: 1px solid #13b58c;
+  border: 1px solid var(--primary_color);
   background: white;
   border-radius: 24px;
   width: 100%;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 600; 
   font-size: 18px;
   line-height: 17px;
   /* identical to box height */
-  color: #13b58c;
+  color: var(--primary_color) !important;
 }
+ 
 
 .Backdrop {
     width: 100%;

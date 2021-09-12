@@ -24,6 +24,7 @@ import locationListImage from '../../../assets/images/store/locationList.png';
 import closeImage from '../../../assets/images/store/close.png';
 import { useEffect } from 'react';
 import { selectUserId } from '../../../store/selectors/auth';
+import Attribute from './Attribute';
 
 const CreateStore = () => {
   const [showError, setShowError] = useState(false);
@@ -57,6 +58,8 @@ const CreateStore = () => {
   const attribute = useSelector((state) => state.store.attribute);
   const isAuthenticated = useSelector((state) => selectUserId(state));
  const errorMessage = useSelector((state) => state.store.message);
+   const [attributeData, setAttributeData] = useState(null);
+
 
    
   // function
@@ -90,25 +93,24 @@ const CreateStore = () => {
           description,
           coordinates,
           base64,
+          attributeData,
           () => history.push(`/storesuccess?id=${isAuthenticated}`)
         )
       );
  
     } else {
-      const attributes = attribute?.map((at) => {
-        return { values: ['12345'], id: at.id };
-      });
+      
       const stores = {
         account: {
           name: name,
-          active: true,
           category_id: [type.id],
           description: description,
           image_path: '',
           web_address: '',
           coordinates: coordinates,
           type: 'accounts',
-         },
+          attributes: attributeData ? attributeData : [{}],
+        },
       };
 
       console.log(stores);
@@ -136,9 +138,9 @@ const CreateStore = () => {
 
   // Get Category Type:
   const getType = (category) => {
+    setAttributeData(null);
     setType(category);
-    console.log(category);
-    dispatch(actions.initAttribute(category.id));
+     dispatch(actions.initAttribute(category.id,'accounts'));
   };
 
   const imageUploadClick = () => {
@@ -146,7 +148,9 @@ const CreateStore = () => {
     fileInput.click();
   };
   const imageUpload = async (e) => {
-    console.log(e.target.files);
+    console.log('====================================');
+    console.log(URL.createObjectURL(e.target.files[0]));
+    console.log('====================================');
     setImage(URL.createObjectURL(e.target.files[0]));
     setFile(e.target.files[0]);
 
@@ -200,7 +204,6 @@ const CreateStore = () => {
       <Spinner show={loading} />
       {errorMessage && <Toast message={errorMessage} type="error" />}
 
-            
       <ToastContainer
         autoClose={2000}
         position="top-center"
@@ -224,7 +227,7 @@ const CreateStore = () => {
             </ol>
           </nav>
         </div>
-<br />
+        <br />
         <div className="col ">
           <div className={classes.mycontainer}>
             <div className={classes.groupcard}>
@@ -347,11 +350,8 @@ const CreateStore = () => {
             <br />
 
             <div className="mt-2">
-              <div >
-                <div
-                  className={classes.categoryBox}
-                  
-                >
+              <div>
+                <div className={classes.categoryBox}>
                   {categories.map((category, i) => {
                     return (
                       <div className=" " key={i}>
@@ -377,6 +377,13 @@ const CreateStore = () => {
                 </div>
               </div>
             </div>
+            {attribute && (
+              <Attribute
+                attribute={attribute}
+                attributeData={attributeData}
+                setAttributeData={setAttributeData}
+              />
+            )}
 
             <div className="text-center" style={{ paddingBottom: '3em', paddingTop: '1em' }}>
               <button className="btnGreenStyle" onClick={createStore}>

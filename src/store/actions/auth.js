@@ -101,6 +101,7 @@ export const authVerification = (verificationData) => {
 export const auth = (userData, isSignup) => {
   console.log(userData, isSignup);
   return (dispatch) => {
+    const token = process.env.REACT_APP_API_KEY;
     dispatch(authStart());
     let url = '/v1/users/register';
     if (!isSignup) {
@@ -109,11 +110,8 @@ export const auth = (userData, isSignup) => {
     var config = {
       method: 'post',
       url: url,
-      headers: {
-        'Content-Type': 'application/json',
-        tenant_key: localStorage.getItem('tenant_key'),
-      },
-      data: JSON.stringify(userData),
+  
+      data: userData,
     };
     axios(config)
       .then((response) => {

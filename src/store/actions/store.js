@@ -1,20 +1,19 @@
-import * as actionTypes from './actionTypes';
+/* eslint-disable no-loop-func */
+ import * as actionTypes from './actionTypes';
 import axios from '../../axios';
 import { ACCESS_TOKEN } from '../../shared/utility';
 
-
-export const  failedMessage = (msg) => {
+export const failedMessage = (msg) => {
   return {
     type: actionTypes.ERROR_MESSAGE,
     msg: msg,
-  }; 
-}
-export const  startLoading = () => {
+  };
+};
+export const startLoading = () => {
   return {
     type: actionTypes.START_LOADING,
-   }; 
-}
- 
+  };
+};
 
 export const setStoreDetails = (storeDetails) => {
   return {
@@ -290,6 +289,7 @@ export const initFile = (
   description,
   coordinates,
   base64,
+  attributeData,
   callBack
 ) => {
   return (dispatch) => {
@@ -300,14 +300,14 @@ export const initFile = (
       headers: {
         'Content-Type': 'application/json',
       },
-      data: JSON.stringify({
+      data: {
         files: [
           {
             name: fileName,
             type: contentType,
           },
         ],
-      }),
+      },
     };
     axios(config)
       .then((response) => {
@@ -329,7 +329,7 @@ export const initFile = (
               .then((res) => {
                 if (res.status) {
                   console.log(res);
-                  
+
                   const stores = {
                     account: {
                       name: name,
@@ -338,19 +338,22 @@ export const initFile = (
                       web_address: '',
                       image_path: ImagePath,
                       coordinates: coordinates,
+                      attributes: attributeData ? attributeData : [{}],
                       type: 'accounts',
                     },
                   };
 
                   console.log(stores);
 
-                  dispatch(CreateStore(stores,callBack));
+                  dispatch(CreateStore(stores, callBack));
                 }
               })
               .catch((error) => {
                 console.log('Error:' + error.message);
-                dispatch(failedMessage('Some problem occurred in image upload. Please try again later.'))
-              }); 
+                dispatch(
+                  failedMessage('Some problem occurred in image upload. Please try again later.')
+                );
+              });
           });
         }
       })
@@ -369,11 +372,11 @@ export const setAttribute = (attribute) => {
   };
 };
 
-export const initAttribute = (categoryID) => {
+export const initAttribute = (categoryID, type) => {
   return (dispatch) => {
     var config = {
       method: 'get',
-      url: `/v1/attributes/?category_id=${categoryID}&type=accounts`,
+      url: `/v1/attributes/?category_id=${categoryID}&type=${type}`,
     };
     axios(config)
       .then((response) => {
@@ -384,6 +387,171 @@ export const initAttribute = (categoryID) => {
       })
       .catch((error) => {
         console.log(error);
+      });
+  };
+};
+
+// Call currency
+
+export const setCurrencies = (currencies) => {
+  return {
+    type: actionTypes.INIT_CURRENCIES,
+    currencies: currencies,
+  };
+};
+
+export const initCurrencies = () => {
+  return (dispatch) => {
+    var config = {
+      method: 'get',
+      url: `v1/currencies`,
+    };
+    axios(config)
+      .then((response) => {
+        console.log(response);
+        if (response.data.status) {
+          console.log(response);
+          dispatch(setCurrencies(response.data.data.currencies));
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+// create Product
+
+export const initAddProduct = (product) => {
+  return {
+    type: actionTypes.ADD_PRODUCT,
+    product: product,
+  };
+};
+
+export const initFiles = (
+  accountId,
+  title,
+  price,
+  description,
+  quantity,
+  selectedCategory,
+  attributeData,
+  currency,
+  coordinates,
+  base64,
+  files,
+  callBack
+) => {
+  return (dispatch) => {
+    dispatch(startLoading());
+    var config = {
+      method: 'post',
+      url: 'v1/utils/S3signedUploadURL',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: {
+        files: files,
+      },
+    };
+    axios(config)
+      .then((response) => {
+        if (response.data.status) {
+          console.log(response);
+          // dispatch(SetFiles(response.data.data.result[0]));
+          const responseFiles = response.data.data.result;
+
+          var increment = 0;
+          for (let index = 0; index < responseFiles.length; index++) {
+            const path = responseFiles[index].signedUrl;
+            const ImagePath = responseFiles[index].fileUri;
+            const fetchPath = base64[index].file;
+            console.log('====================================');
+            console.log(fetchPath);
+            console.log('====================================');
+            fetch(fetchPath).then(async (res) => {
+              console.log(res);
+              fetch(path, {
+                method: 'put',
+                headers: {
+                  ContentType: files[index].type,
+                },
+                body: await res.blob(),
+              })
+                .then((res) => {
+                  if (res.ok) {
+                    console.log('eta ekhane' + res);
+                    increment = increment + 1;
+                    if (increment === files.length) {
+                      const listingData = {
+                        listing: {
+                          list_price: price,
+                          description: description,
+                          account_id: accountId,
+                          currency_id: currency,
+                          stock: quantity,
+                          attributes: attributeData ? attributeData : [{}],
+                          title: title,
+                          offer_percent: 0,
+                          images: responseFiles.map((res) => res.fileUri),
+                          category_id: [selectedCategory],
+                          coordinates: coordinates,
+                          type: 'events',
+                        },
+                      };
+                      dispatch(createProduct(listingData, callBack));
+                    }
+                  }
+                })
+                .catch((error) => {
+                  console.log('Error:' + error.message);
+                  dispatch(
+                    failedMessage('Some problem occurred in image upload. Please try again later.')
+                  );
+                });
+              console.log('====================================');
+              console.log(increment);
+              console.log('====================================');
+            });
+          }
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+export const createProduct = (listing, callBack) => {
+  return (dispatch) => {
+    dispatch(startLoading());
+    var config = {
+      method: 'post',
+      url: 'products/v1/listings',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: listing,
+    };
+
+    axios(config)
+      .then((response) => {
+        if (response.data.status) {
+          console.log('====================================');
+          console.log(response);
+          console.log('====================================');
+          dispatch(createStoreSuccess());
+          callBack && callBack();
+        } else {
+          console.log('====================================');
+          console.log(response);
+          console.log('====================================');
+          dispatch(createStoreFailed());
+        }
+      })
+      .catch((error) => {
+        dispatch(createStoreFailed());
       });
   };
 };

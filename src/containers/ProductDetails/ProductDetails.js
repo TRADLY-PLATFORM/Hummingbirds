@@ -285,10 +285,10 @@ const ProductDetails = () => {
             <nav aria-label="breadcrumb">
               <ol className={classes.breadCrumb}>
                 <li className="breadcrumb-item active" aria-current="page">
-                  <Link onClick={goBack}>
+                  <button onClick={goBack}>
                     <img src={ArrowLogo} alt="Back" style={{ marginRight: '10px' }} />
                     Back to previous
-                  </Link>
+                  </button>
                 </li>
               </ol>
             </nav>

@@ -9,7 +9,8 @@ const initialState = {
   addresses: [],
   categories: [],
   attribute:null,
-  file:[],
+  file: [],
+  currencies:[],
   error: false,
   message: null,
 
@@ -50,6 +51,11 @@ const fetchStoreDetailsFailed = (state, action) => {
 const initStoreLists = (state, action) => {
   return updateObject(state, {
     loading: true,
+  });
+};
+const setCurrencies = (state, action) => {
+  return updateObject(state, {
+    currencies: action.currencies,
   });
 };
 
@@ -197,6 +203,9 @@ const storeReducer = (state = initialState, action) => {
 
     case actionTypes.SET_ATTRIBUTE:
       return setAttribute(state, action);
+
+    case actionTypes.INIT_CURRENCIES:
+      return setCurrencies(state, action);
 
     default:
       return state;

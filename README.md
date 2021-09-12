@@ -102,8 +102,8 @@ This is an example of how to list things you need to use the software and how to
 There are some things you need to know to work on this open source.
 There are three environment files that can be run and built separately.
 1. Create a sentry profile for error handles. And change the sentry dsn from constant file .
-2. Change "REACT_APP_DOMAIN_URL" from environment files and add your website url there.
-3. Once you sign up with [Tradly Sandbox](https://superadmin.sandbox.tradly.app), you can get your tenant name (It is the app name you entered when you signup) change the "REACT_APP_TENANT_NAME" from environment files and add your tenant name.
+2. Change "REACT_APP_DOMAIN_URL" from environment files and add your website url there.This is for SEO purpose. If you don't change this variable then you face many problems in SEO.
+3. Once you sign up with [Tradly Sandbox](https://superadmin.sandbox.tradly.app), you can get your API key (It is public key).After that you create a variable in your environment files called "REACT_APP_API_KEY"  And put the API key here.
  
 <!-- _For more examples, please refer to the [Documentation](https://example.com)_ -->
 
@@ -129,6 +129,8 @@ Contributions are what make the open source community such an amazing place to b
 
 
 
+
+<!--  -->
 <!-- LICENSE -->
 ## License
 
