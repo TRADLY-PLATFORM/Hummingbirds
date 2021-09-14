@@ -37,7 +37,7 @@ const Carousel = () => {
 
   return (
     <div>
-      <div id="myCarousel" className={classes.carousel + ' slide'} data-ride="carousel">
+      <div id="myCarousel" className={classes.carousel  } >
         <Swiper
           spaceBetween={30}
           centeredSlides={true}
@@ -55,9 +55,15 @@ const Carousel = () => {
             {onboardingImage?.map((list, i) => {
               
               return (
-                <SwiperSlide key={i} className={classes.itemImg}>
-                  <img src={list.image} alt="Chania" style={{ width: '75%', margin: '0 auto' }} />
-                  <div className={classes.carouselCaption + ' carousel-caption'}>
+                <SwiperSlide key={i} className={classes.onboardingImage}>
+                  <div className={classes.itemImage}>
+                    <img
+                      src={list.image}
+                      alt="Chania"
+                      
+                    />
+                  </div>
+                  <div className={classes.carouselCaption}>
                     <p className={classes.cardTitle}>{list.text}</p>
                   </div>
                 </SwiperSlide>

@@ -91,12 +91,12 @@ const Home = () => {
         <link href={location.pathname} />
       </Helmet>
       {/* <Backdrop show={loading || followLoading} /> */}
-      <Spinner show={loading || followLoading} />
+      {/* <Spinner show={loading || followLoading} /> */}
 
       {!categories.length > 0 ? (
         <Loader
           type="ThreeDots"
-          color="#13B58C"
+          color="var(--primary_color)"
           height={100}
           width={100}
           style={{ display: 'flex', justifyContent: 'center' }}

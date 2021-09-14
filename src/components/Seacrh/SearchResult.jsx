@@ -6,11 +6,16 @@ import Listing from '../Listing/Listing';
 import classes from "./SearchResult.module.css"
 import NoProductImage from '../../assets/images/rsz_noimage.png';
 import NoIamgeLogo from '../../assets/images/home/store/noImage.svg';
+import backdrop from '../UI/Backdrop/Backdrop';
+import spinner from '../UI/Spinner/Spinner';
+import Aux from '../../hoc/Auxiliary/Auxiliary';
+import Loader from 'react-loader-spinner';
 
 const SearchResult = () => {
   const { key } = useParams();
   const dispatch = useDispatch();
   const listings = useSelector((state) => state.Search.searchList);
+  const loading = useSelector((state) => state.Search.loading);
 
   useEffect(() => {
     dispatch(actions.getSearchingResult(key));
@@ -19,10 +24,17 @@ const SearchResult = () => {
        window.history.back();
      };
   return (
-    <>
-     
-      {listings.length > 0 ? (
-         <div div className={classes.find}>
+    <Aux>
+      {loading ? (
+        <Loader
+          type="ThreeDots"
+          color="var(--primary_color)"
+          height={100}
+          width={100}
+          style={{ display: 'flex', justifyContent: 'center' }}
+        />
+      ) : listings.length > 0 ? (
+        <div div className={classes.find}>
           {listings.map((list, i) => {
             let imagePath = NoProductImage;
             if (list.images[0] !== undefined) {
@@ -74,20 +86,16 @@ const SearchResult = () => {
               </Link>
             );
           })}
-          </div>
-        ) : (
-          <div
-            style={{ marginTop: '2em' }}
-            className="alert alert-danger fade in alert-dismissible"
-          >
-            <Link to="#" className="close" data-dismiss="alert" aria-label="close" title="close">
-              ×
-            </Link>
-            <strong>oops!</strong> No listings found.
-          </div>
-        )}
-       
-    </>
+        </div>
+      ) : (
+        <div style={{ marginTop: '2em' }} className="alert alert-danger fade in alert-dismissible">
+          <Link to="#" className="close" data-dismiss="alert" aria-label="close" title="close">
+            ×
+          </Link>
+          <strong>oops!</strong> No listings found.
+        </div>
+      )}
+    </Aux>
   );
 };
 

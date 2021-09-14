@@ -73,7 +73,7 @@ const Layout = (props) => {
           <div className=" ">
             <div className={classes.navbar}>
               <button type="button" onClick={navButtonClick}>
-                <img style={{width:"20px", height:"12px"}} src={menubarIcon} alt="" />
+                <img style={{ width: '20px', height: '12px' }} src={menubarIcon} alt="" />
               </button>
               <div className="logo" style={{ marginLeft: '7%' }}>
                 {appLogo !== '' ? (
@@ -104,7 +104,11 @@ const Layout = (props) => {
                       src={getUserImage() !== '' ? getUserImage() : profileUser}
                       alt="User Avatar"
                     />
-                    <img style={{ width: '7px',height:"7px", marginLeft: '5px' }} src={arrow} alt="" />
+                    <img
+                      style={{ width: '7px', height: '7px', marginLeft: '5px' }}
+                      src={arrow}
+                      alt=""
+                    />
                   </Link>
 
                   <div className={classes.dropdownMenu + ' user-menu dropdown-menu'}>
@@ -129,8 +133,8 @@ const Layout = (props) => {
                 </div>
               </div>
             </div>
-            <div   style={{ marginTop: '27px' }}>
-               <Search/>
+            <div style={{ marginTop: '27px' }}>
+              <Search />
             </div>
 
             <div className={classes.navbarMenu} id="navbarMenu">
@@ -140,7 +144,7 @@ const Layout = (props) => {
                 onClick={navButtonOff}
                 style={{ display: isSiteNavOpen ? 'block' : 'none' }}
               >
-                <img style={{ width: '20px',height:"20px" }} src={closeMenu} alt="" />
+                <img style={{ width: '20px', height: '20px' }} src={closeMenu} alt="" />
               </button>
               <div className={classes.logoImage}>
                 <Link to="/home">
@@ -148,7 +152,7 @@ const Layout = (props) => {
                     <img
                       className="img-fluid"
                       src={appLogo}
-                      style={{ width: '105px' }}
+                      style={{ width: '95px', height: '50px' }}
                       alt="Tradly"
                       title="Tradly"
                     />

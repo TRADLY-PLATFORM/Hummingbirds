@@ -272,7 +272,7 @@ export const accountCategories = () => {
   };
 };
 
-// Image File Post
+// Image File Post for Create store
 
 export const SetFiles = (file) => {
   return {
@@ -288,7 +288,7 @@ export const initFile = (
   categoryId,
   description,
   coordinates,
-  base64,
+  file,
   attributeData,
   callBack
 ) => {
@@ -317,14 +317,12 @@ export const initFile = (
           const fileURL = response.data.data.result[0];
           const path = fileURL.signedUrl;
           const ImagePath = fileURL.fileUri;
-          fetch(base64.file).then(async (res) => {
-            console.log(res);
-            fetch(path, {
+           fetch(path, {
               method: 'put',
               headers: {
                 ContentType: contentType,
               },
-              body: await res.blob(),
+              body: file,
             })
               .then((res) => {
                 if (res.status) {
@@ -336,7 +334,7 @@ export const initFile = (
                       category_id: [categoryId],
                       description: description,
                       web_address: '',
-                      image_path: ImagePath,
+                      images: [ImagePath],
                       coordinates: coordinates,
                       attributes: attributeData ? attributeData : [{}],
                       type: 'accounts',
@@ -354,7 +352,6 @@ export const initFile = (
                   failedMessage('Some problem occurred in image upload. Please try again later.')
                 );
               });
-          });
         }
       })
       .catch((error) => {
@@ -439,8 +436,8 @@ export const initFiles = (
   attributeData,
   currency,
   coordinates,
-  base64,
-  files,
+   files,
+  fullFile,
   callBack
 ) => {
   return (dispatch) => {
@@ -466,54 +463,45 @@ export const initFiles = (
           for (let index = 0; index < responseFiles.length; index++) {
             const path = responseFiles[index].signedUrl;
             const ImagePath = responseFiles[index].fileUri;
-            const fetchPath = base64[index].file;
-            console.log('====================================');
-            console.log(fetchPath);
-            console.log('====================================');
-            fetch(fetchPath).then(async (res) => {
-              console.log(res);
-              fetch(path, {
-                method: 'put',
-                headers: {
-                  ContentType: files[index].type,
-                },
-                body: await res.blob(),
-              })
-                .then((res) => {
-                  if (res.ok) {
-                    console.log('eta ekhane' + res);
-                    increment = increment + 1;
-                    if (increment === files.length) {
-                      const listingData = {
-                        listing: {
-                          list_price: price,
-                          description: description,
-                          account_id: accountId,
-                          currency_id: currency,
-                          stock: quantity,
-                          attributes: attributeData ? attributeData : [{}],
-                          title: title,
-                          offer_percent: 0,
-                          images: responseFiles.map((res) => res.fileUri),
-                          category_id: [selectedCategory],
-                          coordinates: coordinates,
-                          type: 'events',
-                        },
-                      };
-                      dispatch(createProduct(listingData, callBack));
-                    }
-                  }
-                })
-                .catch((error) => {
-                  console.log('Error:' + error.message);
-                  dispatch(
-                    failedMessage('Some problem occurred in image upload. Please try again later.')
-                  );
-                });
-              console.log('====================================');
-              console.log(increment);
-              console.log('====================================');
-            });
+              
+             fetch(path, {
+               method: 'PUT',
+               headers: {
+                 ContentType: files[index].type,
+               },
+               body: fullFile[0],
+             })
+            .then((res) => {
+                 if (res.ok) {
+                   console.log('eta ekhane' + res);
+                   increment = increment + 1;
+                   if (increment === files.length) {
+                     const listingData = {
+                       listing: {
+                         list_price: price,
+                         description: description,
+                         account_id: accountId,
+                         currency_id: currency,
+                         stock: quantity,
+                         attributes: attributeData ? attributeData : [{}],
+                         title: title,
+                         offer_percent: 0,
+                         images: responseFiles.map((res) => res.fileUri),
+                         category_id: [selectedCategory],
+                         coordinates: coordinates,
+                         type: 'events',
+                       },
+                     };
+                     dispatch(createProduct(listingData, callBack));
+                   }
+                 }
+               })
+               .catch((error) => {
+                 console.log('Error:' + error.message);
+                 dispatch(
+                   failedMessage('Some problem occurred in image upload. Please try again later.')
+                 );
+               });
           }
         }
       })

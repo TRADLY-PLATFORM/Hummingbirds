@@ -75,16 +75,16 @@ const Store = () => {
                     <div className={classes.bannerimages + ' row'}>
                       <div className="col-lg-12">
                         <div className={classes.bannerText + ' col-sm-12'}>
-                          <div className={classes.fashionStore + ' col-sm-6'}>
+                          <div className={classes.fashionStore    }>
                             {list.images[0] ? (
                               <img src={list.images[0]} alt={storeName} title={storeName} />
                             ) : (
                               <img src={AllenSollyLogo} alt={storeName} title={storeName} />
                             )}
 
-                            <div>
+                            <div className={classes.fashionStoreNameBox}>
                               <h3>{storeName}</h3>
-                              <p>@{storeOwner}</p>
+                              <span>@{storeOwner}</span>
                             </div>
                           </div>
                           <div className={classes.followBtn}>

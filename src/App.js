@@ -55,7 +55,7 @@ class App extends Component {
     let root = document.documentElement;
     const color =
       localStorage.getItem('primary_color') || this.props.onboarding_configs.app_color_primary;
-    root.style.setProperty("--primary_color",color);
+    root.style.setProperty("--primary_color",color || '#15B790');
  
 
     let routes = (

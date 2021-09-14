@@ -47,7 +47,7 @@
 font-weight: 600;
 font-size: 12px;
 line-height: 15px;
-color: #15B790;
+color: var(--primary_color);
 }
 .storeImage {
   margin-bottom: 15px;
@@ -86,7 +86,7 @@ color: #15B790;
    font-weight: bold;
   font-size: 15px;
   text-align: right;
-  color: #13b58c;
+  color: var(--primary_color);
   margin: auto 0;
 }
 

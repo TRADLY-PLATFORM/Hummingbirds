@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import classes from './Attribute.module.css';
 import Select from 'react-select';
 import groupAvatar from '../../../assets/images/uploadPlaceholder.svg';
-import imageToBase64 from 'image-to-base64/browser';
-import CreatableSelect from 'react-select/creatable';
-import { attr } from 'dom7';
+ import CreatableSelect from 'react-select/creatable';
+import uploadImageIcon from "../../../assets/images/store/upload@2x.png"
+ import cancelImage from '../../../assets/images/store/cancel@2x.png';
+
 
 const Attribute = ({ attribute, attributeData, setAttributeData }) => {
   // statte
@@ -22,19 +23,8 @@ const Attribute = ({ attribute, attributeData, setAttributeData }) => {
   };
 
   const imageUpload = async (e) => {
-    setImage(URL.createObjectURL(e.target.files[0]));
-    setFile(e.target.files[0]);
-
-    const file = e.target.files[0];
-
-    imageToBase64(e.target.files[0]) // Path to the image
-      .then((response) => {
-        setBase64({ file: 'data:' + file.type + ';base64,' + response });
-        console.log({ file: 'data:' + file.type + ';base64,' + response });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+     setFile(e.target.files[0]);
+ 
   };
 
   const handleChange = (newValue, actionMeta, attribute_id, attribute_field_type) => {
@@ -223,32 +213,39 @@ const Attribute = ({ attribute, attributeData, setAttributeData }) => {
                   />
                 </div>
               )}
-              {attr.field_type === 5 && (
-                <div className={classes.attachMentBox}>
-                  <div className="p-2">
-                    <img
-                      id="imageid"
-                      className={classes.groupAvatar}
-                      src={image ? image : groupAvatar}
-                      alt=""
-                    />
-                  </div>
-                  <div>
-                    <div style={{ height: '0px', overflow: 'hidden' }}>
-                      <input
-                        type="file"
-                        id="attachmentClick"
-                        name="imageUpload"
-                        accept="image/*"
-                        onChange={(e) => imageUpload(e)}
-                      />
+              {attr.field_type === 5 &&
+                (file === null ? (
+                  <div className={classes.attachMentBox}>
+                    <div>
+                      <div style={{ height: '0px', overflow: 'hidden' }}>
+                        <input
+                          type="file"
+                          id="attachmentClick"
+                          name="imageUpload"
+                          accept="image/*"
+                          onChange={(e) => imageUpload(e)}
+                        />
+                      </div>
+                      <button className={classes.photoUploadButton} onClick={imageUploadClick}>
+                        <img src={uploadImageIcon} alt="" />
+                        <p>Upload Attachment Image</p>
+                      </button>
                     </div>
-                    <button className={classes.photoUploadButton} onClick={imageUploadClick}>
-                      Upload File
-                    </button>
                   </div>
-                </div>
-              )}
+                ) : (
+                  <div className={classes.uploadedImage}>
+                    <div>
+                      <img src={groupAvatar} alt="" />
+                    </div>
+                    <div className={classes.imageDescriptions}>
+                      <span>{ file.name}</span>
+                      <span>{file.type}</span>
+                    </div>
+                    <div className={classes.cancelImage} onClick={()=>setFile(null)}>
+                      <img src={cancelImage} alt="" />
+                    </div>
+                  </div>
+                ))}
             </div>
           </>
         );

@@ -31,8 +31,8 @@ const CreateProduct = () => {
   const [product_address, setProduct_address] = useState('');
   const [coordinates, setCoordinates] = useState(null);
   const [imagePath, setImagePath] = useState([{ id: 'addIcon', path: addProductIcon }]);
-  const [base64, setBase64] = useState([]);
-  const [files, setFiles] = useState([]);
+   const [files, setFiles] = useState([]);
+  const [fullFile,setFullFile]=useState([])
 
   // Params
   const { accountId } = useParams()
@@ -76,25 +76,15 @@ const CreateProduct = () => {
     } else {
       setFiles([{ name: file.name, type: file.type }]);
     }
+    if (fullFile.length > 0) {
+      setFullFile([...fullFile, file]);
+    } else {
+      setFullFile([file]);
+    }
 
-    imageToBase64(file) // Path to the image
-      .then((response) => {
-        if (base64.length > 0) {
-          setBase64([
-            ...base64,
-            { file: 'data:' + file.type + ';base64,' + response, type: file.type },
-          ]);
-        } else {
-          setBase64([{ file: 'data:' + file.type + ';base64,' + response, type: file.type }]);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+     
   };
-  console.log('====================================');
-  console.log(base64);
-  console.log('====================================');
+ 
 
   //
   const handleChange = (e) => {
@@ -203,8 +193,8 @@ const CreateProduct = () => {
         attributeData,
         currency,
         coordinates,
-        base64,
-        files,
+         files,
+        fullFile,
         () => history.push(`/store`)
       )
     );
@@ -230,7 +220,7 @@ const CreateProduct = () => {
         draggable
         pauseOnHover
       />
-      <Link to="Store">
+      <Link to="/Store">
         <button className={classes.button}>
           <i className="fa fa-arrow-left "></i> back to my store
         </button>

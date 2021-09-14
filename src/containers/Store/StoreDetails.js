@@ -139,8 +139,8 @@ class StoreDetails extends Component {
         <div class="container-fluid">
           <div className={classes.bannerimages + ' row'}>
             <div className="col-lg-12">
-              <div className={classes.bannerText + ' col-sm-12'}>
-                <div className={classes.fashionStore}>
+              <div className={classes.bannerText }>
+                <div className={classes.fashionStore  }>
                   <div>
                     {storeDetails.getIn(['images', 0], '') !== '' ? (
                       <img
@@ -153,9 +153,9 @@ class StoreDetails extends Component {
                     )}
                   </div>
 
-                  <div>
+                  <div className={classes.fashionStoreNameBox}>
                     <h3>{storeName}</h3>
-                    <p>@{storeOwner}</p>
+                    <span>@{storeOwner}</span>
                   </div>
                 </div>
                 <div className={classes.followBtn}>

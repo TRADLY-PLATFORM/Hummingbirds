@@ -1,39 +1,34 @@
 .borderNone {
     border: none !important;
 }
-.itemImg{
+.onboardingImage{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh !important;
+ }
+.itemImage img{
+    height: 480px;
+    width: 480px;
 }
 
-.cardTitle{    
-    height: 60px;
-    padding: 10px 20px;
-     margin-bottom: 2em;
-    font-weight: 500;
-    font-size: 24px;
-    line-height: 30px;
-    text-align: center;
-    letter-spacing: -0.482353px;
-    color: #13B58C;
-}
-
-
-.itemImg img{
-    width: 75%; 
-    height: 75% !important;
-}
-
-.carousel {
-    top: 10%;
-}
-
+ 
+  
 .carouselCaption {
     position: relative;
     left: auto;
     right: auto;
-    padding: 10px 30px;
+    width: 500px;
+    margin-top: 50px;
+   }
+
+.cardTitle{    
+     padding: 10px 20px;
+     margin-bottom: 2em;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 29px;
+    text-align: center;
+    letter-spacing: -0.482353px;
+    color: var(--primary_color);
 }

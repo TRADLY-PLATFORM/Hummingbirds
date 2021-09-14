@@ -23,6 +23,7 @@
   padding: 10px;
   background: none;
   color: white;
+  outline: none;
 }
 
 input::placeholder {
@@ -36,5 +37,7 @@ input::placeholder {
   box-sizing: border-box;
   border-radius: 24px;
   padding: 10px;
-  color: #13b58c;
+  color: var(--primary_color);
+   font-size: 16px;
+  font-weight: 600;
 }

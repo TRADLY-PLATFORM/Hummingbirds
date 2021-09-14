@@ -154,7 +154,7 @@ class Listings extends Component {
           ? item.getIn(['location', 'formatted_address'], '') === locationValue.value
           : item
       );
-    if (productsListing && productsListing.size === 0 && !loading) {
+    if (productsListing && productsListing.length === 0 ) {
       listing = (
         <div style={{ marginTop: '5em' }} className="alert alert-danger fade in alert-dismissible">
           <Link to="#" className="close" data-dismiss="alert" aria-label="close" title="close">

@@ -12,6 +12,7 @@ import * as actions from '../../../store/actions/index';
 import classes from './CreateStore.module.css';
 
 import groupAvatar from '../../../assets/images/uploadPlaceholder.svg';
+import cancelImage from '../../../assets/images/store/cancel@2x.png';
 
 import axios from '../../../axios';
 import axios2 from 'axios';
@@ -25,7 +26,7 @@ import closeImage from '../../../assets/images/store/close.png';
 import { useEffect } from 'react';
 import { selectUserId } from '../../../store/selectors/auth';
 import Attribute from './Attribute';
-
+ 
 const CreateStore = () => {
   const [showError, setShowError] = useState(false);
   const [name, setName] = useState('');
@@ -92,7 +93,7 @@ const CreateStore = () => {
           type.id,
           description,
           coordinates,
-          base64,
+          file,
           attributeData,
           () => history.push(`/storesuccess?id=${isAuthenticated}`)
         )
@@ -148,23 +149,11 @@ const CreateStore = () => {
     fileInput.click();
   };
   const imageUpload = async (e) => {
-    console.log('====================================');
-    console.log(URL.createObjectURL(e.target.files[0]));
-    console.log('====================================');
+ 
     setImage(URL.createObjectURL(e.target.files[0]));
     setFile(e.target.files[0]);
 
-    const file = e.target.files[0];
-
-    imageToBase64(e.target.files[0]) // Path to the image
-      .then((response) => {
-        setBase64({ file: 'data:' + file.type + ';base64,' + response });
-        console.log({ file: 'data:' + file.type + ';base64,' + response });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+   };
 
   // Address Search
   const handleAddressSearch = (e) => {
@@ -265,24 +254,28 @@ const CreateStore = () => {
 
             <div className={classes.addgroup}>
               <div className="form-group mt-2 ">
+                <label htmlFor="storeName">Store Name</label>
                 <input
-                  className={classes.input + ' form-control input-lg '}
+                  id="storeName"
+                  className={classes.input}
                   name="name"
                   value={name}
                   onChange={(e) => handleChange(e)}
                   type="text"
-                  placeholder="Store Name"
+                  placeholder="Type your store name"
                 />
               </div>
 
               <div className="form-group mt-2 " style={{ position: 'relative' }}>
+                <label htmlFor="storeAddress">Store Address</label>
                 <input
-                  className={classes.input + ' form-control input-lg '}
+                  id="storeAddress"
+                  className={classes.input}
                   name="store_address"
                   value={store_address}
                   onChange={(e) => handleAddressSearch(e)}
                   type="text"
-                  placeholder="Store Address"
+                  placeholder="Search your store address"
                 />
                 {store_address.length > 0 ? (
                   <img
@@ -331,14 +324,16 @@ const CreateStore = () => {
               </div>
 
               <div className="form-group mt-2">
+                <label htmlFor="storeDescription">Store Description</label>
                 <textarea
+                  id="storeDescription"
                   rows="4"
-                  className={classes.input + ' form-control input-lg '}
+                  className={classes.input}
                   name="description"
                   value={description}
                   onChange={(e) => handleChange(e)}
                   type="text"
-                  placeholder="Store Description"
+                  placeholder="Type your store description here"
                   style={{ resize: 'none' }}
                 />
               </div>
@@ -377,6 +372,7 @@ const CreateStore = () => {
                 </div>
               </div>
             </div>
+           
             {attribute && (
               <Attribute
                 attribute={attribute}

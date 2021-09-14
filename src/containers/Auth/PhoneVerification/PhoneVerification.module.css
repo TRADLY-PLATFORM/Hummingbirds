@@ -37,8 +37,10 @@
   box-sizing: border-box;
   border-radius: 24px;
   padding: 10px;
-  color: #13b58c;
+  color: var(--primary_color);
   background-color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .PhoneDigit {

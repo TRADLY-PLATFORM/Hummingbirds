@@ -13,6 +13,10 @@ $primaryBgColor: #ffffff;
 .whiteColor {
   color: $primaryBgColor;
 }
+.noDecoration:hover{
+  text-decoration: none;
+  color: white;
+}
 
 .bgColor {
   background-color: $primaryBgColor;
@@ -181,8 +185,9 @@ span.glyphicon.glyphicon-search.form-control-feedback {
   border-radius: 30px;
   color: #212121;
   border: none;
-  box-shadow: 10px 10px 10px rgb(224, 224, 224);
-}
+    box-shadow: 0px 8px 28px rgba(0, 0, 0, 0.07);
+
+ }
 
 .col-xs-5th-1,
 .col-xs-5th-2,
@@ -640,4 +645,13 @@ span.glyphicon.glyphicon-search.form-control-feedback {
   color: var(--primary_color);
    font-size: 30px !important;
   font-weight: bold !important;
+}
+
+
+::placeholder { /* Chrome/Opera/Safari */
+
+  color: #4F4F4F !important;
+}
+label{
+  color:#959393;
 }

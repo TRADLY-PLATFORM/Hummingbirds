@@ -15,8 +15,8 @@ import * as actions from '../../store/actions/index';
 import { selectProductDetails } from '../../store/selectors/product';
 import { selectUserId } from '../../store/selectors/auth';
 import Maps from '../../components/UI/Maps/Maps';
-import heartActive from '../../assets/images/products/heartActive.png';
-import heartDisable from '../../assets/images/products/heartDisable.png';
+import heartActive from '../../assets/images/products/favourite@2x.png';
+import heartDisable from '../../assets/images/products/heartIcon@2x.png';
 import { Helmet } from 'react-helmet';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -312,7 +312,7 @@ const ProductDetails = () => {
                   return (
                     <SwiperSlide key={index}>
                       <img
-                        style={width > 780 ? { height: '450px' } : { height: '180px' }}
+                        style={width > 780 ? { height: '340px' } : { height: '180px' }}
                         src={img}
                       />
                     </SwiperSlide>
@@ -330,7 +330,7 @@ const ProductDetails = () => {
                   <>
                     {isAuthenticated ? (
                       <div className={classes.likeBtn}>
-                        <button onClick={productLike} className="pull-right">
+                        <button onClick={productLike} className=" ">
                           {productDetails.getIn(['listing', 'liked'], '') ? (
                             <img className={classes.heartActive} src={heartActive} alt="" />
                           ) : (
@@ -352,14 +352,14 @@ const ProductDetails = () => {
 
             <div>
               <div className={classes.Description}>
-                <span>Product Description</span>
+                <span> Description</span>
                 <p>{productDetails.getIn(['listing', 'description'], 'N/A')}</p>
               </div>
             </div>
           </div>
 
           <div className="col-xs-12 col-md-6 " style={{ padding: '0' }}>
-            <div className="col-lg-12 mt-4">
+            <div className="col-lg-12  ">
               <div className="row bgColor">
                 <div className={classes.fashionStore}>
                   <div className="  ">
@@ -441,7 +441,7 @@ const ProductDetails = () => {
                 </div>
               </div>
 
-              <div className="row bgColor" style={{ marginTop: '20px' }}>
+              {/* <div className="row bgColor" style={{ marginTop: '20px' }}>
                 <div className={classes.additionalDetails}>
                   <h1 className="h1Headings" style={{ fontSize: '18px' }}>
                     Additional Details
@@ -453,7 +453,7 @@ const ProductDetails = () => {
                     Home Delivery Available, Cash On Delivery
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               <br />
               <button

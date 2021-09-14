@@ -10,7 +10,7 @@
     font-size: 2rem;
     background: none;
     border: 1.1px solid transparent;
-    color: #13B58C;
+    color: var(--primary_color);
     padding-top: 25px;
 }
 
@@ -26,7 +26,7 @@
         width: 100px;
         height: 100px;
         margin: 10px;
-        border: 1px solid #13B58C;
+        border: 1px solid var(--primary_color);
 }
 
 .productImgRule {
@@ -42,7 +42,7 @@
     width: 100%;
     margin: 0 auto;
     border: none;
-    border-bottom: 1px solid #13B58C;
+    border-bottom: 1px solid  #E2E2E2;
     padding: 10px;
     color: #000;
     outline: none;
@@ -63,7 +63,7 @@
 .currency_input {
      margin: 0 auto;
     border: none;
-    border-bottom: 1px solid #13B58C;
+    border-bottom: 1px solid var(--primary_color);
     padding: 10px;
     color: #000;
     outline: none;
@@ -72,7 +72,7 @@
 .btnGreenStyle {
     padding: 8px 13px;
     border: none;
-    background: linear-gradient(180deg, #2BDBC0 0%, #13B58C 100%);
+    background: linear-gradient(180deg, var(--primary_color) 0%, var(--primary_color) 100%);
     border-radius: 24px;
     font-style: normal;
     font-weight: 500;
@@ -106,7 +106,7 @@
 .searchResult {
   height: 200px;
   width: 100%;
-  border: 1px solid #13B58C;
+  border: 1px solid var(--primary_color);
   border-radius:5px;
   padding: 10px 20px;
   background: #fff;

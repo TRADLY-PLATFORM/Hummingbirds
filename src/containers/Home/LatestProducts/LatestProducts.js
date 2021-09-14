@@ -73,7 +73,11 @@ const LatestProducts = ({ products }) => {
             ) : (
               <div className={classes.bottomDesc}>
                 <img src={NoIamgeLogo} alt={list.title} title={list.title} />
-                <span>N/A</span>
+                <span>
+                  {(list.account.name.length < 10
+                    ? list.account.name
+                    : list.account.name.substring(0, 10) + '..')|| "N/A"}
+                </span>
                 <p className={classes.amountTitle}>
                   {list.list_price.formatted !== undefined ? list.list_price.formatted : ''}
                 </p>
@@ -143,36 +147,4 @@ const LatestProducts = ({ products }) => {
 };
 
 export default LatestProducts;
-
-
-{/* <ItemsCarousel
-  infiniteLoop={false}
-  gutter={12}
-  activePosition={'center'}
-  chevronWidth={60}
-  disableSwipe={false}
-  alwaysShowChevrons={false}
-  numberOfCards={width < 780 ? 1 : 5}
-  slidesToScroll={width < 780 ? 1 : 3}
-  outsideChevron={false}
-  showSlither={false}
-  firstAndLastGutter={true}
-  requestToChangeActive={setActiveItemIndex}
-  activeItemIndex={activeItemIndex}
-  rightChevron={
-    <span
-      className="glyphicon glyphicon-chevron-right"
-      style={{ fontSize: '30px', color: '#e6e6e6' }}
-      aria-hidden="true"
-    ></span>
-  }
-  leftChevron={
-    <span
-      className="glyphicon glyphicon-chevron-left"
-      style={{ fontSize: '30px', color: '#e6e6e6' }}
-      aria-hidden="true"
-    ></span>
-  }
->
-  {arrayListings}
-</ItemsCarousel>; */}
+ 

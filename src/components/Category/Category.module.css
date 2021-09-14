@@ -18,14 +18,14 @@
 }
   .wellCategory:hover {
     background-color: #dffbf4;
-    border: 1px solid #15b790;
+    border: 1px solid var(--primary_color);
   }
 .wellCategory p {
   font-style: normal;
   font-weight: normal;
-  font-size: 10px;
-  line-height: 12px;
-  color: #15b790;
+  font-size: 15px;
+  line-height: 10px;
+  color: var(--primary_color);
 
   margin: 0;
 }

@@ -327,3 +327,8 @@ export const setOnboardingConfigsData = () => {
       });
   };
 };
+
+
+
+// SEO configs
+

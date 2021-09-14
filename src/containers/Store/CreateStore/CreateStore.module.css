@@ -25,7 +25,7 @@
   font-size: 14px;
   line-height: 17px;
   text-align: center;
-  color: #13b58c;
+  color: var(--primary_color);
   margin-top: 1em;
 }
 
@@ -45,12 +45,12 @@
 .input {
   width: 100%;
   margin: 0 auto;
-  border: 1px solid #ececec;
-  border-radius: 24px;
-  padding: 10px 20px;
-  background: #fff;
-  color: #000;
-}
+  border:none;
+  border-bottom: 1px solid  #E2E2E2;
+   padding: 5px 5px ;
+   color: #000;
+  outline: none;
+ }
 
 .groupAvatar {
   margin-top: 4px;
@@ -84,14 +84,14 @@
 }
   .wellCategory:hover {
     background-color: #dffbf4;
-    border: 1px solid #15b790;
+    border: 1px solid var(--primary_color);
   }
 .wellCategory p {
   font-style: normal;
   font-weight: normal;
-  font-size: 10px;
+  font-size: 14px;
   line-height: 12px;
-  color: #15b790;
+  color: var(--primary_color);
 
   margin: 0;
 }
@@ -105,7 +105,7 @@
   position: absolute;
   top: 0%;
   right: 0;
-  margin: 12px;
+  margin:25px  12px;
 }
 .closeImage {
   width: 15px;
@@ -113,18 +113,18 @@
   position: absolute;
   top: 0%;
   right: 0;
-  margin: 17px;
+  margin: 32px 17px;
   cursor: pointer;
 }
 .searchResult {
   height: 200px;
   width: 100%;
   border: 1px solid #ececec;
-  border-radius: 24px;
+  border-radius: 10px;
   padding: 10px 20px;
   background: #fff;
   position: absolute;
-  top: 50px;
+  top: 60px;
   overflow-y: scroll;
 }
 .addressList {
@@ -149,6 +149,8 @@
   border-radius: 100%;
   background-color: #ececec;
 }
+
+
 
 @media only screen and (max-width: 1300px) {
   .mycontainer {
@@ -181,7 +183,7 @@
     line-height: 14px;
     overflow: hidden;
     font-family: Montserrat;
-    color: #15b790;
+    color: var(--primary_color);
     display: flex;
     align-items: center;
     justify-content: center;

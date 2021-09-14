@@ -8,13 +8,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import NoIamgeLogo from '../../assets/images/home/store/noImage.svg';
 import NoProductImage from '../../assets/images/rsz_noimage.png';
 import { Link } from 'react-router-dom';
+import Loader from 'react-loader-spinner';
 
 const WishList = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(actions.getWishlist());
   }, []);
-  const wishList = useSelector((state) => state.wishList.wishLists || []);
+  const wishList = useSelector((state) => state.wishList.wishLists );
+  const loading = useSelector((state) => state.wishList.loading );
   console.log(wishList);
   return (
     <div>
@@ -55,7 +57,15 @@ const WishList = () => {
       </div>
 
       <div className="">
-        {wishList.length > 0 ? (
+        {loading ? (
+          <Loader
+            type="ThreeDots"
+            color="var(--primary_color)"
+            height={100}
+            width={100}
+            style={{ display: 'flex', justifyContent: 'center' }}
+          />
+        ) : wishList.length && wishList?.length > 0 ? (
           <div className={classes.wishList}>
             {wishList.map((list, i) => {
               let productImage = NoProductImage;

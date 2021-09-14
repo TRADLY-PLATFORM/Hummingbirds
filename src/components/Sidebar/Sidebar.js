@@ -52,7 +52,7 @@ class Sidebar extends Component {
                 <img
                   className="img-fluid"
                   src={appLogo}
-                  style={{ width: '145px' }}
+                  style={{ width: '95px',height:'50px' }}
                   alt="Tradly"
                   title="Tradly"
                 />
@@ -114,7 +114,7 @@ class Sidebar extends Component {
                 </Link>
               )}
             </li>
-            {/* <li className={url === '/listings' || url.includes('/product') ? 'active' : ''}>
+            <li className={url === '/listings' || url.includes('/product') ? 'active' : ''}>
               <Link to="/listings" style={{ display: 'flex ', alignItems: 'center' }}>
                 <svg
                   width="24"
@@ -128,7 +128,7 @@ class Sidebar extends Component {
 
                 <span>Listings</span>
               </Link>
-            </li> */}
+            </li>
             {/* <li className={url === '/my-transaction' ? 'active' : ''}>
               <Link to="/my-transaction">
                 <img
