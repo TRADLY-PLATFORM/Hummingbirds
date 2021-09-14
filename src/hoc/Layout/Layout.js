@@ -28,7 +28,12 @@ import { Search } from '../../components/Seacrh/Search';
 const Layout = (props) => {
   const isAuthenticated = useSelector((state) => selectUserId(state));
   const tenantData = useSelector((state) => selectTenantData(state));
+
+
   const userData = useSelector((state) => selectUserData(state));
+  const onboarding_configs = useSelector((state) => state.auth.onboarding_configs);
+
+
   const dispatch = useDispatch();
 
   const url = useLocation().pathname;
@@ -54,7 +59,7 @@ const Layout = (props) => {
   }
 
   // Logo path:
-     let appLogo = localStorage.getItem('logo_path') || this.props.onboarding_configs.splash_image;
+     let appLogo = onboarding_configs.splash_image  ;
   function getUserImage() {
     return userData.get('profile_pic', '');
   }
