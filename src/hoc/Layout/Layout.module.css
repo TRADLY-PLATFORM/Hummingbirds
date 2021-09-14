@@ -120,6 +120,7 @@ a {
 }
 
 .bgColor {
+  min-height: 100vh;
   background-color: #f6f9ff;
 }
 

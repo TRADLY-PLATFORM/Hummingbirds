@@ -17,9 +17,7 @@ Leaflet.Icon.Default.imagePath = '../node_modules/leaflet';
 
 
 const Maps = ({ lat, lng, address }) => {
-  console.log('=================এখানে আসবে===================');
-  console.log(lat, lng);
-  console.log('====================================');
+ 
   const containerStyle = {};
 
   const position = [51.505, -0.09];

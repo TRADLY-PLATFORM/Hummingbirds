@@ -5,8 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 class Toast extends Component{
     render(){ 
-        console.log(this.props);
-        if(this.props.message != null && this.props.type!=null){
+         if(this.props.message != null && this.props.type!=null){
             if (! toast.isActive(this.toastId)) {
                 if(this.props.type === 'error'){
                     this.toastId = toast.error(this.props.message);

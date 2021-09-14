@@ -76,7 +76,7 @@ const setOnboardingConfigs = (state, action) => {
 const setSeoConfigs = (state, action) => {
   
   return updateObject(state, {
-    seo_configs: action.data,
+    seo_configs: action.configs,
     loading: false,
   });
 };
@@ -135,7 +135,7 @@ const authReducer = (state = initialState, action) => {
     case actionTypes.SET_ONBOARDING_CONFIGS:
       return setOnboardingConfigs(state, action);
     case actionTypes.SEO_CONFIGS:
-      return setSeoConfigs(state, action);
+      return setSeoConfigs (state, action);
 
     case actionTypes.FETCH_COUNTRIES_FAILED:
       return fetchCountriesFailed(state, action);

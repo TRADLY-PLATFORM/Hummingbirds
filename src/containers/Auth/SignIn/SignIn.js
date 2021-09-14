@@ -42,8 +42,7 @@ class SignIn extends Component {
   onSubmit = (e) => {
     e.preventDefault();
     const authType = this.props.configsData.auth_type;
-    console.log('dekkho:', authType);
-    if (authType === 1) {
+     if (authType === 1) {
       if (this.state.email === '') {
         if (!toast.isActive(this.toastId)) {
           this.toastId = toast.error('Email is required');
@@ -122,8 +121,7 @@ class SignIn extends Component {
     if (this.props.isAuthenticated) {
       authRedirect = <Redirect to={this.props.authRedirectPath} />;
     }
-    console.log(this.props.configsData.auth_type);
-    // let authRedirect = null;
+     // let authRedirect = null;
     // if (this.props.isAuthenticated || this.props.verifyId) {
     //   authRedirect = <Redirect to={this.props.authRedirectPath} />;
     // }
@@ -147,8 +145,7 @@ class SignIn extends Component {
         />
       );
     }
-    console.log('isAuthenticated', isAuthenticated);
-    return (
+     return (
       <div>
         <Helmet>
           <title>Tradly Web - Sign In</title>

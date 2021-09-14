@@ -114,8 +114,7 @@ const CreateStore = () => {
         },
       };
 
-      console.log(stores);
-
+ 
       dispatch(
         actions.CreateStore(stores, () => history.push(`/storesuccess?id=${isAuthenticated}`))
       );

@@ -13,7 +13,7 @@
 }
 .wellStore {
    height: 260px;
-   width:98%;
+   width:190px;
   padding-top: 31px;
  padding-bottom: 7.34%;
  padding-left: 17px;
@@ -106,12 +106,22 @@ text-decoration: none !important;
     padding-right: 4%;
   }
   .swiperSlide{
-    width: 60% !important;
+    width: 40% !important;
    }
 }
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 500px) {
 
   .swiperSlide{
-    width: 80% !important;
+    width: 50% !important;
    }
+}
+@media only screen and (max-width: 400px) {
+
+  .swiperSlide{
+    width: 76% !important;
+   }
+   .wellStore {
+ 
+   width:250px;
+    height: 280px;}
 }

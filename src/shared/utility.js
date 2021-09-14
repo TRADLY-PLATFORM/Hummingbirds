@@ -6,8 +6,7 @@ export const updateObject = (oldObject, updatedProperties) => {
 };
 
 export const countryFilter = (code, data) => {
-  console.log(code);
-  let filterCountry = data
+   let filterCountry = data
     .filter((country) => {
       return parseInt(code) === parseInt(country.dial_code);
     })

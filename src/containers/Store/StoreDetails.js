@@ -77,8 +77,7 @@ class StoreDetails extends Component {
     if (storeDetails.get('following') !== false) {
       IsFollowing = true;
     }
-    console.log(storeId);
-    this.timer = setTimeout(() => {
+     this.timer = setTimeout(() => {
       this.props.postStoreFollow(storeId, IsFollowing);
     }, 1000);
 
@@ -244,8 +243,7 @@ class StoreDetails extends Component {
         {listing}
       </Aux>
     );
-    console.log(this.props.isAuthenticated);
-    const { match, location, history } = this.props;
+     const { match, location, history } = this.props;
     
     const buisnessName = process.env.REACT_APP_BUSINESS_NAME;
 

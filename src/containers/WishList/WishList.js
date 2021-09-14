@@ -17,8 +17,7 @@ const WishList = () => {
   }, []);
   const wishList = useSelector((state) => state.wishList.wishLists );
   const loading = useSelector((state) => state.wishList.loading );
-  console.log(wishList);
-  return (
+   return (
     <div>
       <div className="">
         <div>
@@ -76,8 +75,7 @@ const WishList = () => {
               let storelogo = list.account.images[0];
               let storeName = list.account.name;
               let price = list.list_price.formatted !== undefined ? list.list_price.formatted : '';
-              console.log(storeName);
-              return (
+               return (
                 <Link to={`/l/${list.id}-${list.title}`} key={i} style={{ textDecoration: 'none' }}>
                   <div className={''}>
                     <div className={classes.latestTrend}>

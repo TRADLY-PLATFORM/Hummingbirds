@@ -31,14 +31,12 @@ const Header = (props) => {
         // handle success
         setShowSearchResult(true);
         setSearchResult(response.data.data.listings);
-        console.log(response.data.data.listings);
-      });
+       });
     }
   };
 
   const { userData } = props;
-  console.log(' ', userData);
-  function getUserName() {
+   function getUserName() {
     return userData.get('first_name', 'Guests') + ' ' + userData.get('last_name', '');
   }
 

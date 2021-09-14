@@ -5,8 +5,7 @@ import storeIcon from '../../assets/images/MyTransaction/storeIcon.svg';
 
 const MyTransactionst = () => {
   const userData = useReducer((state) => state.auth.userData);
-  console.log(userData);
-  return (
+   return (
     <div>
       <div className="row">
         <div className={classes.pageTitle + ' col-md-6 '}>

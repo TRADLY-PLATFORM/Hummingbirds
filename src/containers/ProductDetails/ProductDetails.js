@@ -201,8 +201,7 @@ const ProductDetails = () => {
     if (productDetails.getIn(['listing', 'account', 'following'], '') !== false) {
       IsFollowing = true;
     }
-    console.log(storeId);
-
+ 
     dispatch(actions.postStoreFollow(storeId, IsFollowing));
 
     if (!followError) {
@@ -225,8 +224,7 @@ const ProductDetails = () => {
       isLiked = true;
     }
     const productId = productDetails.getIn(['listing', 'id'], '');
-    console.log('productDetails', productDetails, productId);
-    setTimeout(() => {
+     setTimeout(() => {
       dispatch(actions.onProductLikeDisLike(productId, isLiked));
     }, 1000);
 
@@ -261,12 +259,7 @@ const ProductDetails = () => {
     toastMessage = <Toast type="error" message={message || followMessage} />;
   }
   const productDescription = productDetails.getIn(['listing', 'description'], 'N/A');
-  console.log(productDetails.getIn(['listing']));
-  console.log('isAuthenticated', isAuthenticated);
-  console.log('====================================');
-  console.log(productDetails.getIn(['listing', 'coordinates', 'latitude'], ''));
-  console.log(productDetails.getIn(['listing', 'coordinates', 'longitude'], ''));
-  console.log('====================================');
+ 
 
   return (
     <>
@@ -318,7 +311,7 @@ const ProductDetails = () => {
                     </SwiperSlide>
                   );
                 })}
-              </Swiper>
+              </Swiper> 
               <div
                 style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
               >

@@ -26,8 +26,7 @@ const categoryHtmlHandler = (categories, categoryLength) => {
     //                 </div>
     //             </div> ];
     // }
-    console.log(category);
-
+ 
     let link = '/link';
 
     // if (category.link) {

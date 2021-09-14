@@ -13,35 +13,51 @@
   border: 1px solid #e3e3e3;
   border-radius: 10px;
   box-sizing: border-box;
-  min-height: 300px;
-  width: 98%;
+  width: 190px !important;
+  height: 270px;
   overflow: hidden;
 }
 .latestTrend:hover {
   /* background-color: #4a4a4a; */
 }
-.latestTrend p {
-  padding: 2px 15px;
-  font-size: 17px;
- }
 .storeImage {
   margin-bottom: 15px;
   width: 100%;
-  height: 190px;
+  height: 155px;
 }
+.listTitle {
+  margin-top: 20px;
+  margin-bottom: 0;
+  padding: 0 8px;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 15px;
+  color: var(--primary_color);
+}
+.amountTitle {
+  min-width: 50px;
+  margin-top: 4px;
+  margin-bottom: 0;
+  padding: 0 8px;
+  font-weight: 500;
+  font-size: 15px;
+  text-align: left;
+  color: var(--primary_color);
+}
+
 .bottomDesc {
- height: 35px;
-  display: flex ;
+  margin-top: 10px;
+  margin-bottom: 14px;
+
+  display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom:14px;
-   padding:2px 8px;
+  padding: 0px 8px;
   position: relative;
 }
 .bottomDesc img {
-   width: 15%;
-   height: 100%;
-    border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   /* border: solid 1px #949ca2; */
@@ -55,21 +71,11 @@
   line-height: 12px;
   color: #4a4a4a;
   opacity: 1;
+  margin-left: 4px;
 }
-.amountTitle {
-   min-width: 50px;
-   font-weight: bold;
-  font-size: 15px;
-  text-align: right;
-  color: var(--primary_color)  ;
-  margin: auto 0;
-}
-
-
 
 @media only screen and (max-width: 780px) {
- 
-  .latestTrend{
+  /* .latestTrend{
      min-height: 350px;
     display: flex;
     flex-direction: column;
@@ -97,29 +103,39 @@
   line-height: 17px;
  
  
+} */
 }
 
-}
- 
 @media only screen and (max-width: 600px) {
- .latestProducts{
-        padding-left: 7%;
-
+  .latestProducts {
+    padding-left: 7%;
   }
-  .latestProductsHeader{
+  .latestProductsHeader {
     padding-right: 4%;
   }
-.swiperSlider{
-  width: 60% !important;
+  .swiperSlider {
+    width: 40% !important;
+  }
 }
 
+@media only screen and (max-width: 500px) {
+  .swiperSlider {
+    width: 50% !important;
+  }
 }
+
+@media only screen and (max-width: 400px) {
+  .swiperSlider {
+    width: 76% !important;
+  }
+  .latestTrend {
  
- 
-@media only screen and (max-width: 480px) {
-
-.swiperSlider{
-  width: 80% !important;
+   width: 250px !important;
+  height: 320px;
+ }
+ .storeImage {
+  margin-bottom: 5px;
+  width: 100%;
+  height: 210px;
 }
-
 }

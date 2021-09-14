@@ -29,8 +29,7 @@ class Sidebar extends Component {
   render() {
     const { tenantData, location } = this.props;
    
-    console.log(tenantData, location);
-    let appLogo = this.props.onboarding_configs.splash_image;
+     let appLogo = this.props.onboarding_configs.splash_image;
  
     let redirectUrl = null;
     if (this.state.redirect) {
@@ -40,8 +39,7 @@ class Sidebar extends Component {
     let url = location.pathname;
     //let search = window.location.search;
     //let params = new URLSearchParams(search);
-    console.log('url', url);
-    return (
+     return (
       <Aux>
         {redirectUrl}
         <div className={classes.bgSidebar + ' col-lg-2 sidenav hidden-xs nopadding'}>

@@ -126,7 +126,7 @@ const StoresToFollow = ({ storesToFollow }) => {
 
           <div style={{ marginTop: '60px' }}>
             <Swiper
-              slidesPerView={width < 600 ?"auto":2}
+              slidesPerView={width < 600 ? 'auto' : 2}
               slidesPerGroup={1}
               spaceBetween={10}
               loop={false}
@@ -134,23 +134,38 @@ const StoresToFollow = ({ storesToFollow }) => {
               className="mySwiper"
               style={{ marginTop: '60px' }}
               breakpoints={{
-                 "600": {
+                600: {
+                  slidesPerView: 3,
+                  spaceBetween: 25,
+                },
+                768: {
                   slidesPerView: 2,
                   spaceBetween: 10,
                 },
-                
-                "950": {
+                850: {
                   slidesPerView: 3,
-                  spaceBetween: 10,
+                  spaceBetween: 0,
                 },
-                "1160": {
+                1050: {
+                  slidesPerView: 4,
+                  spaceBetween: 25,
+                },
+
+                1100: {
                   slidesPerView: 4,
                   spaceBetween: 10,
                 },
-                
-                "1300": {
+                1250: {
                   slidesPerView: 5,
-                  spaceBetween: 10,
+                  spaceBetween: 5,
+                },
+                1500: {
+                  slidesPerView: 6,
+                  spaceBetween: 5,
+                },
+                1850: {
+                  slidesPerView: 7,
+                  spaceBetween: 5,
                 },
               }}
             >

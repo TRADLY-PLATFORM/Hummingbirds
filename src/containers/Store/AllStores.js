@@ -21,14 +21,12 @@ const AllStores = () => {
   }, []);
   const stores = useSelector((state) => state.store.storesLists);
 
-  console.log(followLoading);
-
+ 
   const postStoreFollow = (id, following) => {
     const storeId = id;
     let IsFollowing = following;
 
-    console.log(storeId);
-
+ 
     setTimeout(() => {
       dispatch(actions.postStoreFollow(storeId, IsFollowing));
     }, 1000);

@@ -200,10 +200,7 @@ const CreateProduct = () => {
     );
   };
 
-  //
-  console.log('====================================');
-  console.log(price, title, description, currency);
-  console.log('====================================');
+ 
 
   return (
     <Aux>

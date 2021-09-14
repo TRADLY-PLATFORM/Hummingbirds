@@ -27,9 +27,7 @@ const LatestProducts = ({ products }) => {
   const { width, height } = useWindowSize();
   const collections = useSelector((state) => state.home.collections);
 
-  console.log('====================================');
-  console.log(products);
-  console.log('====================================');
+ 
   const dispatch = useDispatch();
   // useEffect(() => {
   //    dispatch(actions.initLatestProducts());
@@ -52,7 +50,10 @@ const LatestProducts = ({ products }) => {
       >
         <div className={classes.latestTrend}>
           <img src={imagePath} className={classes.storeImage} alt={list.title} title={list.title} />
-          <p>{list.title.length < 20 ? list.title : list.title.substring(0, 20) + '..'}</p>
+          <p className={classes.listTitle}>{list.title.length < 20 ? list.title : list.title.substring(0, 20) + '..'}</p>
+          <p className={classes.amountTitle}>
+            {list.list_price.formatted !== undefined ? list.list_price.formatted : ''}
+          </p>
           <div>
             {list.account !== undefined && list.account.images[0] ? (
               <div className={classes.bottomDesc}>
@@ -66,9 +67,6 @@ const LatestProducts = ({ products }) => {
                     ? list.account.name
                     : list.account.name.substring(0, 10) + '..'}
                 </span>
-                <p className={classes.amountTitle}>
-                  {list.list_price.formatted !== undefined ? list.list_price.formatted : ''}
-                </p>
               </div>
             ) : (
               <div className={classes.bottomDesc}>
@@ -76,11 +74,8 @@ const LatestProducts = ({ products }) => {
                 <span>
                   {(list.account.name.length < 10
                     ? list.account.name
-                    : list.account.name.substring(0, 10) + '..')|| "N/A"}
+                    : list.account.name.substring(0, 10) + '..') || 'N/A'}
                 </span>
-                <p className={classes.amountTitle}>
-                  {list.list_price.formatted !== undefined ? list.list_price.formatted : ''}
-                </p>
               </div>
             )}
           </div>
@@ -107,31 +102,50 @@ const LatestProducts = ({ products }) => {
           <br />
           <div style={{ marginTop: '60px' }}>
             <Swiper
-              slidesPerView={width < 600 ?"auto":2}
+              slidesPerView={width < 600 ? 'auto' : 1}
               slidesPerGroup={1}
-              spaceBetween={  10}
+              spaceBetween={5}
               loop={false}
               navigation={width < 780 ? false : true}
               className="mySwiper"
               style={{ marginTop: '60px' }}
               breakpoints={{
+                400: {
+                  slidesPerView: 1,
+                  spaceBetween: 5,
+                },
                 600: {
+                  slidesPerView: 3,
+                  spaceBetween: 5,
+                },
+                768: {
                   slidesPerView: 2,
                   spaceBetween: 10,
                 },
-
-                950: {
+                850: {
                   slidesPerView: 3,
-                  spaceBetween: 10,
+                  spaceBetween: 0,
                 },
-                1200: {
+                1050: {
+                  slidesPerView: 4,
+                  spaceBetween: 25,
+                },
+
+                1100: {
                   slidesPerView: 4,
                   spaceBetween: 10,
                 },
-
-                1400: {
+                1250: {
                   slidesPerView: 5,
-                  spaceBetween: 10,
+                  spaceBetween: 5,
+                },
+                1500: {
+                  slidesPerView: 6,
+                  spaceBetween: 5,
+                },
+                1850: {
+                  slidesPerView: 7,
+                  spaceBetween: 5,
                 },
               }}
             >

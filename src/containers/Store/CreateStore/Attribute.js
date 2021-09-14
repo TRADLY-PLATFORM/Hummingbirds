@@ -127,32 +127,11 @@ const Attribute = ({ attribute, attributeData, setAttributeData }) => {
     }
   };
 
-  console.log('====================================');
-  console.log(attributeData);
-  console.log('====================================');
-
-  // const valueChange = (newValue: any, actionMeta: any) => {
-  //   console.group('Value Changed 2');
-  //   console.log(newValue);
-  //   console.log(`action: ${actionMeta.action}`);
-  //   console.groupEnd();
-  // };
-
-  // const options = [
-  //   { value: 'chocolate', label: 'Chocolate' },
-  //   { value: 'strawberry', label: 'Strawberry' },
-  //   { value: 'vanilla', label: 'Vanilla' },
-  // ];
-
+ 
+ 
   return (
     <>
-      {/* <CreatableSelect
-        isClearable
-        isMulti
-        onChange={valueChange}
-        className="basic-multi-select"
-        classNamePrefix="select"
-      /> */}
+     
       {attribute?.map((attr) => {
         // Data
         let options;

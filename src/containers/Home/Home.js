@@ -69,25 +69,19 @@ const Home = () => {
   const collections = useSelector((state) => state.home.collections);
   const isAuthenticated = useSelector((state) => selectUserId(state));
   const products = useSelector((state) => state.home.products);
-    const storesToFollow = useSelector((state) => state.home.stores);
+  const storesToFollow = useSelector((state) => state.home.stores);
+  const seo_configs = useSelector((state) => state.auth.seo_configs);
 
  
-  console.log('loading:', loading);
-  console.log('follow-loading:', followLoading);
-
+ 
   // redirectListing = () => {
   //    history.push('/listings');
   // };
   return (
     <Aux className={classes.HomePage}>
       <Helmet>
-        <title>
-           Buy & Sell used items online from mobile app
-        </title>
-        <meta
-          name="description"
-          content=" Buy & Sell used items online and preloved electronics, bikes, cycle, books, fashion, gadgets, etc"
-        />
+        <title>{seo_configs?.meta_title}</title>
+        <meta name="description" content={seo_configs.meta_description} />
         <link href={location.pathname} />
       </Helmet>
       {/* <Backdrop show={loading || followLoading} /> */}

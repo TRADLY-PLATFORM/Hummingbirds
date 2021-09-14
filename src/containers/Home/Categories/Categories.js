@@ -8,9 +8,7 @@ import useWindowSize from '../../../components/Hooks/WindowSize/WindowSize';
 
 const Categories = ({ categories }) => {
   // const Categories = useSelector((state) => state.home.categories);
-  console.log('====================================');
-  console.log(Categories);
-  console.log('====================================');
+ 
   const [categorySet, setCategorySet] = useState([...categories]);
   const { width, height } = useWindowSize();
    // useEffect(() => {
