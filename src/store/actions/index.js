@@ -8,6 +8,7 @@ export {
   setAuthRedirectPath,
   setGeneralConfigsData,
   setOnboardingConfigsData,
+  setSeoConfigs,
 } from './auth';
 
 export {

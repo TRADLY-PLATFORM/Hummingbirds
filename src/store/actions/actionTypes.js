@@ -92,3 +92,5 @@ export const START_LOADING = 'START_LOADING';
 export const INIT_CURRENCIES = 'INIT_CURRENCIES';
 
 export const ADD_PRODUCT = 'ADD_PRODUCT';
+
+export const SEO_CONFIGS = 'SEO_CONFIG'

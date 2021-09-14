@@ -47,6 +47,7 @@ class App extends Component {
     this.props.onTryAuthSignUp();
     // this.props.onSetTenantConfig();
     this.props.onSetOnboardingConfigsData();
+    this.props.onSetSeoConfigs();
   }
 
 
@@ -127,6 +128,7 @@ const mapDispatchToProps = (dispatch) => {
     // onSetTenantConfig: () => dispatch(actions.setTenantConfig()),
     onSetOnboardingConfigsData: () => dispatch(actions.setOnboardingConfigsData()),
     // onInitCountries: () => dispatch(actions.initCountries())
+    onSetSeoConfigs: () => dispatch(actions.setSeoConfigs()),
   };
 };
 

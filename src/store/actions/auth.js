@@ -332,3 +332,30 @@ export const setOnboardingConfigsData = () => {
 
 // SEO configs
 
+
+export const SEOConfigs = (data) => {
+  return {
+    type: actionTypes.SEO_CONFIGS,
+    configs: data,
+  };
+};
+
+export const setSeoConfigs = () => {
+  return (dispatch) => {
+    axios
+      .get('v1/configs?key_group=seo')
+      .then((response) => {
+        console.log(response);
+        if (response.status) {
+          console.log('====================================');
+          console.log(response);
+          console.log('====================================');
+          // dispatch(SEOConfigs(response.data.data.configs));
+           
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
