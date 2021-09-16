@@ -1,0 +1,11 @@
+.allListingsBox{
+  padding-left: 43px;
+  padding-right:38px ;
+}
+
+@media only screen and (max-width: 780px) {
+  .allListingsBox{
+  padding-left: 4%;
+  padding-right:4% ;
+}
+}

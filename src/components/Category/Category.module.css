@@ -21,14 +21,19 @@
     border: 1px solid var(--primary_color);
   }
 .wellCategory p {
+  width: 92px;
+  height: 20px;
+  overflow: hidden;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+ align-items: center; 
   font-style: normal;
   font-weight: normal;
   font-size: 15px;
   line-height: 10px;
   color: var(--primary_color);
-
-  margin: 0;
-}
+ }
 
 .wellCategory img {
   width: 32px;

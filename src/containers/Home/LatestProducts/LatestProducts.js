@@ -63,18 +63,18 @@ const LatestProducts = ({ products }) => {
                   title={list.account.name}
                 />
                 <span>
-                  {list.account.name.length < 10
+                  {list.account.name.length < 17
                     ? list.account.name
-                    : list.account.name.substring(0, 10) + '..'}
+                    : list.account.name.substring(0, 15) + '..'}
                 </span>
               </div>
             ) : (
               <div className={classes.bottomDesc}>
                 <img src={NoIamgeLogo} alt={list.title} title={list.title} />
                 <span>
-                  {(list.account.name.length < 10
+                  {(list.account.name.length < 17
                     ? list.account.name
-                    : list.account.name.substring(0, 10) + '..') || 'N/A'}
+                    : list.account.name.substring(0, 15) + '..') || 'N/A'}
                 </span>
               </div>
             )}
@@ -93,59 +93,41 @@ const LatestProducts = ({ products }) => {
             <div className="  ">
               <h3 className={classes.headingTitle}>{title}</h3>
             </div>
-            <div className="  " style={{ marginRight: '0.4%' }}>
+            <div className="  ">
               <Link to="/listings">
                 <button className={'btnGreenStyle pull-right'}>View All</button>
               </Link>
             </div>
           </div>
-          <br />
-          <div style={{ marginTop: '60px' }}>
+           <div >
             <Swiper
-              slidesPerView={width < 600 ? 'auto' : 1}
+              slidesPerView={'auto'}
               slidesPerGroup={1}
-              spaceBetween={5}
+              spaceBetween={16}
               loop={false}
-              navigation={width < 780 ? false : true}
+              navigation={false}
               className="mySwiper"
-              style={{ marginTop: '60px' }}
+               
               breakpoints={{
-                400: {
-                  slidesPerView: 1,
-                  spaceBetween: 5,
-                },
-                600: {
-                  slidesPerView: 3,
-                  spaceBetween: 5,
-                },
-                768: {
-                  slidesPerView: 2,
-                  spaceBetween: 10,
-                },
-                850: {
-                  slidesPerView: 3,
-                  spaceBetween: 0,
-                },
                 1050: {
                   slidesPerView: 4,
-                  spaceBetween: 25,
-                },
-
-                1100: {
-                  slidesPerView: 4,
-                  spaceBetween: 10,
+                  spaceBetween: 16,
                 },
                 1250: {
                   slidesPerView: 5,
-                  spaceBetween: 5,
+                  spaceBetween: 16,
                 },
-                1500: {
+                1450: {
                   slidesPerView: 6,
-                  spaceBetween: 5,
+                  spaceBetween: 16,
                 },
-                1850: {
+                1650: {
                   slidesPerView: 7,
-                  spaceBetween: 5,
+                  spaceBetween: 16,
+                },
+                1800: {
+                  slidesPerView: 8,
+                  spaceBetween: 16,
                 },
               }}
             >

@@ -17,56 +17,46 @@ import StoreActiveLogo from '../../assets/images/sidebar/active/store.svg';
 import PropTypes from 'prop-types';
 import * as actions from '../../store/actions/index';
 import { useState } from 'react';
-import menubarIcon from "../../assets/images/mobilemenu/menu.png"
-import closeMenu from "../../assets/images/mobilemenu/close.png"
+import menubarIcon from '../../assets/images/mobilemenu/menu.png';
+import closeMenu from '../../assets/images/mobilemenu/close.png';
 import profileUser from '../../assets/images/header/profile-user.png';
 import arrow from '../../assets/images/mobilemenu/down-arrow.png';
 import { Search } from '../../components/Seacrh/Search';
-
-
 
 const Layout = (props) => {
   const isAuthenticated = useSelector((state) => selectUserId(state));
   const tenantData = useSelector((state) => selectTenantData(state));
 
-
   const userData = useSelector((state) => selectUserData(state));
   const onboarding_configs = useSelector((state) => state.auth.onboarding_configs);
-
 
   const dispatch = useDispatch();
 
   const url = useLocation().pathname;
- 
+
   const [isSiteNavOpen, setIsSiteNavOpen] = useState(false);
 
   const authRedirectHandler = (path) => {
-
-    dispatch(actions.setAuthRedirectPath(path,null));
+    dispatch(actions.setAuthRedirectPath(path, null));
   };
   function navButtonClick() {
-    
-      document.getElementById('navbarMenu').style.width = '60%';
-      setIsSiteNavOpen(true);
-    
-     
+    document.getElementById('navbarMenu').style.width = '245px';
+    setIsSiteNavOpen(true);
   }
   function navButtonOff() {
-    
-      document.getElementById('navbarMenu').style.width = '0';
-      setIsSiteNavOpen(false);
-   
+    document.getElementById('navbarMenu').style.width = '0';
+    setIsSiteNavOpen(false);
   }
 
   // Logo path:
-     let appLogo = onboarding_configs.splash_image  ;
+  let appLogo = onboarding_configs.splash_image;
   function getUserImage() {
     return userData.get('profile_pic', '');
   }
-    function getUserName() {
-      return userData.get('first_name', 'Guests') + ' ' + userData.get('last_name', '');
-    }
- 
+  function getUserName() {
+    return userData.get('first_name', 'Guests') + ' ' + userData.get('last_name', '');
+  }
+
   return (
     <div>
       <Aux>
@@ -219,9 +209,13 @@ const Layout = (props) => {
 
         <div className={classes.bgColor + ' container-fluid'} style={{}}>
           <div className="row content" onClick={navButtonOff}>
-            <Sidebar isAuthentication={isAuthenticated} tenantData={tenantData} />
-
-            <div className={classes.rightPanel + ' col-lg-10'}>
+            <div
+              className=" col-md-2 sidenav hidden-xs nopadding"
+              style={{ position: 'fixed', height: '100vh' ,width:'245px'}}
+            >
+              <Sidebar isAuthentication={isAuthenticated} tenantData={tenantData} />
+            </div>
+            <div className={classes.rightPanel}>
               <Header userData={userData} />
               <main className={classes.rightTopMargin + ' col-lg-12'}>{props.children}</main>
             </div>

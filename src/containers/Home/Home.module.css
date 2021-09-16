@@ -1,7 +1,7 @@
 
 .homeContent{
-  padding: 0 15px;
-}
+ padding-left: 32px;
+   padding-right: 20px;}
 
 @media only screen and (max-width: 600px) {
   .homeContent{

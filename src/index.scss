@@ -1,8 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
- 
 
-
-$primaryColor:  var(--primary_color);
+$primaryColor: var(--primary_color);
 $primaryBgColor: #ffffff;
 
 * {
@@ -13,7 +11,7 @@ $primaryBgColor: #ffffff;
 .whiteColor {
   color: $primaryBgColor;
 }
-.noDecoration:hover{
+.noDecoration:hover {
   text-decoration: none;
   color: white;
 }
@@ -36,7 +34,7 @@ $primaryBgColor: #ffffff;
 .btnOutlineGreenStyle {
   padding: 8px 20px;
   border: 1px solid $primaryColor;
-  background:white;
+  background: white;
   border-radius: 24px;
   font-style: normal;
   font-weight: 600;
@@ -141,19 +139,22 @@ $primaryBgColor: #ffffff;
   height: 45px !important;
 }
 
-.nav-pills li a span {
-  left: 20px;
-  position: relative;
-  font-weight: 700;
-font-size: 14px;
- }
-.nav-pills li a span {
-  left: 20px;
-  position: relative;
-   opacity: 0.7;
-   font-weight: 500;
-font-size: 14px;
+.nav-pills > li.active > a{
+display: flex;
+align-items: center;
+ height: 48px;
+
 }
+
+.nav-pills li a span {
+  left: 19px;
+  position: relative;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  line-height: 17px;
+  color: #121212 !important;
+}
+ 
 
 .nav-pills > li.active > a,
 .nav-pills > li.active > a:focus,
@@ -162,18 +163,24 @@ font-size: 14px;
   background-color: #e7f8f3;
 }
 
+.nav-pills > li.active >a> span  {
+    color:  var(--primary_color ) !important;
+   
+}
+
 .nav > li > a:focus,
 .nav > li > a:hover {
   background-color: #e7f8f3;
+
 }
 
- 
- 
 span.glyphicon.glyphicon-search.form-control-feedback {
-  left: 8px;
-  color: $primaryColor;
-  top: 6px;
+  left: 18px;
+  color: #121212;
+  top: 20%;
   font-size: 15px;
+  height: 20px;
+  width: 20px;
 }
 
 .input-lg {
@@ -185,9 +192,8 @@ span.glyphicon.glyphicon-search.form-control-feedback {
   border-radius: 30px;
   color: #212121;
   border: none;
-    box-shadow: 0px 8px 28px rgba(0, 0, 0, 0.07);
-
- }
+  box-shadow: 0px 8px 28px rgba(0, 0, 0, 0.07);
+}
 
 .col-xs-5th-1,
 .col-xs-5th-2,
@@ -636,22 +642,22 @@ span.glyphicon.glyphicon-search.form-control-feedback {
   float: right;
 }
 
-
-.swiper-button-next ,.swiper-button-prev {
-
+.swiper-button-next,
+.swiper-button-prev {
 }
 
-.swiper-button-next:after,.swiper-button-prev:after {
+.swiper-button-next:after,
+.swiper-button-prev:after {
   color: var(--primary_color);
-   font-size: 30px !important;
+  font-size: 30px !important;
   font-weight: bold !important;
 }
 
+::placeholder {
+  /* Chrome/Opera/Safari */
 
-::placeholder { /* Chrome/Opera/Safari */
-
-  color: #4F4F4F !important;
+  color: #4f4f4f !important;
 }
-label{
-  color:#959393;
+label {
+  color: #959393;
 }

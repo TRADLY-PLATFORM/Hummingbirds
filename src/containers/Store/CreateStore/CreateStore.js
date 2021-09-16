@@ -39,6 +39,10 @@ const CreateStore = () => {
   const [base64, setBase64] = useState({});
   const [coordinates, setCoordinates] = useState(null);
   const [file, setFile] = useState(null);
+   const [attributeData, setAttributeData] = useState(null);
+
+
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -59,7 +63,6 @@ const CreateStore = () => {
   const attribute = useSelector((state) => state.store.attribute);
   const isAuthenticated = useSelector((state) => selectUserId(state));
  const errorMessage = useSelector((state) => state.store.message);
-   const [attributeData, setAttributeData] = useState(null);
 
 
    
@@ -80,6 +83,9 @@ const CreateStore = () => {
       toast.error('Type is required');
       call = false;
       return false;
+    }
+    if (attribute) {
+      
     }
 
     if (file !== null) {
@@ -185,6 +191,9 @@ const CreateStore = () => {
     border: '1px solid #13b58c',
   };
   const deActive = {};
+  console.log('====================================');
+  console.log(attributeData);
+  console.log('====================================');
   return (
     <Aux>
       {redirectUrl}
@@ -208,7 +217,16 @@ const CreateStore = () => {
             <ol className={classes.breadCrumb}>
               <li className="breadcrumb-item active" aria-current="page">
                 <Link to="/store">
-                  <img src={ArrowLogo} alt="store" style={{ marginRight: '10px' }} />
+                  <svg
+                    width="16"
+                    height="14"
+                    viewBox="0 0 16 14"
+                    fill="var(--primary_color)"
+                    xmlns="http://www.w3.org/2000/svg"
+                    style={{marginRight:'10px'}}
+                  >
+                    <path d="M16 6V8H4L8 12L7 14L0 7L7 0L8 2L4 6H16Z" />
+                  </svg>
                   Back to my store
                 </Link>
               </li>
@@ -371,7 +389,7 @@ const CreateStore = () => {
                 </div>
               </div>
             </div>
-           
+
             {attribute && (
               <Attribute
                 attribute={attribute}

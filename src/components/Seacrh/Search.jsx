@@ -6,6 +6,8 @@ import { useHistory, useLocation, useParams } from 'react-router-dom';
 import * as actions from "../../store/actions/index"
 import classes from "./Search.module.css"
 
+import searchIcon from "../../assets/images/header/search (1).png"
+
 export  const Search = () => {
    const [searchText, setSearchText] = useState('');
    const [showSearchResult, setShowSearchResult] = useState(false);
@@ -37,13 +39,15 @@ export  const Search = () => {
    };
   return (
     <>
-      <div className="col-sm-6">
+      <div className="col-sm-6" style={{ padding: '0' }}>
         <div className={classes.searchBar}>
-          <span className="glyphicon glyphicon-search form-control-feedback"></span>
+          <span className={classes.SearchIcon}>
+            <img src={searchIcon} alt="" />
+          </span>
           <input
             type="text"
             value={searchText}
-            className="form-control input-lg"
+            className={classes.searchInput}
             placeholder="Search Product"
             onChange={handleChange}
             onKeyPress={(e) => {

@@ -68,9 +68,9 @@ const ProductDetail = () => {
             })}
           </Swiper>
         </div>
-        <div>
+        <div className={classes.product}>
           
-       </div>
+        </div>
       
       </div>
     </div>

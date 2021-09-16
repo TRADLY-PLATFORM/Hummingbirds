@@ -5,11 +5,14 @@
 }
 
 .wellStore {
-  min-height: 18.5em;
-  width: 250px;
-  margin: 10px;
-  padding: 20px 20px;
-  margin-bottom: 20px;
+   width: 210px;
+  height: 260px;
+  margin-right: 16px;
+   padding-top: 31px;
+  padding-bottom: 20px;
+  padding-left: 17px;
+  padding-right: 17px;
+   margin-bottom: 16px;
   background-color: #ffffff;
   border: 1px solid #e3e3e3;
   border-radius: 10px;
@@ -17,17 +20,12 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
+  text-decoration: none !important;
 }
  
-.wellStore a:hover{
-  text-decoration: none;
-}
-
 .wellStoreDetails {
   font-style: normal;
-  margin-top: 15px;
 }
 
 .wellStoreDetails p {
@@ -35,47 +33,44 @@
   line-height: 22px;
   color: #4a4a4a;
   min-height: 15px;
-
 }
 
-.wellStore img {
-  margin-bottom: 15px;
-  width: 50%;
+.imageDiv img {
+  width: 64px;
+  height: 64px;
   border-radius: 100%;
 }
-.imageDiv {
-   height: 100px;
-  width:200px;
-}
+
 .btnGreenFollow {
-  padding: 10px 13px;
+  padding: 7px 13px;
   border: none;
-  background: linear-gradient(180deg,var(--primary_color) 0%, var(--primary_color) 100%);
+  background: linear-gradient(180deg, var(--primary_color) 0%, var(--primary_color) 100%);
   border-radius: 24px;
   width: 100%;
   font-style: normal;
-  font-weight: 500; 
-  font-size: 18px;
+  font-weight: 500;
+  font-size: 14px;
   line-height: 17px;
   /* identical to box height */
   color: #ffffff !important;
-  margin-top: 7px;
+  z-index: 10;
+  text-decoration: none !important;
 }
- 
-.btnGreenUnFollowing{
+.btnGreenUnFollowing {
   padding: 10px 13px;
   border: 1px solid var(--primary_color);
   background: white;
   border-radius: 24px;
   width: 100%;
   font-style: normal;
-  font-weight: 600; 
-  font-size: 18px;
+  font-weight: 500;
+  font-size: 14px;
   line-height: 17px;
   /* identical to box height */
   color: var(--primary_color) !important;
+  z-index: 10;
+  text-decoration: none !important;
 }
- 
 
 .Backdrop {
     width: 100%;
@@ -87,38 +82,56 @@
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-@media only screen and (max-width: 780px) {
+@media only screen and (max-width: 580px) {
   .storesStyle {
   display: grid;
      grid-template-columns: 48% 48%;
      grid-column-gap: 4%;
       padding: 0 4%; 
-   margin: 0;
+     margin: 0;
 }
   
  
   .wellStore{
    width: 100%;
-  margin:  10px 0;
+  margin:  4% 0;
   }
-  .wellStoreDetails{
-    margin-top: 5px;
+ 
+}
+
+@media only screen and (max-width: 380px) {
+    .storesStyle {
+  display: grid;
+     grid-template-columns: 49% 49%;
+     grid-column-gap: 4%;
+      padding: 0 2%; 
+     margin: 0;
+}
+
+  .wellStore{
+    padding-left: 10px;
+  padding-right: 10px;
   }
-  .wellStoreDetails p {
-  font-size: 10px;
-  line-height: 12px;
-  color: #4a4a4a;
-  min-height: 15px;
-  padding:0 20px;
+
+
+
 }
-  .wellStore img {
-  margin-bottom: 25px;
-  width:50%;
-   border-radius: 100%;
+@media only screen and (max-width: 340px) {
+    .storesStyle {
+  display: grid;
+     grid-template-columns: 49% 49%;
+     grid-column-gap: 4%;
+      padding: 0 2%; 
+     margin: 0;
 }
-.wellStoreDetails {
-  font-style: normal;
-  margin-top: 45px;
-}
+
+  .wellStore{
+    padding-left: 5px;
+  padding-right: 5px;
+   justify-content: space-around;
+
+  }
+
+
 
 }

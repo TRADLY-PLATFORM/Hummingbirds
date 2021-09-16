@@ -100,14 +100,9 @@ const Home = () => {
           <div className={classes.homeContent}>
             <HomeBanner images={promo_banners} />
             <Categories categories={categories} />
-            <br />
-            <StoresToFollow storesToFollow={storesToFollow} />
-            <br />
-            <br />
+             <StoresToFollow storesToFollow={storesToFollow} />
             <LatestProducts products={products} />
-            <br />
-            <br />
-            <br />
+            
           </div>
         </>
       )}

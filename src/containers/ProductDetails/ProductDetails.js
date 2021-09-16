@@ -269,12 +269,14 @@ const ProductDetails = () => {
         <link rel="canonical" href={location.pathname} />
       </Helmet>
       <Aux>
-        <Backdrop show={loading || followLoading} />
-        <Spinner show={loading || followLoading} />
+       
+            <Backdrop show={loading} />
+              <Spinner show={loading } />
+         
         {toastMessage}
 
         <div className={classes.rowBox}>
-          <div className="col-lg-12">
+          {/* <div className="col-lg-12">
             <nav aria-label="breadcrumb">
               <ol className={classes.breadCrumb}>
                 <li className="breadcrumb-item active" aria-current="page">
@@ -285,7 +287,7 @@ const ProductDetails = () => {
                 </li>
               </ol>
             </nav>
-          </div>
+          </div> */}
 
           <div className={classes.imageBox + ' col-xs-12 col-md-6 '}>
             <div className={classes.productImageBox}>
@@ -304,14 +306,11 @@ const ProductDetails = () => {
                 {productDetails.getIn(['listing', 'images'], List()).map((img, index) => {
                   return (
                     <SwiperSlide key={index}>
-                      <img
-                        style={width > 780 ? { height: '340px' } : { height: '180px' }}
-                        src={img}
-                      />
+                      <img className={classes.productImage} src={img} />
                     </SwiperSlide>
                   );
                 })}
-              </Swiper> 
+              </Swiper>
               <div
                 style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
               >
@@ -477,14 +476,11 @@ const ProductDetails = () => {
                     </button>
                   </div>
                 </div> */}
-              <br />
-              <br />
+            
             </div>
           </div>
         </div>
-
-        <br />
-        <br />
+ 
       </Aux>
     </>
   );

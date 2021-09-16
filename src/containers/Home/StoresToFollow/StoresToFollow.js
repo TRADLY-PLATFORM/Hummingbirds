@@ -116,58 +116,44 @@ const StoresToFollow = ({ storesToFollow }) => {
             <div className="  ">
               <h3 className={classes.headingTitle}>{title}</h3>
             </div>
-            <div className="  " style={{ marginRight: '0.4%' }}>
+            <div className="  "  >
               <Link to="/stores">
                 <button className={'btnGreenStyle pull-right'}>View All</button>
               </Link>
             </div>
           </div>
-          <br />
-
-          <div style={{ marginTop: '60px' }}>
+ 
+          <div>
             <Swiper
-              slidesPerView={width < 600 ? 'auto' : 2}
+              slidesPerView={'auto'}
               slidesPerGroup={1}
-              spaceBetween={10}
+              spaceBetween={16}
               loop={false}
-              navigation={width < 780 ? false : true}
+              navigation={false}
               className="mySwiper"
-              style={{ marginTop: '60px' }}
               breakpoints={{
-                600: {
-                  slidesPerView: 3,
-                  spaceBetween: 25,
-                },
-                768: {
-                  slidesPerView: 2,
-                  spaceBetween: 10,
-                },
-                850: {
-                  slidesPerView: 3,
-                  spaceBetween: 0,
-                },
                 1050: {
                   slidesPerView: 4,
-                  spaceBetween: 25,
-                },
-
-                1100: {
-                  slidesPerView: 4,
-                  spaceBetween: 10,
+                  spaceBetween: 16,
                 },
                 1250: {
                   slidesPerView: 5,
-                  spaceBetween: 5,
+                  spaceBetween: 16,
                 },
-                1500: {
+                1450: {
                   slidesPerView: 6,
-                  spaceBetween: 5,
+                  spaceBetween: 16,
                 },
-                1850: {
+                1650: {
                   slidesPerView: 7,
-                  spaceBetween: 5,
+                  spaceBetween: 16,
+                },
+                1800: {
+                  slidesPerView: 8,
+                  spaceBetween: 16,
                 },
               }}
+              
             >
               {arrayListings?.map((list, i) => (
                 <SwiperSlide className={classes.swiperSlide}>{list}</SwiperSlide>

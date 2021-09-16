@@ -18,7 +18,7 @@ const WishList = () => {
   const wishList = useSelector((state) => state.wishList.wishLists );
   const loading = useSelector((state) => state.wishList.loading );
    return (
-    <div>
+    <div className={classes.wishListsBox}>
       <div className="">
         <div>
           <h2 className={classes.pageTitle}>My Wishlist </h2>
@@ -76,34 +76,38 @@ const WishList = () => {
               let storeName = list.account.name;
               let price = list.list_price.formatted !== undefined ? list.list_price.formatted : '';
                return (
-                <Link to={`/l/${list.id}-${list.title}`} key={i} style={{ textDecoration: 'none' }}>
-                  <div className={''}>
-                    <div className={classes.latestTrend}>
-                      <img
-                        src={productImage}
-                        className={classes.storeImage}
-                        alt="Woman accesories"
-                        title="Woman accesories"
-                      />
-                      <p>{list.title}</p>
-                      <div className={classes.bottomDesc}>
-                        <img
-                          src={storelogo || NoIamgeLogo}
-                          alt="Woman accesories"
-                          title="Woman accesories"
-                        />{' '}
-                        <span>
-                          {' '}
-                          {list.account.name.length < 10
-                            ? list.account.name
-                            : list.account.name.substring(0, 8) + '..'}
-                        </span>
-                        <p className={classes.amountTitle}>{price}</p>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              );
+                 <Link
+                   to={`/l/${list.id}-${list.title}`}
+                   key={i}
+                   style={{ textDecoration: 'none' }}
+                 >
+                   <div className={''}>
+                     <div className={classes.latestTrend}>
+                       <img
+                         src={productImage}
+                         className={classes.storeImage}
+                         alt="Woman accesories"
+                         title="Woman accesories"
+                       />
+                       <p className={classes.storeTitle}>{list.title}</p>
+                       <div className={classes.bottomDesc}>
+                         <img
+                           src={storelogo || NoIamgeLogo}
+                           alt="Woman accesories"
+                           title="Woman accesories"
+                         />{' '}
+                         <span>
+                           {' '}
+                           {list.account.name.length < 10
+                             ? list.account.name
+                             : list.account.name.substring(0, 8) + '..'}
+                         </span>
+                         <p className={classes.amountTitle}>{price}</p>
+                       </div>
+                     </div>
+                   </div>
+                 </Link>
+               );
             })}
           </div>
         ) : (

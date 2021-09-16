@@ -29,11 +29,11 @@ const Attribute = ({ attribute, attributeData, setAttributeData }) => {
 
   const handleChange = (newValue, actionMeta, attribute_id, attribute_field_type) => {
     console.group('Value Changed');
-    console.log(newValue);
+    console.log(newValue, actionMeta, attribute_id, attribute_field_type);
     console.log(`attrId: ${actionMeta.action}`);
 
     console.groupEnd();
-    if (attribute_field_type === (1 || 3)) {
+    if (attribute_field_type === 1 || 3) {
       if (attributeData !== null) {
         console.log('here');
         const check = attributeData?.find((attr) => attr.id === attribute_id);
@@ -60,7 +60,7 @@ const Attribute = ({ attribute, attributeData, setAttributeData }) => {
           setAttributeData([{ values: [newValue.value], id: attribute_id }]);
         }
       }
-    } else if (attribute_field_type === (2 || 4)) {
+    } else if (attribute_field_type === 2 || 4) {
       if (attributeData !== null) {
         if (actionMeta.action !== ('remove-value' || 'clear')) {
           const check = attributeData.find((attr) => attr.id === attribute_id);

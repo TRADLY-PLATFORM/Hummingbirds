@@ -19,6 +19,12 @@ import {
 } from '../../store/selectors/product';
 import PropTypes from 'prop-types';
 
+
+import classes from "./Listings.module.css"
+
+
+
+
 class Listings extends Component {
    static propTypes = {
     match: PropTypes.object.isRequired,
@@ -205,16 +211,16 @@ class Listings extends Component {
         <Aux>
           <Backdrop show={loading} />
           <Spinner show={loading} />
-          <Filter
-            selectedOption={selectedOptionList}
-            options={options}
-            handleChange={this.handleChange}
-          />
-          {listing}
-          {showLoadButton}
-          <br />
-          <br />
-          <br />
+
+          <div className={classes.allListingsBox}>
+            <Filter
+              selectedOption={selectedOptionList}
+              options={options}
+              handleChange={this.handleChange}
+            />
+            {listing}
+            {showLoadButton}
+          </div>
         </Aux>
       </>
     );

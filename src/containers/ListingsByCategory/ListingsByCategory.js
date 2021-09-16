@@ -53,7 +53,7 @@ const ListingsByCategory = () => {
                       alt={list.title}
                       title={list.title}
                     />
-                    <p>{list.title}</p>
+                    <p className={classes.storeTitle}>{list.title}</p>
                     <div className={classes.bottomDesc}>
                       {list.account !== undefined && list.account.images[0] ? (
                         <>
@@ -92,9 +92,7 @@ const ListingsByCategory = () => {
             })}
           </div>
         }
-        <br />
-        <br />
-        <br />
+         
       </Aux>
     </>
   );

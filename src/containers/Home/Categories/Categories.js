@@ -90,16 +90,13 @@ const Categories = ({ categories }) => {
   //   }
   // }
   return (
-    <div style={{ marginTop: '10px', minHeight: '150px' }}>
-      <div className="">
-        <div className={classes.CategoryBox}>
+   
+         <div className={classes.CategoryBox}>
           {
             sendCategories()
          }
         </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default Categories;
