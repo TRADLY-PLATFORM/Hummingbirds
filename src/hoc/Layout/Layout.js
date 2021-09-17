@@ -37,7 +37,7 @@ const Layout = (props) => {
   const [isSiteNavOpen, setIsSiteNavOpen] = useState(false);
 
   const authRedirectHandler = (path) => {
-    dispatch(actions.setAuthRedirectPath(path, null));
+    dispatch(actions.setAuthRedirectPath(path));
   };
   function navButtonClick() {
     document.getElementById('navbarMenu').style.width = '245px';
@@ -108,7 +108,11 @@ const Layout = (props) => {
 
                   <div className={classes.dropdownMenu + ' user-menu dropdown-menu'}>
                     {userData.get('id', '') === '' ? (
-                      <Link className={classes.navLink} to="/sign-in">
+                      <Link
+                        className={classes.navLink}
+                        to="/sign-in"
+                        onClick={() => authRedirectHandler(url)}
+                      >
                         <i className="fa fa-power-off mr-10"></i>Login
                       </Link>
                     ) : (
@@ -180,7 +184,7 @@ const Layout = (props) => {
                       <span>My Wishlist</span>
                     </Link>
                   ) : (
-                    <Link to="/sign-in">
+                    <Link to="/sign-in" onClick={() => authRedirectHandler('/wishlist')}>
                       <img
                         className="img-fluid"
                         src={url === '/wishlist' ? WishlistActiveLogo : WishlistLogo}
@@ -211,7 +215,7 @@ const Layout = (props) => {
           <div className="row content" onClick={navButtonOff}>
             <div
               className=" col-md-2 sidenav hidden-xs nopadding"
-              style={{ position: 'fixed', height: '100vh' ,width:'245px'}}
+              style={{ position: 'fixed', height: '100vh', width: '245px' }}
             >
               <Sidebar isAuthentication={isAuthenticated} tenantData={tenantData} />
             </div>

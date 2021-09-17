@@ -67,6 +67,9 @@ class StoreDetails extends Component {
     }
     return '';
   };
+  setPath = () => {
+     this.props.setRedirectPath(this.props.location.pathname);
+  };
 
   postStoreFollow = () => {
     const { storeDetails } = this.props;
@@ -78,6 +81,13 @@ class StoreDetails extends Component {
     this.timer = setTimeout(() => {
       this.props.postStoreFollow(storeId, IsFollowing);
     }, 1000);
+
+    if (!this.props.error) {
+      const btn = document.getElementById('followBtn');
+      btn.innerText = IsFollowing ? 'Follow' : 'Following';
+      btn.classList.remove(IsFollowing ? 'btnGreenStyle' : 'btnOutlineGreenStyle');
+      btn.classList.add(IsFollowing ? 'btnOutlineGreenStyle' : 'btnGreenStyle');
+    }
 
     this.timer = setTimeout(() => {
       if (!this.props.error) {
@@ -156,6 +166,7 @@ class StoreDetails extends Component {
                   </button> */}
                 {this.props.isAuthenticated ? (
                   <button
+                    id="followBtn"
                     className={`${
                       this.props.storeDetails.get('following')
                         ? 'btnGreenStyle'
@@ -166,7 +177,7 @@ class StoreDetails extends Component {
                     {this.props.storeDetails.get('following') ? 'Following' : 'Follow'}
                   </button>
                 ) : (
-                  <Link to="/sign-in">
+                  <Link to="/sign-in" onClick={this.setPath}>
                     <button
                       className="btnOutlineGreenStyle pull-right "
                       style={{ marginLeft: '15px' }}
@@ -283,6 +294,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(actions.initListings(count, filterValue, totalCountOfProducts)),
     postStoreFollow: (storeId, IsFollowing) =>
       dispatch(actions.postStoreFollow(storeId, IsFollowing)),
+    setRedirectPath: (redirectPath) => dispatch(actions.setAuthRedirectPath(redirectPath)),
   };
 };
 

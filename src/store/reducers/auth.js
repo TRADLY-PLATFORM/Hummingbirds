@@ -98,6 +98,13 @@ const setAuthRedirectPath = (state, action) => {
     disabled: false,
   });
 };
+const setVerifyID = (state, action) => {
+  return updateObject(state, {
+     verify_id: action.verify_id,
+    loading: false,
+    error: false,
+   });
+};
 
 const authVerify = (state, action) => {
   return updateObject(state, { error: false, loading: false, disabled: true, message: null });
@@ -135,13 +142,16 @@ const authReducer = (state = initialState, action) => {
     case actionTypes.SET_ONBOARDING_CONFIGS:
       return setOnboardingConfigs(state, action);
     case actionTypes.SEO_CONFIGS:
-      return setSeoConfigs (state, action);
+      return setSeoConfigs(state, action);
 
     case actionTypes.FETCH_COUNTRIES_FAILED:
       return fetchCountriesFailed(state, action);
 
     case actionTypes.SET_AUTH_REDIRECT_PATH:
       return setAuthRedirectPath(state, action);
+
+    case actionTypes.VERIFY_ID:
+      return setVerifyID(state, action);
 
     case actionTypes.SUCCESS_TENANT_CONFIG:
       return successTenantConfig(state, action);

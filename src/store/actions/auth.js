@@ -23,6 +23,13 @@ export const setAuthRedirectPath = (path, id) => {
   };
 };
 
+export const setVerifyID = ( id) => {
+  return {
+    type: actionTypes.VERIFY_ID,
+     verify_id: id,
+  };
+};
+
 export const authVerify = () => {
   return {
     type: actionTypes.AUTH_VERIFY,
@@ -118,7 +125,8 @@ export const auth = (userData, isSignup) => {
              
             let encodeVerifyId = btoa(response.data.data.verify_id);
             console.log(encodeVerifyId);
-            dispatch(setAuthRedirectPath('/verification/' + encodeVerifyId, encodeVerifyId));
+            dispatch(setVerifyID(encodeVerifyId));
+            // dispatch(setAuthRedirectPath('/verification/' + encodeVerifyId, encodeVerifyId));
           } else {
             dispatch(authFail('Invalid credentials'));
             return false;
@@ -137,7 +145,7 @@ export const auth = (userData, isSignup) => {
           localStorage.setItem('expirationDate', expirationDate);
           dispatch(authSuccess(response.data.data.user));
           dispatch(checkAuthTimeout(setTimeExpiry));
-          dispatch(setAuthRedirectPath('/', null));
+          // dispatch(setAuthRedirectPath('/', null));
         }
       })
       .catch((error) => {

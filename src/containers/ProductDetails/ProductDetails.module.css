@@ -16,7 +16,7 @@
 }
   */
 .rowBox{
-  margin-top:60px ;
+  margin-top:30px ;
   padding-left: 57px;
   padding-right: 31px;
 }
@@ -185,7 +185,7 @@ color: #4a4a4a;
 
 @media only screen and (max-width: 580px) {
 .rowBox{
-  margin-top:60px ;
+  margin-top: 0px ;
   padding-left: 0px;
   padding-right: 0px;
 }

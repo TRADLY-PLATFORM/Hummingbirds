@@ -172,7 +172,7 @@ class SignUp extends Component {
 
     let authRedirect = null;
     if (this.props.isAuthenticated || this.props.verifyId) {
-      authRedirect = <Redirect to={this.props.authRedirectPath} />;
+       authRedirect = <Redirect to={'/verification/' + this.props.verifyId} />;
     }
 
     let defaultCountry = '';

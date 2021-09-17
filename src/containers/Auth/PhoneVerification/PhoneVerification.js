@@ -71,7 +71,7 @@ class PhoneVerification extends Component {
     }
 
     if (this.props.isAuthenticated) {
-      authRedirect = <Redirect to={'/'} />;
+      authRedirect = <Redirect to={this.props.authRedirectPath} />;
     }
 
     return (

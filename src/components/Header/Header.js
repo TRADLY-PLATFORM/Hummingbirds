@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import classes from './Header.module.css';
 import profileUser from '../../assets/images/header/profile-user.png';
 
@@ -14,29 +14,23 @@ import NoProductImage from '../../assets/images/rsz_noimage.png';
 import NoIamgeLogo from '../../assets/images/home/store/noImage.svg';
 import downArrow from '../../assets/images/header/downArrow.png';
 
+import { useDispatch, useSelector } from 'react-redux';
+import * as actions from "../../store/actions/index"
+
 
 import { Search } from '../Seacrh/Search';
 
 // import Skeleton from '../UI/Skeleton/Skeleton';
 
 const Header = (props) => {
-  const [searchText, setSearchText] = useState('');
-  const [showSearchResult, setShowSearchResult] = useState(false);
-  const [searchResult, setSearchResult] = useState('');
+ 
 
-  const handleChange = (e) => {
-    setSearchText(e.target.value);
-  };
-  const handleKeypress = (e) => {
-    //it triggers by pressing the enter key
-    if (e.key === 'Enter') {
-      axios.get('/products/v1/listings?page=1&search_key=' + searchText).then(function (response) {
-        // handle success
-        setShowSearchResult(true);
-        setSearchResult(response.data.data.listings);
-       });
-    }
-  };
+  const dispatch = useDispatch()
+  const {pathname} = useLocation()
+  console.log('====================================');
+  console.log(pathname);
+  console.log('====================================');
+ 
 
   const { userData } = props;
    function getUserName() {
@@ -47,10 +41,12 @@ const Header = (props) => {
     return userData.get('profile_pic', '');
   }
 
-  const backClick = () => {
-    setSearchText('');
-    setShowSearchResult(false);
-  };
+ 
+
+
+  const setPath = () => {
+    dispatch(actions.setAuthRedirectPath(pathname,null));
+   }
 
   return (
     <>
@@ -77,7 +73,7 @@ const Header = (props) => {
 
             <div className={classes.dropdownMenu + ' user-menu dropdown-menu'}>
               {userData.get('id', '') === '' ? (
-                <Link className={classes.navLink} to="/sign-in">
+                <Link className={classes.navLink} to="/sign-in" onClick={setPath}>
                   <i className="fa fa-power-off mr-10"></i>Login
                 </Link>
               ) : (

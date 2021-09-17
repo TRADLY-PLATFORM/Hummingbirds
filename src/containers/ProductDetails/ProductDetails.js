@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
-import { Link, useLocation, useParams, withRouter } from 'react-router-dom';
+import { Link, useLocation, useParams, withRouter, useHistory } from 'react-router-dom';
 import { List, Map } from 'immutable';
 import Toast from '../../components/UI/Toast/Toast';
 import Backdrop from '../../components/UI/Backdrop/Backdrop';
@@ -39,6 +39,10 @@ const ProductDetails = () => {
 
   const location = useLocation();
   const { id } = useParams();
+  const history = useHistory();
+  console.log('====================================');
+  console.log(history);
+  console.log('====================================');
 
   const error = useSelector((state) => state.product.error);
   const loading = useSelector((state) => state.product.loading);
@@ -56,6 +60,10 @@ const ProductDetails = () => {
     dispatch(actions.initProductDetails(id.split('-')[0]), true);
     dispatch(actions.setGeneralConfigsData());
   }, [0]);
+
+  const setPath = () => {
+    dispatch(actions.setAuthRedirectPath(location.pathname));
+  };
 
   const showMaps = () => {
     setMaps(true);
@@ -201,7 +209,7 @@ const ProductDetails = () => {
     if (productDetails.getIn(['listing', 'account', 'following'], '') !== false) {
       IsFollowing = true;
     }
- 
+
     dispatch(actions.postStoreFollow(storeId, IsFollowing));
 
     if (!followError) {
@@ -224,9 +232,17 @@ const ProductDetails = () => {
       isLiked = true;
     }
     const productId = productDetails.getIn(['listing', 'id'], '');
-     setTimeout(() => {
+    setTimeout(() => {
       dispatch(actions.onProductLikeDisLike(productId, isLiked));
     }, 1000);
+
+    if (!error) {
+      const LikeImage = document.getElementById('likeImage');
+      LikeImage.src = isLiked ? heartDisable : heartActive;
+
+      LikeImage.classList.remove(isLiked ? classes.heartActive : classes.heartDisable);
+      LikeImage.classList.add(isLiked ? classes.heartDisable : classes.heartActive);
+    }
 
     setTimeout(() => {
       if (!error) {
@@ -259,7 +275,6 @@ const ProductDetails = () => {
     toastMessage = <Toast type="error" message={message || followMessage} />;
   }
   const productDescription = productDetails.getIn(['listing', 'description'], 'N/A');
- 
 
   return (
     <>
@@ -269,10 +284,9 @@ const ProductDetails = () => {
         <link rel="canonical" href={location.pathname} />
       </Helmet>
       <Aux>
-       
-            <Backdrop show={loading} />
-              <Spinner show={loading } />
-         
+        <Backdrop show={loading} />
+        <Spinner show={loading} />
+
         {toastMessage}
 
         <div className={classes.rowBox}>
@@ -323,15 +337,24 @@ const ProductDetails = () => {
                     {isAuthenticated ? (
                       <div className={classes.likeBtn}>
                         <button onClick={productLike} className=" ">
-                          {productDetails.getIn(['listing', 'liked'], '') ? (
-                            <img className={classes.heartActive} src={heartActive} alt="" />
-                          ) : (
-                            <img className={classes.heartDisable} src={heartDisable} alt="" />
-                          )}
+                          <img
+                            id="likeImage"
+                            src={
+                              productDetails.getIn(['listing', 'liked'], '')
+                                ? heartActive
+                                : heartDisable
+                            }
+                            className={
+                              productDetails.getIn(['listing', 'liked'], '')
+                                ? classes.heartActive
+                                : classes.heartDisable
+                            }
+                            alt=""
+                          />
                         </button>
                       </div>
                     ) : (
-                      <Link to="/sign-in" className={classes.likeBtn}>
+                      <Link to="/sign-in" className={classes.likeBtn} onClick={setPath}>
                         <button>
                           <img className={classes.heartDisable} src={heartDisable} alt="" />
                         </button>
@@ -374,7 +397,7 @@ const ProductDetails = () => {
                           : 'Follow'}
                       </button>
                     ) : (
-                      <Link to="/sign-in">
+                      <Link to="/sign-in" onClick={setPath}>
                         <button
                           className="btnOutlineGreenStyle pull-right "
                           style={{ marginLeft: '15px' }}
@@ -387,16 +410,25 @@ const ProductDetails = () => {
                       <>
                         {isAuthenticated ? (
                           <div className={classes.likeBtn}>
-                            <button onClick={productLike} className="pull-right">
-                              {productDetails.getIn(['listing', 'liked'], '') ? (
-                                <img className={classes.heartActive} src={heartActive} alt="" />
-                              ) : (
-                                <img className={classes.heartDisable} src={heartDisable} alt="" />
-                              )}
+                            <button onClick={productLike} className=" ">
+                              <img
+                                id="likeImage"
+                                src={
+                                  productDetails.getIn(['listing', 'liked'], '')
+                                    ? heartActive
+                                    : heartDisable
+                                }
+                                className={
+                                  productDetails.getIn(['listing', 'liked'], '')
+                                    ? classes.heartActive
+                                    : classes.heartDisable
+                                }
+                                alt=""
+                              />
                             </button>
                           </div>
                         ) : (
-                          <Link to="/sign-in" className={classes.likeBtn}>
+                          <Link to="/sign-in" className={classes.likeBtn} onClick={setPath}>
                             <button>
                               <img className={classes.heartDisable} src={heartDisable} alt="" />
                             </button>
@@ -454,6 +486,7 @@ const ProductDetails = () => {
                 onClick={() => {
                   javascript: window.open(configsData.app_download_link, '_blank');
                 }}
+                style={{outline:'none'}}
               >
                 Download App
               </button>
@@ -476,11 +509,9 @@ const ProductDetails = () => {
                     </button>
                   </div>
                 </div> */}
-            
             </div>
           </div>
         </div>
- 
       </Aux>
     </>
   );

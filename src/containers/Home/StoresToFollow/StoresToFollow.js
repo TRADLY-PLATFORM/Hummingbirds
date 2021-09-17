@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../../store/actions/index';
 import AllenSollyLogo from '../../../assets/images/home/store/allenSolly.svg';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import classes from './StoreToFollow.module.css';
 import ItemsCarousel from 'react-items-carousel';
 import backdrop from '../../../components/UI/Backdrop/Backdrop';
@@ -30,6 +30,8 @@ const StoresToFollow = ({ storesToFollow }) => {
   const [isFollow, setIsFollow] = useState();
 
   const dispatch = useDispatch();
+    const { pathname } = useLocation();
+
   // useEffect(() => {
   //   dispatch(actions.initStoresToFollow());
   // }, [0]);
@@ -38,6 +40,12 @@ const StoresToFollow = ({ storesToFollow }) => {
   const followError = useSelector((state) => state.store.error);
   const followLoading = useSelector((state) => state.store.loading);
   const isAuthenticated = useSelector((state) => selectUserId(state));
+
+
+  
+  const setPath = () => {
+      dispatch(actions.setAuthRedirectPath(pathname));
+    };
 
   // const [followSet,setFollowSet] = useState()
   let arrayListings = [];
@@ -53,6 +61,7 @@ const StoresToFollow = ({ storesToFollow }) => {
     if (description.length > 15) {
       description = description.substring(0, 13) + '..';
     }
+
 
     const postStoreFollow = (e, id) => {
       const storeId = id;
@@ -100,7 +109,7 @@ const StoresToFollow = ({ storesToFollow }) => {
               {list.following ? 'Following' : 'Follow'}
             </Link>
           ) : (
-            <Link to="/sign-in">
+            <Link to="/sign-in" onClick={setPath}>
               <button className={classes.btnGreenUnFollowing}>Follow</button>
             </Link>
           )}
