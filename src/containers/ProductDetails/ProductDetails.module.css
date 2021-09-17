@@ -16,9 +16,21 @@
 }
   */
 .rowBox{
-  margin-top:30px ;
+  margin-top:10px ;
   padding-left: 57px;
   padding-right: 31px;
+
+}
+.breadCrumb{
+  border: none;
+  outline: none;
+  background-color: transparent;
+  color: var(--primary_color);
+  display: flex;
+  align-items: center;
+    font-size: 17px;
+  font-weight: 500;
+  margin-bottom: 15px; 
 }
 
 .Description {

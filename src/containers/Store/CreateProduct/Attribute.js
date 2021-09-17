@@ -31,7 +31,7 @@ const Attribute = ({ attribute, attributeData, setAttributeData }) => {
  
 
     console.groupEnd();
-    if (attribute_field_type === 1 || 3) {
+    if (attribute_field_type === 1 || attribute_field_type === 3) {
       if (attributeData !== null) {
         console.log('here');
         const check = attributeData?.find((attr) => attr.id === attribute_id);
@@ -58,7 +58,7 @@ const Attribute = ({ attribute, attributeData, setAttributeData }) => {
           setAttributeData([{ values: [newValue.value], id: attribute_id }]);
         }
       }
-    } else if (attribute_field_type === 2 || 4) {
+    } else if (attribute_field_type === 2 || attribute_field_type === 4) {
       if (attributeData !== null) {
         if (actionMeta.action !== ('remove-value' || 'clear')) {
           const check = attributeData.find((attr) => attr.id === attribute_id);
@@ -106,7 +106,7 @@ const Attribute = ({ attribute, attributeData, setAttributeData }) => {
             const findOut = attributeData.filter((attr) => attr.id !== attribute_id);
             if (attribute_field_type === 2) {
               setAttributeData([...findOut]);
-            } else if (attribute_field_type === 4) {  
+            } else if (attribute_field_type === 4) {
               setAttributeData([...findOut]);
             }
           }
@@ -135,7 +135,7 @@ const Attribute = ({ attribute, attributeData, setAttributeData }) => {
       {attribute?.map((attr) => {
         // Data
         let options;
-        if (attr.field_type === 1 || 2) {
+        if (attr.field_type === 1 || attr.field_type === 2) {
           options = attr.values?.map((value) => {
             return { value: value.name, label: value.name, id: value.id };
           });

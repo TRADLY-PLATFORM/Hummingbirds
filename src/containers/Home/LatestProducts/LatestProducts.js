@@ -44,13 +44,19 @@ const LatestProducts = ({ products }) => {
 
     return (
       <Link
-        to={`/l/${list.id}-${`${list.title.replace('%', '')}`}`}
+      
+        to={{
+          pathname: `/l/${list.id}-${list.title.replace('%', '')}`,
+          state: { prevPath: 'Home' },
+        }}
         key={i}
         style={{ textDecoration: 'none' }}
       >
         <div className={classes.latestTrend}>
           <img src={imagePath} className={classes.storeImage} alt={list.title} title={list.title} />
-          <p className={classes.listTitle}>{list.title.length < 20 ? list.title : list.title.substring(0, 20) + '..'}</p>
+          <p className={classes.listTitle}>
+            {list.title.length < 20 ? list.title : list.title.substring(0, 20) + '..'}
+          </p>
           <p className={classes.amountTitle}>
             {list.list_price.formatted !== undefined ? list.list_price.formatted : ''}
           </p>

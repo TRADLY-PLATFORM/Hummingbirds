@@ -84,9 +84,9 @@ const CreateStore = () => {
       call = false;
       return false;
     }
-    if (attribute) {
+    // if (attribute) {
       
-    }
+    // }
 
     if (file !== null) {
       const contentType = file.type;

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useLocation } from 'react-router-dom';
 import * as actions from '../../store/actions/index';
 import Listing from '../Listing/Listing';
 import classes from "./SearchResult.module.css"
@@ -16,6 +16,8 @@ const SearchResult = () => {
   const dispatch = useDispatch();
   const listings = useSelector((state) => state.Search.searchList);
   const loading = useSelector((state) => state.Search.loading);
+
+  const location = useLocation()
 
   useEffect(() => {
     dispatch(actions.getSearchingResult(key));
@@ -42,7 +44,10 @@ const SearchResult = () => {
             }
             return (
               <Link
-                to={`/l/${list.id}-${list.title.replace('%', '')}`}
+                to={{
+                  pathname: `/l/${list.id}-${list.title.replace('%', '')}`,
+                  state: { prevPath: 'search results ' },
+                }}
                 key={i}
                 style={{ textDecoration: 'none' }}
               >

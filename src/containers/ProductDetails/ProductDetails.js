@@ -166,17 +166,60 @@ const ProductDetails = () => {
     if (productDetails.getIn(['listing', 'attributes'], List()).size > 0) {
       return productDetails.getIn(['listing', 'attributes'], List()).map((attr, index) => {
         return (
-          <React.Fragment key={index}>
-            <div className={classes.DetailsLeft + ' col-lg-6 col-sm-6 col-md-6'}>
-              {attr.get('name')}
-            </div>
-            <div className={classes.DetailsRight + ' col-lg-6 col-sm-6 col-md-6'}>
-              {attr
-                .get('values', List())
-                .map((item) => item.get('name'))
-                .join(', ')}
-            </div>
-          </React.Fragment>
+          <div key={index}>
+            {attr.get('field_type') === 1 && (
+              <React.Fragment>
+                <div className={classes.DetailsLeft + ' col-lg-6 col-sm-6 col-md-6'}>
+                  {attr.get('name')}
+                </div>
+                <div className={classes.DetailsRight + ' col-lg-6 col-sm-6 col-md-6'}>
+                  {attr
+                    .get('values', List())
+                    .map((item) => item.get('name'))
+                    .join(', ')}
+                </div>
+              </React.Fragment>
+            )}
+            {attr.get('field_type') === 2 && (
+              <React.Fragment key={index}>
+                <div className={classes.DetailsLeft + ' col-lg-6 col-sm-6 col-md-6'}>
+                  {attr.get('name')}
+                </div>
+                <div className={classes.DetailsRight + ' col-lg-6 col-sm-6 col-md-6'}>
+                  {attr
+                    .get('values', List())
+                    .map((item) => item.get('name'))
+                    .join(', ')}
+                </div>
+              </React.Fragment>
+            )}
+            {attr.get('field_type') === 3 && (
+              <React.Fragment key={index}>
+                <div className={classes.DetailsLeft + ' col-lg-6 col-sm-6 col-md-6'}>
+                  {attr.get('name')}
+                </div>
+                <div className={classes.DetailsRight + ' col-lg-6 col-sm-6 col-md-6'}>
+                  {attr
+                    .get('values', List())
+                    .map((item) => item)
+                    .join(', ')}
+                </div>
+              </React.Fragment>
+            )}
+            {attr.get('field_type') === 4 && (
+              <React.Fragment key={index}>
+                <div className={classes.DetailsLeft + ' col-lg-6 col-sm-6 col-md-6'}>
+                  {attr.get('name')}
+                </div>
+                <div className={classes.DetailsRight + ' col-lg-6 col-sm-6 col-md-6'}>
+                  {attr
+                    .get('values', List())
+                    .map((item) => item)
+                    .join(', ')}
+                </div>
+              </React.Fragment>
+            )}
+          </div>
         );
       });
     }
@@ -290,18 +333,25 @@ const ProductDetails = () => {
         {toastMessage}
 
         <div className={classes.rowBox}>
-          {/* <div className="col-lg-12">
-            <nav aria-label="breadcrumb">
-              <ol className={classes.breadCrumb}>
-                <li className="breadcrumb-item active" aria-current="page">
-                  <button onClick={goBack}>
-                    <img src={ArrowLogo} alt="Back" style={{ marginRight: '10px' }} />
-                    Back to previous
-                  </button>
-                </li>
-              </ol>
-            </nav>
-          </div> */}
+          <div className="col-lg-12">
+            {location.state && (
+              <>
+                <button onClick={goBack} className={classes.breadCrumb}>
+                  <svg
+                    width="16"
+                    height="14"
+                    viewBox="0 0 16 14"
+                    fill=" var(--primary_color)"
+                    xmlns="http://www.w3.org/2000/svg"
+                    style={{ marginRight: '10px' }}
+                  >
+                    <path d="M16 6V8H4L8 12L7 14L0 7L7 0L8 2L4 6H16Z" />
+                  </svg>
+                  Back to {location.state.prevPath}
+                </button>
+              </>
+            )}
+          </div>
 
           <div className={classes.imageBox + ' col-xs-12 col-md-6 '}>
             <div className={classes.productImageBox}>
@@ -486,7 +536,7 @@ const ProductDetails = () => {
                 onClick={() => {
                   javascript: window.open(configsData.app_download_link, '_blank');
                 }}
-                style={{outline:'none'}}
+                style={{ outline: 'none' }}
               >
                 Download App
               </button>
