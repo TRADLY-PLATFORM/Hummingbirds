@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
-import { Link, useLocation, useParams, withRouter } from 'react-router-dom';
+import { Link, useLocation, useParams, withRouter, useHistory } from 'react-router-dom';
 import { List, Map } from 'immutable';
 import Toast from '../../components/UI/Toast/Toast';
 import Backdrop from '../../components/UI/Backdrop/Backdrop';
@@ -15,8 +15,8 @@ import * as actions from '../../store/actions/index';
 import { selectProductDetails } from '../../store/selectors/product';
 import { selectUserId } from '../../store/selectors/auth';
 import Maps from '../../components/UI/Maps/Maps';
-import heartActive from '../../assets/images/products/heartActive.png';
-import heartDisable from '../../assets/images/products/heartDisable.png';
+import heartActive from '../../assets/images/products/favourite@2x.png';
+import heartDisable from '../../assets/images/products/heartIcon@2x.png';
 import { Helmet } from 'react-helmet';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -39,6 +39,10 @@ const ProductDetails = () => {
 
   const location = useLocation();
   const { id } = useParams();
+  const history = useHistory();
+  console.log('====================================');
+  console.log(history);
+  console.log('====================================');
 
   const error = useSelector((state) => state.product.error);
   const loading = useSelector((state) => state.product.loading);
@@ -56,6 +60,10 @@ const ProductDetails = () => {
     dispatch(actions.initProductDetails(id.split('-')[0]), true);
     dispatch(actions.setGeneralConfigsData());
   }, [0]);
+
+  const setPath = () => {
+    dispatch(actions.setAuthRedirectPath(location.pathname));
+  };
 
   const showMaps = () => {
     setMaps(true);
@@ -158,17 +166,60 @@ const ProductDetails = () => {
     if (productDetails.getIn(['listing', 'attributes'], List()).size > 0) {
       return productDetails.getIn(['listing', 'attributes'], List()).map((attr, index) => {
         return (
-          <React.Fragment key={index}>
-            <div className={classes.DetailsLeft + ' col-lg-6 col-sm-6 col-md-6'}>
-              {attr.get('name')}
-            </div>
-            <div className={classes.DetailsRight + ' col-lg-6 col-sm-6 col-md-6'}>
-              {attr
-                .get('values', List())
-                .map((item) => item.get('name'))
-                .join(', ')}
-            </div>
-          </React.Fragment>
+          <div key={index}>
+            {attr.get('field_type') === 1 && (
+              <React.Fragment>
+                <div className={classes.DetailsLeft + ' col-lg-6 col-sm-6 col-md-6'}>
+                  {attr.get('name')}
+                </div>
+                <div className={classes.DetailsRight + ' col-lg-6 col-sm-6 col-md-6'}>
+                  {attr
+                    .get('values', List())
+                    .map((item) => item.get('name'))
+                    .join(', ')}
+                </div>
+              </React.Fragment>
+            )}
+            {attr.get('field_type') === 2 && (
+              <React.Fragment key={index}>
+                <div className={classes.DetailsLeft + ' col-lg-6 col-sm-6 col-md-6'}>
+                  {attr.get('name')}
+                </div>
+                <div className={classes.DetailsRight + ' col-lg-6 col-sm-6 col-md-6'}>
+                  {attr
+                    .get('values', List())
+                    .map((item) => item.get('name'))
+                    .join(', ')}
+                </div>
+              </React.Fragment>
+            )}
+            {attr.get('field_type') === 3 && (
+              <React.Fragment key={index}>
+                <div className={classes.DetailsLeft + ' col-lg-6 col-sm-6 col-md-6'}>
+                  {attr.get('name')}
+                </div>
+                <div className={classes.DetailsRight + ' col-lg-6 col-sm-6 col-md-6'}>
+                  {attr
+                    .get('values', List())
+                    .map((item) => item)
+                    .join(', ')}
+                </div>
+              </React.Fragment>
+            )}
+            {attr.get('field_type') === 4 && (
+              <React.Fragment key={index}>
+                <div className={classes.DetailsLeft + ' col-lg-6 col-sm-6 col-md-6'}>
+                  {attr.get('name')}
+                </div>
+                <div className={classes.DetailsRight + ' col-lg-6 col-sm-6 col-md-6'}>
+                  {attr
+                    .get('values', List())
+                    .map((item) => item)
+                    .join(', ')}
+                </div>
+              </React.Fragment>
+            )}
+          </div>
         );
       });
     }
@@ -201,7 +252,6 @@ const ProductDetails = () => {
     if (productDetails.getIn(['listing', 'account', 'following'], '') !== false) {
       IsFollowing = true;
     }
-    console.log(storeId);
 
     dispatch(actions.postStoreFollow(storeId, IsFollowing));
 
@@ -225,10 +275,17 @@ const ProductDetails = () => {
       isLiked = true;
     }
     const productId = productDetails.getIn(['listing', 'id'], '');
-    console.log('productDetails', productDetails, productId);
     setTimeout(() => {
       dispatch(actions.onProductLikeDisLike(productId, isLiked));
     }, 1000);
+
+    if (!error) {
+      const LikeImage = document.getElementById('likeImage');
+      LikeImage.src = isLiked ? heartDisable : heartActive;
+
+      LikeImage.classList.remove(isLiked ? classes.heartActive : classes.heartDisable);
+      LikeImage.classList.add(isLiked ? classes.heartDisable : classes.heartActive);
+    }
 
     setTimeout(() => {
       if (!error) {
@@ -261,12 +318,6 @@ const ProductDetails = () => {
     toastMessage = <Toast type="error" message={message || followMessage} />;
   }
   const productDescription = productDetails.getIn(['listing', 'description'], 'N/A');
-  console.log(productDetails.getIn(['listing']));
-  console.log('isAuthenticated', isAuthenticated);
-  console.log('====================================');
-  console.log(productDetails.getIn(['listing', 'coordinates', 'latitude'], ''));
-  console.log(productDetails.getIn(['listing', 'coordinates', 'longitude'], ''));
-  console.log('====================================');
 
   return (
     <>
@@ -276,22 +327,30 @@ const ProductDetails = () => {
         <link rel="canonical" href={location.pathname} />
       </Helmet>
       <Aux>
-        <Backdrop show={loading || followLoading} />
-        <Spinner show={loading || followLoading} />
+        <Backdrop show={loading} />
+        <Spinner show={loading} />
+
         {toastMessage}
 
         <div className={classes.rowBox}>
           <div className="col-lg-12">
-            <nav aria-label="breadcrumb">
-              <ol className={classes.breadCrumb}>
-                <li className="breadcrumb-item active" aria-current="page">
-                  <button onClick={goBack}>
-                    <img src={ArrowLogo} alt="Back" style={{ marginRight: '10px' }} />
-                    Back to previous
-                  </button>
-                </li>
-              </ol>
-            </nav>
+            {location.state && (
+              <>
+                <button onClick={goBack} className={classes.breadCrumb}>
+                  <svg
+                    width="16"
+                    height="14"
+                    viewBox="0 0 16 14"
+                    fill=" var(--primary_color)"
+                    xmlns="http://www.w3.org/2000/svg"
+                    style={{ marginRight: '10px' }}
+                  >
+                    <path d="M16 6V8H4L8 12L7 14L0 7L7 0L8 2L4 6H16Z" />
+                  </svg>
+                  Back to {location.state.prevPath}
+                </button>
+              </>
+            )}
           </div>
 
           <div className={classes.imageBox + ' col-xs-12 col-md-6 '}>
@@ -311,10 +370,7 @@ const ProductDetails = () => {
                 {productDetails.getIn(['listing', 'images'], List()).map((img, index) => {
                   return (
                     <SwiperSlide key={index}>
-                      <img
-                        style={width > 780 ? { height: '450px' } : { height: '180px' }}
-                        src={img}
-                      />
+                      <img className={classes.productImage} src={img} />
                     </SwiperSlide>
                   );
                 })}
@@ -330,16 +386,25 @@ const ProductDetails = () => {
                   <>
                     {isAuthenticated ? (
                       <div className={classes.likeBtn}>
-                        <button onClick={productLike} className="pull-right">
-                          {productDetails.getIn(['listing', 'liked'], '') ? (
-                            <img className={classes.heartActive} src={heartActive} alt="" />
-                          ) : (
-                            <img className={classes.heartDisable} src={heartDisable} alt="" />
-                          )}
+                        <button onClick={productLike} className=" ">
+                          <img
+                            id="likeImage"
+                            src={
+                              productDetails.getIn(['listing', 'liked'], '')
+                                ? heartActive
+                                : heartDisable
+                            }
+                            className={
+                              productDetails.getIn(['listing', 'liked'], '')
+                                ? classes.heartActive
+                                : classes.heartDisable
+                            }
+                            alt=""
+                          />
                         </button>
                       </div>
                     ) : (
-                      <Link to="/sign-in" className={classes.likeBtn}>
+                      <Link to="/sign-in" className={classes.likeBtn} onClick={setPath}>
                         <button>
                           <img className={classes.heartDisable} src={heartDisable} alt="" />
                         </button>
@@ -352,14 +417,14 @@ const ProductDetails = () => {
 
             <div>
               <div className={classes.Description}>
-                <span>Product Description</span>
+                <span> Description</span>
                 <p>{productDetails.getIn(['listing', 'description'], 'N/A')}</p>
               </div>
             </div>
           </div>
 
           <div className="col-xs-12 col-md-6 " style={{ padding: '0' }}>
-            <div className="col-lg-12 mt-4">
+            <div className="col-lg-12  ">
               <div className="row bgColor">
                 <div className={classes.fashionStore}>
                   <div className="  ">
@@ -382,7 +447,7 @@ const ProductDetails = () => {
                           : 'Follow'}
                       </button>
                     ) : (
-                      <Link to="/sign-in">
+                      <Link to="/sign-in" onClick={setPath}>
                         <button
                           className="btnOutlineGreenStyle pull-right "
                           style={{ marginLeft: '15px' }}
@@ -395,16 +460,25 @@ const ProductDetails = () => {
                       <>
                         {isAuthenticated ? (
                           <div className={classes.likeBtn}>
-                            <button onClick={productLike} className="pull-right">
-                              {productDetails.getIn(['listing', 'liked'], '') ? (
-                                <img className={classes.heartActive} src={heartActive} alt="" />
-                              ) : (
-                                <img className={classes.heartDisable} src={heartDisable} alt="" />
-                              )}
+                            <button onClick={productLike} className=" ">
+                              <img
+                                id="likeImage"
+                                src={
+                                  productDetails.getIn(['listing', 'liked'], '')
+                                    ? heartActive
+                                    : heartDisable
+                                }
+                                className={
+                                  productDetails.getIn(['listing', 'liked'], '')
+                                    ? classes.heartActive
+                                    : classes.heartDisable
+                                }
+                                alt=""
+                              />
                             </button>
                           </div>
                         ) : (
-                          <Link to="/sign-in" className={classes.likeBtn}>
+                          <Link to="/sign-in" className={classes.likeBtn} onClick={setPath}>
                             <button>
                               <img className={classes.heartDisable} src={heartDisable} alt="" />
                             </button>
@@ -441,7 +515,7 @@ const ProductDetails = () => {
                 </div>
               </div>
 
-              <div className="row bgColor" style={{ marginTop: '20px' }}>
+              {/* <div className="row bgColor" style={{ marginTop: '20px' }}>
                 <div className={classes.additionalDetails}>
                   <h1 className="h1Headings" style={{ fontSize: '18px' }}>
                     Additional Details
@@ -453,7 +527,7 @@ const ProductDetails = () => {
                     Home Delivery Available, Cash On Delivery
                   </div>
                 </div>
-              </div>
+              </div> */}
 
               <br />
               <button
@@ -462,6 +536,7 @@ const ProductDetails = () => {
                 onClick={() => {
                   javascript: window.open(configsData.app_download_link, '_blank');
                 }}
+                style={{ outline: 'none' }}
               >
                 Download App
               </button>
@@ -484,14 +559,9 @@ const ProductDetails = () => {
                     </button>
                   </div>
                 </div> */}
-              <br />
-              <br />
             </div>
           </div>
         </div>
-
-        <br />
-        <br />
       </Aux>
     </>
   );

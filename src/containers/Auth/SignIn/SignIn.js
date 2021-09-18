@@ -42,8 +42,7 @@ class SignIn extends Component {
   onSubmit = (e) => {
     e.preventDefault();
     const authType = this.props.configsData.auth_type;
-    console.log('dekkho:', authType);
-    if (authType === 1) {
+     if (authType === 1) {
       if (this.state.email === '') {
         if (!toast.isActive(this.toastId)) {
           this.toastId = toast.error('Email is required');
@@ -122,8 +121,7 @@ class SignIn extends Component {
     if (this.props.isAuthenticated) {
       authRedirect = <Redirect to={this.props.authRedirectPath} />;
     }
-    console.log(this.props.configsData.auth_type);
-    // let authRedirect = null;
+     // let authRedirect = null;
     // if (this.props.isAuthenticated || this.props.verifyId) {
     //   authRedirect = <Redirect to={this.props.authRedirectPath} />;
     // }
@@ -147,8 +145,7 @@ class SignIn extends Component {
         />
       );
     }
-    console.log('isAuthenticated', isAuthenticated);
-    return (
+     return (
       <div>
         <Helmet>
           <title>Tradly Web - Sign In</title>
@@ -213,18 +210,18 @@ class SignIn extends Component {
               </div>
 
               <div className="text-center mt-5">
-                <Link to="/forgot-password" className="text-center whiteColor">
+                <Link to="/forgot-password" className="text-center whiteColor noDecoration">
                   Forgot Password ?
                 </Link>
               </div>
 
               <div className="text-center mt-5">
-                <Link to="/sign-up" className="text-center whiteColor">
+                <Link to="/sign-up" className="text-center whiteColor noDecoration">
                   Don't have an account ? Sign Up
                 </Link>
               </div>
               <div className="text-center mt-5">
-                <Link to="/" className="text-center whiteColor">
+                <Link to="/" className="text-center whiteColor noDecoration">
                   <i className="fa fa-home fontIconSize"></i> Back to home
                 </Link>
               </div>

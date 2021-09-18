@@ -93,7 +93,7 @@ const fetchSupplierListsFailed = (state, action) => {
 
 const startProductLikeDisLike = (state, action) => {
   return updateObject(state, {
-    loading: true,
+    // loading: true,
   });
 };
 

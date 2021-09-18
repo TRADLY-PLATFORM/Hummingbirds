@@ -23,6 +23,13 @@ export const setAuthRedirectPath = (path, id) => {
   };
 };
 
+export const setVerifyID = ( id) => {
+  return {
+    type: actionTypes.VERIFY_ID,
+     verify_id: id,
+  };
+};
+
 export const authVerify = () => {
   return {
     type: actionTypes.AUTH_VERIFY,
@@ -56,8 +63,7 @@ export const getOnboardingConfigs = (data) => {
 };
 
 export const checkAuthTimeout = (expirationTime) => {
-  //console.log(expirationTime);
-  return (dispatch) => {
+   return (dispatch) => {
     setTimeout(() => {
       if (localStorage.getItem('response')) {
         dispatch(refreshToken());
@@ -99,8 +105,7 @@ export const authVerification = (verificationData) => {
 };
 
 export const auth = (userData, isSignup) => {
-  console.log(userData, isSignup);
-  return (dispatch) => {
+   return (dispatch) => {
     const token = process.env.REACT_APP_API_KEY;
     dispatch(authStart());
     let url = '/v1/users/register';
@@ -117,21 +122,18 @@ export const auth = (userData, isSignup) => {
       .then((response) => {
         if (isSignup) {
           if (response.data.status) {
-            console.log('====================================');
-            console.log(response);
-            console.log('====================================');
+             
             let encodeVerifyId = btoa(response.data.data.verify_id);
             console.log(encodeVerifyId);
-            dispatch(setAuthRedirectPath('/verification/' + encodeVerifyId, encodeVerifyId));
+            dispatch(setVerifyID(encodeVerifyId));
+            // dispatch(setAuthRedirectPath('/verification/' + encodeVerifyId, encodeVerifyId));
           } else {
             dispatch(authFail('Invalid credentials'));
             return false;
           }
         } else {
-          console.log('====================================');
-          console.log(response);
-          console.log('====================================');
-          const setTimeExpiry = EXPIRY_TIME;
+           console.log(response);
+           const setTimeExpiry = EXPIRY_TIME;
           const expirationDate = new Date(new Date().getTime() + setTimeExpiry * 1000);
           //   localStorage.setItem('token', response.data.data.user.key.auth_key);
           //   localStorage.setItem('refresh_key', response.data.data.user.key.refresh_key);
@@ -143,12 +145,11 @@ export const auth = (userData, isSignup) => {
           localStorage.setItem('expirationDate', expirationDate);
           dispatch(authSuccess(response.data.data.user));
           dispatch(checkAuthTimeout(setTimeExpiry));
-          dispatch(setAuthRedirectPath('/', null));
+          // dispatch(setAuthRedirectPath('/', null));
         }
       })
       .catch((error) => {
-        console.log(error);
-        dispatch(authFail('Invalid credentials or user not registered'));
+         dispatch(authFail('Invalid credentials or user not registered'));
       });
   };
 };
@@ -320,6 +321,36 @@ export const setOnboardingConfigsData = () => {
           dispatch(getOnboardingConfigs(response.data.data.configs));
           localStorage.setItem('primary_color', response.data.data.configs.app_color_primary);
           localStorage.setItem('logo_path', response.data.data.configs.splash_image);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+
+
+// SEO configs
+
+
+export const SEOConfigs = (data) => {
+  return {
+    type: actionTypes.SEO_CONFIGS,
+    configs: data,
+  };
+};
+
+export const setSeoConfigs = () => {
+  return (dispatch) => {
+    axios
+      .get('v1/configs?key_group=seo')
+      .then((response) => {
+        console.log(response);
+        if (response.status) {
+ 
+          dispatch(SEOConfigs(response.data.data.configs));
+           
         }
       })
       .catch((error) => {

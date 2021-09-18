@@ -19,16 +19,20 @@ const AllStores = () => {
   useEffect(() => {
     dispatch(actions.getStores());
   }, []);
+  
+  const setPath = () => {
+    dispatch(actions.setAuthRedirectPath(location.pathname));
+  };
+
+
   const stores = useSelector((state) => state.store.storesLists);
 
-  console.log(followLoading);
-
+ 
   const postStoreFollow = (id, following) => {
     const storeId = id;
     let IsFollowing = following;
 
-    console.log(storeId);
-
+ 
     setTimeout(() => {
       dispatch(actions.postStoreFollow(storeId, IsFollowing));
     }, 1000);
@@ -83,18 +87,18 @@ const AllStores = () => {
 
               {isAuthenticated ? (
                 <Link
-                  style={{textDecoration:"none"}}
+                  style={{ textDecoration: 'none' }}
                   className={
                     (store.following ? classes.btnGreenFollow : classes.btnGreenUnFollowing) +
                     ' mt-5'
                   }
                   onClick={() => postStoreFollow(store.id, store.following)}
-                  to='/stores'
+                  to="/stores"
                 >
                   {store.following ? 'Following' : 'Follow'}
                 </Link>
               ) : (
-                <Link to="/sign-in">
+                <Link to="/sign-in" onClick={setPath}>
                   <button className={classes.btnGreenUnFollowing + ' mt-5'}>Follow</button>
                 </Link>
               )}

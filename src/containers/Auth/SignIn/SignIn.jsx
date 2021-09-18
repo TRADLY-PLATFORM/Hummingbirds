@@ -124,16 +124,18 @@ const SignIn = () => {
    
   return (
     <>
-      <Helmet> 
-       <title>Tradly Web - Sign In</title>
-          <meta name="description" content=" Widest Range of Mobile & Tablets, Home Appliances, Tv, Audio, Home & Living At Tradly | Best Prices ? Fast DELIVERY | Cash on Delivery ? Effortless Shopping ? Best Customer Care!" />
-         </Helmet>
+      <Helmet>
+        <title>Tradly Web - Sign In</title>
+        <meta
+          name="description"
+          content=" Widest Range of Mobile & Tablets, Home Appliances, Tv, Audio, Home & Living At Tradly | Best Prices ? Fast DELIVERY | Cash on Delivery ? Effortless Shopping ? Best Customer Care!"
+        />
+      </Helmet>
       <div className="row">
-        
         <div className={classes.title}>
           Tradly <br /> Marketplace
         </div>
-        <Backdrop show={ loading} />
+        <Backdrop show={loading} />
         <Spinner show={loading} />
         <ToastContainer
           autoClose={2000}
@@ -147,7 +149,7 @@ const SignIn = () => {
         />
         {authRedirect}
 
-        <div className="col-lg-12 nopaddingLeft">
+        <div className={classes.formBox + 'col-lg-12 nopaddingLeft'}>
           <h5 className={classes.titleAccount}>Login to your account</h5>
           <br />
           <form action="" method="post" onSubmit={onSubmit}>
@@ -158,20 +160,20 @@ const SignIn = () => {
                 name="email"
                 type="text"
                 placeholder="Email"
-                value={ email}
-                onChange={ handleChange}
+                value={email}
+                onChange={handleChange}
                 autoComplete="off"
               />
             </div>
-            
+
             <div className="form-group mt-4">
               <input
                 className={classes.input}
                 type="password"
                 name="password"
-                value={ password}
+                value={password}
                 placeholder="Password"
-                onChange={ handleChange}
+                onChange={handleChange}
               />
             </div>
 
@@ -200,7 +202,7 @@ const SignIn = () => {
           </form>
         </div>
       </div>
-      </>
+    </>
   );
 };
 

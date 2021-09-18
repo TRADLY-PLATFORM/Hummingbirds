@@ -14,8 +14,7 @@ const ShippingAddress = () => {
       setShippingAddress(shippingAddressInfo);
     }
   };
-  console.log(shippingAddress);
-  return (
+   return (
     <div className="col-md-8 ">
       <div className={classes.shippingAddress}>
         {' '}

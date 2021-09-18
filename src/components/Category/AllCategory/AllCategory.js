@@ -12,8 +12,7 @@ import * as actions from '../../../store/actions/index';
          dispatch(actions.initCategories());
      },[])
        const Categories = useSelector((state) => state.home.categories);
-   console.log(Categories);
-     return (
+      return (
        <div>
          <div style={{ marginTop: '20px', minHeight: '150px',  }}>
            

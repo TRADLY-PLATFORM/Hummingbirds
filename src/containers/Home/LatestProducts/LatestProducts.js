@@ -27,9 +27,7 @@ const LatestProducts = ({ products }) => {
   const { width, height } = useWindowSize();
   const collections = useSelector((state) => state.home.collections);
 
-  console.log('====================================');
-  console.log(products);
-  console.log('====================================');
+ 
   const dispatch = useDispatch();
   // useEffect(() => {
   //    dispatch(actions.initLatestProducts());
@@ -46,13 +44,22 @@ const LatestProducts = ({ products }) => {
 
     return (
       <Link
-        to={`/l/${list.id}-${`${list.title.replace('%', '')}`}`}
+      
+        to={{
+          pathname: `/l/${list.id}-${list.title.replace('%', '')}`,
+          state: { prevPath: 'Home' },
+        }}
         key={i}
         style={{ textDecoration: 'none' }}
       >
         <div className={classes.latestTrend}>
           <img src={imagePath} className={classes.storeImage} alt={list.title} title={list.title} />
-          <p>{list.title.length < 20 ? list.title : list.title.substring(0, 20) + '..'}</p>
+          <p className={classes.listTitle}>
+            {list.title.length < 20 ? list.title : list.title.substring(0, 20) + '..'}
+          </p>
+          <p className={classes.amountTitle}>
+            {list.list_price.formatted !== undefined ? list.list_price.formatted : ''}
+          </p>
           <div>
             {list.account !== undefined && list.account.images[0] ? (
               <div className={classes.bottomDesc}>
@@ -62,21 +69,19 @@ const LatestProducts = ({ products }) => {
                   title={list.account.name}
                 />
                 <span>
-                  {list.account.name.length < 10
+                  {list.account.name.length < 17
                     ? list.account.name
-                    : list.account.name.substring(0, 10) + '..'}
+                    : list.account.name.substring(0, 15) + '..'}
                 </span>
-                <p className={classes.amountTitle}>
-                  {list.list_price.formatted !== undefined ? list.list_price.formatted : ''}
-                </p>
               </div>
             ) : (
               <div className={classes.bottomDesc}>
                 <img src={NoIamgeLogo} alt={list.title} title={list.title} />
-                <span>N/A</span>
-                <p className={classes.amountTitle}>
-                  {list.list_price.formatted !== undefined ? list.list_price.formatted : ''}
-                </p>
+                <span>
+                  {(list.account.name.length < 17
+                    ? list.account.name
+                    : list.account.name.substring(0, 15) + '..') || 'N/A'}
+                </span>
               </div>
             )}
           </div>
@@ -94,40 +99,41 @@ const LatestProducts = ({ products }) => {
             <div className="  ">
               <h3 className={classes.headingTitle}>{title}</h3>
             </div>
-            <div className="  " style={{ marginRight: '0.4%' }}>
+            <div className="  ">
               <Link to="/listings">
                 <button className={'btnGreenStyle pull-right'}>View All</button>
               </Link>
             </div>
           </div>
-          <br />
-          <div style={{ marginTop: '60px' }}>
+           <div >
             <Swiper
-              slidesPerView={width < 600 ?"auto":2}
+              slidesPerView={'auto'}
               slidesPerGroup={1}
-              spaceBetween={  10}
+              spaceBetween={16}
               loop={false}
-              navigation={width < 780 ? false : true}
+              navigation={false}
               className="mySwiper"
-              style={{ marginTop: '60px' }}
+               
               breakpoints={{
-                600: {
-                  slidesPerView: 2,
-                  spaceBetween: 10,
-                },
-
-                950: {
-                  slidesPerView: 3,
-                  spaceBetween: 10,
-                },
-                1200: {
+                1050: {
                   slidesPerView: 4,
-                  spaceBetween: 10,
+                  spaceBetween: 16,
                 },
-
-                1400: {
+                1250: {
                   slidesPerView: 5,
-                  spaceBetween: 10,
+                  spaceBetween: 16,
+                },
+                1450: {
+                  slidesPerView: 6,
+                  spaceBetween: 16,
+                },
+                1650: {
+                  slidesPerView: 7,
+                  spaceBetween: 16,
+                },
+                1800: {
+                  slidesPerView: 8,
+                  spaceBetween: 16,
                 },
               }}
             >
@@ -143,36 +149,4 @@ const LatestProducts = ({ products }) => {
 };
 
 export default LatestProducts;
-
-
-{/* <ItemsCarousel
-  infiniteLoop={false}
-  gutter={12}
-  activePosition={'center'}
-  chevronWidth={60}
-  disableSwipe={false}
-  alwaysShowChevrons={false}
-  numberOfCards={width < 780 ? 1 : 5}
-  slidesToScroll={width < 780 ? 1 : 3}
-  outsideChevron={false}
-  showSlither={false}
-  firstAndLastGutter={true}
-  requestToChangeActive={setActiveItemIndex}
-  activeItemIndex={activeItemIndex}
-  rightChevron={
-    <span
-      className="glyphicon glyphicon-chevron-right"
-      style={{ fontSize: '30px', color: '#e6e6e6' }}
-      aria-hidden="true"
-    ></span>
-  }
-  leftChevron={
-    <span
-      className="glyphicon glyphicon-chevron-left"
-      style={{ fontSize: '30px', color: '#e6e6e6' }}
-      aria-hidden="true"
-    ></span>
-  }
->
-  {arrayListings}
-</ItemsCarousel>; */}
+ 

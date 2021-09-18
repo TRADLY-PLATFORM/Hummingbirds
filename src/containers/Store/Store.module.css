@@ -1,3 +1,8 @@
+.storeDetailsBox{
+    padding-left: 43px;
+  padding-right:38px ;
+}
+
 .breadCrumb {
   padding: 0px 8px 15px;
   margin-bottom: 8px;
@@ -105,24 +110,70 @@
   margin-bottom: 10px;
 }
 
+.storeBanner{
+ width: 100%;
+ height: 217px;
+ overflow: hidden;
+ background-image: url(../../assets/images/store/store.svg);
+  background-repeat: no-repeat;
+  background-position: inherit;
+  background-size: cover;
+ }
+
+.bannerText {
+  background: #ffffff;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.0523656);
+  border-radius: 10px;
+  padding: 10px 0px;
+  padding-left: 46px;
+  padding-right: 75px;
+  margin-top: -77px;
+ 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 126px;
+  overflow: hidden;
+ }
+
+ 
+  .storeHeader{
+   padding-left: 34px;
+   padding-right: 34px;
+ }
+
  .fashionStore{
    display: flex;
+   flex-direction: row;
    align-items: center;
+   
+ }
+ .fashionStoreNameBox{
+   width: 100%;
+   height: 100%;
+   margin: auto 0;
+   margin-left: 17px;
+   display: flex;
+   flex-direction: column;
+   justify-content:center;
+   align-items:flex-start;
  }
 .fashionStore h3 {
+  margin: 0;
+  margin-bottom: 8px;
   font-weight: 600;
   font-size: 18px;
-  line-height: 20px;
-  display: flex;
-  align-items: center;
-  letter-spacing: -0.385882px;
+   letter-spacing: -0.385882px;
   color: #000000;
 
 }
 
 .fashionStore img {
    padding-right: 20px;
-  width: 80px;
+  width:100px;
+  height:100px;
+  border-radius: 50%;
+  padding: 10px;
 }
 
 .fashionStore p {
@@ -133,25 +184,8 @@
   opacity: 0.5;
 }
 
-.bannerText {
-  background: #ffffff;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.0523656);
-  border-radius: 10px;
-  padding: 10px 20px;
-  margin-top: -70px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  min-height: 30px;
- }
-
-.bannerimage {
-  background-image: url(/static/media/store.e5a4d495.svg);
-  background-repeat: no-repeat;
-  background-position: inherit;
-  background-size: cover;
-  height: 217px;
-}
+ 
+ 
 .latestTrend {
   margin-bottom: 5px;
   background-color: #ffffff;
@@ -249,15 +283,35 @@
 
 
 @media only screen and (max-width: 600px) {
+.storeDetailsBox{
+    padding-left: 4%;
+  padding-right:4% ;
+}
+ .fashionStore img {
+   width:70px;
+  height:70px;}
+ .followBtn{
+   display: flex;
+   justify-content: center;
+ }
+}
+@media only screen and (max-width: 450px) {
+.storeHeader{
+  padding-right: 0px;
+  padding-left: 0px;
+}
+.storeBanner{
+  height: 150px;
+}
+  .storeDetailsBox{
+     padding-right: 10px ;
+     padding-left : 10px ;
+}
    .bannerText {
    border-radius: 10px;
    padding: 10px 20px;
    margin-top: -70px;
    display: block;
-  align-items: center;
- }
- .followBtn{
-   display: flex;
-   justify-content: center;
+   align-items: center;
  }
 }

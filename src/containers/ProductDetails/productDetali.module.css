@@ -1,0 +1,14 @@
+.productDetailsInfoBox{
+  width: 100%;
+  height: 313px;
+  background-color:#15B790;
+   display: grid;
+   grid-auto-columns: 50% 50%;
+   padding-left: 121px;
+   padding-right: 97px;
+}
+
+.productImage{
+  width: 611px;
+  height: 338px;
+}

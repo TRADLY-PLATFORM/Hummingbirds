@@ -19,6 +19,12 @@ import {
 } from '../../store/selectors/product';
 import PropTypes from 'prop-types';
 
+
+import classes from "./Listings.module.css"
+
+
+
+
 class Listings extends Component {
    static propTypes = {
     match: PropTypes.object.isRequired,
@@ -36,9 +42,7 @@ class Listings extends Component {
     loadOnce: false,
   };
   handleChange = (selectedOption, selectedName) => {
-    console.log('====================================');
-    console.log(selectedOption, selectedName);
-    console.log('====================================');
+    
     let name = selectedName.name;
     let selectedValue = { ...this.state.selectedOption };
     if (selectedOption?.value === null) {
@@ -136,16 +140,13 @@ class Listings extends Component {
 
   render() {
 
-    console.log(this.props.match.params.categoryID);
-
+ 
     let listing = '';
     let showLoadButton = null;
-    const { listings, total_records, loading } = this.props;
-    console.log('total_records', total_records, listings);
-    const { selectedOption } = this.state;
+    const { listings, total_records, loading, seoConfigs } = this.props;
+     const { selectedOption } = this.state;
     const { categoryValue, supplierValue, locationValue } = selectedOption;
-    console.log(categoryValue, supplierValue, locationValue);
-    const productsListing = listings
+     const productsListing = listings
       .filter((item) =>
         supplierValue !== null ? item.getIn(['account', 'id'], '') === supplierValue.value : item
       )
@@ -154,7 +155,7 @@ class Listings extends Component {
           ? item.getIn(['location', 'formatted_address'], '') === locationValue.value
           : item
       );
-    if (productsListing && productsListing.size === 0 && !loading) {
+    if (productsListing && productsListing.length === 0 ) {
       listing = (
         <div style={{ marginTop: '5em' }} className="alert alert-danger fade in alert-dismissible">
           <Link to="#" className="close" data-dismiss="alert" aria-label="close" title="close">
@@ -203,28 +204,23 @@ class Listings extends Component {
     return (
       <>
         <Helmet>
-          <title>Tradly Web -  All Products</title>
-          <meta
-            name="description"
-            content=" Collection of all new products. You can see different types of products by selecting according to your choice. You can easily find the product of your choice."
-            
-          />
+          <title>{seoConfigs.meta_listing_title}</title>
+          <meta name="description" content={seoConfigs.meta_listing_description} />
           <link rel="canonical" href={location.pathname} />
-
         </Helmet>
         <Aux>
           <Backdrop show={loading} />
           <Spinner show={loading} />
-          <Filter
-            selectedOption={selectedOptionList}
-            options={options}
-            handleChange={this.handleChange}
-          />
-          {listing}
-          {showLoadButton}
-          <br />
-          <br />
-          <br />
+
+          <div className={classes.allListingsBox}>
+            <Filter
+              selectedOption={selectedOptionList}
+              options={options}
+              handleChange={this.handleChange}
+            />
+            {listing}
+            {showLoadButton}
+          </div>
         </Aux>
       </>
     );
@@ -241,6 +237,7 @@ const mapStateToProps = (state) => {
     total_records: selectTotalListings(state),
     categoryLists: selectCategoryLists(state),
     supplierLists: selectSupplierLists(state),
+    seoConfigs: state.auth.seo_configs,
   };
 };
 

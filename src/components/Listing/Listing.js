@@ -17,7 +17,7 @@ const listing = (props) => {
                 alt={list.get('title', '')}
                 title={list.get('title', '')}
               />
-              <p>{list.get('title', '')}</p>
+              <p className={classes.storeTitle}>{list.get('title', '')}</p>
               <div className={classes.bottomDesc}>
                  
                   <img
@@ -43,7 +43,7 @@ const listing = (props) => {
   });
 
   return (
-    <div className="container-fluid mt-5" style={{ padding: '0px' }}>
+    <div className="  mt-5" style={{ padding: '0px' }}>
       <div className={classes.listArray}>{listArray}</div>
     </div>
   );

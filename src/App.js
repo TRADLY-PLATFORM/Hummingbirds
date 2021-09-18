@@ -47,16 +47,16 @@ class App extends Component {
     this.props.onTryAuthSignUp();
     // this.props.onSetTenantConfig();
     this.props.onSetOnboardingConfigsData();
+    this.props.onSetSeoConfigs();
   }
 
 
   render() {
 
     let root = document.documentElement;
-    const color =
-      localStorage.getItem('primary_color') || this.props.onboarding_configs.app_color_primary;
-    root.style.setProperty("--primary_color",color);
- 
+    const color =  this.props.onboarding_configs.app_color_primary;
+    root.style.setProperty("--primary_color",color || '#15B790');
+  
 
     let routes = (
       <Switch>
@@ -127,6 +127,7 @@ const mapDispatchToProps = (dispatch) => {
     // onSetTenantConfig: () => dispatch(actions.setTenantConfig()),
     onSetOnboardingConfigsData: () => dispatch(actions.setOnboardingConfigsData()),
     // onInitCountries: () => dispatch(actions.initCountries())
+    onSetSeoConfigs: () => dispatch(actions.setSeoConfigs()),
   };
 };
 

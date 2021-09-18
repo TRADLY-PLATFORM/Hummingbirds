@@ -1,7 +1,11 @@
-.storePart{
+.storePart {
   position: relative;
-}
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  }
 .headingTitle {
+  font-family: Montserrat;
   font-style: normal;
   font-weight: 600;
   font-size: 24px;
@@ -9,17 +13,16 @@
   color: #000000;
   margin: 0;
   float: left;
-  margin-bottom: 30px;
+  margin-bottom: 16px;
 }
 .wellStore {
-   height: 260px;
-   width:98%;
+  width: 100%;
+  height: 100%;
   padding-top: 31px;
- padding-bottom: 7.34%;
- padding-left: 17px;
- padding-right: 17px;
-   /* padding: 25px 40px; */
-  margin-bottom: 20px;
+  padding-bottom: 20px;
+  padding-left: 17px;
+  padding-right: 17px;
+   margin-bottom: 20px;
   background-color: #ffffff;
   border: 1px solid #e3e3e3;
   border-radius: 10px;
@@ -28,14 +31,13 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-   text-decoration: none !important;
-
+  text-decoration: none !important;
 }
-.wellStore a{
+.wellStore a {
 }
 .wellStoreDetails {
   font-style: normal;
- }
+}
 
 .wellStoreDetails p {
   font-size: 15px;
@@ -43,7 +45,7 @@
   color: #4a4a4a;
   min-height: 15px;
 }
- 
+
 .imageDiv img {
   width: 64px;
   height: 64px;
@@ -65,7 +67,7 @@
   z-index: 10;
   text-decoration: none !important;
 }
-.btnGreenUnFollowing{
+.btnGreenUnFollowing {
   padding: 10px 13px;
   border: 1px solid var(--primary_color);
   background: white;
@@ -77,41 +79,45 @@
   line-height: 17px;
   /* identical to box height */
   color: var(--primary_color) !important;
-    z-index: 10;
-text-decoration: none !important;
+  z-index: 10;
+  text-decoration: none !important;
+}
+.swiperSlide{
+  width: 210px;
+  height: 260px;
 }
 
-
-
 @media only screen and (max-width: 600px) {
-  
-
   .wellStore img {
-  /* margin-bottom: 25px;
+    /* margin-bottom: 25px;
   width: 130px;
    border-radius: 100%; */
-}
-.wellStoreDetails {
-  /* font-style: normal;
+  }
+  .wellStoreDetails {
+    /* font-style: normal;
   margin-top: 45px; */
-}
-
+  }
 }
 
 @media only screen and (max-width: 600px) {
-.storePart{
-    padding-Left: 7%;
+  .storePart {
+    padding-left: 7%;
   }
-  .storePartHeader{
+  .storePartHeader {
     padding-right: 4%;
   }
-  .swiperSlide{
-    width: 60% !important;
-   }
-}
-@media only screen and (max-width: 480px) {
 
-  .swiperSlide{
-    width: 80% !important;
-   }
+}
+
+@media only screen and (max-width: 400px) {
+
+ 
+  .swiperSlide {
+    width: 240px !important;
+    height: 280px !important;
+  }
+.headingTitle {
+  font-size: 20px;
+}
+
 }

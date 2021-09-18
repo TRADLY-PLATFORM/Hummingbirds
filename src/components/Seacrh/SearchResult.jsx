@@ -1,16 +1,23 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useLocation } from 'react-router-dom';
 import * as actions from '../../store/actions/index';
 import Listing from '../Listing/Listing';
 import classes from "./SearchResult.module.css"
 import NoProductImage from '../../assets/images/rsz_noimage.png';
 import NoIamgeLogo from '../../assets/images/home/store/noImage.svg';
+import backdrop from '../UI/Backdrop/Backdrop';
+import spinner from '../UI/Spinner/Spinner';
+import Aux from '../../hoc/Auxiliary/Auxiliary';
+import Loader from 'react-loader-spinner';
 
 const SearchResult = () => {
   const { key } = useParams();
   const dispatch = useDispatch();
   const listings = useSelector((state) => state.Search.searchList);
+  const loading = useSelector((state) => state.Search.loading);
+
+  const location = useLocation()
 
   useEffect(() => {
     dispatch(actions.getSearchingResult(key));
@@ -19,10 +26,17 @@ const SearchResult = () => {
        window.history.back();
      };
   return (
-    <>
-     
-      {listings.length > 0 ? (
-         <div div className={classes.find}>
+    <Aux>
+      {loading ? (
+        <Loader
+          type="ThreeDots"
+          color="var(--primary_color)"
+          height={100}
+          width={100}
+          style={{ display: 'flex', justifyContent: 'center' }}
+        />
+      ) : listings.length > 0 ? (
+        <div div className={classes.find}>
           {listings.map((list, i) => {
             let imagePath = NoProductImage;
             if (list.images[0] !== undefined) {
@@ -30,7 +44,10 @@ const SearchResult = () => {
             }
             return (
               <Link
-                to={`/l/${list.id}-${list.title.replace('%', '')}`}
+                to={{
+                  pathname: `/l/${list.id}-${list.title.replace('%', '')}`,
+                  state: { prevPath: 'search results ' },
+                }}
                 key={i}
                 style={{ textDecoration: 'none' }}
               >
@@ -74,20 +91,16 @@ const SearchResult = () => {
               </Link>
             );
           })}
-          </div>
-        ) : (
-          <div
-            style={{ marginTop: '2em' }}
-            className="alert alert-danger fade in alert-dismissible"
-          >
-            <Link to="#" className="close" data-dismiss="alert" aria-label="close" title="close">
-              ×
-            </Link>
-            <strong>oops!</strong> No listings found.
-          </div>
-        )}
-       
-    </>
+        </div>
+      ) : (
+        <div style={{ marginTop: '2em' }} className="alert alert-danger fade in alert-dismissible">
+          <Link to="#" className="close" data-dismiss="alert" aria-label="close" title="close">
+            ×
+          </Link>
+          <strong>oops!</strong> No listings found.
+        </div>
+      )}
+    </Aux>
   );
 };
 

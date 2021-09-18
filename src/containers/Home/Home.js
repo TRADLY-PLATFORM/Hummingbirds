@@ -69,34 +69,28 @@ const Home = () => {
   const collections = useSelector((state) => state.home.collections);
   const isAuthenticated = useSelector((state) => selectUserId(state));
   const products = useSelector((state) => state.home.products);
-    const storesToFollow = useSelector((state) => state.home.stores);
+  const storesToFollow = useSelector((state) => state.home.stores);
+  const seo_configs = useSelector((state) => state.auth.seo_configs);
 
  
-  console.log('loading:', loading);
-  console.log('follow-loading:', followLoading);
-
+ 
   // redirectListing = () => {
   //    history.push('/listings');
   // };
   return (
     <Aux className={classes.HomePage}>
       <Helmet>
-        <title>
-           Buy & Sell used items online from mobile app
-        </title>
-        <meta
-          name="description"
-          content=" Buy & Sell used items online and preloved electronics, bikes, cycle, books, fashion, gadgets, etc"
-        />
+        <title>{seo_configs?.meta_title}</title>
+        <meta name="description" content={seo_configs.meta_description} />
         <link href={location.pathname} />
       </Helmet>
       {/* <Backdrop show={loading || followLoading} /> */}
-      <Spinner show={loading || followLoading} />
+      {/* <Spinner show={loading || followLoading} /> */}
 
       {!categories.length > 0 ? (
         <Loader
           type="ThreeDots"
-          color="#13B58C"
+          color="var(--primary_color)"
           height={100}
           width={100}
           style={{ display: 'flex', justifyContent: 'center' }}
@@ -106,14 +100,9 @@ const Home = () => {
           <div className={classes.homeContent}>
             <HomeBanner images={promo_banners} />
             <Categories categories={categories} />
-            <br />
-            <StoresToFollow storesToFollow={storesToFollow} />
-            <br />
-            <br />
+             <StoresToFollow storesToFollow={storesToFollow} />
             <LatestProducts products={products} />
-            <br />
-            <br />
-            <br />
+            
           </div>
         </>
       )}

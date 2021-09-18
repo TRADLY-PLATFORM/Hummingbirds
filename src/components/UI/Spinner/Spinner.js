@@ -9,16 +9,15 @@ const spinner = (props) => {
        styleImage = props.styles
     }
 
-    return (
-        props.show ? 
-        <Loader
-             type="ThreeDots"
-             color="#13B58C" 
-             height={100}
-             width={100}
-             className={styleImage} 
-          /> : null
-    )
+    return props.show ? (
+      <Loader
+        type="ThreeDots"
+        color="var(--primary_color)"
+        height={100}
+        width={100}
+        className={styleImage}
+      />
+    ) : null;
 }
 
 

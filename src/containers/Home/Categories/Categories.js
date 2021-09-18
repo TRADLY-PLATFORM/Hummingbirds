@@ -8,9 +8,7 @@ import useWindowSize from '../../../components/Hooks/WindowSize/WindowSize';
 
 const Categories = ({ categories }) => {
   // const Categories = useSelector((state) => state.home.categories);
-  console.log('====================================');
-  console.log(Categories);
-  console.log('====================================');
+ 
   const [categorySet, setCategorySet] = useState([...categories]);
   const { width, height } = useWindowSize();
    // useEffect(() => {
@@ -92,16 +90,13 @@ const Categories = ({ categories }) => {
   //   }
   // }
   return (
-    <div style={{ marginTop: '10px', minHeight: '150px' }}>
-      <div className="">
-        <div className={classes.CategoryBox}>
+   
+         <div className={classes.CategoryBox}>
           {
             sendCategories()
          }
         </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default Categories;

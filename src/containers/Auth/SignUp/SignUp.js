@@ -172,7 +172,7 @@ class SignUp extends Component {
 
     let authRedirect = null;
     if (this.props.isAuthenticated || this.props.verifyId) {
-      authRedirect = <Redirect to={this.props.authRedirectPath} />;
+       authRedirect = <Redirect to={'/verification/' + this.props.verifyId} />;
     }
 
     let defaultCountry = '';
@@ -221,7 +221,7 @@ class SignUp extends Component {
             <p style={{ color: `{primary_color}` }}>{this.props.configsData.registration_title}</p>
           </div>
 
-          <div className="col-lg-12 nopaddingLeft">
+          <div className={classes.formBox + 'col-lg-12 nopaddingLeft'}>
             <h5 className={classes.titleAccount}>Create your account</h5>
             <br />
             <form action="" method="post" onSubmit={this.onSubmit}>
@@ -295,12 +295,12 @@ class SignUp extends Component {
               </div>
 
               <div className="text-center mt-5">
-                <Link to="/sign-in" className="text-center whiteColor">
+                <Link to="/sign-in" className="text-center whiteColor noDecoration">
                   have an account ? Sign in
                 </Link>
               </div>
               <div className="text-center mt-5">
-                <Link to="/" className="text-center whiteColor">
+                <Link to="/" className="text-center whiteColor noDecoration">
                   <i className="fa fa-home fontIconSize"></i> Back to home
                 </Link>
               </div>

@@ -11,7 +11,6 @@ import noProductLogo from '../../../assets/images/store/noProduct.svg';
 import NoProductImage from '../../../assets/images/rsz_noimage.png';
 import NoIamgeLogo from '../../../assets/images/home/store/noImage.svg';
 
-
 import Backdrop from '../../../components/UI/Backdrop/Backdrop';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import AllenSollyLogo from '../../../assets/images/home/store/allenSolly.svg';
@@ -34,7 +33,6 @@ const Store = () => {
 
   // useEffect:
   useEffect(() => {
- 
     setTimeout(() => {
       dispatch(actions.userStoreLists(isAuthenticated));
     }, 1000);
@@ -65,39 +63,30 @@ const Store = () => {
             return (
               <div className=" " key={i}>
                 <div>
-                  <img
-                    src={StoreBanner}
-                    className={classes.storeImage}
-                    alt="Woman accesories"
-                    title="Woman accesories"
-                  />
-                  <div class="container-fluid">
-                    <div className={classes.bannerimages + ' row'}>
-                      <div className="col-lg-12">
-                        <div className={classes.bannerText + ' col-sm-12'}>
-                          <div className={classes.fashionStore + ' col-sm-6'}>
-                            {list.images[0] ? (
-                              <img src={list.images[0]} alt={storeName} title={storeName} />
-                            ) : (
-                              <img src={AllenSollyLogo} alt={storeName} title={storeName} />
-                            )}
+                  <div className={classes.storeBanner}></div>
+                  <div className={classes.storeHeader}>
+                    <div className={classes.bannerText + ' col-sm-12'}>
+                      <div className={classes.fashionStore}>
+                        {list.images[0] ? (
+                          <img src={list.images[0]} alt={storeName} title={storeName} />
+                        ) : (
+                          <img src={AllenSollyLogo} alt={storeName} title={storeName} />
+                        )}
 
-                            <div>
-                              <h3>{storeName}</h3>
-                              <p>@{storeOwner}</p>
-                            </div>
-                          </div>
-                          <div className={classes.followBtn}>
-                            <button className="btnGreenStyle pull-right  ">Edit profile</button>
-                          </div>
+                        <div className={classes.fashionStoreNameBox}>
+                          <h3>{storeName}</h3>
+                          <span>@{storeOwner}</span>
                         </div>
+                      </div>
+                      <div className={classes.followBtn}>
+                        <button className="btnGreenStyle pull-right  ">Edit profile</button>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div>
                   {listings.length > 0 ? (
-                    <div>
+                    <div className={classes.myStoreProducts}>
                       <Link to={`/addproduct/${list.id}`}>
                         <button className="btnGreenStyle pull-right">Add a product </button>
                       </Link>
@@ -120,7 +109,7 @@ const Store = () => {
                                   alt={list.title}
                                   title={list.title}
                                 />
-                                <p>{list.title}</p>
+                                <p className={classes.productTitle}>{list.title}</p>
                                 <div className={classes.bottomDesc}>
                                   {list.account !== undefined && list.account.images[0] ? (
                                     <>

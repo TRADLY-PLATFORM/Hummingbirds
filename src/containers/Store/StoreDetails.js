@@ -22,14 +22,12 @@ import { selectUserId } from '../../store/selectors/auth';
 import { Helmet } from 'react-helmet';
 import PropTypes from 'prop-types';
 
- 
-
 class StoreDetails extends Component {
   constructor(props) {
     super(props);
     const {
       match: {
-        params: { id},
+        params: { id },
       },
     } = props;
 
@@ -69,6 +67,9 @@ class StoreDetails extends Component {
     }
     return '';
   };
+  setPath = () => {
+     this.props.setRedirectPath(this.props.location.pathname);
+  };
 
   postStoreFollow = () => {
     const { storeDetails } = this.props;
@@ -77,10 +78,16 @@ class StoreDetails extends Component {
     if (storeDetails.get('following') !== false) {
       IsFollowing = true;
     }
-    console.log(storeId);
     this.timer = setTimeout(() => {
       this.props.postStoreFollow(storeId, IsFollowing);
     }, 1000);
+
+    if (!this.props.error) {
+      const btn = document.getElementById('followBtn');
+      btn.innerText = IsFollowing ? 'Follow' : 'Following';
+      btn.classList.remove(IsFollowing ? 'btnGreenStyle' : 'btnOutlineGreenStyle');
+      btn.classList.add(IsFollowing ? 'btnOutlineGreenStyle' : 'btnGreenStyle');
+    }
 
     this.timer = setTimeout(() => {
       if (!this.props.error) {
@@ -130,123 +137,118 @@ class StoreDetails extends Component {
 
     storeContent = (
       <Aux>
-        <img
-          src={StoreBanner}
-          className={classes.storeImage}
-          alt="Woman accesories"
-          title="Woman accesories"
-        />
-        <div class="container-fluid">
-          <div className={classes.bannerimages + ' row'}>
-            <div className="col-lg-12">
-              <div className={classes.bannerText + ' col-sm-12'}>
-                <div className={classes.fashionStore}>
-                  <div>
-                    {storeDetails.getIn(['images', 0], '') !== '' ? (
-                      <img
-                        src={storeDetails.getIn(['images', 0], '')}
-                        alt="Woman accesories"
-                        title="Woman accesories"
-                      />
-                    ) : (
-                      <img src={AllenSollyLogo} alt="Woman accesories" title="Woman accesories" />
-                    )}
-                  </div>
+        <div>
+          <div className={classes.storeBanner}></div>
 
-                  <div>
-                    <h3>{storeName}</h3>
-                    <p>@{storeOwner}</p>
-                  </div>
-                </div>
-                <div className={classes.followBtn}>
-                  {/* <button className="btnGreenStyle pull-right mt-4" onClick={this.postStoreFollow}>
-                    Follow
-                  </button> */}
-                  {this.props.isAuthenticated ? (
-                    <button
-                      className={`${
-                        this.props.storeDetails.get('following')
-                          ? 'btnGreenStyle'
-                          : 'btnOutlineGreenStyle'
-                      } pull-right  `}
-                      onClick={this.postStoreFollow}
-                    >
-                      {this.props.storeDetails.get('following') ? 'Following' : 'Follow'}
-                    </button>
+          <div className={classes.storeHeader}>
+            <div className={classes.bannerText}>
+              <div className={classes.fashionStore}>
+                <div>
+                  {storeDetails.getIn(['images', 0], '') !== '' ? (
+                    <img
+                      src={storeDetails.getIn(['images', 0], '')}
+                      alt="Woman accesories"
+                      title="Woman accesories"
+                    />
                   ) : (
-                    <Link to="/sign-in">
-                      <button
-                        className="btnOutlineGreenStyle pull-right "
-                        style={{ marginLeft: '15px' }}
-                      >
-                        Follow
-                      </button>
-                    </Link>
+                    <img src={AllenSollyLogo} alt="Woman accesories" title="Woman accesories" />
                   )}
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <div class="container-fluid">
-          <div className={classes.bannerDescText + ' row'}>
-            <div className=" col-lg-12 mb1">
-              <div className="col-xs-5 col-lg-3">
-                Descriptions <span className="float-right">:</span>
+                <div className={classes.fashionStoreNameBox}>
+                  <h3>{storeName}</h3>
+                  <span>@{storeOwner}</span>
+                </div>
               </div>
-              <div className="col-xs-7 col-lg-9">
-                {storeDetails.get('description', '') || 'N/A'}
+              <div className={classes.followBtn}>
+                {/* <button className="btnGreenStyle pull-right mt-4" onClick={this.postStoreFollow}>
+                    Follow
+                  </button> */}
+                {this.props.isAuthenticated ? (
+                  <button
+                    id="followBtn"
+                    className={`${
+                      this.props.storeDetails.get('following')
+                        ? 'btnGreenStyle'
+                        : 'btnOutlineGreenStyle'
+                    } pull-right  `}
+                    onClick={this.postStoreFollow}
+                  >
+                    {this.props.storeDetails.get('following') ? 'Following' : 'Follow'}
+                  </button>
+                ) : (
+                  <Link to="/sign-in" onClick={this.setPath}>
+                    <button
+                      className="btnOutlineGreenStyle pull-right "
+                      style={{ marginLeft: '15px' }}
+                    >
+                      Follow
+                    </button>
+                  </Link>
+                )}
               </div>
-            </div>
-            <div className="col-lg-12 mb1">
-              <div className="col-xs-5 col-lg-3">
-                categories <span className="float-right">:</span>
-              </div>
-              <div className="col-xs-7 col-lg-9">{this.getCategory()}</div>
-            </div>
-            <div className="col-lg-12 mb1">
-              <div className="col-xs-5 col-lg-3">
-                Location <span className="float-right">:</span>
-              </div>
-              <div className="col-xs-7 col-lg-9">
-                <span> {storeDetails.getIn(['location', 'formatted_address'], 'N/A')}</span>
-                <Modal show={this.state.maps} modalClosed={this.closeMaps}>
-                  <Maps
-                    lat={storeDetails.getIn(['coordinates', 'latitude'], '')}
-                    lng={storeDetails.getIn(['coordinates', 'longitude'], '')}
-                    address={storeDetails.getIn(['location', 'formatted_address'], 'N/A')}
-                  />
-                </Modal>
-                <button
-                  type="button"
-                  className="btn btn-outline-success float-right"
-                  onClick={this.showMaps}
-                >
-                  Get Direction
-                </button>
-              </div>
-            </div>
-            <div className=" col-lg-12 mb1">
-              <div className="col-xs-5 col-lg-3">
-                Total Followers <span className="float-right">:</span>
-              </div>
-              <div className="col-xs-7 col-lg-9">{storeDetails.get('total_followers', '')}</div>
-            </div>
-            <div className="col-lg-12 mb1">
-              <div className="col-xs-5  col-lg-3">
-                Total Listings <span className="float-right">:</span>
-              </div>
-              <div className="col-xs-7 col-lg-9">{storeDetails.get('total_listings', '')}</div>
             </div>
           </div>
         </div>
-        {listing}
+        <div className={classes.storeDetailsBox}>
+          <div class="container-fluid">
+            <div className={classes.bannerDescText + ' row'}>
+              <div className=" col-lg-12 mb1">
+                <div className="col-xs-5 col-lg-3">
+                  Descriptions <span className="float-right">:</span>
+                </div>
+                <div className="col-xs-7 col-lg-9">
+                  {storeDetails.get('description', '') || 'N/A'}
+                </div>
+              </div>
+              <div className="col-lg-12 mb1">
+                <div className="col-xs-5 col-lg-3">
+                  categories <span className="float-right">:</span>
+                </div>
+                <div className="col-xs-7 col-lg-9">{this.getCategory()}</div>
+              </div>
+              <div className="col-lg-12 mb1">
+                <div className="col-xs-5 col-lg-3">
+                  Location <span className="float-right">:</span>
+                </div>
+                <div className="col-xs-7 col-lg-9">
+                  <span> {storeDetails.getIn(['location', 'formatted_address'], 'N/A')}</span>
+                  <Modal show={this.state.maps} modalClosed={this.closeMaps}>
+                    <Maps
+                      lat={storeDetails.getIn(['coordinates', 'latitude'], '')}
+                      lng={storeDetails.getIn(['coordinates', 'longitude'], '')}
+                      address={storeDetails.getIn(['location', 'formatted_address'], 'N/A')}
+                    />
+                  </Modal>
+                  <button
+                    type="button"
+                    className="btn btn-outline-success float-right"
+                    onClick={this.showMaps}
+                  >
+                    Get Direction
+                  </button>
+                </div>
+              </div>
+              <div className=" col-lg-12 mb1">
+                <div className="col-xs-5 col-lg-3">
+                  Total Followers <span className="float-right">:</span>
+                </div>
+                <div className="col-xs-7 col-lg-9">{storeDetails.get('total_followers', '')}</div>
+              </div>
+              <div className="col-lg-12 mb1">
+                <div className="col-xs-5  col-lg-3">
+                  Total Listings <span className="float-right">:</span>
+                </div>
+                <div className="col-xs-7 col-lg-9">{storeDetails.get('total_listings', '')}</div>
+              </div>
+            </div>
+          </div>
+          {listing}
+        </div>
       </Aux>
     );
-    console.log(this.props.isAuthenticated);
     const { match, location, history } = this.props;
-    
+
     const buisnessName = process.env.REACT_APP_BUSINESS_NAME;
 
     return (
@@ -259,23 +261,11 @@ class StoreDetails extends Component {
           />
           <link rel="canonical" href={location.pathname} />
         </Helmet>
-        {/* <Helmet>
-          <title>
-           
-            Buy online from - {`${process.env.REACT_APP_BUSINESS_NAME}`} from your mobile via app 
-          </title>
-          <meta name="description" content={storeName + '-' + storeOwner} />
-          <link rel="canonical" href={location.pathname} />
-        </Helmet> */}
+
         <Aux>
           <Backdrop show={this.props.loading} />
           <Spinner show={this.props.loading} />
-          {storeContent}
-          
-
-          <br />
-          <br />
-          <br />
+          <div>{storeContent}</div>
         </Aux>
       </>
     );
@@ -304,6 +294,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(actions.initListings(count, filterValue, totalCountOfProducts)),
     postStoreFollow: (storeId, IsFollowing) =>
       dispatch(actions.postStoreFollow(storeId, IsFollowing)),
+    setRedirectPath: (redirectPath) => dispatch(actions.setAuthRedirectPath(redirectPath)),
   };
 };
 

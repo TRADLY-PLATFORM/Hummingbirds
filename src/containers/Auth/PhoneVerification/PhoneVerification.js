@@ -49,8 +49,7 @@ class PhoneVerification extends Component {
     this.setState({ showError: true });
 
     let verification_id = atob(this.props.verifyId);
-    console.log(verification_id);
-
+ 
     const verification = {
       verify_id: verification_id,
       code: this.state.verificationCode,
@@ -72,7 +71,7 @@ class PhoneVerification extends Component {
     }
 
     if (this.props.isAuthenticated) {
-      authRedirect = <Redirect to={'/'} />;
+      authRedirect = <Redirect to={this.props.authRedirectPath} />;
     }
 
     return (

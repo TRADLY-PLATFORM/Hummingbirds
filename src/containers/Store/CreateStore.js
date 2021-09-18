@@ -77,8 +77,7 @@ class CreateStore extends Component {
       },
     };
 
-    console.log(stores);
-
+ 
     this.props.onCreateStore(stores, () =>
       this.props.history.push(`/storesuccess?id=${this.props.isAuthenticated}`)
     );
@@ -105,8 +104,7 @@ class CreateStore extends Component {
     fileInput.click();
   };
   imageUpload = async (e) => {
-    console.log(e.target.files);
-    this.setState({ image: URL.createObjectURL(e.target.files[0]) });
+     this.setState({ image: URL.createObjectURL(e.target.files[0]) });
 
     const file = e.target.files[0];
     const contentType = file.type;
@@ -115,8 +113,7 @@ class CreateStore extends Component {
     imageToBase64(e.target.files[0]) // Path to the image
       .then((response) => {
         this.setState({ base64: { file: 'data:' + file.type + ';base64,' + response } });
-        console.log({ file: 'data:' + file.type + ';base64,' + response });
-      })
+       })
       .catch((error) => {
         console.log(error);
       });
@@ -141,9 +138,7 @@ class CreateStore extends Component {
         .then((response) => {
           if (response.data.status) {
             console.log(response);
-
-            console.log(response.data.data.result[0].fileUri);
-
+ 
             const path = response.data.data.result[0].signedUrl;
 
             fetch(this.state.base64['file']).then(async (res) => {

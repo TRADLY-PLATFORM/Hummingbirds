@@ -11,7 +11,8 @@ const initialState = {
   verify_id: null,
   countries: null,
   general_configs: {},
-  onboarding_configs:{},
+  onboarding_configs: {},
+  seo_configs:{},
   authRedirectPath: '/',
   userData: {},
   tenantData: {},
@@ -72,6 +73,13 @@ const setOnboardingConfigs = (state, action) => {
     loading: false,
   });
 };
+const setSeoConfigs = (state, action) => {
+  
+  return updateObject(state, {
+    seo_configs: action.configs,
+    loading: false,
+  });
+};
 
 const fetchCountriesFailed = (state, action) => {
   return updateObject(state, {
@@ -89,6 +97,13 @@ const setAuthRedirectPath = (state, action) => {
     error: false,
     disabled: false,
   });
+};
+const setVerifyID = (state, action) => {
+  return updateObject(state, {
+     verify_id: action.verify_id,
+    loading: false,
+    error: false,
+   });
 };
 
 const authVerify = (state, action) => {
@@ -121,14 +136,23 @@ const authReducer = (state = initialState, action) => {
       return startCountries(state, action);
     case actionTypes.SET_COUNTRIES:
       return setCountries(state, action);
+
     case actionTypes.SET_CONFIGS:
       return setGeneralConfigs(state, action);
     case actionTypes.SET_ONBOARDING_CONFIGS:
       return setOnboardingConfigs(state, action);
+    case actionTypes.SEO_CONFIGS:
+      return setSeoConfigs(state, action);
+
     case actionTypes.FETCH_COUNTRIES_FAILED:
       return fetchCountriesFailed(state, action);
+
     case actionTypes.SET_AUTH_REDIRECT_PATH:
       return setAuthRedirectPath(state, action);
+
+    case actionTypes.VERIFY_ID:
+      return setVerifyID(state, action);
+
     case actionTypes.SUCCESS_TENANT_CONFIG:
       return successTenantConfig(state, action);
     case actionTypes.FAILED_TENANT_CONFIG:

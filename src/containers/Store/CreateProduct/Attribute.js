@@ -4,8 +4,8 @@ import Select from 'react-select';
 import groupAvatar from '../../../assets/images/uploadPlaceholder.svg';
 import imageToBase64 from 'image-to-base64/browser';
 import CreatableSelect from 'react-select/creatable';
-import { attr } from 'dom7';
-
+import uploadImageIcon from '../../../assets/images/store/upload@2x.png';
+import cancelImage from '../../../assets/images/store/cancel@2x.png';
 const Attribute = ({ attribute, attributeData, setAttributeData }) => {
   // statte
   const [multiValue, setMultiValue] = useState([]);
@@ -24,26 +24,14 @@ const Attribute = ({ attribute, attributeData, setAttributeData }) => {
   const imageUpload = async (e) => {
     setImage(URL.createObjectURL(e.target.files[0]));
     setFile(e.target.files[0]);
-
-    const file = e.target.files[0];
-
-    imageToBase64(e.target.files[0]) // Path to the image
-      .then((response) => {
-        setBase64({ file: 'data:' + file.type + ';base64,' + response });
-        console.log({ file: 'data:' + file.type + ';base64,' + response });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+ 
   };
 
   const handleChange = (newValue, actionMeta, attribute_id, attribute_field_type) => {
-    console.group('Value Changed');
-    console.log(newValue);
-    console.log(`attrId: ${actionMeta.action}`);
+ 
 
     console.groupEnd();
-    if (attribute_field_type === (1 || 3)) {
+    if (attribute_field_type === 1 || attribute_field_type === 3) {
       if (attributeData !== null) {
         console.log('here');
         const check = attributeData?.find((attr) => attr.id === attribute_id);
@@ -70,7 +58,7 @@ const Attribute = ({ attribute, attributeData, setAttributeData }) => {
           setAttributeData([{ values: [newValue.value], id: attribute_id }]);
         }
       }
-    } else if (attribute_field_type === (2 || 4)) {
+    } else if (attribute_field_type === 2 || attribute_field_type === 4) {
       if (attributeData !== null) {
         if (actionMeta.action !== ('remove-value' || 'clear')) {
           const check = attributeData.find((attr) => attr.id === attribute_id);
@@ -137,36 +125,17 @@ const Attribute = ({ attribute, attributeData, setAttributeData }) => {
     }
   };
 
-  console.log('====================================');
-  console.log(attributeData);
-  console.log('====================================');
-
-  // const valueChange = (newValue: any, actionMeta: any) => {
-  //   console.group('Value Changed 2');
-  //   console.log(newValue);
-  //   console.log(`action: ${actionMeta.action}`);
-  //   console.groupEnd();
-  // };
-
-  // const options = [
-  //   { value: 'chocolate', label: 'Chocolate' },
-  //   { value: 'strawberry', label: 'Strawberry' },
-  //   { value: 'vanilla', label: 'Vanilla' },
-  // ];
+ 
+ 
+ 
 
   return (
     <>
-      {/* <CreatableSelect
-        isClearable
-        isMulti
-        onChange={valueChange}
-        className="basic-multi-select"
-        classNamePrefix="select"
-      /> */}
+     
       {attribute?.map((attr) => {
         // Data
         let options;
-        if (attr.field_type === 1 || 2) {
+        if (attr.field_type === 1 || attr.field_type === 2) {
           options = attr.values?.map((value) => {
             return { value: value.name, label: value.name, id: value.id };
           });
@@ -223,32 +192,39 @@ const Attribute = ({ attribute, attributeData, setAttributeData }) => {
                   />
                 </div>
               )}
-              {attr.field_type === 5 && (
-                <div className={classes.attachMentBox}>
-                  <div className="p-2">
-                    <img
-                      id="imageid"
-                      className={classes.groupAvatar}
-                      src={image ? image : groupAvatar}
-                      alt=""
-                    />
-                  </div>
-                  <div>
-                    <div style={{ height: '0px', overflow: 'hidden' }}>
-                      <input
-                        type="file"
-                        id="attachmentClick"
-                        name="imageUpload"
-                        accept="image/*"
-                        onChange={(e) => imageUpload(e)}
-                      />
+              {attr.field_type === 5 &&
+                (file === null ? (
+                  <div className={classes.attachMentBox}>
+                    <div>
+                      <div style={{ height: '0px', overflow: 'hidden' }}>
+                        <input
+                          type="file"
+                          id="attachmentClick"
+                          name="imageUpload"
+                          accept="image/*"
+                          onChange={(e) => imageUpload(e)}
+                        />
+                      </div>
+                      <button className={classes.photoUploadButton} onClick={imageUploadClick}>
+                        <img src={uploadImageIcon} alt="" />
+                        <p>Upload Attachment Image</p>
+                      </button>
                     </div>
-                    <button className={classes.photoUploadButton} onClick={imageUploadClick}>
-                      Upload File
-                    </button>
                   </div>
-                </div>
-              )}
+                ) : (
+                  <div className={classes.uploadedImage}>
+                    <div>
+                      <img src={groupAvatar} alt="" />
+                    </div>
+                    <div className={classes.imageDescriptions}>
+                      <span>{file.name}</span>
+                      <span>{file.type}</span>
+                    </div>
+                    <div className={classes.cancelImage} onClick={() => setFile(null)}>
+                      <img src={cancelImage} alt="" />
+                    </div>
+                  </div>
+                ))}
             </div>
           </>
         );

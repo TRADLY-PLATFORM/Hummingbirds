@@ -45,7 +45,14 @@ const ListingsByCategory = () => {
                 imagePath = list.images[0];
               }
               return (
-                <Link to={`/l/${list.id}-${list.title}`} key={i} style={{ textDecoration: 'none' }}>
+                <Link
+                   to={{
+                    pathname: `/l/${list.id}-${list.title.replace('%', '')}`,
+                    state: { prevPath: `${categoryName.split('-')[1]} listings` },
+                  }}
+                  key={i}
+                  style={{ textDecoration: 'none' }}
+                >
                   <div className={classes.latestTrend}>
                     <img
                       src={imagePath}
@@ -53,7 +60,7 @@ const ListingsByCategory = () => {
                       alt={list.title}
                       title={list.title}
                     />
-                    <p>{list.title}</p>
+                    <p className={classes.storeTitle}>{list.title}</p>
                     <div className={classes.bottomDesc}>
                       {list.account !== undefined && list.account.images[0] ? (
                         <>
@@ -92,9 +99,7 @@ const ListingsByCategory = () => {
             })}
           </div>
         }
-        <br />
-        <br />
-        <br />
+         
       </Aux>
     </>
   );

@@ -1,5 +1,5 @@
-.breadCrumb {
-  padding: 0px 8px 15px;
+/* .breadCrumb {
+  
   margin-bottom: 8px;
   list-style: none;
 }
@@ -14,44 +14,25 @@
   border: none;
   background-color: transparent;
 }
-/* 
-.Details {
-  background: white;
-  padding-top: 1em;
-  padding-bottom: 2em;
-}
+  */
+.rowBox{
+  margin-top:10px ;
+  padding-left: 57px;
+  padding-right: 31px;
 
-.Details h4 {
+}
+.breadCrumb{
+  border: none;
+  outline: none;
+  background-color: transparent;
+  color: var(--primary_color);
+  display: flex;
+  align-items: center;
+    font-size: 17px;
   font-weight: 500;
-  font-size: 14px;
-  line-height: 17px;
-  margin-top: 0;
-  color: #4a4a4a;
+  margin-bottom: 15px; 
 }
 
-.Details div {
-  font-weight: bold;
-  line-height: 22px;
-  color: #4a4a4a;
-}
-
-.Details span {
-  font-weight: 500;
-  line-height: 15px;
-  color: 222222;
-  opacity: 0.4;
-  margin-top: 1em;
-  display: block;
-}
-
-.Details strike {
-  float: right;
-  color: #13b58c;
-}
-.Details strong {
-  padding-left: 30px;
-  color: #13b58c;
-} */
 .Description {
   text-align: justify;
   padding-left: 24px;
@@ -162,35 +143,64 @@ color: #4a4a4a;
   font-size: 18px;
 }
 
-.disableLikeBtn button,.likeBtn button{
-  width: 48px;
-  height: 48px;
-  border: 1px solid #E2E2E2;
-  border-radius: 50% !important;
+ .likeBtn button{
+
+   display: flex;
+   margin-left: 15px;
+  border: none;
   background-color: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 15px;
 
 }
-.heartDisable {
-  width: 40px;
-  height: 40px;
-  padding: 10px;
+.likeBtn button img{
+   width: 48px;
+  height: 48px;
 }
 
-.heartActive{
-  width: 40px;
-  height: 40px;
-  padding: 10px;
+.productImage{
+  width: 524px;
+  height: 338px;
+ }
+
+
+@media only screen and (min-width: 1700px) {
+.productImage{
+  width: 524px;
+  height: 400px;
+ }
+
+
 }
 
-@media only screen and (max-width: 780px) {
-  .rowBox{
-    padding: 16px;
-    margin: 0;
-  }
+/* @media only screen and (max-width: 1100px) {
+.productImage{
+  width: 524px;
+  height: 300px;
+ }
+
+
+} */
+
+
+@media only screen and (max-width: 989px) {
+    .imageBox{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+
+   }
+.Description{
+  margin-bottom: 20px;
+}
+
+}
+
+
+
+@media only screen and (max-width: 580px) {
+.rowBox{
+  margin-top: 0px ;
+  padding-left: 0px;
+  padding-right: 0px;
+}
   .imageBox{
     padding-left: 0px !important;
     padding-right: 0px !important;
@@ -198,29 +208,16 @@ color: #4a4a4a;
    }
    .productImageBox{
      width: 100%;
-  
+     
      margin-bottom: 5px;
 
    }
-   /* .productImageBox img{
-     height: 180px !important;
-     width: 100%;
-   } */
-
+ 
    .likeBtn{
       margin-right: 29px;
     }
 
-   .heartDisable {
-  width: 30px;
-  height: 30px;
-  padding: 5px;
-}
-
-.heartActive{
-  width: 30px;
-  height: 30px;
-  padding: 5px;
-}
+ 
+ 
 }
  

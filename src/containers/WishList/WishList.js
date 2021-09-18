@@ -8,16 +8,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import NoIamgeLogo from '../../assets/images/home/store/noImage.svg';
 import NoProductImage from '../../assets/images/rsz_noimage.png';
 import { Link } from 'react-router-dom';
+import Loader from 'react-loader-spinner';
 
 const WishList = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(actions.getWishlist());
   }, []);
-  const wishList = useSelector((state) => state.wishList.wishLists || []);
-  console.log(wishList);
-  return (
-    <div>
+  const wishList = useSelector((state) => state.wishList.wishLists );
+  const loading = useSelector((state) => state.wishList.loading );
+   return (
+    <div className={classes.wishListsBox}>
       <div className="">
         <div>
           <h2 className={classes.pageTitle}>My Wishlist </h2>
@@ -55,7 +56,15 @@ const WishList = () => {
       </div>
 
       <div className="">
-        {wishList.length > 0 ? (
+        {loading ? (
+          <Loader
+            type="ThreeDots"
+            color="var(--primary_color)"
+            height={100}
+            width={100}
+            style={{ display: 'flex', justifyContent: 'center' }}
+          />
+        ) : wishList.length && wishList?.length > 0 ? (
           <div className={classes.wishList}>
             {wishList.map((list, i) => {
               let productImage = NoProductImage;
@@ -66,36 +75,39 @@ const WishList = () => {
               let storelogo = list.account.images[0];
               let storeName = list.account.name;
               let price = list.list_price.formatted !== undefined ? list.list_price.formatted : '';
-              console.log(storeName);
-              return (
-                <Link to={`/l/${list.id}-${list.title}`} key={i} style={{ textDecoration: 'none' }}>
-                  <div className={''}>
-                    <div className={classes.latestTrend}>
-                      <img
-                        src={productImage}
-                        className={classes.storeImage}
-                        alt="Woman accesories"
-                        title="Woman accesories"
-                      />
-                      <p>{list.title}</p>
-                      <div className={classes.bottomDesc}>
-                        <img
-                          src={storelogo || NoIamgeLogo}
-                          alt="Woman accesories"
-                          title="Woman accesories"
-                        />{' '}
-                        <span>
-                          {' '}
-                          {list.account.name.length < 10
-                            ? list.account.name
-                            : list.account.name.substring(0, 8) + '..'}
-                        </span>
-                        <p className={classes.amountTitle}>{price}</p>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              );
+               return (
+                 <Link
+                   to={`/l/${list.id}-${list.title}`}
+                   key={i}
+                   style={{ textDecoration: 'none' }}
+                 >
+                   <div className={''}>
+                     <div className={classes.latestTrend}>
+                       <img
+                         src={productImage}
+                         className={classes.storeImage}
+                         alt="Woman accesories"
+                         title="Woman accesories"
+                       />
+                       <p className={classes.storeTitle}>{list.title}</p>
+                       <div className={classes.bottomDesc}>
+                         <img
+                           src={storelogo || NoIamgeLogo}
+                           alt="Woman accesories"
+                           title="Woman accesories"
+                         />{' '}
+                         <span>
+                           {' '}
+                           {list.account.name.length < 10
+                             ? list.account.name
+                             : list.account.name.substring(0, 8) + '..'}
+                         </span>
+                         <p className={classes.amountTitle}>{price}</p>
+                       </div>
+                     </div>
+                   </div>
+                 </Link>
+               );
             })}
           </div>
         ) : (

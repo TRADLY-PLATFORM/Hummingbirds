@@ -13,9 +13,7 @@ import SwiperCore, { Navigation, Pagination } from 'swiper/core';
 // install Swiper modules
 SwiperCore.use([Navigation, Pagination]);
 const homeBanner = (props) => {
-    console.log('====================================');
-    console.log(props);
-    console.log('====================================');
+     
       
     return (
       <>

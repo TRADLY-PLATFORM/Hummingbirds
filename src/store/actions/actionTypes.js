@@ -3,6 +3,7 @@ export const AUTH_SUCCESS = 'AUTH_SUCCESS';
 export const AUTH_FAIL = 'AUTH_FAIL';
 export const AUTH_LOGOUT = 'AUTH_LOGOUT';
 export const AUTH_VERIFY = 'AUTH_VERIFY';
+export const VERIFY_ID = 'VERIFY_ID';
 export const SET_AUTH_REDIRECT_PATH = 'SET_AUTH_REDIRECT_PATH';
 export const SET_CONFIGS = 'SET_CONFIGS';
 export const SET_ONBOARDING_CONFIGS = 'SET_ONBOARDING_CONFIGS';
@@ -92,3 +93,5 @@ export const START_LOADING = 'START_LOADING';
 export const INIT_CURRENCIES = 'INIT_CURRENCIES';
 
 export const ADD_PRODUCT = 'ADD_PRODUCT';
+
+export const SEO_CONFIGS = 'SEO_CONFIG'

@@ -17,51 +17,46 @@ import StoreActiveLogo from '../../assets/images/sidebar/active/store.svg';
 import PropTypes from 'prop-types';
 import * as actions from '../../store/actions/index';
 import { useState } from 'react';
-import menubarIcon from "../../assets/images/mobilemenu/menu.png"
-import closeMenu from "../../assets/images/mobilemenu/close.png"
+import menubarIcon from '../../assets/images/mobilemenu/menu.png';
+import closeMenu from '../../assets/images/mobilemenu/close.png';
 import profileUser from '../../assets/images/header/profile-user.png';
 import arrow from '../../assets/images/mobilemenu/down-arrow.png';
 import { Search } from '../../components/Seacrh/Search';
 
-
-
 const Layout = (props) => {
   const isAuthenticated = useSelector((state) => selectUserId(state));
   const tenantData = useSelector((state) => selectTenantData(state));
+
   const userData = useSelector((state) => selectUserData(state));
+  const onboarding_configs = useSelector((state) => state.auth.onboarding_configs);
+
   const dispatch = useDispatch();
 
   const url = useLocation().pathname;
- 
+
   const [isSiteNavOpen, setIsSiteNavOpen] = useState(false);
 
   const authRedirectHandler = (path) => {
-
-    dispatch(actions.setAuthRedirectPath(path,null));
+    dispatch(actions.setAuthRedirectPath(path));
   };
   function navButtonClick() {
-    
-      document.getElementById('navbarMenu').style.width = '60%';
-      setIsSiteNavOpen(true);
-    
-     
+    document.getElementById('navbarMenu').style.width = '245px';
+    setIsSiteNavOpen(true);
   }
   function navButtonOff() {
-    
-      document.getElementById('navbarMenu').style.width = '0';
-      setIsSiteNavOpen(false);
-   
+    document.getElementById('navbarMenu').style.width = '0';
+    setIsSiteNavOpen(false);
   }
 
   // Logo path:
-     let appLogo = localStorage.getItem('logo_path') || this.props.onboarding_configs.splash_image;
+  let appLogo = onboarding_configs.splash_image;
   function getUserImage() {
     return userData.get('profile_pic', '');
   }
-    function getUserName() {
-      return userData.get('first_name', 'Guests') + ' ' + userData.get('last_name', '');
-    }
- 
+  function getUserName() {
+    return userData.get('first_name', 'Guests') + ' ' + userData.get('last_name', '');
+  }
+
   return (
     <div>
       <Aux>
@@ -73,7 +68,7 @@ const Layout = (props) => {
           <div className=" ">
             <div className={classes.navbar}>
               <button type="button" onClick={navButtonClick}>
-                <img style={{width:"20px", height:"12px"}} src={menubarIcon} alt="" />
+                <img style={{ width: '20px', height: '12px' }} src={menubarIcon} alt="" />
               </button>
               <div className="logo" style={{ marginLeft: '7%' }}>
                 {appLogo !== '' ? (
@@ -104,12 +99,20 @@ const Layout = (props) => {
                       src={getUserImage() !== '' ? getUserImage() : profileUser}
                       alt="User Avatar"
                     />
-                    <img style={{ width: '7px',height:"7px", marginLeft: '5px' }} src={arrow} alt="" />
+                    <img
+                      style={{ width: '7px', height: '7px', marginLeft: '5px' }}
+                      src={arrow}
+                      alt=""
+                    />
                   </Link>
 
                   <div className={classes.dropdownMenu + ' user-menu dropdown-menu'}>
                     {userData.get('id', '') === '' ? (
-                      <Link className={classes.navLink} to="/sign-in">
+                      <Link
+                        className={classes.navLink}
+                        to="/sign-in"
+                        onClick={() => authRedirectHandler(url)}
+                      >
                         <i className="fa fa-power-off mr-10"></i>Login
                       </Link>
                     ) : (
@@ -129,8 +132,8 @@ const Layout = (props) => {
                 </div>
               </div>
             </div>
-            <div   style={{ marginTop: '27px' }}>
-               <Search/>
+            <div style={{ marginTop: '27px' }}>
+              <Search />
             </div>
 
             <div className={classes.navbarMenu} id="navbarMenu">
@@ -140,7 +143,7 @@ const Layout = (props) => {
                 onClick={navButtonOff}
                 style={{ display: isSiteNavOpen ? 'block' : 'none' }}
               >
-                <img style={{ width: '20px',height:"20px" }} src={closeMenu} alt="" />
+                <img style={{ width: '20px', height: '20px' }} src={closeMenu} alt="" />
               </button>
               <div className={classes.logoImage}>
                 <Link to="/home">
@@ -148,7 +151,7 @@ const Layout = (props) => {
                     <img
                       className="img-fluid"
                       src={appLogo}
-                      style={{ width: '105px' }}
+                      style={{ width: '95px', height: '50px' }}
                       alt="Tradly"
                       title="Tradly"
                     />
@@ -181,7 +184,7 @@ const Layout = (props) => {
                       <span>My Wishlist</span>
                     </Link>
                   ) : (
-                    <Link to="/sign-in">
+                    <Link to="/sign-in" onClick={() => authRedirectHandler('/wishlist')}>
                       <img
                         className="img-fluid"
                         src={url === '/wishlist' ? WishlistActiveLogo : WishlistLogo}
@@ -210,9 +213,13 @@ const Layout = (props) => {
 
         <div className={classes.bgColor + ' container-fluid'} style={{}}>
           <div className="row content" onClick={navButtonOff}>
-            <Sidebar isAuthentication={isAuthenticated} tenantData={tenantData} />
-
-            <div className={classes.rightPanel + ' col-lg-10'}>
+            <div
+              className=" col-md-2 sidenav hidden-xs nopadding"
+              style={{ position: 'fixed', height: '100vh', width: '245px' }}
+            >
+              <Sidebar isAuthentication={isAuthenticated} tenantData={tenantData} />
+            </div>
+            <div className={classes.rightPanel}>
               <Header userData={userData} />
               <main className={classes.rightTopMargin + ' col-lg-12'}>{props.children}</main>
             </div>
