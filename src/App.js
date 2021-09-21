@@ -41,7 +41,9 @@ import SearchResult from './components/Seacrh/SearchResult';
 import CreateStore from './containers/Store/CreateStore/CreateStore';
 import Store from './containers/Store/MyStore/Stor';
  import CreateProduct from './containers/Store/CreateProduct/CreateProduct';
-
+import ProductDetail from './containers/ProductDetails/ProductDetail';
+import BuyNow from './containers/Cart/BuyNow/BuyNow';
+ 
 class App extends Component {
   componentDidMount() {
     this.props.onTryAuthSignUp();
@@ -79,6 +81,7 @@ class App extends Component {
         <Route path="/my-transaction" exact component={MyTransactionst} />
         <Route path="/profile" exact component={MyProfile} />
         <Route path="/cart" exact component={Cart} />
+        <Route path="/checkout" exact component={BuyNow} />
         <Route path="/editprofile" excat component={EditProfile} />
         <Route path="/group" excat component={Group} />
         <Route path="/mygroup" excat component={myGroup} />
@@ -94,7 +97,7 @@ class App extends Component {
         <Route path="/reviewpage" excat component={reviewPage} />
         <Route path="/detailorder" excat component={detailOrder} />
         <Route path="/search/:key" excat component={SearchResult} />
-        
+
         <Redirect to="/" />
       </Switch>
     );
@@ -105,7 +108,7 @@ class App extends Component {
         this.props.location.pathname === '/sign-in' ||
         this.props.location.pathname === '/forgot-password' ||
         this.props.location.pathname === '/verification/' + this.props.verifyId ? (
-          <BeforeAuth>{routes}</BeforeAuth>
+          <BeforeAuth>{routes}</BeforeAuth>                                                               
         ) : (
           <Layout>{routes}</Layout>
         )}

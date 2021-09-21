@@ -76,7 +76,6 @@ export const POST_STORE_FOLLOW_FAILED = 'POST_STORE_FOLLOW_FAILED';
 
 export const ADD_TO_CART = 'ADD_TO_CART';
 export const GET_CART = 'GET_CART';
-export const CHECKOUT = 'CHECKOUT';
 export const DELETE_FROM_CART = 'DELETE_FROM_CART';
 export const DELETE_ALL_CART_DETAILS = 'DELETE_ALL_CART_DETAILS';
 
@@ -95,3 +94,7 @@ export const INIT_CURRENCIES = 'INIT_CURRENCIES';
 export const ADD_PRODUCT = 'ADD_PRODUCT';
 
 export const SEO_CONFIGS = 'SEO_CONFIG'
+
+
+export const SET_PAYMENT_METHOD = 'SET_PAYMENT_METHOD';
+export const CHECKOUT = 'CHECKOUT';

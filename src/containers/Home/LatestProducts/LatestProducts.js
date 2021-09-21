@@ -111,31 +111,31 @@ const LatestProducts = ({ products }) => {
               slidesPerGroup={1}
               spaceBetween={16}
               loop={false}
-              navigation={false}
+               navigation={width > 768 ? true : false}
               className="mySwiper"
                
-              breakpoints={{
-                1050: {
-                  slidesPerView: 4,
-                  spaceBetween: 16,
-                },
-                1250: {
-                  slidesPerView: 5,
-                  spaceBetween: 16,
-                },
-                1450: {
-                  slidesPerView: 6,
-                  spaceBetween: 16,
-                },
-                1650: {
-                  slidesPerView: 7,
-                  spaceBetween: 16,
-                },
-                1800: {
-                  slidesPerView: 8,
-                  spaceBetween: 16,
-                },
-              }}
+              // breakpoints={{
+              //   1050: {
+              //     slidesPerView: 4,
+              //     spaceBetween: 16,
+              //   },
+              //   1250: {
+              //     slidesPerView: 5,
+              //     spaceBetween: 16,
+              //   },
+              //   1450: {
+              //     slidesPerView: 6,
+              //     spaceBetween: 16,
+              //   },
+              //   1650: {
+              //     slidesPerView: 7,
+              //     spaceBetween: 16,
+              //   },
+              //   1890: {
+              //     slidesPerView: 8,
+              //     spaceBetween: 16,
+              //   },
+              // }}
             >
               {arrayListings?.map((list, i) => (
                 <SwiperSlide className={classes.swiperSlider}>{list}</SwiperSlide>

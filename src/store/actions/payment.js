@@ -19,3 +19,62 @@ export const connectStripe = () => {
       });
   };
 };
+
+
+export const setPaymentMethod = (data) => {
+  return {
+    type: actionTypes.SET_PAYMENT_METHOD,
+    payment_methods: data,
+  };
+};
+
+export const getPaymentMethods = () => {
+  return (dispatch) => {
+     axios
+       .get('v1/tenants/payment_methods')
+       .then((response) => {
+         if (response.data.status) {
+           dispatch(setPaymentMethod(response.data.data.payment_methods));
+         } else {
+           console.log(response);
+         }
+       })
+       .catch((error) => {
+         console.log(error);
+       });
+  };
+};
+
+
+// Checkout
+
+export const checkoutSuccess = (data) => {
+  return {
+    type: actionTypes.CHECKOUT,
+   };
+};
+
+export const clickCheckout = (data) => {
+  return (dispatch) => {
+    const url = 'products/v1/cart/checkout';
+    var config = {
+      method: 'post',
+      url: url,
+      data: data,
+    };
+    axios(config)
+      .then((response) => {
+        if (response.data.status) {
+          console.log('====================================');
+          console.log(response);
+          console.log('====================================');
+         } else {
+          console.log(response);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+

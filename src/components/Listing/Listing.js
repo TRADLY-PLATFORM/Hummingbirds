@@ -25,11 +25,11 @@ const listing = (props) => {
                     alt={list.get('title', '')}
                     title={list.getIn(['account', 'name'])}
                   />{' '}
-                  <span>
-                    {list.getIn(['account', 'name']).length < 10
+                  <p className={classes.storeName}>
+                    {list.getIn(['account', 'name']).length < 9
                       ? list.getIn(['account', 'name'])
-                      : list.getIn(['account', 'name']).substring(0, 8) + '..'}
-                  </span>
+                      : list.getIn(['account', 'name']).substring(0, 7) + '..'}
+                  </p>
                   <p className={classes.amountTitle}>
                     {list.getIn(['offer_price', 'formatted'])} 
                   </p>

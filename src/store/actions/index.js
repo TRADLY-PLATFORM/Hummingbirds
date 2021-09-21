@@ -46,7 +46,7 @@ export { initGroupDetails, CreateGroup } from './group';
 
 export { getCartList, addToCart } from './cart';
 
-export { connectStripe } from './payment';
+export { connectStripe, getPaymentMethods, clickCheckout } from './payment';
 
 export { getWishlist } from './wishList';
 

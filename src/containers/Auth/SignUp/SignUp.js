@@ -135,7 +135,7 @@ class SignUp extends Component {
           last_name: this.state.lastName,
           email: this.state.email,
           password: this.state.password,
-          type: 'client',
+          type: 'customer',
         },
       };
     } else {
@@ -147,7 +147,7 @@ class SignUp extends Component {
           mobile: this.state.mobile.slice(this.state.dialCode.length),
           password: this.state.password,
           dial_code: this.state.dialCode,
-          type: 'client',
+          type: 'customer',
         },
       };
     }

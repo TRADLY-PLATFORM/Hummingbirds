@@ -7,7 +7,7 @@
 }
 
 .button {
-    font-size: 2rem;
+    font-size: 18px;
     background: none;
     border: 1.1px solid transparent;
     color: var(--primary_color);

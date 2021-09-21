@@ -143,7 +143,7 @@ class Listings extends Component {
  
     let listing = '';
     let showLoadButton = null;
-    const { listings, total_records, loading, seoConfigs } = this.props;
+    const { listings,allListings, total_records, loading, seoConfigs } = this.props;
      const { selectedOption } = this.state;
     const { categoryValue, supplierValue, locationValue } = selectedOption;
      const productsListing = listings
@@ -155,29 +155,34 @@ class Listings extends Component {
           ? item.getIn(['location', 'formatted_address'], '') === locationValue.value
           : item
       );
-    if (productsListing && productsListing.length === 0 ) {
-      listing = (
-        <div style={{ marginTop: '5em' }} className="alert alert-danger fade in alert-dismissible">
-          <Link to="#" className="close" data-dismiss="alert" aria-label="close" title="close">
-            ×
-          </Link>
-          <strong>oops!</strong> No listings found.
-        </div>
-      );
-    }
+    
     console.log(productsListing);
-    if (productsListing && productsListing.size > 0) {
-      listing = <Listing listings={productsListing} total_records={total_records} />;
-      if (total_records > totalCountOfProducts && productsListing.size !== total_records) {
-        showLoadButton = (
-          <div className="col-sm-12">
-            <button
-              className="btnGreenStyle pull-right mt-4"
-              onClick={this.loadMore}
-              style={{ marginBottom: '50px' }}
-            >
-              Load More
-            </button>
+    if (!loading && allListings.length) {
+      if (productsListing.size > 0) {
+        listing = <Listing listings={productsListing} total_records={total_records} />;
+        if (total_records > totalCountOfProducts && productsListing.size !== total_records) {
+          showLoadButton = (
+            <div className="col-sm-12">
+              <button
+                className="btnGreenStyle pull-right mt-4"
+                onClick={this.loadMore}
+                style={{ marginBottom: '50px' }}
+              >
+                Load More
+              </button>
+            </div>
+          );
+        }
+      } else {
+        listing = (
+          <div
+            style={{ marginTop: '5em' }}
+            className="alert alert-danger fade in alert-dismissible"
+          >
+            <Link to="#" className="close" data-dismiss="alert" aria-label="close" title="close">
+              ×
+            </Link>
+            <strong>oops!</strong> No listings found.
           </div>
         );
       }
@@ -232,6 +237,7 @@ const mapStateToProps = (state) => {
     error: state.product.error,
     loading: state.product.loading,
     message: state.product.message,
+    allListings: state.product.listings,
     listings: selectListings(state),
     page: state.product.page,
     total_records: selectTotalListings(state),

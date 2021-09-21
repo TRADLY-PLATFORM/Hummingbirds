@@ -293,6 +293,7 @@ const ProductDetails = () => {
       }
     }, 2000);
   };
+
   // const addToCart = () => {
   //    const productId = productDetails.getIn(['listing', 'id'], '');
   //   const cartData = {
@@ -530,7 +531,7 @@ const ProductDetails = () => {
               </div> */}
 
               <br />
-              <button
+              {/* <button
                 type="button"
                 className="btn btn-addtocart btn-lg btn-block height70"
                 onClick={() => {
@@ -539,26 +540,28 @@ const ProductDetails = () => {
                 style={{ outline: 'none' }}
               >
                 Download App
-              </button>
-              {/* <div className="row">
-                  <div className={classes.buttons}>
-                    <button
-                      type="button"
-                      className="btn btn-addtocart btn-lg btn-block height70"
-                      style={{ marginRight: '15px' }}
-                      onClick={this.addToCart}
-                    >
-                      Add To Cart
-                    </button>
-                    <button
-                      type="button"
-                      className="btn btn-success btn-lg btn-block height70"
-                      style={{ marginLeft: '15px' }}
-                    >
-                      Buy Now
-                    </button>
-                  </div>
-                </div> */}
+              </button> */}
+              <div className="row">
+                <div className={classes.buttons}>
+                  <button
+                    type="button"
+                    className="btn btn-addtocart btn-lg btn-block height70"
+                    style={{ marginRight: '15px' }}
+                  >
+                    Add To Cart
+                  </button>
+                  <Link
+                    className="btn btn-success btn-lg btn-block height70"
+                    style={{ marginLeft: '15px' }}
+                    to={{
+                      pathname: `/checkout`,
+                      state: { option: 'Buy Now', product_id: id.split('-')[0] },
+                    }}
+                  >
+                    Buy Now
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </div>

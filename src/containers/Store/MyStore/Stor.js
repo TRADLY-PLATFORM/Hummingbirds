@@ -67,11 +67,13 @@ const Store = () => {
                   <div className={classes.storeHeader}>
                     <div className={classes.bannerText + ' col-sm-12'}>
                       <div className={classes.fashionStore}>
-                        {list.images[0] ? (
-                          <img src={list.images[0]} alt={storeName} title={storeName} />
-                        ) : (
-                          <img src={AllenSollyLogo} alt={storeName} title={storeName} />
-                        )}
+                        <div>
+                          {list.images[0] ? (
+                            <img src={list.images[0]} alt={storeName} title={storeName} />
+                          ) : (
+                            <img src={AllenSollyLogo} alt={storeName} title={storeName} />
+                          )}
+                        </div>
 
                         <div className={classes.fashionStoreNameBox}>
                           <h3>{storeName}</h3>
@@ -109,7 +111,7 @@ const Store = () => {
                                   alt={list.title}
                                   title={list.title}
                                 />
-                                <p className={classes.productTitle}>{list.title}</p>
+                                <p className={classes.storeTitle}>{list.title}</p>
                                 <div className={classes.bottomDesc}>
                                   {list.account !== undefined && list.account.images[0] ? (
                                     <>

@@ -139,9 +139,14 @@ color: #4a4a4a;
   align-items: center;
   margin: 0;
 }
-.buttons button {
+.buttons button,.buttons a {
   font-size: 18px;
 }
+.buttons a{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ }
 
  .likeBtn button{
 
@@ -157,7 +162,7 @@ color: #4a4a4a;
 }
 
 .productImage{
-  width: 524px;
+  width: 524px ;
   height: 338px;
  }
 

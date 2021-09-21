@@ -96,12 +96,12 @@ const WishList = () => {
                            alt="Woman accesories"
                            title="Woman accesories"
                          />{' '}
-                         <span>
-                           {' '}
-                           {list.account.name.length < 10
+                         <p className={classes.storeName}>
+                            
+                           {list.account.name.length < 9
                              ? list.account.name
-                             : list.account.name.substring(0, 8) + '..'}
-                         </span>
+                             : list.account.name.substring(0, 7) + '..'}
+                         </p>
                          <p className={classes.amountTitle}>{price}</p>
                        </div>
                      </div>

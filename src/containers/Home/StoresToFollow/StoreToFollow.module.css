@@ -83,7 +83,7 @@
   text-decoration: none !important;
 }
 .swiperSlide{
-  width: 210px;
+  width: 185px !important;
   height: 260px;
 }
 
@@ -113,7 +113,7 @@
 
  
   .swiperSlide {
-    width: 240px !important;
+    width: 195px !important;
     height: 280px !important;
   }
 .headingTitle {
