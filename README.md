@@ -100,6 +100,10 @@ This is an example of how to list things you need to use the software and how to
    npm install
    ```
 
+## Deploy in Netlify
+
+
+[![Launching in Netlify](https://user-images.githubusercontent.com/61427976/134223384-fbfec96d-b401-427a-8e0c-59a8a40c84a8.png)](https://youtu.be/ALQwwL4U-AU "Launching in Netlify")
 
 
 <!-- USAGE EXAMPLES -->
@@ -118,6 +122,7 @@ There are three environment files that can be run and built separately.
 ## Roadmap
 
 See the [open issues](https://github.com/github_username/repo_name/issues) for a list of proposed features (and known issues).
+
 
 
 
