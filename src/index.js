@@ -19,6 +19,7 @@ import { Integrations } from '@sentry/tracing';
 import { dsn } from './shared/constants';
 import SearchReducer from './store/reducers/Search';
 import PaymentReducer from './store/reducers/payment';
+import CartReducer from './store/reducers/cart';
 // import * as Sentry from "@sentry/browser";
 
 // Sentry.init({
@@ -49,6 +50,7 @@ const rootReducer = combineReducers({
   wishList: wishListReducer,
   Search: SearchReducer,
   payment: PaymentReducer,
+  cart:CartReducer
 });
 
 const store = createStore(

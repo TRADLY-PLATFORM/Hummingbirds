@@ -43,6 +43,7 @@ import Store from './containers/Store/MyStore/Stor';
  import CreateProduct from './containers/Store/CreateProduct/CreateProduct';
 import ProductDetail from './containers/ProductDetails/ProductDetail';
 import BuyNow from './containers/Cart/BuyNow/BuyNow';
+import OrderSuccess from './containers/Cart/OrderSuccess/OrderSuccess';
  
 class App extends Component {
   componentDidMount() {
@@ -50,6 +51,7 @@ class App extends Component {
     // this.props.onSetTenantConfig();
     this.props.onSetOnboardingConfigsData();
     this.props.onSetSeoConfigs();
+    this.props.onSetCurrency();
   }
 
 
@@ -80,8 +82,9 @@ class App extends Component {
         <Route path="/wishlist" exact component={WishList} />
         <Route path="/my-transaction" exact component={MyTransactionst} />
         <Route path="/profile" exact component={MyProfile} />
-        <Route path="/cart" exact component={Cart} />
-        <Route path="/checkout" exact component={BuyNow} />
+        {/* <Route path="/cart" exact component={Cart} /> */}
+        <Route path="/cart" exact component={BuyNow} />
+        <Route path="/checkout-success" exact component={OrderSuccess} />
         <Route path="/editprofile" excat component={EditProfile} />
         <Route path="/group" excat component={Group} />
         <Route path="/mygroup" excat component={myGroup} />
@@ -131,6 +134,7 @@ const mapDispatchToProps = (dispatch) => {
     onSetOnboardingConfigsData: () => dispatch(actions.setOnboardingConfigsData()),
     // onInitCountries: () => dispatch(actions.initCountries())
     onSetSeoConfigs: () => dispatch(actions.setSeoConfigs()),
+    onSetCurrency: () => dispatch(actions.initCurrencies()),
   };
 };
 

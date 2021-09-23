@@ -1,31 +1,43 @@
 .shippingAddress {
-  background-color: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
+
+  width: 100%;
+  
 }
 
 .headerStyle {
-  padding: 4rem 4rem 1rem 4rem;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+font-weight: 500;
+font-size: 20px;
+line-height: 24px;
+color: var(--primary_color) ;
 }
-.headerStyle h2 {
-  font-weight: 500;
-  font-size: 36px;
-  line-height: 44px;
-}
-
-.inputsField {
-  padding: 4rem;
-}
+  
 .input {
-  border: 1px solid #000000;
-  border-radius: 24px;
-  padding: 10px;
-  background: #fff;
-  color: #000;
-}
+    width: 100%;
+    margin: 0 auto;
+    border: none;
+    border-bottom: 1px solid  #E2E2E2;
+    padding: 10px;
+    color: #000;
+    outline: none;
+ }
+ 
 
-.formPadding {
-  padding: 4rem;
-  align-items: center;
-}
+ .saveButton{
+   margin-top: 20px;
+   width: 100%;
+   display: flex;
+   justify-content: center;
+ }
+ .saveButton button{
+    margin-top:20px;
+  width: 50%;
+  text-align: center;
+  padding:   12px 0;
+  background: linear-gradient(0deg, var(--primary_color) 0%, var(--primary_color) 100%);
+border-radius: 48px;
+border:none;
+font-weight: 600;
+font-size: 16px;
+line-height: 20px;
+color: #FEFEFE;
+ }

@@ -44,9 +44,16 @@ export {
 
 export { initGroupDetails, CreateGroup } from './group';
 
-export { getCartList, addToCart } from './cart';
+export { getCartList, addToCart, deleteCart } from './cart';
 
-export { connectStripe, getPaymentMethods, clickCheckout } from './payment';
+export {
+  connectStripe,
+  getPaymentMethods,
+  clickCheckout,
+  getShippingMethod,
+  addAddress,
+  getAddress,
+} from './payment';
 
 export { getWishlist } from './wishList';
 

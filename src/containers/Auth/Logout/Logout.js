@@ -7,7 +7,9 @@ class Logout extends Component {
   componentDidMount() {
     this.props.onLogout();
     setTimeout(() => {
-         this.props.onSetOnboardingConfigsData();
+      this.props.onSetOnboardingConfigsData();
+          this.props.onSetCurrency();
+
      }, 1000);
     
   }
@@ -20,6 +22,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onLogout: () => dispatch(actions.logout()),
     onSetOnboardingConfigsData: () => dispatch(actions.setOnboardingConfigsData()),
+    onSetCurrency: () => dispatch(actions.initCurrencies()),
   };
 };
 

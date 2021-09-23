@@ -430,6 +430,7 @@ export const initFiles = (
   accountId,
   title,
   price,
+  shippingCharge,
   description,
   quantity,
   selectedCategory,
@@ -479,6 +480,7 @@ export const initFiles = (
                      const listingData = {
                        listing: {
                          list_price: price,
+                         shipping_charges:shippingCharge,
                          description: description,
                          account_id: accountId,
                          currency_id: currency,

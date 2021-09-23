@@ -54,12 +54,16 @@ const ProductDetails = () => {
   const followError = useSelector((state) => state.store.error);
   const followMessage = useSelector((state) => state.store.message);
   const configsData = useSelector((state) => state.auth.general_configs);
+  const currencies = useSelector((state) => state.store.currencies);
+  const cartError= useSelector((state) => state.cart.error);
+  const cartErrorMessage = useSelector((state) => state.cart.message);
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(actions.initProductDetails(id.split('-')[0]), true);
     dispatch(actions.setGeneralConfigsData());
-  }, [0]);
+    dispatch(actions.initCurrencies());
+  }, [id]);
 
   const setPath = () => {
     dispatch(actions.setAuthRedirectPath(location.pathname));
@@ -294,16 +298,24 @@ const ProductDetails = () => {
     }, 2000);
   };
 
-  // const addToCart = () => {
-  //    const productId = productDetails.getIn(['listing', 'id'], '');
-  //   const cartData = {
-  //     cart: {
-  //       listing_id: productId,
-  //       quantity: 1,
-  //     },
-  //   };
-  //   this.props.onAddToCart(cartData);
-  // };
+  const addCart = () => {
+    const productId = productDetails.getIn(['listing', 'id'], '');
+    const cartData = {
+      cart: {
+        listing_id: productId,
+        quantity: 1,
+      },
+    };
+    dispatch(actions.addToCart(cartData, currencies[0]));
+    setTimeout(() => {
+      if (!error) {
+        dispatch(actions.initProductDetails(id.split('-')[0], false));
+            dispatch(actions.initCurrencies());
+
+      }
+    }, 1000);
+
+   };
   const getImage = () => {
     return <h2>Hello</h2>;
   };
@@ -315,8 +327,8 @@ const ProductDetails = () => {
   //
 
   let toastMessage = null;
-  if (error || followError) {
-    toastMessage = <Toast type="error" message={message || followMessage} />;
+  if (error || followError || cartError) {
+    toastMessage = <Toast type="error" message={message || followMessage || cartErrorMessage} />;
   }
   const productDescription = productDetails.getIn(['listing', 'description'], 'N/A');
 
@@ -328,10 +340,15 @@ const ProductDetails = () => {
         <link rel="canonical" href={location.pathname} />
       </Helmet>
       <Aux>
-        <Backdrop show={loading} />
-        <Spinner show={loading} />
+        
+             <Backdrop show={loading} />
+             <Spinner show={loading} />
+       
+
+      
 
         {toastMessage}
+         
 
         <div className={classes.rowBox}>
           <div className="col-lg-12">
@@ -516,20 +533,6 @@ const ProductDetails = () => {
                 </div>
               </div>
 
-              {/* <div className="row bgColor" style={{ marginTop: '20px' }}>
-                <div className={classes.additionalDetails}>
-                  <h1 className="h1Headings" style={{ fontSize: '18px' }}>
-                    Additional Details
-                  </h1>
-                  <div className={classes.DetailsLeft + ' col-lg-6 col-sm-6 col-md-6'}>
-                    Deliver Details
-                  </div>
-                  <div className={classes.DetailsRight + ' col-lg-6 col-sm-6 col-md-6'}>
-                    Home Delivery Available, Cash On Delivery
-                  </div>
-                </div>
-              </div> */}
-
               <br />
               {/* <button
                 type="button"
@@ -543,23 +546,59 @@ const ProductDetails = () => {
               </button> */}
               <div className="row">
                 <div className={classes.buttons}>
-                  <button
-                    type="button"
-                    className="btn btn-addtocart btn-lg btn-block height70"
-                    style={{ marginRight: '15px' }}
-                  >
-                    Add To Cart
-                  </button>
-                  <Link
-                    className="btn btn-success btn-lg btn-block height70"
-                    style={{ marginLeft: '15px' }}
-                    to={{
-                      pathname: `/checkout`,
-                      state: { option: 'Buy Now', product_id: id.split('-')[0] },
-                    }}
-                  >
-                    Buy Now
-                  </Link>
+                  {isAuthenticated ? (
+                    productDetails.getIn(['listing', 'in_cart'], '') ? (
+                      <Link
+                        to="/cart"
+                        type="button"
+                        className="btn btn-addtocart btn-lg btn-block height70"
+                        style={{ marginRight: '15px' }}
+                      >
+                        Go To Cart
+                      </Link>
+                    ) : (
+                      <button
+                        onClick={addCart}
+                        type="button"
+                        className="btn btn-addtocart btn-lg btn-block height70"
+                        style={{ marginRight: '15px' }}
+                      >
+                        Add To Cart
+                      </button>
+                    )
+                  ) : (
+                    <Link
+                      onClick={setPath}
+                      to="/sign-in"
+                      type="button"
+                      className="btn btn-addtocart btn-lg btn-block height70"
+                      style={{ marginRight: '15px' }}
+                    >
+                      Add To Cart
+                    </Link>
+                  )}
+                  {isAuthenticated ? (
+                    <Link
+                      className="btn btn-success btn-lg btn-block height70"
+                      onClick={addCart}
+                      style={{ marginLeft: '15px' }}
+                      to={{
+                        pathname: `/cart`,
+                        state: { option: 'Buy Now' },
+                      }}
+                    >
+                      Buy Now
+                    </Link>
+                  ) : (
+                    <Link
+                      className="btn btn-success btn-lg btn-block height70"
+                      onClick={setPath}
+                      style={{ marginLeft: '15px' }}
+                      to="/sign-in"
+                    >
+                      Buy Now
+                    </Link>
+                  )}
                 </div>
               </div>
             </div>
