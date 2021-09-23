@@ -81,7 +81,7 @@ class SignUp extends Component {
         }
         return false;
       }
-    } else {
+    } else if(authType === 3){
       if (this.state.firstName === '') {
         if (!toast.isActive(this.toastId)) {
           this.toastId = toast.error('First name is required');
@@ -138,7 +138,7 @@ class SignUp extends Component {
           type: 'customer',
         },
       };
-    } else {
+    } else if (authType === 3) {
       users = {
         user: {
           uuid: uUid,

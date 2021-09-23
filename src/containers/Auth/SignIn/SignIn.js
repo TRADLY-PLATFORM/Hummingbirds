@@ -59,7 +59,7 @@ class SignIn extends Component {
         }
         return false;
       }
-    } else {
+    } else if(authType === 3) {
       if (this.state.mobile === '') {
         if (!toast.isActive(this.toastId)) {
           this.toastId = toast.error('Phone number is required');
@@ -93,7 +93,7 @@ class SignIn extends Component {
           type: 'customer',
         },
       };
-    } else {
+    } else if (authType === 3) {
       users = {
         user: {
           uuid: uUid,
