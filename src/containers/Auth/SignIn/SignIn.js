@@ -59,7 +59,7 @@ class SignIn extends Component {
         }
         return false;
       }
-    } else {
+    } else if(authType === 3) {
       if (this.state.mobile === '') {
         if (!toast.isActive(this.toastId)) {
           this.toastId = toast.error('Phone number is required');
@@ -90,17 +90,17 @@ class SignIn extends Component {
           uuid: uUid,
           email: this.state.email,
           password: this.state.password,
-          type: 'client',
+          type: 'customer',
         },
       };
-    } else {
+    } else if (authType === 3) {
       users = {
         user: {
           uuid: uUid,
           mobile: this.state.mobile.slice(this.state.dialCode.length),
           password: this.state.password,
           dial_code: this.state.dialCode,
-          type: 'client',
+          type: 'customer',
         },
       };
     }

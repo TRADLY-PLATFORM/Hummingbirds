@@ -81,7 +81,7 @@ class SignUp extends Component {
         }
         return false;
       }
-    } else {
+    } else if(authType === 3){
       if (this.state.firstName === '') {
         if (!toast.isActive(this.toastId)) {
           this.toastId = toast.error('First name is required');
@@ -135,10 +135,10 @@ class SignUp extends Component {
           last_name: this.state.lastName,
           email: this.state.email,
           password: this.state.password,
-          type: 'client',
+          type: 'customer',
         },
       };
-    } else {
+    } else if (authType === 3) {
       users = {
         user: {
           uuid: uUid,
@@ -147,7 +147,7 @@ class SignUp extends Component {
           mobile: this.state.mobile.slice(this.state.dialCode.length),
           password: this.state.password,
           dial_code: this.state.dialCode,
-          type: 'client',
+          type: 'customer',
         },
       };
     }

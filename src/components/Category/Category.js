@@ -41,7 +41,9 @@ const categoryHtmlHandler = (categories, categoryLength) => {
         style={{ textDecoration: 'none' }}
       >
         <div className={classes.wellCategory}>
-          <img src={category.image_path} alt={category.name} title={category.name} />
+          {category.image_path && (
+            <img src={category.image_path} alt={category.name} title={category.name} />
+          )}
           <p>{category.name.length < 9 ? category.name : category.name.substring(0, 6) + '..'}</p>
 
           {/* .length < 16 ? category.name : category.name.substring(0, 10) + '..' */}

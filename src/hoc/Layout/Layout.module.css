@@ -107,15 +107,9 @@ a {
   height: 550px;
 }
 
-/* On small screens, set height to 'auto' for the grid */
-@media screen and (max-width: 767px) {
-  .row.content {
-    height: auto;
-  }
-}
 
 .rightTopMargin {
-  margin-top: 23px;
+  /* margin-top: 23px; */
   padding-right: 0;
   padding-left: 0;
 }
@@ -129,6 +123,14 @@ a {
 .rightPanel {
    margin-left: 245px;
  
+}
+
+
+/* On small screens, set height to 'auto' for the grid */
+@media screen and (max-width: 767px) {
+  .row.content {
+    height: auto;
+  }
 }
 
 @media (max-width: 767px) {
@@ -146,7 +148,7 @@ a {
 
 @media only screen and (max-width: 780px) {
    .rightTopMargin {
-  margin-top: 20px;
+  /* margin-top: 20px; */
   
 }
 

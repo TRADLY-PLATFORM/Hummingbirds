@@ -1,7 +1,9 @@
 
 .homeContent{
  padding-left: 32px;
-   padding-right: 20px;}
+   padding-right: 20px;
+  margin-top: 23px;
+}
 
 @media only screen and (max-width: 600px) {
   .homeContent{

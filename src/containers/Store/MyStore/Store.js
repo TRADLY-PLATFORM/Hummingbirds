@@ -45,26 +45,26 @@ class Store extends Component {
               return (
                 <div className=" " key={i}>
                   <div>
-                    <img
-                      src={StoreBanner}
-                      className={classes.storeImage}
-                      alt="Woman accesories"
-                      title="Woman accesories"
-                    />
                     <div class="container-fluid">
                       <div className={classes.bannerimages + ' row'}>
                         <div className="col-lg-12">
                           <div className={classes.bannerText + ' col-sm-12'}>
-                            <div className={classes.fashionStore + ' col-sm-6'}>
-                              {list.images[0] ? (
-                                <img src={list.images[0]} alt={storeName} title={storeName} />
-                              ) : (
-                                <img src={AllenSollyLogo} alt={storeName} title={storeName} />
-                              )}
-
+                            <div className={classes.fashionStore}>
                               <div>
+                                {storeDetails.getIn(['images', 0], '') !== '' ? (
+                                  <img
+                                    src={storeDetails.getIn(['images', 0], '')}
+                                    alt={storeName}
+                                    title={storeName}
+                                  />
+                                ) : (
+                                  <img src={AllenSollyLogo} alt={storeName} title={storeName} />
+                                )}
+                              </div>
+
+                              <div className={classes.fashionStoreNameBox}>
                                 <h3>{storeName}</h3>
-                                <p>@{storeOwner}</p>
+                                <span>@{storeOwner}</span>
                               </div>
                             </div>
                             <div className={classes.followBtn}>
