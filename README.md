@@ -62,6 +62,11 @@
 This is an open source business web site. Which you can easily use for your business platform by changing a little bit.It has all the features of a business website. The benefits of SEO have also been added. Which is Google friendly. And you can easily optimize your website.
 <!-- [![Product Name Screen Shot][product-screenshot]](https://example.com) -->
  
+The preview of the project. 
+![Snip20210920_23](https://user-images.githubusercontent.com/61427976/133940934-b3e18f84-57f8-49bc-a5c7-a0e23a7ebb66.png)
+![Snip20210920_25](https://user-images.githubusercontent.com/61427976/133940940-cce97fbc-b267-4a7c-8c04-14a432030f0e.png)
+![Snip20210920_26](https://user-images.githubusercontent.com/61427976/133940948-09361d1c-08b3-43e3-b588-ac1dd3ff3e0c.png)
+![Snip20210920_27](https://user-images.githubusercontent.com/61427976/133940957-e8905cd8-2ece-46ee-800a-e07546950b60.png)
 
 ### Built With
 
@@ -95,6 +100,10 @@ This is an example of how to list things you need to use the software and how to
    npm install
    ```
 
+## Deploy in Netlify
+
+
+[![Launching in Netlify](https://user-images.githubusercontent.com/61427976/134223384-fbfec96d-b401-427a-8e0c-59a8a40c84a8.png)](https://youtu.be/ALQwwL4U-AU "Launching in Netlify")
 
 
 <!-- USAGE EXAMPLES -->
@@ -113,6 +122,7 @@ There are three environment files that can be run and built separately.
 ## Roadmap
 
 See the [open issues](https://github.com/github_username/repo_name/issues) for a list of proposed features (and known issues).
+
 
 
 
