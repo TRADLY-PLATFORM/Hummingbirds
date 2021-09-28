@@ -72,10 +72,6 @@ class App extends Component {
         <Route path="/forgot-password" exact component={ForgotPassword} />
         <Route path="/logout" exact component={Logout} />
         <Route path="/listings" exact component={Listings} />
-        <Route path="/listings/:category" exact component={Listings} />
-        <Route path="/listings/:price" exact component={Listings} />
-        <Route path="/listings/:" exact component={Listings} />
-        <Route path="/listings" exact component={Listings} />
         <Route path="/lc/:categoryName" exact component={ListingsByCategory} />
         <Route path="/categories" exact component={AllCategory} />
         <Route path="/verification/:verifyID" exact component={PhoneVerification} />
