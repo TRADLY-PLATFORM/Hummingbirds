@@ -491,7 +491,7 @@ export const initFiles = (
                          images: responseFiles.map((res) => res.fileUri),
                          category_id: [selectedCategory],
                          coordinates: coordinates,
-                         type: 'events',
+                         type: 'listings',
                        },
                      };
                      dispatch(createProduct(listingData, callBack));

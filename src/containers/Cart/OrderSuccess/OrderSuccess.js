@@ -22,7 +22,7 @@ const OrderSuccess = () => {
         <h4>Thank you, Your Order is successful.</h4>
       </div>
       <div >
-        <Link to="/" className="btnGreenStyle" style={{textDecoration:"none"}}>Back To Home</Link>
+        <Link to="/myorder" className="btnGreenStyle" style={{textDecoration:"none"}}>Go To Orders</Link>
       </div>
     </div>
   );

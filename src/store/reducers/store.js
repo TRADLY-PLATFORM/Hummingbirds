@@ -151,9 +151,7 @@ const setAttribute = (state, action) => {
 };
 
 const storeReducer = (state = initialState, action) => {
-  console.log('================এটা স্টোর====================');
-  console.log(state,action.type);
-  console.log('====================================');
+ 
   switch (action.type) {
     case actionTypes.ERROR_MESSAGE:
       return errorMessage(state, action);

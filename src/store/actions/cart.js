@@ -73,11 +73,11 @@ export const setCartList = (cartList) => {
   };
 };
 
-export const getCartList = (currency) => {
+export const getCartList = (currency,shippingMethodId) => {
   return (dispatch) => {
     dispatch(startLoading());
     axios
-      .get('/products/v1/cart', {
+      .get('/products/v1/cart?shipping_method_id=' + shippingMethodId, {
         headers: {
           'X-Currency': currency.code,
         },
@@ -85,7 +85,6 @@ export const getCartList = (currency) => {
       .then((response) => {
         if (response.data.status) {
           dispatch(setCartList(response.data.data));
-         
         } else {
           console.log('error', response);
         }
@@ -117,7 +116,7 @@ export const deleteCart = (data,currency) => {
 
     axios(config).then((response) => {
       if (response.data.status) {
-          dispatch(getCartList(currency));
+          dispatch(getCartList(currency,1));
       } else {
         console.log('error', response);
       }

@@ -60,11 +60,10 @@ background-image: url(../../../assets/images/store/store.svg);
   padding-left: 46px;
   padding-right: 75px;
   margin-top: -77px;
- 
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 126px;
+height: 126px;
   overflow: hidden;
 
  }
@@ -220,6 +219,13 @@ font-weight: bold;
   color: #121212;
   margin: auto 0;
 }
+ .followBtn{
+    display: flex;
+    min-height: 80px;
+   flex-direction: column;   
+   justify-content: space-between;
+   align-items: center;
+ }
  
 
 @media only screen and (max-width: 768px) {
@@ -241,8 +247,10 @@ font-weight: bold;
 }
 
  .followBtn{
-   display: flex;
+    display: flex;
+   flex-direction: column;   
    justify-content: center;
+   align-items: center;
  }
  .myStoreProducts{
     padding-left: 4%;

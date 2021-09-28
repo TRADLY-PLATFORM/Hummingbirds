@@ -53,8 +53,11 @@ export {
   getShippingMethod,
   addAddress,
   getAddress,
+  callEphemeralKey,
 } from './payment';
 
 export { getWishlist } from './wishList';
 
 export { getSearchingResult } from './Search';
+
+export { getOrders, getOrderDetails, setNewOrderStatus } from './order';

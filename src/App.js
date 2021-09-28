@@ -25,14 +25,12 @@ import StoreDetails from './containers/Store/StoreDetails';
 import groupAdded from './containers/Group/groupAdded';
 import groupSuccess from './containers/Group/groupSuccess';
 import transactionSuccess from './containers/MyTransactionst/transactionSuccess';
-import myOrder from './containers/Order/myOrder';
-import StoreSuccess from './containers/Store/StoreSuccess';
+ import StoreSuccess from './containers/Store/StoreSuccess';
 import ProductSuccess from './containers/Store/ProductSuccess';
 import NoProduct from './containers/Store/NoProduct';
 import withProduct from './containers/Store/withProduct';
  import reviewPage from './containers/Order/reviewPage';
-import detailOrder from './containers/Order/detailOrder';
-import ListingsByCategory from './containers/ListingsByCategory/ListingsByCategory';
+ import ListingsByCategory from './containers/ListingsByCategory/ListingsByCategory';
 import AllStores from './containers/Store/AllStores';
 import SignIn from './containers/Auth/SignIn/SignIn';
 import { ErrorBoundary } from '@sentry/react';
@@ -44,6 +42,11 @@ import Store from './containers/Store/MyStore/Stor';
 import ProductDetail from './containers/ProductDetails/ProductDetail';
 import BuyNow from './containers/Cart/BuyNow/BuyNow';
 import OrderSuccess from './containers/Cart/OrderSuccess/OrderSuccess';
+import MyOrder from './containers/Order/MyOrder';
+import DetailOrder from './containers/Order/DetailOrder';
+import StoreOrders from './containers/StoreOrders/StoreOrders';
+import StoreOrderDetails from './containers/StoreOrders/StoreOrderDetails';
+import Card from './containers/Stripe/Card';
  
 class App extends Component {
   componentDidMount() {
@@ -69,6 +72,10 @@ class App extends Component {
         <Route path="/forgot-password" exact component={ForgotPassword} />
         <Route path="/logout" exact component={Logout} />
         <Route path="/listings" exact component={Listings} />
+        <Route path="/listings/:category" exact component={Listings} />
+        <Route path="/listings/:price" exact component={Listings} />
+        <Route path="/listings/:" exact component={Listings} />
+        <Route path="/listings" exact component={Listings} />
         <Route path="/lc/:categoryName" exact component={ListingsByCategory} />
         <Route path="/categories" exact component={AllCategory} />
         <Route path="/verification/:verifyID" exact component={PhoneVerification} />
@@ -91,16 +98,20 @@ class App extends Component {
         <Route path="/groupadded" excat component={groupAdded} />
         <Route path="/groupsuccess" excat component={groupSuccess} />
         <Route path="/transactionsuccess" excat component={transactionSuccess} />
-        <Route path="/myorder" excat component={myOrder} />
+        <Route path="/myorder" excat component={MyOrder} />
+        <Route path="/myorder/statusID" excat component={MyOrder} />
+        <Route path="/storeorders" excat component={StoreOrders} />
+        <Route path="/storeorders/statusID" excat component={StoreOrders} />
         <Route path="/storesuccess" excat component={StoreSuccess} />
         <Route path="/productsuccess" excat component={ProductSuccess} />
         <Route path="/noproduct" excat component={NoProduct} />
         <Route path="/withproduct" excat component={withProduct} />
         <Route path="/addproduct/:accountId" excat component={CreateProduct} />
         <Route path="/reviewpage" excat component={reviewPage} />
-        <Route path="/detailorder" excat component={detailOrder} />
+        <Route path="/myorder-details/:id" excat component={DetailOrder} />
+        <Route path="/storeorder-details/:id" excat component={StoreOrderDetails} />
         <Route path="/search/:key" excat component={SearchResult} />
-
+        <Route path="/card" excat component={Card} />
         <Redirect to="/" />
       </Switch>
     );

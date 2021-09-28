@@ -7,7 +7,9 @@ const initialState = {
   message: null,
   payment_methods: [],
   shipping_methods: [],
-  address_list:[]
+  address_list: [],
+  ephemeral_key: {},
+  paymentIntent:{},
 };
 
 const setLoading = (state, action) => {
@@ -43,6 +45,23 @@ const setShippingMethods = (state, action) => {
   });
 };
 
+const setEphemeralKey = (state, action) => {
+  console.log(state, action);
+  return updateObject(state, {
+    error: false,
+    loading: false,
+    ephemeral_key: action.data,
+  });
+};
+const setPaymentIntent = (state, action) => {
+  console.log(state, action);
+  return updateObject(state, {
+    error: false,
+    loading: false,
+    paymentIntent: action.data,
+  });
+};
+
 
 const checkoutSuccess = (state, action) => {
   console.log(state, action);
@@ -66,6 +85,10 @@ const PaymentReducer = (state = initialState, action) => {
       return setPaymentMethods(state, action);
     case actionTypes.SET_SHIPPING_METHOD:
       return setShippingMethods(state, action);
+    case actionTypes.EPHEMERAL_KEY:
+      return setEphemeralKey(state, action);
+    case actionTypes.PAYMENT_INTENT:
+      return setPaymentIntent(state, action);
 
     case actionTypes.CHECKOUT:
       return checkoutSuccess(state, action);

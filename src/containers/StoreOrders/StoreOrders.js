@@ -1,56 +1,60 @@
-import React, { useEffect, useReducer } from 'react';
-import classes from './myOrder.module.css';
-import { Link, useHistory, useParams, useLocation } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import classes from './StoreOrders.module.css';
+import { Link, useLocation, useHistory, useParams } from 'react-router-dom';
 
 import orderIcon1 from '../../assets/images/Order/orderIcon1.svg';
 import orderIcon from '../../assets/images/Order/orderIcon.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../store/actions/index';
 import moment from 'moment';
-
-import { options, orderStatus } from '../../shared/Status';
+ 
 import Loader from 'react-loader-spinner';
-
+import { options, orderStatus } from '../../shared/Status';
 import Select from 'react-select';
-import storeSuccess from '../Store/StoreSuccess';
 
 import groupImage from '../../assets/images/Order/Group 3.png';
 
-const MyOrder = () => {
+ 
+const StoreOrders = () => {
+// 
+  const[accountId,setAccountId]=useState(null)
+
+  // reducer
   const orders = useSelector((state) => state.order.orders);
   const loading = useSelector((state) => state.order.loading);
 
-  const history = useHistory();
-  const { statusID } = useParams();
-  const location = useLocation();
-
+const history = useHistory();
+const { statusID } = useParams();
+const location = useLocation();
   const dispatch = useDispatch();
-  useEffect(() => {
-    if (location.state === undefined) {
-      dispatch(actions.getOrders());
-    }
-  }, [location]);
+  
+    useEffect(() => {
+      if (location.state === undefined) {
+            dispatch(actions.getOrders(location.search.replace('?', '')));
+      }
+    }, [location]);
 
-  useEffect(() => {
-    if (location.state !== undefined) {
-      dispatch(actions.getOrders(undefined, location.state));
-    }
-  }, [location]);
+    useEffect(() => {
+      if (location.state !== undefined) {
+        dispatch(actions.getOrders(location.search.replace('?', ''), location.state));
+      }
+    }, [location]);
+  
 
-  //
   // function
-  // Date convertor 
+  // Date convertor
   const changeDateFormat = (timestamp, format) => {
     return moment(timestamp * 1000).format(format);
   };
-  //
-  const handleChange = (newValue, actionMeta) => {
-    history.push({ pathname: `/myorder/${newValue.value.replace(' ', '-')}`, state: newValue.id });
-  };
+  // 
+    const handleChange = (newValue, actionMeta) => {
+      history.push({
+        pathname: `/storeorders/${newValue.value.replace(' ', '-')}`,
+        state: newValue.id,
+        search: location.search.replace('?', ''),
+      });
+    };
 
-  console.log('====================================');
-  console.log(location);
-  console.log('====================================');
 
   return (
     <div className={classes.myOrdersBox}>
@@ -69,7 +73,7 @@ const MyOrder = () => {
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              zIndex: '500',
+              zIndex: '100',
             }}
           />
         </>
@@ -143,7 +147,13 @@ const MyOrder = () => {
                     <img className={classes.productImg} src={order_details[0].listing.images[0]} />
                   </div>
 
-                  <Link className="offTextDecoration" to={`/myorder-details/${order.id}`}>
+                  <Link
+                    className="offTextDecoration"
+                    to={{
+                      pathname: '/storeorder-details/' + order.id,
+                      search: location.search.replace('?', ''),
+                    }}
+                  >
                     <div style={{ cursor: 'pointer' }} onClick>
                       <p className={classes.transactionDetails}>{order_details[0].listing.title}</p>
                       <p className={classes.bottomDesc}>#Order ID : {order.id}</p>
@@ -193,7 +203,7 @@ const MyOrder = () => {
   );
 };
 
-export default MyOrder;
+export default StoreOrders;
 
 // <div>
 //        <h4 className={classes.lastWeek}>Last Week</h4>

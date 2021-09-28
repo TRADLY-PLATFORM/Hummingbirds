@@ -1,0 +1,43 @@
+.shippingAddress {
+
+  width: 100%;
+  
+}
+
+.headerStyle {
+font-weight: 500;
+font-size: 20px;
+line-height: 24px;
+color: var(--primary_color) ;
+}
+  
+.input {
+    width: 100%;
+    margin: 0 auto;
+    border: none;
+    border-bottom: 1px solid  #E2E2E2;
+    padding: 10px;
+    color: #000;
+    outline: none;
+ }
+ 
+
+ .saveButton{
+   margin-top: 20px;
+   width: 100%;
+   display: flex;
+   justify-content: center;
+ }
+ .saveButton button{
+    margin-top:20px;
+  width: 50%;
+  text-align: center;
+  padding:   12px 0;
+  background: linear-gradient(0deg, var(--primary_color) 0%, var(--primary_color) 100%);
+border-radius: 48px;
+border:none;
+font-weight: 600;
+font-size: 16px;
+line-height: 20px;
+color: #FEFEFE;
+ }

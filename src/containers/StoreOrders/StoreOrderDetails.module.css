@@ -354,7 +354,7 @@ background: var(--primary_color);
     flex-direction:column;
 }
 .statusHeader p{
-  font-weight: 500;
+  font-weight: 600;
 font-size: 14px;
 line-height: 24px;
  color: #606A7B;
@@ -398,3 +398,30 @@ color: #606A7B;
   text-align: center;
   margin: 20px 0;
 }
+
+
+.addAddressButton{
+   padding: 8px 20px;
+  border: none;
+  background: linear-gradient(
+    180deg,
+    var(--primary_color) 0%,
+    var(--primary_color) 100%
+  ) !important;
+  border-radius: 8px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color:  white; 
+ }
+ .pickupAddressForm {
+  width: 100%;
+  margin-top: 20px;
+  padding: 35px;
+  background: #fefefe;
+  border-radius: 8px;
+  min-height: 30px;
+}
+ 
+ 

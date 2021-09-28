@@ -34,13 +34,12 @@
   color: var(--primary_color);
 }
 
-
 .SortbyMenu {
- display: grid;
+  display: grid;
  grid-template-columns: 30% 70%;
  align-items: center;
   height: 100%;
- }
+}
 
 .pageTitle {
    display: flex;
@@ -98,7 +97,6 @@ margin: 0;
 text-align: end;
 margin-right: 14px;
 }
-
 .filterDateBtn {
   border: none;
   font-weight: bold;

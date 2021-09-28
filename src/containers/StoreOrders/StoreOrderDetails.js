@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import classes from './detailOrder.module.css';
-import { Link, useParams } from 'react-router-dom';
+import classes from './StoreOrderDetails.module.css';
+import { Link, useParams, useLocation } from 'react-router-dom';
 
 import productImg from '../../assets/images/products/productImg.svg';
 // images
@@ -14,20 +14,26 @@ import moment from 'moment';
 import { changeStatus, orderStatus } from '../../shared/Status';
 import Modal from '../../components/UI/Modal/Modal';
 import Loader from 'react-loader-spinner';
+import PickupAddress from './PickupAddress';
 
-const DetailOrder = () => {
+const StoreOrderDetails = () => {
   const [statusModal, setStatusModal] = useState(false);
-
+  const [pickupAddress, setPickupAddress] = useState({ type: 'pickup' });
+  const [openModal, setOpenModal] = useState(false);
+ 
   const { id } = useParams();
+  const location = useLocation();
+
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(actions.getOrderDetails(id));
-  }, [0]);
+    dispatch(actions.getOrderDetails(id, location.search));
+    dispatch(actions.getAddress('pickup'));
+  }, [location]);
 
   // reducer
   const orderDetails = useSelector((state) => state.order.order_details);
   const loading = useSelector((state) => state.order.loading);
-
+ 
   // function
   const changeDateFormat = (timestamp, format) => {
     return moment(new Date(timestamp * 1000)).format(format);
@@ -41,18 +47,36 @@ const DetailOrder = () => {
   const closeModal = () => {
     setStatusModal(false);
   };
+  const closePickupAddressModal = () => {
+    setOpenModal(false);
+  };
 
   //
   const changeOrderStatus = (status) => {
-    const data = {
+    let data = {
       order: {
         status: status,
       },
     };
-    dispatch(actions.setNewOrderStatus(data, id));
+
+    dispatch(actions.setNewOrderStatus(data, id, location.search));
     setStatusModal(false);
   };
 
+  const saveAddress = (e) => {
+    e.preventDefault();
+    const addressData = {
+      address: { ...pickupAddress },
+    };
+    dispatch(actions.addAddress(addressData, true, id, location.search));
+    setTimeout(() => {
+      dispatch(actions.getAddress('pickup'));
+    }, 700);
+    setOpenModal(false);
+  };
+console.log('====================================');
+  console.log(orderDetails?.pickup_address);
+console.log('====================================');
   return (
     <div className={classes.orderDetalsBox}>
       {loading && (
@@ -115,15 +139,23 @@ const DetailOrder = () => {
                         </p>
                       </p>
                     ) : (
-                      <p>
-                        <p className={classes.shortAddress} style={{ marginTop: '0' }}>
-                          {orderDetails.account.location.city}
-                          {orderDetails.account.location.country}
-                        </p>
-                        <p className={classes.formattedAddress}>
-                          {orderDetails.account.location.formatted_address}
-                        </p>
-                      </p>
+                      <div style={{marginTop:"17px"}}>
+                        <button
+                          className={classes.addAddressButton}
+                          onClick={() => setOpenModal(true)}
+                        >
+                          Add New Address +
+                        </button>
+                        <Modal show={openModal} modalClosed={closePickupAddressModal}>
+                          <div className={classes.pickupAddressForm}>
+                            <PickupAddress
+                              pickupAddress={pickupAddress}
+                              setPickupAddress={setPickupAddress}
+                              saveAddress={saveAddress}
+                            />
+                          </div>
+                        </Modal>
+                      </div>
                     ))}
                 </div>
               </div>
@@ -185,43 +217,93 @@ const DetailOrder = () => {
                   );
                 })}
               </div>
-              <div className={classes.Address}>
-                <h4 className={classes.AddressHeader}>
-                  {' '}
-                  {orderDetails.shipping_method.name} Address
-                </h4>
-                <div className={classes.AddressBox}>
-                  <div className={classes.markerImage}>
-                    <img src={locationMarker} alt="" />
-                  </div>
-                  <div>
-                    {orderDetails.shipping_method.type === 'delivery' && (
-                      <>
-                        <p className={classes.shortAddress} style={{ marginTop: '0' }}>
-                          {orderDetails.shipping_address.address_line_1}
-                        </p>
-                        <p className={classes.formattedAddress}>
-                          {orderDetails.shipping_address.formatted_address}
-                        </p>
-                      </>
-                    )}
-                    {orderDetails.shipping_method.type === 'pickup' && (
-                      <>
-                        <p className={classes.shortAddress} style={{ marginTop: '0' }}>
-                          {orderDetails.account.location.city}
-                          {orderDetails.account.location.country}
-                        </p>
-                        <p className={classes.formattedAddress}>
-                          {orderDetails.account.location.formatted_address}
-                        </p>
-                      </>
-                    )}
-                  </div>
-                  <div className={classes.directionImage}>
-                    <img src={directionImage} alt="" />
+              {orderDetails.shipping_method.type === 'delivery' && (
+                <div className={classes.Address}>
+                  <h4 className={classes.AddressHeader}>
+                    {orderDetails.shipping_method.name} Address
+                  </h4>
+                  <div className={classes.AddressBox}>
+                    <div className={classes.markerImage}>
+                      <img src={locationMarker} alt="" />
+                    </div>
+                    <div>
+                      <p className={classes.shortAddress} style={{ marginTop: '0' }}>
+                        {orderDetails.shipping_address.address_line_1}
+                      </p>
+                      <p className={classes.formattedAddress}>
+                        {orderDetails.shipping_address.formatted_address}
+                      </p>
+                    </div>
+                    <div className={classes.directionImage}>
+                      <img src={directionImage} alt="" />
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
+              {orderDetails.shipping_method.type === 'pickup' && (
+                <div className={classes.Address}>
+                  <h4 className={classes.AddressHeader}>
+                    {orderDetails.shipping_method.name} Address
+                  </h4>
+                  {Object.keys(orderDetails.pickup_address).length !== 0 ? (
+                    <div>
+                      <div className={classes.AddressBox} key={Math.random()}>
+                        <div className={classes.markerImage}>
+                          <img src={locationMarker} alt="" />
+                        </div>
+                        <div>
+                          <p className={classes.shortAddress} style={{ marginTop: '0' }}>
+                            {orderDetails.pickup_address.address_line_1}
+                            {orderDetails.pickup_address.state}
+                          </p>
+                          <p className={classes.formattedAddress}>
+                            {orderDetails.pickup_address.formatted_address}
+                          </p>
+                        </div>
+                        <div className={classes.directionImage}>
+                          <img src={directionImage} alt="" />
+                        </div>
+                      </div>
+
+                      <div style={{ marginTop: '10px' }}>
+                        <button
+                          className={classes.addAddressButton}
+                          onClick={() => setOpenModal(true)}
+                        >
+                          Change Address
+                        </button>
+                        <Modal show={openModal} modalClosed={closePickupAddressModal}>
+                          <div className={classes.pickupAddressForm}>
+                            <PickupAddress
+                              pickupAddress={pickupAddress}
+                              setPickupAddress={setPickupAddress}
+                              saveAddress={saveAddress}
+                            />
+                          </div>
+                        </Modal>
+                      </div>
+                    </div>
+                  ) : (
+                    <div>
+                      <button
+                        className={classes.addAddressButton}
+                        onClick={() => setOpenModal(true)}
+                      >
+                        Add New Address +
+                      </button>
+                      <Modal show={openModal} modalClosed={closePickupAddressModal}>
+                        <div className={classes.pickupAddressForm}>
+                          <PickupAddress
+                            pickupAddress={pickupAddress}
+                            setPickupAddress={setPickupAddress}
+                            saveAddress={saveAddress}
+                          />
+                        </div>
+                      </Modal>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
             <div className="colo-12 col-md-6">
               <div className={classes.TimelineBox}>
@@ -264,18 +346,6 @@ const DetailOrder = () => {
                 </div>
               </div>
               <div className={classes.timelineButtons}>
-                <Link
-                  to={
-                    '/l/' +
-                    orderDetails.order_details[0].listing.id +
-                    '-' +
-                    orderDetails.order_details[0].listing.title
-                  }
-                  className="btnOutlineGreenStyle"
-                  style={{ marginRight: '15px' }}
-                >
-                  Reorder
-                </Link>
                 <button
                   onClick={statusOpen}
                   className={classes.btnGreenStyle}
@@ -313,4 +383,4 @@ const DetailOrder = () => {
   );
 };
 
-export default DetailOrder;
+export default StoreOrderDetails;

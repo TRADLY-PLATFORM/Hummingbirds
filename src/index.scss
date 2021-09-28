@@ -665,3 +665,33 @@ span.glyphicon.glyphicon-search.form-control-feedback {
 label {
   color: #959393;
 }
+
+.center{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.offTextDecoration{
+  text-decoration: none;
+}
+.offTextDecoration:hover,.offTextDecoration:focus{
+  text-decoration: none;
+}
+
+.textColor{
+   color: var(--primary_color) !important
+}
+.textBold{
+  font-weight: 600 !important;
+}
+
+// Button
+.simpleBtn{
+  border: none;
+  background-color: transparent;
+  color: var(--primary_color);
+  font-size: 14px;
+  font-weight: 500;
+}
+ 

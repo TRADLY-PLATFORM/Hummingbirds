@@ -10,7 +10,7 @@ import Aux from '../../../hoc/Auxiliary/Auxiliary';
 import locationMarker from '../../../assets/images/products/locationMarker (1).svg';
 import directionImage from '../../../assets/images/products/direction (1).svg';
 import groupImage from '../../../assets/images/Order/Group 3.png';
-import deleteIcon from "../../../assets/images/cart/deleteIcon (1).svg"
+import deleteIcon from '../../../assets/images/cart/deleteIcon (1).svg';
 
 import { toast, ToastContainer, Slide } from 'react-toastify';
 import ShippingAddress from '../ShippingAddress/ShippingAddress';
@@ -24,12 +24,13 @@ const BuyNow = () => {
   // state
   const [quantity, setQuantity] = useState(1);
   const [paymentMethod, setPaymentMethod] = useState(null);
-  const [shippingMethod, setShippingMethod] = useState(null);
+  const [shippingMethod, setShippingMethod] = useState(1);
   const [addressForm, setAddressForm] = useState(false);
-  const [pickupAddress, setPickupAddress] = useState(false);
+  const [pickupAddress, setPickupAddress] = useState(true);
   const [shippingAddress, setShippingAddress] = useState({ type: 'delivery' });
   const [openModal, setOpenModal] = useState(false);
   const [selectShippingAddress, setSelectShippingAddress] = useState(null);
+  const [selectPickupAddress, setSelectPickupAddress] = useState(null);
 
   const location = useLocation();
   const history = useHistory();
@@ -47,20 +48,18 @@ const BuyNow = () => {
   const cartList = useSelector((state) => state.cart.cart_list);
   const { cart, cart_details } = cartList;
 
-  console.log('==========shipping==========================');
-  console.log(shipping_address);
-  console.log('====================================');
-
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(actions.initCurrencies());
     dispatch(actions.getPaymentMethods());
     dispatch(actions.getShippingMethod());
+    dispatch(actions.callEphemeralKey());
+
   }, [0]);
 
   useEffect(() => {
     if (currencies.length > 0) {
-      dispatch(actions.getCartList(currencies[0]));
+      dispatch(actions.getCartList(currencies[0], shippingMethod));
     }
   }, [currencies]);
 
@@ -95,7 +94,7 @@ const BuyNow = () => {
     }
     dispatch(actions.addToCart(cartData, currencies[0]));
     setTimeout(() => {
-      dispatch(actions.getCartList(currencies[0]));
+      dispatch(actions.getCartList(currencies[0], shippingMethod));
     }, 700);
   };
 
@@ -106,9 +105,8 @@ const BuyNow = () => {
         listing_id: [id],
       },
     };
-          dispatch(actions.deleteCart(data,currencies[0]));
-
-  }
+    dispatch(actions.deleteCart(data, currencies[0]));
+  };
 
   // Select Payment
   const selectPaymentMethod = (e) => {
@@ -118,6 +116,7 @@ const BuyNow = () => {
   // Select Shipping Method
   const selectShippingMethod = (item) => {
     setShippingMethod(item.id);
+    dispatch(actions.getCartList(currencies[0], item.id));
     if (item.type === 'delivery') {
       dispatch(actions.getAddress(item.type));
       setAddressForm(true);
@@ -125,6 +124,7 @@ const BuyNow = () => {
     } else {
       setAddressForm(false);
       setPickupAddress(true);
+      setSelectPickupAddress(cart_details[0].listing.location);
     }
   };
 
@@ -156,27 +156,45 @@ const BuyNow = () => {
       toast.error('Shipping Method is required');
       return false;
     }
-    // if (selectShippingAddress === null) {
-    //   toast.error('Select Your One shipping Address');
-    //   return false;
-    // }
+    if (shippingMethod === 10) {
+      if (selectShippingAddress === null) {
+        toast.error('Select Your One shipping Address');
+        return false;
+      }
+    }
     if (paymentMethod === null) {
       toast.error('Payment Method is required');
       return false;
     }
-    const data = {
-      order: {
-        payment_method_id: paymentMethod,
-        shipping_method_id: shippingMethod,
-      },
-    };
 
-    dispatch(actions.clickCheckout(data, () => history.push(`/checkout-success`)));
+    let data;
+    if (shippingMethod === 10) {
+      data = {
+        order: {
+          payment_method_id: paymentMethod,
+          shipping_method_id: shippingMethod,
+          shipping_address_id: selectShippingAddress,
+        },
+      };
+    } else {
+      data = {
+        order: {
+          payment_method_id: paymentMethod,
+          shipping_method_id: shippingMethod,
+         },
+      }
+    }
+    if(paymentMethod !== 9){
+      dispatch(actions.clickCheckout(data, () => history.push(`/checkout-success`)));
+    }else{
+          dispatch(actions.clickCheckout(data, () => history.push(`/card`),'stripe'));
+    }
+
   };
 
   return (
     <Aux>
-       <ToastContainer
+      <ToastContainer
         autoClose={2000}
         position="top-center"
         transition={Slide}
@@ -189,7 +207,7 @@ const BuyNow = () => {
 
       {(loading || paymentLoading) && (
         <>
-          <div className={classes.Backdrop} ></div>
+          <div className={classes.Backdrop}></div>
           <Loader
             type="ThreeDots"
             color="var(--primary_color)"
@@ -198,11 +216,10 @@ const BuyNow = () => {
             style={{
               position: 'absolute',
               width: '100%',
-              height:"100%",
+              height: '100%',
               display: 'flex',
               justifyContent: 'center',
-              alignItems:"center"
-
+              alignItems: 'center',
             }}
           />
         </>
@@ -415,6 +432,10 @@ const BuyNow = () => {
                     })}
                   </div>
                   <div className={classes.allTotalResults}>
+                    <div className={classes.totalAmount}>
+                      <p>Total</p>
+                      <p>{cart?.list_total.formatted}</p>
+                    </div>
                     <div className={classes.totalAmount}>
                       <p>Shipping</p>
                       <p>{cart?.shipping_total.formatted}</p>

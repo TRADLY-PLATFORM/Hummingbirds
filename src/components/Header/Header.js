@@ -47,7 +47,7 @@ const Header = (props) => {
 
     useEffect(() => {
       if (isAuthenticated && currencies.length > 0) {
-        dispatch(actions.getCartList(currencies[0]));
+        dispatch(actions.getCartList(currencies[0],1));
       }
     }, [currencies || cartList]);
 

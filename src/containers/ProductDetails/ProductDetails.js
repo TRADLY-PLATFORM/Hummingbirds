@@ -55,12 +55,12 @@ const ProductDetails = () => {
   const followMessage = useSelector((state) => state.store.message);
   const configsData = useSelector((state) => state.auth.general_configs);
   const currencies = useSelector((state) => state.store.currencies);
-  const cartError= useSelector((state) => state.cart.error);
+  const cartError = useSelector((state) => state.cart.error);
   const cartErrorMessage = useSelector((state) => state.cart.message);
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(actions.initProductDetails(id.split('-')[0]), true);
+    dispatch(actions.initProductDetails(id.split('-')[0], true));
     dispatch(actions.setGeneralConfigsData());
     dispatch(actions.initCurrencies());
   }, [id]);
@@ -310,12 +310,10 @@ const ProductDetails = () => {
     setTimeout(() => {
       if (!error) {
         dispatch(actions.initProductDetails(id.split('-')[0], false));
-            dispatch(actions.initCurrencies());
-
+        dispatch(actions.initCurrencies());
       }
     }, 1000);
-
-   };
+  };
   const getImage = () => {
     return <h2>Hello</h2>;
   };
@@ -340,15 +338,10 @@ const ProductDetails = () => {
         <link rel="canonical" href={location.pathname} />
       </Helmet>
       <Aux>
-        
-             <Backdrop show={loading} />
-             <Spinner show={loading} />
-       
-
-      
+        <Backdrop show={loading} />
+        <Spinner show={loading} />
 
         {toastMessage}
-         
 
         <div className={classes.rowBox}>
           <div className="col-lg-12">
