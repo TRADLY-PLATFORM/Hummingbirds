@@ -39,7 +39,7 @@ const MyOrder = () => {
 
   //
   // function
-  // Date convertor 
+  // Date convertor
   const changeDateFormat = (timestamp, format) => {
     return moment(timestamp * 1000).format(format);
   };

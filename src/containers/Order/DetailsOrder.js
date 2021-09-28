@@ -274,6 +274,7 @@ const DetailOrder = () => {
                   className="btnOutlineGreenStyle"
                   style={{ marginRight: '15px' }}
                 >
+                  
                   Reorder
                 </Link>
                 <button
@@ -307,6 +308,7 @@ const DetailOrder = () => {
               </div>
             </div>
           </div>
+
         </>
       )}
     </div>
