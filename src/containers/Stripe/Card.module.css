@@ -1,0 +1,69 @@
+
+.Backdrop {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.cardHeader{
+  text-align: center;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  color: var(--primary_color);
+}
+
+.stripeCardBox{
+  width:400px;
+  height: 200px;
+  background: white;
+  margin: 30px auto;
+  padding: 20px;
+  }
+
+
+.cardElement{
+  display: block;
+  margin: 10px 0 20px 0;
+  max-width: 500px;
+  padding: 10px 14px;
+  font-size: 1em;
+  font-family: "Source Code Pro", monospace;
+  box-shadow: rgba(50, 50, 93, 0.14902) 0px 1px 3px,
+    rgba(0, 0, 0, 0.0196078) 0px 1px 0px;
+  border: 0;
+  outline: 0;
+  border-radius: 4px;
+  background: white;
+}
+
+.cardElement::placeholder {
+  color: #aab7c4;
+}
+
+.cardElement input:focus,
+.StripeElement--focus {
+  box-shadow: rgba(50, 50, 93, 0.109804) 0px 4px 6px,
+    rgba(0, 0, 0, 0.0784314) 0px 1px 3px;
+  -webkit-transition: all 150ms ease;
+  transition: all 150ms ease;
+}
+
+
+  .stripeCardBox button{
+  margin-top: 30px;
+  width: 100%;
+  text-align: center;
+  padding: 10px 0;
+  background: linear-gradient(0deg, var(--primary_color) 0%, var(--primary_color) 100%);
+  border-radius: 48px;
+  border: none;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  color: #fefefe;
+  }

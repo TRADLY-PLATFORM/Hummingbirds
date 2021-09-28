@@ -17,12 +17,14 @@ import Backdrop from '../../../components/UI/Backdrop/Backdrop';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import Toast from '../../../components/UI/Toast/Toast';
 import Aux from '../../../hoc/Auxiliary/Auxiliary';
+import Loader from 'react-loader-spinner';
 
 
 const CreateProduct = () => {
   // state
   const [title, setTitle] = useState('');
   const [price, setPrice] = useState(0);
+  const [shippingCharge, setShippingCharge] = useState(0);
   const [description, setDescription] = useState('');
   const [quantity, setQuantity] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -104,6 +106,10 @@ const CreateProduct = () => {
       if (value > 0) {
         setQuantity(value);
       }
+    } else if (name === "Shipping Charge") {
+       if (value > -1) {
+         setShippingCharge(value);
+       }
     }
   };
 
@@ -187,6 +193,7 @@ const CreateProduct = () => {
         accountId,
         title,
         price,
+        shippingCharge,
         description,
         quantity,
         selectedCategory,
@@ -204,9 +211,10 @@ const CreateProduct = () => {
 
   return (
     <Aux>
-      <Backdrop show={loading} />
-      <Spinner show={loading} />
+         <Backdrop show={loading} />
+          <Spinner show={loading} />
       {errorMessage && <Toast message={errorMessage} type="error" />}
+      
       <ToastContainer
         autoClose={2000}
         position="top-center"
@@ -237,13 +245,9 @@ const CreateProduct = () => {
             {imagePath.map((image) => {
               if (image.id === 'addIcon') {
                 return (
-                  <img
-                    style={{ cursor: 'pointer' }}
-                    onClick={handleImageClick}
-                    className={classes.productImage}
-                    src={addProductIcon}
-                    alt="Product Pic"
-                  />
+                  <button className={classes.imageUploadButton} onClick={handleImageClick}>
+                    Add Item
+                  </button>
                 );
               } else {
                 return <img className={classes.productImage} src={image.path} alt="" />;
@@ -277,34 +281,42 @@ const CreateProduct = () => {
             />
           </div>
 
-          <div className="form-group mt-2 ">
-            <label style={{ display: 'block' }} htmlFor="selling-price">
-              Selling Price{' '}
-            </label>
+          <div className={classes.chargesBox}>
+            <div className="form-group mt-2 ">
+              <label htmlFor="selling-price">Selling Price </label>
 
-            <input
-              id="selling-price"
-              value={price}
-              className={classes.input}
-              style={{ display: 'inline', width: '70%' }}
-              name="Selling Price"
-              type="number"
-              placeholder=""
-              onChange={(e) => handleChange(e)}
-            />
-            
-            <select
-              className={classes.input}
-              style={{ display: 'inline', width: '25%', marginLeft: '10px' }}
-              name=""
-              id="currency"
-              onChange={selectCurrency}
-            >
-              <option value="zero">Select currency</option>;
-              {currencies.map((currency) => {
-                return <option value={currency.id}>{currency.code}</option>;
-              })}
-            </select>
+              <input
+                id="selling-price"
+                value={price}
+                className={classes.input}
+                name="Selling Price"
+                type="number"
+                placeholder=""
+                onChange={(e) => handleChange(e)}
+              />
+            </div>
+            <div className="form-group mt-2 ">
+              <label htmlFor="selling-price">Shipping Charge </label>
+
+              <input
+                id="shipping-charge"
+                value={shippingCharge}
+                className={classes.input}
+                name="Shipping Charge"
+                type="number"
+                placeholder=""
+                onChange={(e) => handleChange(e)}
+              />
+            </div>
+            <div className="form-group mt-2">
+              <label htmlFor="currency">Shipping Charge </label>
+              <select className={classes.input} name="" id="currency" onChange={selectCurrency}>
+                <option value="zero">Select currency</option>;
+                {currencies.map((currency) => {
+                  return <option value={currency.id}>{currency.code}</option>;
+                })}
+              </select>
+            </div>
           </div>
 
           <div className="form-group mt-2">
@@ -395,7 +407,7 @@ const CreateProduct = () => {
         )}
 
         <div className="text-center">
-          <button onClick={addProductClick} className={classes.btnGreenStyle}>
+          <button onClick={() => addProductClick()} className={classes.btnGreenStyle}>
             Add Product
           </button>
         </div>

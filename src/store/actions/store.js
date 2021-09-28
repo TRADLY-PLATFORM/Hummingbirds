@@ -430,6 +430,7 @@ export const initFiles = (
   accountId,
   title,
   price,
+  shippingCharge,
   description,
   quantity,
   selectedCategory,
@@ -479,6 +480,7 @@ export const initFiles = (
                      const listingData = {
                        listing: {
                          list_price: price,
+                         shipping_charges:shippingCharge,
                          description: description,
                          account_id: accountId,
                          currency_id: currency,
@@ -489,7 +491,7 @@ export const initFiles = (
                          images: responseFiles.map((res) => res.fileUri),
                          category_id: [selectedCategory],
                          coordinates: coordinates,
-                         type: 'events',
+                         type: 'listings',
                        },
                      };
                      dispatch(createProduct(listingData, callBack));

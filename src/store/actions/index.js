@@ -44,10 +44,20 @@ export {
 
 export { initGroupDetails, CreateGroup } from './group';
 
-export { getCartList, addToCart } from './cart';
+export { getCartList, addToCart, deleteCart } from './cart';
 
-export { connectStripe, getPaymentMethods, clickCheckout } from './payment';
+export {
+  connectStripe,
+  getPaymentMethods,
+  clickCheckout,
+  getShippingMethod,
+  addAddress,
+  getAddress,
+  callEphemeralKey,
+} from './payment';
 
 export { getWishlist } from './wishList';
 
 export { getSearchingResult } from './Search';
+
+export { getOrders, getOrderDetails, setNewOrderStatus } from './order';

@@ -1,0 +1,191 @@
+.myOrdersBox {
+  padding: 45px;
+}
+
+.Backdrop {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+
+.noOrderList {
+  width: 1000px;
+  height: 600px;
+  margin: 50px auto;
+  background: #fefefe;
+  box-shadow: 0px 8px 28px rgba(0, 0, 0, 0.07);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.noOrderListMessage h4 {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  color: var(--primary_color);
+}
+
+.SortbyMenu {
+  display: grid;
+ grid-template-columns: 30% 70%;
+ align-items: center;
+  height: 100%;
+}
+
+.pageTitle {
+   display: flex;
+  align-items: center;
+ }
+ .pageTitle h2{
+  margin: 0;
+  font-size: 36px;
+  font-weight: 500;
+  font-weight: bold;
+  letter-spacing: -0.385882px;
+ }
+
+.btnGreen {
+    width: 177px;
+height: 46px;
+   margin: 0px -20px;
+  border: none;
+   font-style: normal;
+  font-weight: 500;
+  font-size: 21px;
+  line-height: 17px;
+  font-weight: bold;
+  background: #FFFFFF;
+box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.0523656);
+border-radius: 23px;
+}
+
+.btnGreenStyle {
+  padding: 8px 13px;
+  border: none;
+  background: linear-gradient(180deg, #2bdbc0 0%, #13b58c 100%);
+  border-radius: 24px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  /* identical to box height */
+  color: #ffffff;
+}
+
+.button {
+  font-size: 2rem;
+  background: none;
+  border: 1.1px solid #ffffff;
+  color: #13b58c;
+}
+
+.filter {
+ font-weight: 500;
+font-size: 18px;
+ letter-spacing: 0.111px;
+color: #77869E;
+margin: 0;
+text-align: end;
+margin-right: 14px;
+}
+.filterDateBtn {
+  border: none;
+  font-weight: bold;
+  background-color: #f6f9ff;
+}
+
+.filterDateBtn:hover {
+  background: #dffbf4;
+  border-radius: 10px;
+  color: #14b78e !important;
+}
+
+.transactionContainer {
+  height: 86px;
+  margin-top: 20px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.0523656);
+  border-radius: 10px;
+}
+.orderShortDetails {
+  display: grid;
+  grid-template-columns: 20% 70%;
+  align-items: center;
+  padding: 10px 0;
+  grid-column-gap: 40px;
+}
+
+.productImg {
+  margin-left: 30px;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+}
+
+.transactionDetails {
+  position: relative;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  margin-bottom: 5px;
+  color: var(--primary_color);
+}
+
+.bottomDesc {
+    margin-bottom: 0;
+  position: relative;
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: 0.25px;
+  color: #77869e;
+ }
+
+.bottomDesc img {
+  margin-left: 10px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  transition: all 0.5s;
+}
+
+.lastWeek {
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 28px;
+}
+
+.orderHistory {
+  color: #acaeb3;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  display: flex;
+  align-items: center;
+  letter-spacing: -0.385882px;
+}
+
+.bottomDesc span {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #4a4a4a;
+  opacity: 0.5;
+  position: relative;
+  left: 3px;
+  top: 3px;
+}
+
+

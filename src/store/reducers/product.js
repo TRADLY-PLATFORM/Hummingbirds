@@ -16,6 +16,7 @@ const initialState = {
 const initProductDetails = (state, action) => {
   return updateObject(state, {
     loading: true,
+    productDetails:[],
   });
 };
 

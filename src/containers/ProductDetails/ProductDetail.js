@@ -69,7 +69,7 @@ const ProductDetail = () => {
   useEffect(() => {
     dispatch(actions.initProductDetails(id.split('-')[0]), true);
     dispatch(actions.setGeneralConfigsData());
-  }, [0]);
+  }, [id]);
 
 
 // function
