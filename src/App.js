@@ -42,11 +42,11 @@ import Store from './containers/Store/MyStore/Stor';
 import ProductDetail from './containers/ProductDetails/ProductDetail';
 import BuyNow from './containers/Cart/BuyNow/BuyNow';
 import OrderSuccess from './containers/Cart/OrderSuccess/OrderSuccess';
-import MyOrder from './containers/Order/MyOrder';
-import DetailOrder from './containers/Order/DetailOrder';
-import StoreOrders from './containers/StoreOrders/StoreOrders';
+ import StoreOrders from './containers/StoreOrders/StoreOrders';
 import StoreOrderDetails from './containers/StoreOrders/StoreOrderDetails';
 import Card from './containers/Stripe/Card';
+import MyOrder from './containers/Order/MyOrders';
+import DetailOrder from './containers/Order/DetailsOrder';
  
 class App extends Component {
   componentDidMount() {
