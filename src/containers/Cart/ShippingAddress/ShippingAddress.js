@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import classes from './ShippingAddress.module.css';
 
-const ShippingAddress = () => {
-  const [shippingAddress, setShippingAddress] = useState({});
-  const [saveAddress, setSaveAddress] = useState(false);
+const ShippingAddress = ({ shippingAddress, setShippingAddress, saveAddress }) => {
+  // const [saveAddress, setSaveAddress] = useState(false);
 
   const handleGetData = (e) => {
     let isFiledValid = e.target.value.length > 0;
@@ -14,79 +13,52 @@ const ShippingAddress = () => {
       setShippingAddress(shippingAddressInfo);
     }
   };
-   return (
-    <div className="col-md-8 ">
-      <div className={classes.shippingAddress}>
-        {' '}
-        <div className={classes.headerStyle}>
-          <h2>Shipping Address</h2>
-          <p>Select your address that match your card or payment method</p>
-        </div>
+  return (
+    <div className={classes.shippingAddress}>
+      <div className={classes.headerStyle}>
+        <h4>Shipping Address</h4>
+      </div>
+      <form action="" onsubmit="return false" onSubmit={(e) => saveAddress(e)}>
         <div className={classes.inputsField}>
-          <div className=" form-group col-md-6 nopaddingLeft ">
+          <div className=" form-group col-md-12 nopaddingLeft ">
             <input
-              onBlur={handleGetData}
-              className={classes.input + ' form-control input-lg '}
+              required
+              autoComplete="off"
+              onChange={handleGetData}
+              className={classes.input}
               type="text"
-              name="firstName"
-              placeholder="First Name"
+              name="name"
+              placeholder=" Name"
             />
           </div>
-          <div className=" form-group col-md-6 nopaddingRight">
+          <div className=" form-group col-md-12 nopaddingLeft ">
             <input
-              onBlur={handleGetData}
-              className={classes.input + ' form-control input-lg '}
+              required
+              onChange={handleGetData}
+              className={classes.input}
               type="text"
-              name="lastName"
-              placeholder="Last Name"
-            />
-          </div>
-
-          <div className="form-group ">
-            <input
-              onBlur={handleGetData}
-              className={classes.input + ' form-control input-lg '}
-              type="text"
-              name="company"
-              placeholder="company"
+              name="phone_number"
+              placeholder=" Phone Number"
             />
           </div>
 
           <div className="form-group ">
             <input
-              onBlur={handleGetData}
-              className={classes.input + ' form-control input-lg '}
+              required
+              onChange={handleGetData}
+              className={classes.input}
               type="text"
-              name="nameOnCard"
-              placeholder="Name on card"
-            />
-          </div>
-
-          <div className="form-group">
-            <input
-              onBlur={handleGetData}
-              className={classes.input + ' form-control input-lg '}
-              type="text"
-              name="apartment"
-              placeholder="Apartment, Suite, etc"
-            />
-          </div>
-
-          <div className="form-group ">
-            <input
-              onBlur={handleGetData}
-              className={classes.input + ' form-control input-lg '}
-              type="text"
-              name="city"
-              placeholder="City"
+              name="address_line_1"
+              placeholder="Address"
             />
           </div>
 
           <div className="form-group ">
             <div className="col-md-4 nopaddingLeft">
               <input
-                onBlur={handleGetData}
-                className={classes.input + ' form-control input-lg  '}
+                required
+                onChange={handleGetData}
+                className={classes.input}
                 type="text"
                 name="country"
                 placeholder="Country"
@@ -94,34 +66,30 @@ const ShippingAddress = () => {
             </div>
             <div className="col-md-4 nopadding">
               <input
-                onBlur={handleGetData}
-                className={classes.input + ' form-control input-lg '}
+                required
+                onChange={handleGetData}
+                className={classes.input}
                 type="text"
-                name="province"
-                placeholder="Province"
+                name="state"
+                placeholder="state"
               />
             </div>
             <div className="col-md-4 nopaddingRight">
               <input
-                onBlur={handleGetData}
-                className={classes.input + ' form-control input-lg '}
+                required
+                onChange={handleGetData}
+                className={classes.input}
                 type="text"
-                name="postalCode"
+                name="post_code"
                 placeholder="Postal code"
               />
             </div>
           </div>
+          <div className={classes.saveButton}>
+            <button type="submit">Save Address</button>
+          </div>
         </div>
-        <div className={classes.formPadding}>
-          <form action="/action_page.php" method="get">
-            <input type="checkbox" name="saveAddress" value="save"></input>
-            <label style={{ marginLeft: '10px' }} for="vehicle1">
-              {' '}
-              Save my information for next payment
-            </label>
-          </form>
-        </div>
-      </div>
+      </form>
     </div>
   );
 };

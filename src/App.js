@@ -25,14 +25,12 @@ import StoreDetails from './containers/Store/StoreDetails';
 import groupAdded from './containers/Group/groupAdded';
 import groupSuccess from './containers/Group/groupSuccess';
 import transactionSuccess from './containers/MyTransactionst/transactionSuccess';
-import myOrder from './containers/Order/myOrder';
-import StoreSuccess from './containers/Store/StoreSuccess';
+ import StoreSuccess from './containers/Store/StoreSuccess';
 import ProductSuccess from './containers/Store/ProductSuccess';
 import NoProduct from './containers/Store/NoProduct';
 import withProduct from './containers/Store/withProduct';
  import reviewPage from './containers/Order/reviewPage';
-import detailOrder from './containers/Order/detailOrder';
-import ListingsByCategory from './containers/ListingsByCategory/ListingsByCategory';
+ import ListingsByCategory from './containers/ListingsByCategory/ListingsByCategory';
 import AllStores from './containers/Store/AllStores';
 import SignIn from './containers/Auth/SignIn/SignIn';
 import { ErrorBoundary } from '@sentry/react';
@@ -43,6 +41,12 @@ import Store from './containers/Store/MyStore/Stor';
  import CreateProduct from './containers/Store/CreateProduct/CreateProduct';
 import ProductDetail from './containers/ProductDetails/ProductDetail';
 import BuyNow from './containers/Cart/BuyNow/BuyNow';
+import OrderSuccess from './containers/Cart/OrderSuccess/OrderSuccess';
+ import StoreOrders from './containers/StoreOrders/StoreOrders';
+import StoreOrderDetails from './containers/StoreOrders/StoreOrderDetails';
+import Card from './containers/Stripe/Card';
+import MyOrder from './containers/Order/MyOrders';
+import DetailOrder from './containers/Order/DetailsOrder';
  
 class App extends Component {
   componentDidMount() {
@@ -50,6 +54,7 @@ class App extends Component {
     // this.props.onSetTenantConfig();
     this.props.onSetOnboardingConfigsData();
     this.props.onSetSeoConfigs();
+    this.props.onSetCurrency();
   }
 
 
@@ -80,24 +85,29 @@ class App extends Component {
         <Route path="/wishlist" exact component={WishList} />
         <Route path="/my-transaction" exact component={MyTransactionst} />
         <Route path="/profile" exact component={MyProfile} />
-        <Route path="/cart" exact component={Cart} />
-        <Route path="/checkout" exact component={BuyNow} />
+        {/* <Route path="/cart" exact component={Cart} /> */}
+        <Route path="/cart" exact component={BuyNow} />
+        <Route path="/checkout-success" exact component={OrderSuccess} />
         <Route path="/editprofile" excat component={EditProfile} />
         <Route path="/group" excat component={Group} />
         <Route path="/mygroup" excat component={myGroup} />
         <Route path="/groupadded" excat component={groupAdded} />
         <Route path="/groupsuccess" excat component={groupSuccess} />
         <Route path="/transactionsuccess" excat component={transactionSuccess} />
-        <Route path="/myorder" excat component={myOrder} />
+        <Route path="/myorder" excat component={MyOrder} />
+        <Route path="/myorder/statusID" excat component={MyOrder} />
+        <Route path="/storeorders" excat component={StoreOrders} />
+        <Route path="/storeorders/statusID" excat component={StoreOrders} />
         <Route path="/storesuccess" excat component={StoreSuccess} />
         <Route path="/productsuccess" excat component={ProductSuccess} />
         <Route path="/noproduct" excat component={NoProduct} />
         <Route path="/withproduct" excat component={withProduct} />
         <Route path="/addproduct/:accountId" excat component={CreateProduct} />
         <Route path="/reviewpage" excat component={reviewPage} />
-        <Route path="/detailorder" excat component={detailOrder} />
+        <Route path="/myorder-details/:id" excat component={DetailOrder} />
+        <Route path="/storeorder-details/:id" excat component={StoreOrderDetails} />
         <Route path="/search/:key" excat component={SearchResult} />
-
+        <Route path="/card" excat component={Card} />
         <Redirect to="/" />
       </Switch>
     );
@@ -131,6 +141,7 @@ const mapDispatchToProps = (dispatch) => {
     onSetOnboardingConfigsData: () => dispatch(actions.setOnboardingConfigsData()),
     // onInitCountries: () => dispatch(actions.initCountries())
     onSetSeoConfigs: () => dispatch(actions.setSeoConfigs()),
+    onSetCurrency: () => dispatch(actions.initCurrencies()),
   };
 };
 

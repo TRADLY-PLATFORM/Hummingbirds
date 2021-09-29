@@ -22,23 +22,38 @@ export const startProductDetails = () => {
 
 export const initProductDetails = (id,isLoading) => {
   return (dispatch) => {
-    if (isLoading === true) {
+    if (isLoading) {
       dispatch(startProductDetails());
-    }
-    axios
-      .get('/products/v1/listings/' + id + '?locale=en')
-      .then((response) => {
-        if (response.data.status) {
-          console.log(response);
-          dispatch(setProductDetails(response.data.data));
-        } else {
+      axios
+        .get('/products/v1/listings/' + id + '?locale=en')
+        .then((response) => {
+          if (response.data.status) {
+            console.log(response);
+            dispatch(setProductDetails(response.data.data));
+          } else {
+            dispatch(fetchProductDetailsFailed());
+          }
+        })
+        .catch((error) => {
           dispatch(fetchProductDetailsFailed());
-        }
-      })
-      .catch((error) => {
-        dispatch(fetchProductDetailsFailed());
-      });
-  };
+        });
+    }
+    else {
+      axios
+        .get('/products/v1/listings/' + id + '?locale=en')
+        .then((response) => {
+          if (response.data.status) {
+            console.log(response);
+            dispatch(setProductDetails(response.data.data));
+          } else {
+            dispatch(fetchProductDetailsFailed());
+          }
+        })
+        .catch((error) => {
+          dispatch(fetchProductDetailsFailed());
+        });
+    };
+  }
 };
 
 export const setListings = (listings) => {

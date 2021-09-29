@@ -132,8 +132,8 @@ const postStoreFollowSuccess = (state, action) => {
 };
 const setCategories = (state, action) => {
   return updateObject(state, {
-    categories: action.categories,
     loading: false,
+    categories: action.categories,
   });
 };
 
@@ -151,7 +151,7 @@ const setAttribute = (state, action) => {
 };
 
 const storeReducer = (state = initialState, action) => {
-  console.log(action);
+ 
   switch (action.type) {
     case actionTypes.ERROR_MESSAGE:
       return errorMessage(state, action);

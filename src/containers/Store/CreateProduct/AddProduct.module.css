@@ -21,6 +21,14 @@
     top: 266px;
 
 }
+.imageUploadButton{
+     width: 100px;
+        height: 100px;
+                margin: 10px;
+        border: 1px dashed var(--primary_color);
+        border-radius: 4px;
+
+}
 
 .productImage{
         width: 100px;
@@ -46,6 +54,13 @@
     padding: 10px;
     color: #000;
     outline: none;
+ }
+
+ .chargesBox{
+   display: grid;
+   grid-template-columns: 35% 35% 20%;
+   align-items: center;
+   grid-column-gap: 20px;
  }
  
 .productDetails {
