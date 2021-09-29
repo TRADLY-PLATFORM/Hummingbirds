@@ -17,7 +17,7 @@ export const getSearchingResult = (key) => {
   return (dispatch) => {
      dispatch(startLoading());
     axios
-      .get('/products/v1/listings?page=1&search_key=' + key)
+      .get('/products/v1/listings?page=1&search_key='+ key)
       .then((response) => {
         if (response.data.status) {
            

@@ -1,7 +1,13 @@
+.filterBox{
+  margin: 30px;
+  display: none;
+}
+
 .storesStyle {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  margin-top: 30px;
 }
 
 .wellStore {
@@ -53,8 +59,7 @@
   line-height: 17px;
   /* identical to box height */
   color: #ffffff !important;
-  z-index: 10;
-  text-decoration: none !important;
+   text-decoration: none !important;
 }
 .btnGreenUnFollowing {
   padding: 10px 13px;
@@ -68,8 +73,7 @@
   line-height: 17px;
   /* identical to box height */
   color: var(--primary_color) !important;
-  z-index: 10;
-  text-decoration: none !important;
+   text-decoration: none !important;
 }
 
 .Backdrop {

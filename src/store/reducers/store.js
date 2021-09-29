@@ -5,7 +5,7 @@ const initialState = {
   loading: false,
   storeDetails: {},
   storeLists: [],
-  storesLists: [],
+  storesLists: {},
   addresses: [],
   categories: [],
   attribute:null,

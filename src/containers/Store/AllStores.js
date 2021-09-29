@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../store/actions/index';
 import AllenSollyLogo from '../../assets/images/home/store/allenSolly.svg';
@@ -9,16 +9,29 @@ import Aux from '../../hoc/Auxiliary/Auxiliary';
 import backdrop from '../../components/UI/Backdrop/Backdrop';
 import spinner from '../../components/UI/Spinner/Spinner';
 import { selectUserId } from '../../store/selectors/auth';
+import StoreFilter from './StoreFilter';
+import { priceOptions, sortByOptions } from '../../shared/constants';
 
 const AllStores = () => {
+
+  const [selectedPart, setSelectedPart] = useState({
+    priceValue: null,
+    sortValue: null,
+    supplierValue: null,
+    locationValue: null,
+    categoryValue: null,
+  });
+
   const location = useLocation();
   const followError = useSelector((state) => state.store.error);
   const followLoading = useSelector((state) => state.store.loading);
   const isAuthenticated = useSelector((state) => selectUserId(state));
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(actions.getStores());
-  }, []);
+    dispatch(actions.getStores(1,20));
+    dispatch(actions.accountCategories());
+
+  }, [0]);
   
   const setPath = () => {
     dispatch(actions.setAuthRedirectPath(location.pathname));
@@ -26,6 +39,7 @@ const AllStores = () => {
 
 
   const stores = useSelector((state) => state.store.storesLists);
+  const accountCategory = useSelector((state) => state.store.categories);
 
  
   const postStoreFollow = (id, following) => {
@@ -44,6 +58,45 @@ const AllStores = () => {
     }, 2000);
   };
 
+  // 
+  const handleChange = (selectedOption, selectedName) => {
+    console.log('====================================');
+    console.log(selectedOption, selectedName);
+    console.log('====================================');
+    let name = selectedName.name;
+    let selectedValue = { ...selectedPart };
+    if (selectedOption?.value === null) {
+      selectedValue[name] = null;
+    } else {
+      selectedValue[name] = selectedOption;
+    }
+    setSelectedPart(selectedValue);
+
+     
+  };
+  // 
+     let options = {
+       priceOptions: priceOptions,
+       categoryOptions: accountCategory.map((item, index) => {
+         return (
+           {label:item.name,value:item.id}
+         )
+       }),
+       locationOptions: [],
+       supplerOptions: [],
+       sortByOptions: sortByOptions,
+     };
+
+  // 
+  const loadMore = () => {
+    const count = stores.accounts.length ;
+    if (stores.accounts.length !== 100) {
+      dispatch(actions.getStores(parseInt(stores.page), stores.accounts.length + 20));
+    } else {
+       dispatch(actions.getStores(parseInt(stores.page) + 1, 20));
+    }
+  }
+
   return (
     <Aux>
       <Helmet>
@@ -54,8 +107,11 @@ const AllStores = () => {
       {followLoading ? <div className={classes.Backdrop}></div> : null}
 
       <spinner show={followLoading} />
+      <div className={classes.filterBox}>
+        <StoreFilter selectedPart={selectedPart} options={options} handleChange={handleChange} />
+      </div>
       <div className={classes.storesStyle}>
-        {stores?.map((store, i) => {
+        {stores?.accounts?.map((store, i) => {
           let imagePath = AllenSollyLogo;
           if (store.images.length > 0) {
             imagePath = store.images[0];
@@ -105,6 +161,15 @@ const AllStores = () => {
             </Link>
           );
         })}
+      </div>
+      <div className="col-sm-12">
+        <button
+          className="btnGreenStyle pull-right mt-4"
+          onClick={() =>loadMore()}
+          style={{ marginBottom: '50px' }}
+        >
+          Load More
+        </button>
       </div>
     </Aux>
   );

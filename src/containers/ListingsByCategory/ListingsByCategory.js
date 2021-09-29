@@ -10,6 +10,8 @@ import NoIamgeLogo from '../../assets/images/home/store/noImage.svg';
 import backdrop from '../../components/UI/Backdrop/Backdrop';
 import spinner from '../../components/UI/Spinner/Spinner';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
+import Loader from 'react-loader-spinner';
+
 
 import { Helmet } from 'react-helmet';
 
@@ -35,18 +37,24 @@ const ListingsByCategory = () => {
         <link rel="canonical" href={location.pathname} />
       </Helmet>
       <Aux>
-        <backdrop show={loading} />
-        <spinner show={loading} />
-        {
+        {loading ? (
+          <Loader
+            type="ThreeDots"
+            color="var(--primary_color)"
+            height={100}
+            width={100}
+            style={{ display: 'flex', justifyContent: 'center' }}
+          />
+        ) : (
           <div className={classes.find}>
-            {listings.map((list, i) => {
+            {listings?.map((list, i) => {
               let imagePath = NoProductImage;
               if (list.images[0] !== undefined) {
                 imagePath = list.images[0];
               }
               return (
                 <Link
-                   to={{
+                  to={{
                     pathname: `/l/${list.id}-${list.title.replace('%', '')}`,
                     state: { prevPath: `${categoryName.split('-')[1]} listings` },
                   }}
@@ -98,8 +106,7 @@ const ListingsByCategory = () => {
               );
             })}
           </div>
-        }
-         
+        )}
       </Aux>
     </>
   );
