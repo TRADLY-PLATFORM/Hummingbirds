@@ -193,16 +193,16 @@ export const postStoreFollow = (storeId, IsFollowing) => {
   };
 };
 
-export const getStores = () => {
+export const getStores = (page,perPageData) => {
   return (dispatch) => {
     dispatch(initStoreLists());
     axios
-      .get('v1/accounts?page=1&type=accounts')
+      .get(`v1/accounts?page=${page}&type=accounts&per_page=${perPageData}`)
       .then((response) => {
         if (response.data.status) {
           let stores = response.data.data.accounts;
           console.log(stores);
-          dispatch(setAllStores(response.data.data.accounts));
+          dispatch(setAllStores(response.data.data));
         } else {
           dispatch(fetchStoreListsFailed());
         }
