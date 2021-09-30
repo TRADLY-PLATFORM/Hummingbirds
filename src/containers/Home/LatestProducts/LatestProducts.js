@@ -111,7 +111,7 @@ const LatestProducts = ({ products }) => {
               slidesPerGroup={1}
               spaceBetween={16}
               loop={false}
-               navigation={width > 768 ? true : false}
+               navigation={  false}
               className="mySwiper"
                
               // breakpoints={{

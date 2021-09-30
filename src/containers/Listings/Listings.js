@@ -39,7 +39,9 @@ class Listings extends Component {
       locationValue: null,
       categoryValue: null,
     },
+    count: 0,
     loadOnce: false,
+
   };
   handleChange = (selectedOption, selectedName) => {
     
@@ -120,25 +122,44 @@ class Listings extends Component {
     }
   }
 
-  loadMore = () => {
-    let count = totalCountOfProducts;
+  loadMore = (btn) => {
+    let count = 0;
+    if (btn) {
+      count = this.props.allListings.length;
+   }
     let filter = '';
+    let search = '';
     if (this.state.selectedOption.categoryValue !== null) {
-       filter += '&category_id=' + this.state.selectedOption.categoryValue.value;
+      filter += '&category_id=' + this.state.selectedOption.categoryValue.value;
+      search += '&category_name=' + this.state.selectedOption.categoryValue.label.replace(' ','-');
+      this.props.history.push({
+        search: search, 
+      });
+    } else {
+          this.props.history.push(`/listings`);
     }
     
     if (this.state.selectedOption.sortValue !== null) {
       filter += '&sort=' + this.state.selectedOption.sortValue.value;
+      search += '&sort='+ this.state.selectedOption.sortValue.value;
+      this.props.history.push({
+        search: search,
+      });
     }
     if (this.state.selectedOption.priceValue !== null) {
       let prices = this.state.selectedOption.priceValue.value;
       let spitPrices = prices.split('_');
       filter += '&price_from=' + spitPrices[0] + '&price_to=' + spitPrices[1];
+      search += '&price_from=' + spitPrices[0] + '&price_to=' + spitPrices[1];
+       this.props.history.push({
+         search: search,
+       });
     }
     this.props.onInitListings(count, filter, totalCountOfProducts);
-  };
+   };
 
   render() {
+    const { match, location, history } = this.props;
 
  
     let listing = '';
@@ -156,16 +177,18 @@ class Listings extends Component {
           : item
       );
     
-    console.log(productsListing);
-    if (!loading && allListings.length) {
-      if (productsListing.size > 0) {
+ 
+   
+    
+    if (!loading && allListings !== null) {
+      if (productsListing.size > 0  ) {
         listing = <Listing listings={productsListing} total_records={total_records} />;
         if (total_records > totalCountOfProducts && productsListing.size !== total_records) {
           showLoadButton = (
             <div className="col-sm-12">
               <button
                 className="btnGreenStyle pull-right mt-4"
-                onClick={this.loadMore}
+                onClick={() => this.loadMore(true)}
                 style={{ marginBottom: '50px' }}
               >
                 Load More
@@ -203,7 +226,6 @@ class Listings extends Component {
       locationValue: this.state.selectedOption.locationValue,
       categoryValue: this.state.selectedOption.categoryValue,
     };
-            const { match, location, history } = this.props;
 
 
     return (

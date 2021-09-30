@@ -10,7 +10,7 @@ export const sortByOptions = [
   { value: 'newest_first', label: 'Newest first' },
 ];
 
-export const totalCountOfProducts = 25;
+export const totalCountOfProducts = 20;
 
 export const MapKey = 'AIzaSyBAV63gkOE0d0eSV_3rIagJfzMwDcbzPnM';
 export const dsn = 'https://ab22fdcc8ad24c7babc4d07ae7d20642@o396771.ingest.sentry.io/5284098';

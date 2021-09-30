@@ -6,7 +6,7 @@ const initialState = {
   productDetails: [],
   error: false,
   message: null,
-  listings: [],
+  listings: null,
   categoryLists: [],
   supplierLists: [],
   page: 1,

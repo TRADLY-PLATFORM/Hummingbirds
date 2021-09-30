@@ -47,6 +47,8 @@ import StoreOrderDetails from './containers/StoreOrders/StoreOrderDetails';
 import Card from './containers/Stripe/Card';
 import MyOrder from './containers/Order/MyOrders';
 import DetailOrder from './containers/Order/DetailsOrder';
+import EditStore from './containers/Store/EditStore/EditStore';
+import SetPassword from './containers/Auth/ForgotPassword/SetPassword';
  
 class App extends Component {
   componentDidMount() {
@@ -70,14 +72,17 @@ class App extends Component {
         <Route path="/sign-up" exact component={SignUp} />
         <Route path="/sign-in" exact component={SignIn} />
         <Route path="/forgot-password" exact component={ForgotPassword} />
+        <Route path="/forgot-password/verification" exact component={SetPassword} />
         <Route path="/logout" exact component={Logout} />
         <Route path="/listings" exact component={Listings} />
+        <Route path="/listings/:categoryName" exact component={Listings} />
         <Route path="/lc/:categoryName" exact component={ListingsByCategory} />
         <Route path="/categories" exact component={AllCategory} />
         <Route path="/verification/:verifyID" exact component={PhoneVerification} />
         <Route path="/" exact component={Home} />
         <Route path="/l/:id" exact component={ProductDetails} />
         <Route path="/store" exact component={Store} />
+        <Route path="/edit-store" exact component={EditStore} />
         <Route path="/stores" exact component={AllStores} />
         <Route path="/create-store" exact component={CreateStore} />
         <Route path="/a/:id" exact component={StoreDetails} />
@@ -117,8 +122,9 @@ class App extends Component {
         {this.props.location.pathname === '/sign-up' ||
         this.props.location.pathname === '/sign-in' ||
         this.props.location.pathname === '/forgot-password' ||
+        this.props.location.pathname === '/forgot-password/verification' ||
         this.props.location.pathname === '/verification/' + this.props.verifyId ? (
-          <BeforeAuth>{routes}</BeforeAuth>                                                               
+          <BeforeAuth>{routes}</BeforeAuth>
         ) : (
           <Layout>{routes}</Layout>
         )}

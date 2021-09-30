@@ -99,7 +99,7 @@ export const authVerification = (verificationData) => {
         }
       })
       .catch((error) => {
-        dispatch(authFail('verification code is invalid or expired'));
+        dispatch(authFail(error.response.data.error.message));
       });
   };
 };
@@ -120,36 +120,43 @@ export const auth = (userData, isSignup) => {
     };
     axios(config)
       .then((response) => {
-        if (isSignup) {
-          if (response.data.status) {
-             
-            let encodeVerifyId = btoa(response.data.data.verify_id);
-            console.log(encodeVerifyId);
-            dispatch(setVerifyID(encodeVerifyId));
-            // dispatch(setAuthRedirectPath('/verification/' + encodeVerifyId, encodeVerifyId));
+           if (isSignup) {
+            if (response.data.status) {
+              let encodeVerifyId = btoa(response.data.data.verify_id);
+              console.log(encodeVerifyId);
+              dispatch(setVerifyID(encodeVerifyId));
+              // dispatch(setAuthRedirectPath('/verification/' + encodeVerifyId, encodeVerifyId));
+            } else {
+              dispatch(authFail('Something is wrong, Please try again'));
+              return false;
+            }
           } else {
-            dispatch(authFail('Invalid credentials'));
-            return false;
+            if (response.data.status) {
+              console.log(response);
+              const setTimeExpiry = EXPIRY_TIME;
+              const expirationDate = new Date(new Date().getTime() + setTimeExpiry * 1000);
+              //   localStorage.setItem('token', response.data.data.user.key.auth_key);
+              //   localStorage.setItem('refresh_key', response.data.data.user.key.refresh_key);
+              //   localStorage.setItem('userId', response.data.data.user.id);
+              //   localStorage.setItem('expirationDate', expirationDate);
+              //   sessionStorage.setItem('userData', JSON.stringify(response.data.data.user));
+              localStorage.setItem('response', JSON.stringify(response.data.data.user));
+              // localStorage.setItem('token', response.data.data.user.id);
+              localStorage.setItem('expirationDate', expirationDate);
+              dispatch(authSuccess(response.data.data.user));
+              dispatch(checkAuthTimeout(setTimeExpiry));
+              // dispatch(setAuthRedirectPath('/', null));
+            } else {
+              dispatch(authFail('Something is wrong, Please try again'));
+            }
           }
-        } else {
-           console.log(response);
-           const setTimeExpiry = EXPIRY_TIME;
-          const expirationDate = new Date(new Date().getTime() + setTimeExpiry * 1000);
-          //   localStorage.setItem('token', response.data.data.user.key.auth_key);
-          //   localStorage.setItem('refresh_key', response.data.data.user.key.refresh_key);
-          //   localStorage.setItem('userId', response.data.data.user.id);
-          //   localStorage.setItem('expirationDate', expirationDate);
-          //   sessionStorage.setItem('userData', JSON.stringify(response.data.data.user));
-          localStorage.setItem('response', JSON.stringify(response.data.data.user));
-          // localStorage.setItem('token', response.data.data.user.id);
-          localStorage.setItem('expirationDate', expirationDate);
-          dispatch(authSuccess(response.data.data.user));
-          dispatch(checkAuthTimeout(setTimeExpiry));
-          // dispatch(setAuthRedirectPath('/', null));
-        }
+       
       })
       .catch((error) => {
-         dispatch(authFail('Invalid credentials or user not registered'));
+      
+           dispatch(authFail(error.response.data.error.message));
+ 
+        
       });
   };
 };
@@ -176,6 +183,81 @@ export const authCheckState = () => {
   };
 };
 
+
+// forgot-password
+export const passwordChange = (data) => {
+  return {
+    type: actionTypes.PASSWORD_RECOVERY,
+   };
+};
+
+export const password_recovery = (userData) => {
+  return (dispatch) => {
+     dispatch(authStart());
+    let url = 'v1/users/password/recovery';
+ 
+    var config = {
+      method: 'post',
+      url: url,
+
+      data: userData,
+    };
+    axios(config)
+      .then((response) => {
+        if (response.data.status) {
+          let encodeVerifyId = btoa(response.data.data.verify_id);
+          console.log(encodeVerifyId);
+          dispatch(setVerifyID(encodeVerifyId));
+        } else {
+          dispatch(authFail('Something is wrong, Please try again'));
+          return false;
+        }
+      })
+      .catch((error) => {
+        dispatch(authFail(error.response.data.error.message));
+      });
+  };
+};
+
+// set New password
+// export const passwordChange = (data) => {
+//   return {
+//     type: actionTypes.PASSWORD_RECOVERY,
+//     data: data,
+//   };
+// };
+
+export const set_password = (userData) => {
+  return (dispatch) => {
+     dispatch(authStart());
+    let url = 'v1/users/password/set';
+ 
+    var config = {
+      method: 'post',
+      url: url,
+      data: userData,
+    };
+    axios(config)
+      .then((response) => {
+        if (response.data.status) {
+          dispatch(passwordChange());
+        } else {
+          dispatch(authFail('Something is wrong, Please try again'));
+          return false;
+        }
+      })
+      .catch((error) => {
+        dispatch(authFail(error.response.data.error.message));
+     });
+      
+  };
+};
+
+
+
+
+
+
 export const refreshToken = () => {
   return (dispatch) => {
     dispatch(authStart());
@@ -199,7 +281,7 @@ export const refreshToken = () => {
       })
       .catch((error) => {
         console.log(error);
-        dispatch(authFail(''));
+        dispatch(authFail('')); 
       });
   };
 };

@@ -23,6 +23,7 @@ class SignIn extends Component {
     dialCode: '',
     isSignUp: false,
     showError: false,
+    showSuccess:true,
   };
 
   handleChange = (e) => {
@@ -32,7 +33,7 @@ class SignIn extends Component {
     this.setState({
       [name]: value,
     });
-    this.setState({ showError: false });
+    this.setState({ showError: false, showSuccess :false});
   };
 
   componentDidMount() {
@@ -75,7 +76,7 @@ class SignIn extends Component {
       let checkNumber = isValidPhoneNumber(`+${mobile}`);
       if (checkNumber !== true) {
         if (!toast.isActive(this.toastId)) {
-          this.toastId = toast.error('Invalid phone number.');
+          this.toastId = toast.error('Invalid phone number');
         }
         return false;
       }
@@ -116,6 +117,12 @@ class SignIn extends Component {
         this.toastId = toast.error(this.props.message);
       }
     }
+    if (this.props.recoveryPassword === true && this.state.showSuccess) {
+      
+      if (!toast.isActive(this.toastId)) {
+        this.toastId = toast.success('Password Changed,You can login Now');
+      }
+  }
 
     let authRedirect = null;
     if (this.props.isAuthenticated) {
@@ -242,6 +249,7 @@ const mapStateToProps = (state) => {
     authRedirectPath: state.auth.authRedirectPath,
     verifyId: state.auth.verify_id,
     configsData: state.auth.general_configs,
+    recoveryPassword: state.auth.recoveryPassword,
     isAuthenticated: selectUserId(state),
   };
 };

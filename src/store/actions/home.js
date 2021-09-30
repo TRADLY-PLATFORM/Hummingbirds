@@ -63,8 +63,7 @@ export const initHomeCollections = () => {
             let collections = response.data.data.collections;
               dispatch(setCollections({ collections }));
 
-            //  console.log(categories, collections);
-            // stores
+             // stores
             let stores = response.data.data.collections.find(
               (item, i) => item.scope_type === 1
             );

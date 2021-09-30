@@ -81,11 +81,18 @@ const Store = () => {
                         </div>
                       </div>
                       <div className={classes.followBtn}>
-                        <button className="btnGreenStyle  ">Edit profile</button>
+                        <Link
+                          to={{
+                            pathname: '/edit-store',
+                          }}
+                          className="btnGreenStyle  "
+                        >
+                          Edit profile
+                        </Link>
                         <Link
                           to={{
                             pathname: '/storeorders',
-                            search:`account_id=${storeLists [0].id}`,
+                            search: `account_id=${storeLists[0].id}`,
                           }}
                           className="btnGreenStyle  "
                         >
@@ -96,13 +103,13 @@ const Store = () => {
                   </div>
                 </div>
                 <div>
-                  {listings.length > 0 ? (
+                  {listings?.length > 0 ? (
                     <div className={classes.myStoreProducts}>
                       <Link to={`/addproduct/${list.id}`}>
                         <button className="btnGreenStyle pull-right">Add a product </button>
                       </Link>
                       <div className={classes.find}>
-                        {listings.map((list) => {
+                        {listings?.map((list) => {
                           let imagePath = NoProductImage;
                           if (list.images[0] !== undefined) {
                             imagePath = list.images[0];

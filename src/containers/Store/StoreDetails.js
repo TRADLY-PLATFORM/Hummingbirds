@@ -99,7 +99,7 @@ class StoreDetails extends Component {
     }, 2000);
   };
   render() {
-    const { storeDetails, listings, total_records, loading } = this.props;
+    const { storeDetails, listings, total_records, loading ,allListings} = this.props;
     let listing = '';
     let showLoadButton = null;
     let storeContent = null;
@@ -108,7 +108,7 @@ class StoreDetails extends Component {
       storeDetails.getIn(['user', 'first_name'], '') +
       ' ' +
       storeDetails.getIn(['user', 'last_name'], '');
-    if (listings && listings.size === 0 && !loading) {
+    if (listings && listings.size === 0 && !loading && allListings !== null ) {
       listing = (
         <div style={{ marginTop: '5em' }} className="alert alert-danger fade in alert-dismissible">
           <Link to="#" className="close" data-dismiss="alert" aria-label="close" title="close">
@@ -284,6 +284,7 @@ const mapStateToProps = (state) => {
     token: state.auth.token,
     total_records: selectTotalListings(state),
     listings: selectListings(state),
+    allListings:  state.product.listings,
   };
 };
 

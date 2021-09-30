@@ -2,6 +2,8 @@ export {
   auth,
   authVerification,
   logout,
+  password_recovery,
+  set_password,
   authCheckState,
   initCountries,
   setTenantConfig,

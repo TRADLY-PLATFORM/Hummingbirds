@@ -138,7 +138,7 @@ const StoresToFollow = ({ storesToFollow }) => {
               slidesPerGroup={1}
               spaceBetween={16}
               loop={false}
-              navigation={width > 768 ? true : false}
+              navigation={ false}
               className="mySwiper"
               // breakpoints={{
               //   1050: {
