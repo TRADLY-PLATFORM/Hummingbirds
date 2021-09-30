@@ -25,9 +25,7 @@ const ForgotPassword = () => {
     dispatch(actions.initCountries());
   }, [0]);
 
-  console.log('====================================');
-  console.log(error);
-  console.log('====================================');
+ 
   // reducer
   const configsData = useSelector((state) => state.auth.general_configs);
   const countryList = useSelector((state) => state.auth.countries);
