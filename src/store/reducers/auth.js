@@ -7,6 +7,7 @@ const initialState = {
   loading: false,
   error: false,
   disabled: false,
+  recoveryPassword:false,
   message: null,
   verify_id: null,
   countries: null,
@@ -29,8 +30,18 @@ const authSuccess = (state, action) => {
     loading: false,
     message: null,
     disabled: false,
-    error: null,
+    error: false,
     verify_id: null,
+  });
+};
+const passwordChangeSuccess = (state, action) => {
+  console.log(action.data);
+  return updateObject(state, {
+    loading: false,
+    message: null,
+    error: false,
+    verify_id: null,
+    recoveryPassword:true,
   });
 };
 
@@ -113,11 +124,16 @@ const authVerify = (state, action) => {
 export const successTenantConfig = (state, action) => {
   return updateObject(state, {
     tenantData: action.data,
+    error: false,
+    message:null,
   });
 };
 
 export const failedTenantConfig = (state, action) => {
-  return updateObject(state, { error: action.error });
+  return updateObject(state, {
+    error: true,
+    message:action.error
+  });
 };
 
 const authReducer = (state = initialState, action) => {
@@ -126,6 +142,8 @@ const authReducer = (state = initialState, action) => {
       return authStart(state, action);
     case actionTypes.AUTH_SUCCESS:
       return authSuccess(state, action);
+    case actionTypes.PASSWORD_RECOVERY:
+      return passwordChangeSuccess(state, action);
     case actionTypes.AUTH_FAIL:
       return authFail(state, action);
     case actionTypes.AUTH_LOGOUT:

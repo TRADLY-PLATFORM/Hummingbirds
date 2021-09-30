@@ -81,11 +81,18 @@ const Store = () => {
                         </div>
                       </div>
                       <div className={classes.followBtn}>
-                        <button className="btnGreenStyle  ">Edit profile</button>
+                        <Link
+                          to={{
+                            pathname: '/edit-store',
+                          }}
+                          className="btnGreenStyle  "
+                        >
+                          Edit profile
+                        </Link>
                         <Link
                           to={{
                             pathname: '/storeorders',
-                            search:`account_id=${storeLists [0].id}`,
+                            search: `account_id=${storeLists[0].id}`,
                           }}
                           className="btnGreenStyle  "
                         >
