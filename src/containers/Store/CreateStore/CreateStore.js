@@ -71,6 +71,10 @@ const CreateStore = () => {
     e.preventDefault();
     let call;
 
+    if(image===null){
+       toast.error('Image is required');
+       return false;
+    }
     if (name === '') {
       toast.error('Store name is required');
       call = false;
@@ -188,7 +192,7 @@ const CreateStore = () => {
   // }
   const ActiveStyle = {
     backgroundColor: '#e7f8f3',
-    border: '1px solid #13b58c',
+    border: '1px solid  var(--primary_color)',
   };
   const deActive = {};
   console.log('====================================');
@@ -241,7 +245,7 @@ const CreateStore = () => {
                 <div className="p-2">
                   <img
                     id="imageid"
-                    className={classes.groupAvatar}
+                    className={image?classes.imageAvatar:classes.groupAvatar}
                     src={image ? image : groupAvatar}
                     alt="Stores"
                   />

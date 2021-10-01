@@ -440,3 +440,57 @@ export const setSeoConfigs = () => {
       });
   };
 };
+// Accounts configs
+
+
+export const AccountsConfigs = (data) => {
+  return {
+    type: actionTypes.ACCOUNTS_CONFIGS,
+    configs: data,
+  };
+};
+
+export const setAccountsConfigs = () => {
+  return (dispatch) => {
+    axios
+      .get('v1/configs?key_group=accounts')
+      .then((response) => {
+        console.log(response);
+        if (response.status) {
+ 
+          dispatch(AccountsConfigs(response.data.data.configs));
+           
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+// Accounts configs
+
+
+export const ListingsConfigs = (data) => {
+  return {
+    type: actionTypes.LISTINGS_CONFIGS,
+    configs: data,
+  };
+};
+
+export const setListingsConfigs = () => {
+  return (dispatch) => {
+    axios
+      .get('v1/configs?key_group=listings')
+      .then((response) => {
+        console.log(response);
+        if (response.status) {
+
+          dispatch(ListingsConfigs(response.data.data.configs));
+           
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};

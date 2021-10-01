@@ -14,6 +14,8 @@ const initialState = {
   general_configs: {},
   onboarding_configs: {},
   seo_configs:{},
+  accounts_configs:{},
+  listings_configs:{},
   authRedirectPath: '/',
   userData: {},
   tenantData: {},
@@ -91,6 +93,20 @@ const setSeoConfigs = (state, action) => {
     loading: false,
   });
 };
+const setAccountsConfigs = (state, action) => {
+  
+  return updateObject(state, {
+    accounts_configs: action.configs,
+    loading: false,
+  });
+};
+const setListingsConfigs = (state, action) => {
+  
+  return updateObject(state, {
+    listings_configs: action.configs,
+    loading: false,
+  });
+};
 
 const fetchCountriesFailed = (state, action) => {
   return updateObject(state, {
@@ -161,6 +177,10 @@ const authReducer = (state = initialState, action) => {
       return setOnboardingConfigs(state, action);
     case actionTypes.SEO_CONFIGS:
       return setSeoConfigs(state, action);
+    case actionTypes.ACCOUNTS_CONFIGS:
+      return setAccountsConfigs(state, action);
+    case actionTypes.LISTINGS_CONFIGS:
+      return setListingsConfigs(state, action);
 
     case actionTypes.FETCH_COUNTRIES_FAILED:
       return fetchCountriesFailed(state, action);

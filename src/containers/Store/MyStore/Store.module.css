@@ -47,7 +47,7 @@ background-image: url(../../../assets/images/store/store.svg);
 
   .storeHeader{
    padding-left: 34px;
-   padding-right: 50px;
+   padding-right: 34px;
  }
  
  
@@ -227,6 +227,17 @@ font-weight: bold;
    align-items: center;
  }
  
+ .produtDontActive{
+   position: absolute;
+    z-index: 100;
+   background: rgb(253, 186, 2);
+   top: 0;
+   padding: 4px;
+   font-size: 12px;
+    font-weight: 500;
+    color: rgb(255, 255, 255);
+    border-bottom-right-radius: 10px;
+ }
 
 @media only screen and (max-width: 768px) {
  

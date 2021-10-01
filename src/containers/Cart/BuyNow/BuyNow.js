@@ -19,6 +19,7 @@ import Loader from 'react-loader-spinner';
 import { Link } from 'react-router-dom';
 import backdrop from '../../../components/UI/Backdrop/Backdrop';
 import spinner from '../../../components/UI/Spinner/Spinner';
+import ChangeShippingAddress from '../ShippingAddress/ChangeShippingAddress';
 
 const BuyNow = () => {
   // state
@@ -29,6 +30,7 @@ const BuyNow = () => {
   const [pickupAddress, setPickupAddress] = useState(true);
   const [shippingAddress, setShippingAddress] = useState({ type: 'delivery' });
   const [openModal, setOpenModal] = useState(false);
+  const [changeModal, setChangeModal] = useState(false);
   const [selectShippingAddress, setSelectShippingAddress] = useState(null);
   const [selectPickupAddress, setSelectPickupAddress] = useState(null);
 
@@ -131,6 +133,9 @@ const BuyNow = () => {
   const closeModal = () => {
     setOpenModal(false);
   };
+  const closeChangeModal = () => {
+    setChangeModal(false);
+  };
 
   //Save Address
   const saveAddress = (e) => {
@@ -143,6 +148,19 @@ const BuyNow = () => {
       dispatch(actions.getAddress('delivery'));
     }, 700);
     setOpenModal(false);
+  };
+  //Change Address
+  const ChangeAddress = (e) => {
+    e.preventDefault();
+
+    const addressData = {
+      address: { ...shippingAddress },
+    };
+    dispatch(actions.changeAddress(addressData,selectShippingAddress));
+    setTimeout(() => {
+      dispatch(actions.getAddress('delivery'));
+    }, 700);
+    setChangeModal(false);
   };
 
   // Select shipping address Item
@@ -347,12 +365,30 @@ const BuyNow = () => {
                           >
                             Add New Address +
                           </button>
+                          {selectShippingAddress && (
+                            <button
+                              style={{ marginTop: '10px', marginLeft: '20px' }}
+                              className={classes.addAddressButton}
+                              onClick={() => setChangeModal(true)}
+                            >
+                              Edit Address
+                            </button>
+                          )}
                           <Modal show={openModal} modalClosed={closeModal}>
                             <div className={classes.shippingAddressForm}>
                               <ShippingAddress
                                 shippingAddress={shippingAddress}
                                 setShippingAddress={setShippingAddress}
                                 saveAddress={saveAddress}
+                              />
+                            </div>
+                          </Modal>
+                          <Modal show={changeModal} modalClosed={closeChangeModal}>
+                            <div className={classes.shippingAddressForm}>
+                              <ChangeShippingAddress
+                                shippingAddress={shippingAddress}
+                                setShippingAddress={setShippingAddress}
+                                ChangeAddress={ChangeAddress}
                               />
                             </div>
                           </Modal>

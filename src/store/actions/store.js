@@ -1,5 +1,5 @@
 /* eslint-disable no-loop-func */
- import * as actionTypes from './actionTypes';
+import * as actionTypes from './actionTypes';
 import axios from '../../axios';
 import { ACCESS_TOKEN } from '../../shared/utility';
 
@@ -95,9 +95,10 @@ export const userStoreLists = (userId) => {
   };
 };
 
-export const createStoreFailed = () => {
+export const createStoreFailed = (msg) => {
   return {
     type: actionTypes.CREATE_STORE_FAILED,
+    message: msg,
   };
 };
 
@@ -131,11 +132,11 @@ export const CreateStore = (store, callBack) => {
           dispatch(createStoreSuccess());
           callBack && callBack();
         } else {
-          dispatch(createStoreFailed());
+          dispatch(createStoreFailed(response.data.error.message));
         }
       })
       .catch((error) => {
-        dispatch(createStoreFailed());
+        dispatch(createStoreFailed(error.response.data.error.message));
       });
   };
 };
@@ -193,7 +194,7 @@ export const postStoreFollow = (storeId, IsFollowing) => {
   };
 };
 
-export const getStores = (page,perPageData) => {
+export const getStores = (page, perPageData) => {
   return (dispatch) => {
     dispatch(initStoreLists());
     axios
@@ -243,6 +244,7 @@ export const addressSearch = (key) => {
       })
       .catch((error) => {
         dispatch(setAddress(''));
+        dispatch(createStoreFailed(error.response.data.error.message));
       });
   };
 };
@@ -317,45 +319,41 @@ export const initFile = (
           const fileURL = response.data.data.result[0];
           const path = fileURL.signedUrl;
           const ImagePath = fileURL.fileUri;
-           fetch(path, {
-              method: 'put',
-              headers: {
-                ContentType: contentType,
-              },
-              body: file,
+          fetch(path, {
+            method: 'put',
+            headers: {
+              ContentType: contentType,
+            },
+            body: file,
+          })
+            .then((res) => {
+              if (res.status) {
+                console.log(res);
+
+                const stores = {
+                  account: {
+                    name: name,
+                    category_id: [categoryId],
+                    description: description,
+                    web_address: '',
+                    images: [ImagePath],
+                    coordinates: coordinates,
+                    attributes: attributeData ? attributeData : [{}],
+                    type: 'accounts',
+                  },
+                };
+
+                dispatch(CreateStore(stores, callBack));
+              }
             })
-              .then((res) => {
-                if (res.status) {
-                  console.log(res);
-
-                  const stores = {
-                    account: {
-                      name: name,
-                      category_id: [categoryId],
-                      description: description,
-                      web_address: '',
-                      images: [ImagePath],
-                      coordinates: coordinates,
-                      attributes: attributeData ? attributeData : [{}],
-                      type: 'accounts',
-                    },
-                  };
-
-                  console.log(stores);
-
-                  dispatch(CreateStore(stores, callBack));
-                }
-              })
-              .catch((error) => {
-                console.log('Error:' + error.message);
-                dispatch(
-                  failedMessage('Some problem occurred in image upload. Please try again later.')
-                );
-              });
+            .catch((error) => {
+              console.log('Error:' + error.message);
+              dispatch(failedMessage(error.response.data.error.message));
+            });
         }
       })
       .catch((error) => {
-        console.log(error);
+        dispatch(failedMessage(error.response.data.error.message));
       });
   };
 };
@@ -437,7 +435,7 @@ export const initFiles = (
   attributeData,
   currency,
   coordinates,
-   files,
+  files,
   fullFile,
   callBack
 ) => {
@@ -464,51 +462,50 @@ export const initFiles = (
           for (let index = 0; index < responseFiles.length; index++) {
             const path = responseFiles[index].signedUrl;
             const ImagePath = responseFiles[index].fileUri;
-              
-             fetch(path, {
-               method: 'PUT',
-               headers: {
-                 ContentType: files[index].type,
-               },
-               body: fullFile[0],
-             })
-            .then((res) => {
-                 if (res.ok) {
-                   console.log('eta ekhane' + res);
-                   increment = increment + 1;
-                   if (increment === files.length) {
-                     const listingData = {
-                       listing: {
-                         list_price: price,
-                         shipping_charges:shippingCharge,
-                         description: description,
-                         account_id: accountId,
-                         currency_id: currency,
-                         stock: quantity,
-                         attributes: attributeData ? attributeData : [{}],
-                         title: title,
-                         offer_percent: 0,
-                         images: responseFiles.map((res) => res.fileUri),
-                         category_id: [selectedCategory],
-                         coordinates: coordinates,
-                         type: 'listings',
-                       },
-                     };
-                     dispatch(createProduct(listingData, callBack));
-                   }
-                 }
-               })
-               .catch((error) => {
-                 console.log('Error:' + error.message);
-                 dispatch(
-                   failedMessage('Some problem occurred in image upload. Please try again later.')
-                 );
-               });
+
+            fetch(path, {
+              method: 'PUT',
+              headers: {
+                ContentType: files[index].type,
+              },
+              body: fullFile[0],
+            })
+              .then((res) => {
+                if (res.ok) {
+                  console.log('eta ekhane' + res);
+                  increment = increment + 1;
+                  if (increment === files.length) {
+                    const listingData = {
+                      listing: {
+                        list_price: price,
+                        shipping_charges: shippingCharge,
+                        description: description,
+                        account_id: accountId,
+                        currency_id: currency,
+                        stock: quantity,
+                        attributes: attributeData ? attributeData : [{}],
+                        title: title,
+                        offer_percent: 0,
+                        images: responseFiles.map((res) => res.fileUri),
+                        category_id: [selectedCategory],
+                        coordinates: coordinates,
+                        type: 'listings',
+                      },
+                    };
+                    dispatch(createProduct(listingData, callBack));
+                  }
+                }
+              })
+              .catch((error) => {
+                console.log('Error:' + error.message);
+                dispatch(failedMessage(error.response.data.error.message));
+              });
           }
         }
       })
       .catch((error) => {
         console.log(error);
+        dispatch(failedMessage(error.response.data.error.message));
       });
   };
 };
@@ -537,11 +534,11 @@ export const createProduct = (listing, callBack) => {
           console.log('====================================');
           console.log(response);
           console.log('====================================');
-          dispatch(createStoreFailed());
+          dispatch(failedMessage(response.data.error.message));
         }
       })
       .catch((error) => {
-        dispatch(createStoreFailed());
+        dispatch(failedMessage(error.response?.data?.error?.message));
       });
   };
 };

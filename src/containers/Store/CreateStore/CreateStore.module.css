@@ -2,6 +2,7 @@
   padding: 0px 8px 15px;
   margin-bottom: 8px;
   list-style: none;
+  margin-top: 20px;
 }
 
 .breadCrumb li a {
@@ -16,7 +17,7 @@
 .mycontainer {
   background-color: #fff;
   width: 70%;
-  margin: 10px auto;
+  margin: 20px auto;
   border-radius: 10px;
 }
 
@@ -57,6 +58,11 @@
   width: 82px;
   border-radius: 50% !important;
 }
+.imageAvatar {
+  margin-top: 4px;
+  width: 100px;
+  height: 100px;
+ }
 .categoryBox {
   padding-right: 80px;
   padding-left: 80px;
