@@ -11,6 +11,8 @@ export {
   setGeneralConfigsData,
   setOnboardingConfigsData,
   setSeoConfigs,
+  setAccountsConfigs,
+  setListingsConfigs,
 } from './auth';
 
 export {
@@ -54,6 +56,7 @@ export {
   clickCheckout,
   getShippingMethod,
   addAddress,
+  changeAddress,
   getAddress,
   callEphemeralKey,
 } from './payment';

@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
+import  { Suspense, lazy } from 'react';
 
 
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import Layout from './hoc/Layout/Layout';
+
 import BeforeAuth from './hoc/Layout/BeforeAuth/BeforeAuth';
 import SignUp from './containers/Auth/SignUp/SignUp';
- import Logout from './containers/Auth/Logout/Logout';
+import Logout from './containers/Auth/Logout/Logout';
 import PhoneVerification from './containers/Auth/PhoneVerification/PhoneVerification';
-import Home from './containers/Home/Home';
 import Listings from './containers/Listings/Listings';
 import AllCategory from './components/Category/AllCategory/AllCategory';
 import ProductDetails from './containers/ProductDetails/ProductDetails';
- import * as actions from '../src/store/actions/index';
+import * as actions from '../src/store/actions/index';
 import WishList from './containers/WishList/WishList';
 import MyTransactionst from './containers/MyTransactionst/MyTransactionst';
 import MyProfile from './containers/MyProfile/MyProfile';
@@ -21,11 +21,11 @@ import Cart from './containers/Cart/Cart';
 import EditProfile from './containers/EditProfile/EditProfile';
 import Group from './containers/Group/Group';
 import StoreDetails from './containers/Store/StoreDetails';
- import myGroup from './containers/Group/myGroup';
+import myGroup from './containers/Group/myGroup';
 import groupAdded from './containers/Group/groupAdded';
 import groupSuccess from './containers/Group/groupSuccess';
 import transactionSuccess from './containers/MyTransactionst/transactionSuccess';
- import StoreSuccess from './containers/Store/StoreSuccess';
+import StoreSuccess from './containers/Store/StoreSuccess';
 import ProductSuccess from './containers/Store/ProductSuccess';
 import NoProduct from './containers/Store/NoProduct';
 import withProduct from './containers/Store/withProduct';
@@ -38,17 +38,20 @@ import ForgotPassword from './containers/Auth/ForgotPassword/ForgotPassword';
 import SearchResult from './components/Seacrh/SearchResult';
 import CreateStore from './containers/Store/CreateStore/CreateStore';
 import Store from './containers/Store/MyStore/Stor';
- import CreateProduct from './containers/Store/CreateProduct/CreateProduct';
+import CreateProduct from './containers/Store/CreateProduct/CreateProduct';
 import ProductDetail from './containers/ProductDetails/ProductDetail';
 import BuyNow from './containers/Cart/BuyNow/BuyNow';
 import OrderSuccess from './containers/Cart/OrderSuccess/OrderSuccess';
- import StoreOrders from './containers/StoreOrders/StoreOrders';
+import StoreOrders from './containers/StoreOrders/StoreOrders';
 import StoreOrderDetails from './containers/StoreOrders/StoreOrderDetails';
 import Card from './containers/Stripe/Card';
 import MyOrder from './containers/Order/MyOrders';
 import DetailOrder from './containers/Order/DetailsOrder';
 import EditStore from './containers/Store/EditStore/EditStore';
 import SetPassword from './containers/Auth/ForgotPassword/SetPassword';
+
+const Layout = lazy(() => import('./hoc/Layout/Layout'));
+const Home = lazy(() => import('./containers/Home/Home'));
  
 class App extends Component {
   componentDidMount() {
@@ -57,6 +60,8 @@ class App extends Component {
     this.props.onSetOnboardingConfigsData();
     this.props.onSetSeoConfigs();
     this.props.onSetCurrency();
+    this.props.onSetAccountsConfigs();
+    this.props.onSetListingsConfigs();
   }
 
 
@@ -64,7 +69,7 @@ class App extends Component {
 
     let root = document.documentElement;
     const color =  this.props.onboarding_configs.app_color_primary;
-    root.style.setProperty("--primary_color",color || '#15B790');
+    root.style.setProperty("--primary_color",color );
   
 
     let routes = (
@@ -80,7 +85,7 @@ class App extends Component {
         <Route path="/categories" exact component={AllCategory} />
         <Route path="/verification/:verifyID" exact component={PhoneVerification} />
         <Route path="/" exact component={Home} />
-        <Route path="/l/:id" exact component={ProductDetails} />
+        <Route path="/l/:id" exact component={ProductDetail} />
         <Route path="/store" exact component={Store} />
         <Route path="/edit-store" exact component={EditStore} />
         <Route path="/stores" exact component={AllStores} />
@@ -118,17 +123,19 @@ class App extends Component {
     );
 
     return (
-      <ErrorBoundary>
-        {this.props.location.pathname === '/sign-up' ||
-        this.props.location.pathname === '/sign-in' ||
-        this.props.location.pathname === '/forgot-password' ||
-        this.props.location.pathname === '/forgot-password/verification' ||
-        this.props.location.pathname === '/verification/' + this.props.verifyId ? (
-          <BeforeAuth>{routes}</BeforeAuth>
-        ) : (
-          <Layout>{routes}</Layout>
-        )}
-      </ErrorBoundary>
+      <Suspense fallback >
+        <ErrorBoundary>
+          {this.props.location.pathname === '/sign-up' ||
+          this.props.location.pathname === '/sign-in' ||
+          this.props.location.pathname === '/forgot-password' ||
+          this.props.location.pathname === '/forgot-password/verification' ||
+          this.props.location.pathname === '/verification/' + this.props.verifyId ? (
+            <BeforeAuth>{routes}</BeforeAuth>
+          ) : (
+            <Layout>{routes}</Layout>
+          )}
+        </ErrorBoundary>
+      </Suspense>
     );
   }
 }
@@ -147,6 +154,8 @@ const mapDispatchToProps = (dispatch) => {
     onSetOnboardingConfigsData: () => dispatch(actions.setOnboardingConfigsData()),
     // onInitCountries: () => dispatch(actions.initCountries())
     onSetSeoConfigs: () => dispatch(actions.setSeoConfigs()),
+    onSetAccountsConfigs: () => dispatch(actions.setAccountsConfigs()),
+    onSetListingsConfigs: () => dispatch(actions.setListingsConfigs()),
     onSetCurrency: () => dispatch(actions.initCurrencies()),
   };
 };

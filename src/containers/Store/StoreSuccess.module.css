@@ -2,6 +2,7 @@
     display: grid;
     justify-items: center;
     text-align: center;
+    margin-top: 30px;
 }
 
 .pageTitel {

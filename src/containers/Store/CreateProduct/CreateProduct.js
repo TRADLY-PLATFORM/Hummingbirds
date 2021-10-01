@@ -10,7 +10,7 @@ import Attribute from './Attribute';
 import locationImage from '../../../assets/images/store/location.png';
 import locationListImage from '../../../assets/images/store/locationList.png';
 
-import closeImage from '../../../assets/images/store/close.png';
+import closeImage from '../../../assets/images/store/close (1).svg';
 import imageToBase64 from 'image-to-base64/browser';
 import { Slide, toast, ToastContainer } from 'react-toastify';
 import Backdrop from '../../../components/UI/Backdrop/Backdrop';
@@ -18,7 +18,6 @@ import Spinner from '../../../components/UI/Spinner/Spinner';
 import Toast from '../../../components/UI/Toast/Toast';
 import Aux from '../../../hoc/Auxiliary/Auxiliary';
 import Loader from 'react-loader-spinner';
-
 
 const CreateProduct = () => {
   // state
@@ -33,12 +32,13 @@ const CreateProduct = () => {
   const [product_address, setProduct_address] = useState('');
   const [coordinates, setCoordinates] = useState(null);
   const [imagePath, setImagePath] = useState([{ id: 'addIcon', path: addProductIcon }]);
-   const [files, setFiles] = useState([]);
-  const [fullFile,setFullFile]=useState([])
+  const [files, setFiles] = useState([]);
+  const [fullFile, setFullFile] = useState([]);
+  const [showError, setShowError] = useState(false)
 
   // Params
-  const { accountId } = useParams()
-  const history = useHistory()
+  const { accountId } = useParams();
+  const history = useHistory();
 
   // use Effect
   const dispatch = useDispatch();
@@ -58,14 +58,22 @@ const CreateProduct = () => {
   const currencies = useSelector((state) => state.store.currencies);
   const addresses = useSelector((state) => state.store.addresses);
   const loading = useSelector((state) => state.store.loading);
-   const errorMessage = useSelector((state) => state.store.message);
-
+  const error = useSelector((state) => state.store.error);
+  const errorMessage = useSelector((state) => state.store.message);
+  const listingsConfigs = useSelector((state) => state.auth.listings_configs);
 
   // function
   //
   const handleImageClick = () => {
+        setShowError(false);
+
     let fileInput = document.getElementById('fileInput');
-    fileInput.click();
+    if (files.length !== parseInt(listingsConfigs.listing_pictures_count) ) {
+      fileInput.click();
+    } else {
+      toast.error("You can't add more photo")
+    }
+    
   };
 
   const imageUpload = async (e) => {
@@ -83,17 +91,14 @@ const CreateProduct = () => {
     } else {
       setFullFile([file]);
     }
-
-     
   };
- 
 
   //
   const handleChange = (e) => {
     const target = e.target;
     const name = target.name;
     const value = target.value;
-
+     
     if (name === 'Product Title') {
       setTitle(value);
     } else if (name === 'Product Description') {
@@ -106,11 +111,12 @@ const CreateProduct = () => {
       if (value > 0) {
         setQuantity(value);
       }
-    } else if (name === "Shipping Charge") {
-       if (value > -1) {
-         setShippingCharge(value);
-       }
+    } else if (name === 'Shipping Charge') {
+      if (value > -1) {
+        setShippingCharge(value);
+      }
     }
+    setShowError(false)
   };
 
   //
@@ -156,38 +162,41 @@ const CreateProduct = () => {
 
   //
   const addProductClick = () => {
+      //  if (currency === null) {
+      //    setCurrency(currencies[0].id);
+      //  }
     if (title === '') {
       toast.error('Title is required');
-      return false
+      return false;
     }
     if (description === '') {
       toast.error('Description is required');
-            return false;
-
+      return false;
     }
     if (price === '') {
       toast.error('Price is required');
-            return false;
-
+      return false;
     }
-    if (currency === null) {
-      toast.error('Currency is required');
-            return false;
-
+    if (price < parseInt(listingsConfigs.listing_min_price)) {
+      toast.error(
+        'Minimum price cannot be less than ' + parseInt(listingsConfigs.listing_min_price)
+      );
+      return false;
     }
+ 
     if (coordinates === null) {
       toast.error('Address is required');
-            return false;
-
+      return false;
     }
     if (files === null) {
-        toast.error('Image is required');
-        return false;
+      toast.error('Image is required');
+      return false;
     }
     if (selectedCategory === null) {
-    toast.error('Category is required');
-    return false;
+      toast.error('Category is required');
+      return false;
     }
+    setShowError(true)
     dispatch(
       actions.initFiles(
         accountId,
@@ -198,23 +207,25 @@ const CreateProduct = () => {
         quantity,
         selectedCategory,
         attributeData,
-        currency,
+        currency || currencies[0].id,
         coordinates,
-         files,
+        files,
         fullFile,
         () => history.push(`/store`)
       )
     );
   };
 
- 
+  if (error && showError) {
+    toast.error(errorMessage)
+  }
 
   return (
     <Aux>
-         <Backdrop show={loading} />
-          <Spinner show={loading} />
+      <Backdrop show={loading} />
+      <Spinner show={loading} />
       {errorMessage && <Toast message={errorMessage} type="error" />}
-      
+
       <ToastContainer
         autoClose={2000}
         position="top-center"
@@ -254,7 +265,9 @@ const CreateProduct = () => {
               }
             })}
           </div>
-          <p className={classes.productImgRule}>Max. 4 photos per product</p>
+          <p className={classes.productImgRule}>
+            Max. {listingsConfigs?.listing_pictures_count} photos per product
+          </p>
         </div>
 
         <div className={classes.productDetails}>
@@ -271,13 +284,16 @@ const CreateProduct = () => {
           </div>
           <div className="form-group mt-2">
             <label htmlFor="product-description">Product Description</label>
-            <input
+
+            <textarea
+              rows="4"
               id="product-description"
               className={classes.input}
               name="Product Description"
               type="text"
               placeholder="Product Description"
               onChange={(e) => handleChange(e)}
+              style={{ resize: 'none' }}
             />
           </div>
 
@@ -309,10 +325,9 @@ const CreateProduct = () => {
               />
             </div>
             <div className="form-group mt-2">
-              <label htmlFor="currency">Shipping Charge </label>
+              <label htmlFor="currency">Currency</label>
               <select className={classes.input} name="" id="currency" onChange={selectCurrency}>
-                <option value="zero">Select currency</option>;
-                {currencies.map((currency) => {
+                {currencies?.map((currency, index) => {
                   return <option value={currency.id}>{currency.code}</option>;
                 })}
               </select>

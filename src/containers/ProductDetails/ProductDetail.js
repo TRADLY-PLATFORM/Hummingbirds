@@ -1,26 +1,22 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import classes from "./productDetali.module.css"
+import classes from './productDetali.module.css';
 
 import * as actions from '../../store/actions/index';
 import { useLocation, useParams } from 'react-router';
- import Toast from '../../components/UI/Toast/Toast';
+import Toast from '../../components/UI/Toast/Toast';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Skeleton from '../../components/UI/Skeleton/Skeleton';
 import Backdrop from '../../components/UI/Backdrop/Backdrop';
 
-
-
-
 // images
-import starImage from '../../assets/images/products/Star.svg'
+import starImage from '../../assets/images/products/Star.svg';
 import heartActive from '../../assets/images/products/favourite@2x.png';
 import heartDisable from '../../assets/images/products/heartIcon@2x.png';
 import locationMarker from '../../assets/images/products/locationMarker (1).svg';
 import directionImage from '../../assets/images/products/direction (1).svg';
 import noImage from '../../assets/images/products/noImage.svg';
-
 
 // swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -35,45 +31,44 @@ import useWindowSize from '../../components/Hooks/WindowSize/WindowSize';
 import { selectUserId } from '../../store/selectors/auth';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import { Slide, toast, ToastContainer } from 'react-toastify';
+import Loader from 'react-loader-spinner';
 
 // install Swiper modules
 SwiperCore.use([Autoplay, Pagination, Navigation]);
 
-
-
-
 const ProductDetail = () => {
-
-
-    const location = useLocation();
+  const location = useLocation();
 
   const { id } = useParams();
-    const { width, height } = useWindowSize();
-
+  const { width, height } = useWindowSize();
 
   // Reducer
   const productDetails = useSelector((state) => state.product.productDetails);
   const { listing, ratting_data } = productDetails;
 
-    const isAuthenticated = useSelector((state) => selectUserId(state));
+  const isAuthenticated = useSelector((state) => selectUserId(state));
   const error = useSelector((state) => state.product.error);
   const loading = useSelector((state) => state.product.loading);
   const message = useSelector((state) => state.product.message);
-   const token = useSelector((state) => state.auth.token);
+  const token = useSelector((state) => state.auth.token);
   const followLoading = useSelector((state) => state.store.loading);
   const followError = useSelector((state) => state.store.error);
   const followMessage = useSelector((state) => state.store.message);
   const configsData = useSelector((state) => state.auth.general_configs);
+  const currencies = useSelector((state) => state.store.currencies);
+  const cartError = useSelector((state) => state.cart.error);
+  const cartErrorMessage = useSelector((state) => state.cart.message);
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(actions.initProductDetails(id.split('-')[0]), true);
     dispatch(actions.setGeneralConfigsData());
+    dispatch(actions.initCurrencies());
   }, [id]);
 
+  // function
 
-// function
-  
   // Like
   const productLike = () => {
     let isLiked = false;
@@ -124,11 +119,11 @@ const ProductDetail = () => {
     }, 1000);
   };
 
-// auth redirect
-    const setPath = () => {
-      dispatch(actions.setAuthRedirectPath(location.pathname));
+  // auth redirect
+  const setPath = () => {
+    dispatch(actions.setAuthRedirectPath(location.pathname));
   };
-  
+
   // Get Attribute
   const getAttributes = () => {
     if (listing?.attributes.length > 0) {
@@ -136,47 +131,44 @@ const ProductDetail = () => {
         return (
           <div key={index}>
             {attr.field_type === 1 && (
-              <React.Fragment>
+              <div>
                 <div className={classes.DetailsLeft + ' col-lg-6 col-sm-6 col-md-6'}>
                   {attr.name}
                 </div>
                 <div className={classes.DetailsRight + ' col-lg-6 col-sm-6 col-md-6'}>
                   {attr.values.map((item) => item.name).join(', ')}
                 </div>
-              </React.Fragment>
+              </div>
             )}
             {attr.field_type === 2 && (
-              <React.Fragment key={index}>
+              <div key={index}>
                 <div className={classes.DetailsLeft + ' col-lg-6 col-sm-6 col-md-6'}>
                   {attr.name}
                 </div>
                 <div className={classes.DetailsRight + ' col-lg-6 col-sm-6 col-md-6'}>
                   {attr.values.map((item) => item.name).join(', ')}
                 </div>
-              </React.Fragment>
+              </div>
             )}
             {attr.field_type === 3 && (
-              <React.Fragment key={index}>
+              <div key={index}>
                 <div className={classes.DetailsLeft + ' col-lg-6 col-sm-6 col-md-6'}>
                   {attr.name}
                 </div>
                 <div className={classes.DetailsRight + ' col-lg-6 col-sm-6 col-md-6'}>
                   {attr.values.map((item) => item).join(', ')}
                 </div>
-              </React.Fragment>
+              </div>
             )}
             {attr.field_type === 4 && (
-              <React.Fragment key={index}>
+              <div key={index}>
                 <div className={classes.DetailsLeft + ' col-lg-6 col-sm-6 col-md-6'}>
                   {attr.name}
                 </div>
                 <div className={classes.DetailsRight + ' col-lg-6 col-sm-6 col-md-6'}>
-                  {attr
-                    .values
-                    .map((item) => item)
-                    .join(', ')}
+                  {attr.values.map((item) => item).join(', ')}
                 </div>
-              </React.Fragment>
+              </div>
             )}
           </div>
         );
@@ -186,25 +178,65 @@ const ProductDetail = () => {
   };
 
   // Get Category
-    const getCategoryIds = () => {
-      if (listing?.categories.length > 0) {
-        return listing?.categories.map((item) => item.name).join(', ');
-      }
-      return '';
+  const getCategoryIds = () => {
+    if (listing?.categories.length > 0) {
+      return listing?.categories.map((item) => item.name).join(', ');
+    }
+    return '';
   };
-  
+
   // toast Message
-    let toastMessage = null;
-    if (error || followError) {
-      toastMessage = <Toast type="error" message={message || followMessage} />;
+  let toastMessage = null;
+  if (error || followError || cartError) {
+    toastMessage = <Toast type="error" message={message || followMessage || cartErrorMessage} />;
   }
+
   // prev page
-    const goBack = () => {
-      window.history.back();
+  const goBack = () => {
+    window.history.back();
+  };
+  // add cart
+  const addCart = () => {
+    const productId = listing?.id;
+    const cartData = {
+      cart: {
+        listing_id: productId,
+        quantity: 1,
+      },
     };
+    dispatch(actions.addToCart(cartData, currencies[0]));
+    setTimeout(() => {
+      if (!error) {
+        dispatch(actions.initProductDetails(id.split('-')[0], false));
+        dispatch(actions.initCurrencies());
+      }
+    }, 1000);
+  };
 
   return (
     <>
+      {loading ? (
+        <>
+          <div className={classes.Backdrop}></div>
+          <Loader
+            type="ThreeDots"
+            color="var(--primary_color)"
+            height={100}
+            width={100}
+            style={{
+              position: 'absolute',
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              zIndex: '500',
+            }}
+          />
+        </>
+      ) : (
+        <></>
+      )}
       <Helmet>
         <title> {listing?.title || 'N/A'}- Buy Online </title>
         <meta name="description" content={`${listing?.description}`} />
@@ -213,8 +245,18 @@ const ProductDetail = () => {
       <Aux>
         <Backdrop show={loading} />
         <Spinner show={loading} />
-
+        <ToastContainer
+          autoClose={2000}
+          position="top-center"
+          transition={Slide}
+          closeOnClick
+          rtl={false}
+          pauseOnVisibilityChange
+          draggable
+          pauseOnHover
+        />
         {toastMessage}
+
         <div className="">
           {location.state && (
             <>
@@ -235,127 +277,173 @@ const ProductDetail = () => {
           )}
         </div>
 
-        <div className={classes.productDetailsBanner}>
-          <div className={classes.productDetailsBox}>
-            <div className={classes.MainPart}>
-              <div>
-                <Swiper
-                  spaceBetween={30}
-                  centeredSlides={true}
-                  autoplay={{
-                    delay: 2500,
-                    disableOnInteraction: false,
-                  }}
-                  pagination={{
-                    clickable: true,
-                  }}
-                  className="mySwiper"
-                >
-                  {listing?.images.map((img, index) => {
-                    return (
-                      <SwiperSlide key={index}>
-                        <img className={classes.productImage} src={img} />
-                      </SwiperSlide>
-                    );
-                  })}
-                </Swiper>
-                <div className={classes.description}>
-                  <h4 className={classes.descriptionHeader}>Description</h4>
-                  <p className={classes.descriptionBody}>{listing?.description}</p>
-                </div>
-              </div>
-              <div className={classes.MainPartInfo}>
-                <div className={classes.productHeaderPart}>
-                  <p className={classes.stockMessage}>
-                    {listing?.stock && `Only ${listing?.stock} products in stock`}
-                  </p>
-                  <h4 className={classes.productName}>{listing?.title}</h4>
-                  <div className={classes.ratingInfo}>
-                    <img src={starImage} alt="" />
-                    <p>{ratting_data && ratting_data.rating_average}</p>
-                    <span>{ratting_data?.rating_count} Ratings</span>
-                  </div>
-                  <div className={classes.buttons}>
-                    <button type="button" className={classes.addToCart}>
-                      Add To Cart
-                    </button>
-                    <button type="button" className={classes.buyNow}>
-                      Buy Now
-                    </button>
-                  </div>
-                  {isAuthenticated ? (
-                    <div className={classes.likeBtn}>
-                      <button onClick={productLike} className=" ">
-                        <img
-                          id="likeImage"
-                          src={listing?.liked ? heartActive : heartDisable}
-                          className={listing?.liked ? classes.heartActive : classes.heartDisable}
-                          alt=""
-                        />
-                      </button>
-                    </div>
-                  ) : (
-                    <Link to="/sign-in" className={classes.likeBtn} onClick={setPath}>
-                      <button>
-                        <img className={classes.heartDisable} src={heartDisable} alt="" />
-                      </button>
-                    </Link>
-                  )}
-                </div>
-                <div className={classes.addressBox}>
-                  <div className={classes.markerImage}>
-                    <img src={locationMarker} alt="" />
-                  </div>
-                  <div>
-                    <p className={classes.shortAddress}>
-                      {listing?.location.city && `${listing?.location.city}`}
-                      {listing?.location.country && `${listing?.location.country}`}
-                    </p>
-                    <p className={classes.formattedAddress}>
-                      {listing?.location.formatted_address}
-                    </p>
-                  </div>
-                  <div className={classes.directionImage}>
-                    <img src={directionImage} alt="" />
-                  </div>
-                </div>
-                <div className={classes.storeDetails}>
-                  <img
-                    src={listing?.account.images.length > 0 ? listing?.account.images[0] : noImage}
-                    alt=""
-                    className={classes.storeImage}
-                  />
-                  <Link
-                    className={classes.storeName}
-                    to={`/a/${listing?.account_id}-${listing?.account.name}`}
+        {listing ? (
+          <div className={classes.productDetailsBanner}>
+            <div className={classes.productDetailsBox}>
+              <div className={classes.MainPart}>
+                <div>
+                  <Swiper
+                    spaceBetween={30}
+                    centeredSlides={true}
+                    autoplay={{
+                      delay: 2500,
+                      disableOnInteraction: false,
+                    }}
+                    pagination={{
+                      clickable: true,
+                    }}
+                    className="mySwiper"
                   >
-                    {listing?.account.name}
-                  </Link>
-                  {/* <p className={classes.storeName}>{listing?.account.name}</p> */}
-                  <div className={classes.followButton}>
+                    {listing?.images.map((img, index) => {
+                      return (
+                        <SwiperSlide key={index}>
+                          <img className={classes.productImage} src={img} />
+                        </SwiperSlide>
+                      );
+                    })}
+                  </Swiper>
+                  <div className={classes.description}>
+                    <h4 className={classes.descriptionHeader}>Description</h4>
+                    <p className={classes.descriptionBody}>{listing?.description}</p>
+                  </div>
+                </div>
+                <div className={classes.MainPartInfo}>
+                  <div className={classes.productHeaderPart}>
+                    <p className={classes.stockMessage}>
+                      {listing?.stock && `Only ${listing?.stock} products in stock`}
+                    </p>
+                    <h4 className={classes.productName}>{listing?.title}</h4>
+                    <div className={classes.ratingInfo}>
+                      <img src={starImage} alt="" />
+                      <p>{ratting_data && ratting_data.rating_average}</p>
+                      <span>{ratting_data?.rating_count} Ratings</span>
+                    </div>
+                    <div className={classes.buttons}>
+                      {isAuthenticated ? (
+                        <>
+                          {listing?.in_cart ? (
+                            <Link
+                              to="/cart"
+                              type="button"
+                              className={classes.addToCart}
+                              onClick={addCart}
+                            >
+                              Go To Cart
+                            </Link>
+                          ) : (
+                            <button type="button" className={classes.addToCart} onClick={addCart}>
+                              Add To Cart
+                            </button>
+                          )}
+
+                          <Link
+                            onClick={addCart}
+                            type="button"
+                            className={classes.buyNow}
+                            to={{
+                              pathname: `/cart`,
+                              state: { option: 'Buy Now' },
+                            }}
+                          >
+                            Buy Now
+                          </Link>
+                        </>
+                      ) : (
+                        <>
+                          <Link
+                            onClick={setPath}
+                            to="/sign-in"
+                            type="button"
+                            className={classes.addToCart}
+                          >
+                            Add To Cart
+                          </Link>
+                          <Link
+                            onClick={setPath}
+                            to="/sign-in"
+                            type="button"
+                            className={classes.buyNow}
+                          >
+                            Buy Now
+                          </Link>
+                        </>
+                      )}
+                    </div>
                     {isAuthenticated ? (
-                      <button
-                        id="followBtn"
-                        className={`${
-                          listing?.account.following ? 'btnGreenStyle' : 'btnOutlineGreenStyle'
-                        }`}
-                        onClick={storeFollow}
-                      >
-                        {listing?.account.following ? 'Following' : 'Follow'}
-                      </button>
+                      <div className={classes.likeBtn}>
+                        <button onClick={productLike} className=" ">
+                          <img
+                            id="likeImage"
+                            src={listing?.liked ? heartActive : heartDisable}
+                            className={listing?.liked ? classes.heartActive : classes.heartDisable}
+                            alt=""
+                          />
+                        </button>
+                      </div>
                     ) : (
-                      <Link to="/sign-in" onClick={setPath}>
-                        <button
-                          className="btnOutlineGreenStyle pull-right "
-                          style={{ marginLeft: '15px' }}
-                        >
-                          Follow
+                      <Link to="/sign-in" className={classes.likeBtn} onClick={setPath}>
+                        <button>
+                          <img className={classes.heartDisable} src={heartDisable} alt="" />
                         </button>
                       </Link>
                     )}
                   </div>
-                </div>
-                <div className={classes.shareButton}>
+                  <div className={classes.addressBox}>
+                    <div className={classes.markerImage}>
+                      <img src={locationMarker} alt="" />
+                    </div>
+                    <div>
+                      <p className={classes.shortAddress}>
+                        {listing?.location.city && `${listing?.location.city}`}
+                        {listing?.location.country && `${listing?.location.country}`}
+                      </p>
+                      <p className={classes.formattedAddress}>
+                        {listing?.location.formatted_address}
+                      </p>
+                    </div>
+                    <div className={classes.directionImage}>
+                      <img src={directionImage} alt="" />
+                    </div>
+                  </div>
+                  <div className={classes.storeDetails}>
+                    <img
+                      src={
+                        listing?.account.images.length > 0 ? listing?.account.images[0] : noImage
+                      }
+                      alt=""
+                      className={classes.storeImage}
+                    />
+                    <Link
+                      className={classes.storeName}
+                      to={`/a/${listing?.account_id}-${listing?.account.name}`}
+                    >
+                      {listing?.account.name}
+                    </Link>
+                    {/* <p className={classes.storeName}>{listing?.account.name}</p> */}
+                    <div className={classes.followButton}>
+                      {isAuthenticated ? (
+                        <button
+                          id="followBtn"
+                          className={`${
+                            listing?.account.following ? 'btnGreenStyle' : 'btnOutlineGreenStyle'
+                          }`}
+                          onClick={storeFollow}
+                        >
+                          {listing?.account.following ? 'Following' : 'Follow'}
+                        </button>
+                      ) : (
+                        <Link to="/sign-in" onClick={setPath}>
+                          <button
+                            className="btnOutlineGreenStyle pull-right "
+                            style={{ marginLeft: '15px' }}
+                          >
+                            Follow
+                          </button>
+                        </Link>
+                      )}
+                    </div>
+                  </div>
+                  {/* <div className={classes.shareButton}>
                   <button
                     type="button"
                     className="btn btn-addtocart btn-lg btn-block height70"
@@ -366,23 +454,44 @@ const ProductDetail = () => {
                   >
                     Download App
                   </button>
-                </div>
-                
-              </div>
-              <div className={classes.detailsBox}>
-                  <h4 className={classes.detailsHeader}>Details</h4>
-                  {getAttributes()}
+                </div> */}
+                  <div>
+                    <div className={classes.detailsBox}>
+                      <h4 className={classes.detailsHeader}>Details</h4>
+                      <div className={classes.attributePart}>{getAttributes()}</div>
 
-                  <div className={classes.DetailsLeft + ' col-lg-6 col-sm-6 col-md-6'}>
-                    Category
-                  </div>
-                  <div className={classes.DetailsRight + ' col-lg-6 col-sm-6 col-md-6'}>
-                    {getCategoryIds()}
+                      <div className={classes.DetailsLeft + ' col-lg-6 col-sm-6 col-md-6'}>
+                        Category
+                      </div>
+                      <div className={classes.DetailsRight + ' col-lg-6 col-sm-6 col-md-6'}>
+                        {getCategoryIds()}
+                      </div>
+                    </div>
                   </div>
                 </div>
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <>
+            <Loader
+              type="ThreeDots"
+              color="var(--primary_color)"
+              height={100}
+              width={100}
+              style={{
+                position: 'absolute',
+                top: '150px',
+                width: '100%',
+                height: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                zIndex: '500',
+              }}
+            />
+          </>
+        )}
       </Aux>
     </>
   );

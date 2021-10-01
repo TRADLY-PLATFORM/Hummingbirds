@@ -55,7 +55,7 @@
 .receiptRow {
   /* width: 70%; */
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 26% 70%;
   align-items: center;
 }
 .receiptRow p {
@@ -69,6 +69,11 @@
 .receiptAmountPart {
     width: 30%;
   justify-content: center;
+ }
+ .receiptAmountPart  .receiptRow{
+   justify-content: right;
+     grid-template-columns: 26% 30%;
+
  }
 
 .button {

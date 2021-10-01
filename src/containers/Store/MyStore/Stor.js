@@ -33,19 +33,15 @@ const Store = () => {
 
   // useEffect:
   useEffect(() => {
-    setTimeout(() => {
-      dispatch(actions.userStoreLists(isAuthenticated));
-    }, 1000);
-  }, [isAuthenticated]);
+       dispatch(actions.userStoreLists(isAuthenticated));
+   }, [isAuthenticated]);
 
   useEffect(() => {
-    setTimeout(() => {
-      if (storeLists.length > 0) {
+       if (storeLists.length > 0) {
         const filter = '&account_id=' + storeLists[0].id;
         dispatch(actions.initListings(0, filter, totalCountOfProducts));
       }
-    }, 1000);
-  }, [storeLists]);
+   }, [storeLists]);
 
   let storeContent = null;
   if (isAuthenticated && storeLists) {
@@ -87,7 +83,7 @@ const Store = () => {
                           }}
                           className="btnGreenStyle  "
                         >
-                          Edit profile
+                          Edit Store
                         </Link>
                         <Link
                           to={{
@@ -116,9 +112,9 @@ const Store = () => {
                           }
                           return (
                             <Link
-                              to={`/l/${list.id}-${list.title}`}
+                              to={list.active && `/l/${list.id}-${list.title}`}
                               key={i}
-                              style={{ textDecoration: 'none' }}
+                              style={{ textDecoration: 'none', position: 'relative' }}
                             >
                               <div className={classes.latestTrend}>
                                 <img
@@ -159,8 +155,10 @@ const Store = () => {
                                     </>
                                   )}
                                 </div>
+                                {list.active === false && (
+                                  <p className={classes.produtDontActive}>Under Review</p>
+                                )}
                               </div>
-                              <div></div>
                             </Link>
                           );
                         })}

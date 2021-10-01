@@ -51,6 +51,7 @@ const fetchStoreDetailsFailed = (state, action) => {
 const initStoreLists = (state, action) => {
   return updateObject(state, {
     loading: true,
+    
   });
 };
 const setCurrencies = (state, action) => {
@@ -102,7 +103,8 @@ const initSearch = (state, action) => {
 const createStoreFailed = (state, action) => {
   return updateObject(state, {
     loading: false,
-    error: action.error,
+    error: true,
+    message: action.msg,
   });
 };
 

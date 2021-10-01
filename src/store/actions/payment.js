@@ -110,6 +110,30 @@ export const addAddress = (data, changePickupAddress,orderID, store_id) => {
       });
   };
 };
+
+// change Address
+export const changeAddress = (data ,id) => {
+  return (dispatch) => {
+    const url = 'v1/addresses/'+id;
+    var config = {
+      method: 'put',
+      url: url,
+      data: data,
+    };
+    axios(config)
+      .then((response) => {
+        if (response.data.status) {
+          dispatch(setAddress(response.data.data));
+           
+        } else {
+          console.log(response);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
 // Get Address
 export const setgetAddress = (data) => {
   return {

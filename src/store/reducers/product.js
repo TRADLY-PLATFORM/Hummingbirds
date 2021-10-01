@@ -36,6 +36,7 @@ const fetchProductDetailsFailed = (state, action) => {
 const initListings = (state, action) => {
   return updateObject(state, {
     loading: true,
+    listings:null,
   });
 };
 
