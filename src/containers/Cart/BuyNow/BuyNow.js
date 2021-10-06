@@ -57,8 +57,8 @@ const BuyNow = () => {
   }, [0]);
 
   useEffect(() => {
-    if (currencies.length > 0) {
-      dispatch(actions.getCartList(currencies[0], shippingMethod));
+    if (currencies.length > 0 && shipping_methods.lenth) {
+      dispatch(actions.getCartList(currencies[0], shipping_methods[0].id));
     }
   }, [currencies]);
 

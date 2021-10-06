@@ -205,19 +205,22 @@ const TopHeader = () => {
             </Link>
 
             <div className={classes.dropdownMenu + ' user-menu dropdown-menu'}>
-              {userDetails === {} ? (
-                <Link className={classes.navLink} to="/sign-in" onClick={() => setPath(pathname)}>
-                  <i className="fa fa-power-off mr-10"></i>Login
-                </Link>
-              ) : (
+              {isAuthenticated ? (
                 <div>
-                  <Link className={classes.navLink} to="/profile">
+                  <Link
+                    className={classes.navLink}
+                    to={isAuthenticated ? '/profile' : '/sign-in'}
+                   >
                     <i className="fa fa-user"></i> My Profile
                   </Link>
                   <Link className={classes.navLink} to="/logout">
                     <i className="fa fa-power-off"></i> Logout
                   </Link>
                 </div>
+              ) : (
+                <Link className={classes.navLink} to="/sign-in" onClick={() => setPath(pathname)}>
+                  <i className="fa fa-power-off mr-10"></i>Login
+                </Link>
               )}
             </div>
           </div>
