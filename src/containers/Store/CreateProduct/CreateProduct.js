@@ -225,7 +225,7 @@ const CreateProduct = () => {
 
       <ToastContainer
         autoClose={2000}
-        position="top-center"
+        position="bottom-right"
         transition={Slide}
         closeOnClick
         rtl={false}
@@ -325,7 +325,11 @@ const CreateProduct = () => {
               <label htmlFor="currency">Currency</label>
               <select className={classes.input} name="" id="currency" onChange={selectCurrency}>
                 {currencies?.map((currency, index) => {
-                  return <option value={currency.id} key={Math.random()}>{currency.code}</option>;
+                  return (
+                    <option value={currency.id} key={Math.random()}>
+                      {currency.code}
+                    </option>
+                  );
                 })}
               </select>
             </div>
@@ -405,7 +409,11 @@ const CreateProduct = () => {
             >
               <option value="dot">... </option>
               {categories?.map((category) => {
-                return <option value={category.id} key={Math.random()*80000}>{category.name}</option>;
+                return (
+                  <option value={category.id} key={Math.random() * 80000}>
+                    {category.name}
+                  </option>
+                );
               })}
             </select>
           </div>

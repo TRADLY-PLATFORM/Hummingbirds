@@ -119,7 +119,7 @@ class StoreDetails extends Component {
       );
     }
     if (listings && listings.size > 0) {
-      listing = <Listing listings={listings} total_records={total_records} />;
+      listing = <Listing listings={listings} total_records={total_records} message='Store details' />;
       if (total_records > totalCountOfProducts && listings.size !== total_records) {
         showLoadButton = (
           <div className="col-sm-12">

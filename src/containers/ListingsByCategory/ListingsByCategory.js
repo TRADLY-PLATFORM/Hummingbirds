@@ -63,7 +63,7 @@ const ListingsByCategory = () => {
               return (
                 <Link
                   to={{
-                    pathname: `/l/${list.id}-${list.title.replace('%', '')}`,
+                    pathname: `/l/${list.id}-${list.title.replace('%', '').replace('/','')}`,
                     state: { prevPath: `${categoryName.split('-')[1]} listings` },
                   }}
                   key={i}

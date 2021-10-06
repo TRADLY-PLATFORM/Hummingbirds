@@ -23,9 +23,9 @@ import ChangeShippingAddress from '../ShippingAddress/ChangeShippingAddress';
 const BuyNow = () => {
   // state
    const [paymentMethod, setPaymentMethod] = useState(null);
-  const [shippingMethod, setShippingMethod] = useState(1);
+  const [shippingMethod, setShippingMethod] = useState(null);
   const [addressForm, setAddressForm] = useState(false);
-  const [pickupAddress, setPickupAddress] = useState(true);
+  const [pickupAddress, setPickupAddress] = useState(false);
   const [shippingAddress, setShippingAddress] = useState({ type: 'delivery' });
   const [openModal, setOpenModal] = useState(false);
   const [changeModal, setChangeModal] = useState(false);
@@ -58,6 +58,7 @@ const BuyNow = () => {
 
   useEffect(() => {
     if (currencies.length > 0 && shipping_methods.lenth) {
+      setShippingMethod(shipping_methods[0]);
       dispatch(actions.getCartList(currencies[0], shipping_methods[0].id));
     }
   }, [currencies]);
@@ -115,13 +116,13 @@ const BuyNow = () => {
   };
 
   // Select Payment
-  const selectPaymentMethod = (e) => {
-    setPaymentMethod(e.id);
+  const selectPaymentMethod = (method) => {
+    setPaymentMethod(method);
   };
 
   // Select Shipping Method
   const selectShippingMethod = (item) => {
-    setShippingMethod(item.id);
+    setShippingMethod(item);
     dispatch(actions.getCartList(currencies[0], item.id));
     if (item.type === 'delivery') {
       dispatch(actions.getAddress(item.type));
@@ -178,7 +179,7 @@ const BuyNow = () => {
       toast.error('Shipping Method is required');
       return false;
     }
-    if (shippingMethod === 10) {
+    if (shippingMethod.type === 'delivery') {
       if (selectShippingAddress === null) {
         toast.error('Select Your One shipping Address');
         return false;
@@ -190,23 +191,23 @@ const BuyNow = () => {
     }
 
     let data;
-    if (shippingMethod === 10) {
+    if (shippingMethod.type === 'delivery') {
       data = {
         order: {
-          payment_method_id: paymentMethod,
-          shipping_method_id: shippingMethod,
+          payment_method_id: paymentMethod.id,
+          shipping_method_id: shippingMethod.id,
           shipping_address_id: selectShippingAddress,
         },
       };
     } else {
       data = {
         order: {
-          payment_method_id: paymentMethod,
-          shipping_method_id: shippingMethod,
+          payment_method_id: paymentMethod.id,
+          shipping_method_id: shippingMethod.id,
          },
       }
     }
-    if(paymentMethod !== 9){
+    if(paymentMethod.type !== 'stripe'){
       dispatch(actions.clickCheckout(data, () => history.push(`/checkout-success`)));
     }else{
           dispatch(actions.clickCheckout(data, () => history.push(`/card`),'stripe'));
@@ -300,7 +301,7 @@ const BuyNow = () => {
                         <button
                           key={index}
                           className={
-                            shippingMethod === method.id ? 'btnGreenStyle' : 'btnOutlineGreenStyle'
+                            shippingMethod?.id === method.id ? 'btnGreenStyle' : 'btnOutlineGreenStyle'
                           }
                           onClick={() => selectShippingMethod(method)}
                         >
@@ -430,7 +431,7 @@ const BuyNow = () => {
                         <button
                           key={index}
                           className={
-                            paymentMethod === method.id ? 'btnGreenStyle' : 'btnOutlineGreenStyle'
+                            paymentMethod?.id === method.id ? 'btnGreenStyle' : 'btnOutlineGreenStyle'
                           }
                           onClick={() => selectPaymentMethod(method)}
                         >

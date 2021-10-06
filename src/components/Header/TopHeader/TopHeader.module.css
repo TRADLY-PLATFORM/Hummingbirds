@@ -1,28 +1,25 @@
- 
-
-.topHeaderBox{
-  padding:24px 0px 16px 0;
-
+.topHeaderBox {
+  padding: 24px 0px 16px 0;
 }
 
-.firstPart{
+.firstPart {
   position: relative;
   min-height: 50px;
-  
+
   display: grid;
-  grid-template-columns: 10% 70% 20%;
+  grid-template-columns: 10% 50% 40%;
   align-items: center;
- }
-.logo{
+}
+.logo {
   position: absolute;
   top: 0;
   left: 0;
- width: 100%;  
+  width: 100%;
   display: flex;
- justify-content: center;
- }
+  justify-content: center;
+}
 
-.userPart{
+.userPart {
   display: flex;
   align-items: center;
   justify-content: end;
@@ -83,83 +80,77 @@
   position: relative;
 }
 
-.cartArea{
+.cartArea {
   position: relative;
   align-items: center;
   margin-right: 20px;
   width: 44px;
 }
-.cartArea a  {
-   display: flex;
+.cartArea a {
+  display: flex;
   align-items: center;
   justify-content: center;
   text-decoration: none;
- }
- 
+}
+
 .countCart {
- 
-  background: #FF6262;
+  background: #ff6262;
   border-radius: 50%;
   color: #fff;
   font-size: 10px;
   line-height: 14px !important;
   min-width: 20px !important;
-  height: 20px  !important;
-   position: absolute;
-   font-weight: bold;
+  height: 20px !important;
+  position: absolute;
+  font-weight: bold;
   top: 0;
-   right: 0;
-   margin-top: -10px;
-   margin-right: 3px;
+  right: 0;
+  margin-top: -10px;
+  margin-right: 3px;
   text-align: center;
-  border:3px solid #FF6262;
+  border: 3px solid #ff6262;
 }
 
 /* secondPart */
 
-.secondPart{
+.secondPart {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 10px;
 }
 
-.categories{
+.categories {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.categoryBox{
+.categoryBox {
   min-height: 44px;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 0 12px;
-     color: #222;
-   font-weight: 400;
-   font-size: 16px;
-   height: 100%;
-     text-decoration: none;
-
- }
- .categoryBox:hover{
+  color: #222;
+  font-weight: 400;
+  font-size: 16px;
+  height: 100%;
   text-decoration: none;
-     color: rgba(34, 34, 34, 0.767);
-     
- }
+}
+.categoryBox:hover {
+  text-decoration: none;
+  color: var(--primary_color);
+}
 
-
- .subCategoryBox{
-   position: relative;
-   display: none;
-   height: 200px;
-  }
-   /* .categoryBox:hover .subCategoryBox{
+.subCategoryBox {
+  position: relative;
+  display: none;
+  height: 200px;
+}
+/* .categoryBox:hover .subCategoryBox{
   display: block;
  } */
-
-
 
 @media screen and (max-width: 900px) {
   .spanName {

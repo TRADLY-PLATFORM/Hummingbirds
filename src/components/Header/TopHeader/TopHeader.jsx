@@ -22,6 +22,8 @@ const TopHeader = () => {
   useEffect(() => {
     dispatch(actions.initCategoryLists());
     dispatch(actions.initCurrencies());
+    dispatch(actions.getShippingMethod());
+
   }, [0]);
 
 
@@ -35,10 +37,12 @@ const TopHeader = () => {
   const userDetails = useSelector((state) => state.auth.userDetails);
   const categories = useSelector((state) => state.product.categoryLists);
   const currencies = useSelector((state) => state.store.currencies);
+  const shipping_methods = useSelector((state) => state.payment.shipping_methods);
+
 
   // function
   function getUserName() {
-    return userDetails.first_name + userDetails.last_name || 'Guest';
+    return userDetails.first_name  || 'Guest';
   }
 
   function getUserImage() {
@@ -51,8 +55,8 @@ const TopHeader = () => {
 
   // 
     useEffect(() => {
-      if (isAuthenticated && currencies.length > 0) {
-        dispatch(actions.getCartList(currencies[0], 1));
+      if (isAuthenticated && currencies.length > 0 && shipping_methods.length) {
+        dispatch(actions.getCartList(currencies[0], shipping_methods[0].id));
       }
     }, [currencies || cartList]);
 
@@ -64,10 +68,10 @@ const TopHeader = () => {
 
   useEffect(() => {
     if (Categories.length > 0) {
-      if (categories.length < 7) {
+      if (categories.length < 9) {
         setCategoriesSet(categories);
       } else {
-        const sliceLength = 7;
+        const sliceLength = 9;
         let updatedCategories = categories.slice(0, sliceLength);
         let moreCategory = {
           id: Math.random(),
@@ -243,8 +247,11 @@ const TopHeader = () => {
                     key={Math.random() * 300000}
                     className={classes.categoryBox}
                   >
-                    {' '}
-                    {category.name}{' '}
+                   
+                      {category.name.length < 9
+                        ? category.name
+                        : category.name.substring(0, 6) + '..'}
+                     
                   </Link>
                 </>
               );

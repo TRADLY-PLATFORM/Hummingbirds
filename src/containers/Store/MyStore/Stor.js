@@ -105,7 +105,14 @@ const Store = () => {
                           }
                           return (
                             <Link
-                              to={list.active && `/l/${list.id}-${list.title}`}
+                              to={
+                                list.active && {
+                                  pathname: `/l/${list.id}-${list.title
+                                    .replace('%', '')
+                                    .replace('/', '')}`,
+                                  state: { prevPath: `your store` },
+                                }
+                              }
                               key={i}
                               style={{ textDecoration: 'none', position: 'relative' }}
                             >

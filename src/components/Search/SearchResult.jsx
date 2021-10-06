@@ -52,7 +52,7 @@ const SearchResult = () => {
             return (
               <Link
                 to={{
-                  pathname: `/l/${list.id}-${list.title.replace('%', '')}`,
+                  pathname: `/l/${list.id}-${list.title.replace('%', '').replace('/', '')}`,
                   state: { prevPath: 'search results ' },
                 }}
                 key={i}

@@ -58,7 +58,7 @@ const Card = () => {
       {' '}
       <ToastContainer
         autoClose={2000}
-        position="top-center"
+        position="bottom-right"
         transition={Slide}
         closeOnClick
         rtl={false}
