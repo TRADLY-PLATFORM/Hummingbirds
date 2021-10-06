@@ -7,8 +7,7 @@ import * as actions from '../../../store/actions/index';
 import { Slide, toast, ToastContainer } from 'react-toastify';
 import { validateEmail } from '../../../shared/utility';
 import { isValidNumber } from 'libphonenumber-js';
-import Loader from 'react-loader-spinner';
-
+ 
 const ForgotPassword = () => {
   const [email, setEmail] = useState(null);
   const [number, setNumber] = useState(null);

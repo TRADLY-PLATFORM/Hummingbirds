@@ -24,15 +24,13 @@ const setMessage = (state, action) => {
 };
 
 const addToCart = (state, action) => {
-  console.log(state, action);
-  return updateObject(state, {
+   return updateObject(state, {
     error: false,
     // loading: false,
   });
 };
 const setCartlist = (state, action) => {
-  console.log(state, action);
-  return updateObject(state, {
+   return updateObject(state, {
     cart_list: action.cart_list,
     loading: false,
     error: false,
@@ -40,8 +38,7 @@ const setCartlist = (state, action) => {
 };
 
 const CartReducer = (state = initialState, action) => {
-  console.log(action);
-  switch (action.type) {
+   switch (action.type) {
     case actionTypes.CART_LOADING:
       return setLoading(state, action);
     case actionTypes.ERROR_MESSAGE:

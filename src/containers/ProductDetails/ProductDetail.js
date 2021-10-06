@@ -7,8 +7,7 @@ import { useLocation, useParams } from 'react-router';
 import Toast from '../../components/UI/Toast/Toast';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
 import Spinner from '../../components/UI/Spinner/Spinner';
-import Skeleton from '../../components/UI/Skeleton/Skeleton';
-import Backdrop from '../../components/UI/Backdrop/Backdrop';
+ import Backdrop from '../../components/UI/Backdrop/Backdrop';
 
 // images
 import starImage from '../../assets/images/products/Star.svg';
@@ -27,11 +26,10 @@ import 'swiper/components/navigation/navigation.min.css';
 
 // import Swiper core and required modules
 import SwiperCore, { Autoplay, Pagination, Navigation } from 'swiper/core';
-import useWindowSize from '../../components/Hooks/WindowSize/WindowSize';
-import { selectUserId } from '../../store/selectors/auth';
+ import { selectUserId } from '../../store/selectors/auth';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { Slide, toast, ToastContainer } from 'react-toastify';
+import { Slide,  ToastContainer } from 'react-toastify';
 import Loader from 'react-loader-spinner';
 
 // install Swiper modules
@@ -41,7 +39,7 @@ const ProductDetail = () => {
   const location = useLocation();
 
   const { id } = useParams();
-  const { width, height } = useWindowSize();
+  // const { width, height } = useWindowSize();
 
   // Reducer
   const productDetails = useSelector((state) => state.product.productDetails);
@@ -51,21 +49,21 @@ const ProductDetail = () => {
   const error = useSelector((state) => state.product.error);
   const loading = useSelector((state) => state.product.loading);
   const message = useSelector((state) => state.product.message);
-  const token = useSelector((state) => state.auth.token);
-  const followLoading = useSelector((state) => state.store.loading);
+  // const token = useSelector((state) => state.auth.token);
+  // const followLoading = useSelector((state) => state.store.loading);
   const followError = useSelector((state) => state.store.error);
   const followMessage = useSelector((state) => state.store.message);
-  const configsData = useSelector((state) => state.auth.general_configs);
+  // const configsData = useSelector((state) => state.auth.general_configs);
   const currencies = useSelector((state) => state.store.currencies);
   const cartError = useSelector((state) => state.cart.error);
   const cartErrorMessage = useSelector((state) => state.cart.message);
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(actions.initProductDetails(id.split('-')[0]), true);
+    dispatch(actions.initProductDetails(id.split('-')[0], true));
     dispatch(actions.setGeneralConfigsData());
     dispatch(actions.initCurrencies());
-  }, [id]);
+  }, [dispatch, id]);
 
   // function
 
@@ -215,28 +213,7 @@ const ProductDetail = () => {
 
   return (
     <>
-      {loading ? (
-        <>
-          <div className={classes.Backdrop}></div>
-          <Loader
-            type="ThreeDots"
-            color="var(--primary_color)"
-            height={100}
-            width={100}
-            style={{
-              position: 'absolute',
-              width: '100%',
-              height: '100%',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              zIndex: '500',
-            }}
-          />
-        </>
-      ) : (
-        <></>
-      )}
+                 
       <Helmet>
         <title> {listing?.title || 'N/A'}- Buy Online </title>
         <meta name="description" content={`${listing?.description}`} />
@@ -247,7 +224,7 @@ const ProductDetail = () => {
         <Spinner show={loading} />
         <ToastContainer
           autoClose={2000}
-          position="top-center"
+          position="bottom-right"
           transition={Slide}
           closeOnClick
           rtl={false}
@@ -277,7 +254,7 @@ const ProductDetail = () => {
           )}
         </div>
 
-        {listing ? (
+        {!loading && (
           <div className={classes.productDetailsBanner}>
             <div className={classes.productDetailsBox}>
               <div className={classes.MainPart}>
@@ -297,7 +274,7 @@ const ProductDetail = () => {
                     {listing?.images.map((img, index) => {
                       return (
                         <SwiperSlide key={index}>
-                          <img className={classes.productImage} src={img} />
+                          <img className={classes.productImage} src={img} alt='productImage' />
                         </SwiperSlide>
                       );
                     })}
@@ -472,26 +449,8 @@ const ProductDetail = () => {
               </div>
             </div>
           </div>
-        ) : (
-          <>
-            <Loader
-              type="ThreeDots"
-              color="var(--primary_color)"
-              height={100}
-              width={100}
-              style={{
-                position: 'absolute',
-                top: '150px',
-                width: '100%',
-                height: '100%',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                zIndex: '500',
-              }}
-            />
-          </>
-        )}
+        )  
+        }
       </Aux>
     </>
   );

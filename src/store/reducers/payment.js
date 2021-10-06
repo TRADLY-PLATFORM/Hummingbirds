@@ -9,7 +9,9 @@ const initialState = {
   shipping_methods: [],
   address_list: [],
   ephemeral_key: {},
-  paymentIntent:{},
+  paymentIntent: {},
+  stripeConnect: {},
+  logInLink:''
 };
 
 const setLoading = (state, action) => {
@@ -19,8 +21,7 @@ const setLoading = (state, action) => {
 };
 
 const setPaymentMethods = (state, action) => {
-  console.log(state, action);
-  return updateObject(state, {
+   return updateObject(state, {
     error: false,
     payment_methods: action.payment_methods,
     loading: false,
@@ -28,8 +29,7 @@ const setPaymentMethods = (state, action) => {
 };
 
 const setAddressList = (state, action) => {
-  console.log(state, action);
-  return updateObject(state, {
+   return updateObject(state, {
     error: false,
     address_list: action.addressList,
     loading: false,
@@ -37,8 +37,7 @@ const setAddressList = (state, action) => {
 };
 
 const setShippingMethods = (state, action) => {
-  console.log(state, action);
-  return updateObject(state, {
+   return updateObject(state, {
     error: false,
     shipping_methods: action.shipping_methods,
     loading: false,
@@ -46,16 +45,14 @@ const setShippingMethods = (state, action) => {
 };
 
 const setEphemeralKey = (state, action) => {
-  console.log(state, action);
-  return updateObject(state, {
+   return updateObject(state, {
     error: false,
     loading: false,
     ephemeral_key: action.data,
   });
 };
 const setPaymentIntent = (state, action) => {
-  console.log(state, action);
-  return updateObject(state, {
+   return updateObject(state, {
     error: false,
     loading: false,
     paymentIntent: action.data,
@@ -64,17 +61,29 @@ const setPaymentIntent = (state, action) => {
 
 
 const checkoutSuccess = (state, action) => {
-  console.log(state, action);
-  return updateObject(state, {
+   return updateObject(state, {
      loading: false,
+  });
+};
+
+const setStripeConnect = (state, action) => {
+   return updateObject(state, {
+    loading: false,
+    stripeConnect: action.stripeConnect,
+  });
+};
+
+const setLoginLink = (state, action) => {
+   return updateObject(state, {
+    loading: false,
+    logInLink: action.expressLogin,
   });
 };
 
 
 
 const PaymentReducer = (state = initialState, action) => {
-  console.log(action);
-  switch (action.type) {
+   switch (action.type) {
     case actionTypes.START_PAYMENT_LOADING:
       return setLoading(state, action);
 
@@ -89,6 +98,10 @@ const PaymentReducer = (state = initialState, action) => {
       return setEphemeralKey(state, action);
     case actionTypes.PAYMENT_INTENT:
       return setPaymentIntent(state, action);
+    case actionTypes.STRIPE_CONNECT:
+      return setStripeConnect(state, action);
+    case actionTypes.CREATE_EXPRESS_LOGIN:
+      return setLoginLink(state, action);
 
     case actionTypes.CHECKOUT:
       return checkoutSuccess(state, action);

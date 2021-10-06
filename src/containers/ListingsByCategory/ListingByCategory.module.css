@@ -38,9 +38,7 @@
   overflow: hidden;
   box-shadow: 0px 8px 28px rgba(0, 0, 0, 0.07);
 }
-.latestTrend:hover {
-  /* background-color: #4a4a4a; */
-}
+ 
 .storeTitle {
   height: 15px;
   margin: 0 8px;

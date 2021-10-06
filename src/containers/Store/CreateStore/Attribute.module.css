@@ -1,6 +1,6 @@
 
 .addgroup {
-  padding: 15px 40px;
+  padding: 5px 40px;
   color: #000;
   border-radius: 10px;
 }
@@ -66,3 +66,10 @@
    cursor: pointer;
   height: 25px;
 }
+
+ .required::after {
+    content: "*";
+    color: rgb(255, 6, 6);
+     top: -5px;
+    right: -10px;
+  }

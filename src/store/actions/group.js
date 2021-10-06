@@ -36,11 +36,9 @@ export const initGroupDeatils = (id) => {
                        }
             })
                         .then( response => {
-                            console.log(response);
-
+ 
                             if(response.data.status){
-                                console.log(response.data.data.group);
-                                dispatch(setGroupDeatils(response.data.data.group));
+                                 dispatch(setGroupDeatils(response.data.data.group));
                              
                             }else{
                                 dispatch(fetchGroupDeatilsFailed());
@@ -84,8 +82,7 @@ export const createGroupSuccess = () => {
 
 
 export const CreateGroup = (group, token) => {
-    console.log(group);
-    return dispatch => {
+     return dispatch => {
         dispatch(initCreateGroup());
         axios.post('/app/v1/groups', group, {
                 headers: {
@@ -94,8 +91,7 @@ export const CreateGroup = (group, token) => {
                 }
             })
             .then(response => {
-                console.log(response);
-                if (response.data.status) {
+                 if (response.data.status) {
                     dispatch(createGroupSuccess());
 
                 } else {

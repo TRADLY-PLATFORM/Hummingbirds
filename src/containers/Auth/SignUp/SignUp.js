@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -9,14 +10,13 @@ import { toast, ToastContainer, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Backdrop from '../../../components/UI/Backdrop/Backdrop';
 import Spinner from '../../../components/UI/Spinner/Spinner';
-import { countryFilter, validateEmail } from '../../../shared/utility'; //countryFilter
+import {  validateEmail } from '../../../shared/utility'; //countryFilter
 import * as actions from '../../../store/actions/index';
 import { selectUserId } from '../../../store/selectors/auth';
 import PhoneInput from 'react-phone-input-2';
-import { isPossiblePhoneNumber, isValidPhoneNumber } from 'libphonenumber-js';
+import {   isValidPhoneNumber } from 'libphonenumber-js';
 import { Helmet } from 'react-helmet';
-import primary_color from '../../../commonCss';
-
+ 
 class SignUp extends Component {
   state = {
     firstName: '',

@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable react/no-unescaped-entities */
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUserId } from '../../../store/selectors/auth';
 import classes from './Store.module.css';
 import * as actions from '../../../store/actions/index';
 import Aux from '../../../hoc/Auxiliary/Auxiliary';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import noStoreLogo from '../../../assets/images/store/noStore.svg';
+ import noStoreLogo from '../../../assets/images/store/noStore.svg';
 import noProductLogo from '../../../assets/images/store/noProduct.svg';
 import NoProductImage from '../../../assets/images/rsz_noimage.png';
 import NoIamgeLogo from '../../../assets/images/home/store/noImage.svg';
@@ -14,34 +14,28 @@ import NoIamgeLogo from '../../../assets/images/home/store/noImage.svg';
 import Backdrop from '../../../components/UI/Backdrop/Backdrop';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import AllenSollyLogo from '../../../assets/images/home/store/allenSolly.svg';
-import StoreBanner from '../../../assets/images/store/store.svg';
-import { totalCountOfProducts } from '../../../shared/constants';
+ import { totalCountOfProducts } from '../../../shared/constants';
 
 const Store = () => {
-  const [accountId, setAccountId] = useState(null);
-  const dispatch = useDispatch();
+   const dispatch = useDispatch();
 
   // reducer
   const loading = useSelector((state) => state.store.loading);
-  const storeDetails = useSelector((state) => state.store.storeDetails);
-  const storeLists = useSelector((state) => state.store.storeLists);
+   const storeLists = useSelector((state) => state.store.storeLists);
   const isAuthenticated = useSelector((state) => selectUserId(state));
-  const authRedirectPath = useSelector((state) => state.auth.authRedirectPath);
-  const userId = useSelector((state) => state.auth.userId);
-  const token = useSelector((state) => state.auth.token);
-  const listings = useSelector((state) => state.product.listings);
+    const listings = useSelector((state) => state.product.listings);
 
   // useEffect:
   useEffect(() => {
        dispatch(actions.userStoreLists(isAuthenticated));
-   }, [isAuthenticated]);
+   }, [dispatch, isAuthenticated]);
 
   useEffect(() => {
        if (storeLists.length > 0) {
         const filter = '&account_id=' + storeLists[0].id;
         dispatch(actions.initListings(0, filter, totalCountOfProducts));
       }
-   }, [storeLists]);
+   }, [dispatch, storeLists]);
 
   let storeContent = null;
   if (isAuthenticated && storeLists) {
@@ -49,8 +43,7 @@ const Store = () => {
       storeContent = (
         <React.Fragment>
           {storeLists.map((list, i) => {
-            let imagePath = AllenSollyLogo;
-            let description = list.description;
+             let description = list.description;
             if (description.size > 35) {
               description = description.substring(0, 35) + '...';
             }
@@ -99,7 +92,7 @@ const Store = () => {
                   </div>
                 </div>
                 <div>
-                  {listings?.length > 0 ? (
+                  {(!loading && listings!==null) &&(listings?.length > 0 ? (
                     <div className={classes.myStoreProducts}>
                       <Link to={`/addproduct/${list.id}`}>
                         <button className="btnGreenStyle pull-right">Add a product </button>
@@ -172,7 +165,7 @@ const Store = () => {
                       </Link>
                       <img src={noProductLogo} alt="" />
                     </div>
-                  )}
+                  ))}
                 </div>
               </div>
             );

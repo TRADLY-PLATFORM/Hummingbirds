@@ -1,10 +1,8 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect } from 'react';
 import classes from './myOrder.module.css';
-import { Link, useHistory, useParams, useLocation } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 
-import orderIcon1 from '../../assets/images/Order/orderIcon1.svg';
-import orderIcon from '../../assets/images/Order/orderIcon.svg';
-import { useDispatch, useSelector } from 'react-redux';
+ import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../store/actions/index';
 import moment from 'moment';
 
@@ -12,8 +10,7 @@ import { options, orderStatus } from '../../shared/Status';
 import Loader from 'react-loader-spinner';
 
 import Select from 'react-select';
-import storeSuccess from '../Store/StoreSuccess';
-
+ 
 import groupImage from '../../assets/images/Order/Group 3.png';
 
 const MyOrder = () => {
@@ -21,21 +18,20 @@ const MyOrder = () => {
   const loading = useSelector((state) => state.order.loading);
 
   const history = useHistory();
-  const { statusID } = useParams();
-  const location = useLocation();
+   const location = useLocation();
 
   const dispatch = useDispatch();
   useEffect(() => {
     if (location.state === undefined) {
       dispatch(actions.getOrders());
     }
-  }, [location]);
+  }, [dispatch, location]);
 
   useEffect(() => {
     if (location.state !== undefined) {
       dispatch(actions.getOrders(undefined, location.state));
     }
-  }, [location]);
+  }, [dispatch, location]);
 
   //
   // function
@@ -47,11 +43,7 @@ const MyOrder = () => {
   const handleChange = (newValue, actionMeta) => {
     history.push({ pathname: `/myorder/${newValue.value.replace(' ', '-')}`, state: newValue.id });
   };
-
-  console.log('====================================');
-  console.log(location);
-  console.log('====================================');
-
+ 
   return (
     <div className={classes.myOrdersBox}>
       {loading && (
@@ -64,8 +56,9 @@ const MyOrder = () => {
             width={100}
             style={{
               position: 'absolute',
+              right: 0,
+              height: '70%',
               width: '100%',
-              height: '100%',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
@@ -140,7 +133,11 @@ const MyOrder = () => {
               <div className={classes.transactionContainer} key={index}>
                 <div className={classes.orderShortDetails + ' nopadding col-md-4 '}>
                   <div>
-                    <img className={classes.productImg} src={order_details[0].listing.images[0]} />
+                    <img
+                      className={classes.productImg}
+                      src={order_details[0].listing.images[0]}
+                      alt="orderImage"
+                    />
                   </div>
 
                   <Link className="offTextDecoration" to={`/myorder-details/${order.id}`}>

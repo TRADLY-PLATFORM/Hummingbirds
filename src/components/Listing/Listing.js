@@ -1,7 +1,6 @@
 import React from 'react';
 import classes from './Listing.module.css';
-import Aux from '../../hoc/Auxiliary/Auxiliary';
-import { Link } from 'react-router-dom';
+ import { Link } from 'react-router-dom';
 import NoIamgeLogo from '../../assets/images/home/store/noImage.svg';
 
 const listing = (props) => {

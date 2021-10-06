@@ -1,8 +1,9 @@
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
-import { Link, withRouter } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Map, List } from 'immutable';
+import { Map } from 'immutable';
 import { Helmet } from 'react-helmet';
 
 import Backdrop from '../../components/UI/Backdrop/Backdrop';
@@ -149,8 +150,14 @@ class Listings extends Component {
     if (this.state.selectedOption.priceValue !== null) {
       let prices = this.state.selectedOption.priceValue.value;
       let spitPrices = prices.split('_');
-      filter += '&price_from=' + spitPrices[0] + '&price_to=' + spitPrices[1];
-      search += '&price_from=' + spitPrices[0] + '&price_to=' + spitPrices[1];
+      if (spitPrices[1] === '+') {
+        filter += '&price_from=' + spitPrices[0]
+        search += '&price_from=' + spitPrices[0]  
+      }
+      else {
+         filter += '&price_from=' + spitPrices[0] + '&price_to=' + spitPrices[1];
+         search += '&price_from=' + spitPrices[0] + '&price_to=' + spitPrices[1];
+       }
        this.props.history.push({
          search: search,
        });
@@ -159,14 +166,14 @@ class Listings extends Component {
    };
 
   render() {
-    const { match, location, history } = this.props;
+    const {   location  } = this.props;
 
  
     let listing = '';
     let showLoadButton = null;
     const { listings,allListings, total_records, loading, seoConfigs } = this.props;
      const { selectedOption } = this.state;
-    const { categoryValue, supplierValue, locationValue } = selectedOption;
+    const {   supplierValue, locationValue } = selectedOption;
      const productsListing = listings
       .filter((item) =>
         supplierValue !== null ? item.getIn(['account', 'id'], '') === supplierValue.value : item

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import classes from './Attribute.module.css';
 import Select from 'react-select';
@@ -9,11 +10,7 @@ import uploadImageIcon from "../../../assets/images/store/upload@2x.png"
 
 const Attribute = ({ attribute, attributeData, setAttributeData }) => {
   // statte
-  const [multiValue, setMultiValue] = useState([]);
-  const [multiValueText, setMultiValueText] = useState('');
-  const [image, setImage] = useState(null);
-  const [base64, setBase64] = useState({});
-  const [file, setFile] = useState(null);
+   const [file, setFile] = useState(null);
 
   // functions
 
@@ -28,15 +25,10 @@ const Attribute = ({ attribute, attributeData, setAttributeData }) => {
   };
 
   const handleChange = (newValue, actionMeta, attribute_id, attribute_field_type) => {
-    console.group('Value Changed');
-    console.log(newValue, actionMeta, attribute_id, attribute_field_type);
-    console.log( );
-
-    console.groupEnd();
+     
     if (attribute_field_type === 1 || attribute_field_type === 3) {
       if (attributeData !== null) {
-        console.log('here');
-        const check = attributeData?.find((attr) => attr.id === attribute_id);
+         const check = attributeData?.find((attr) => attr.id === attribute_id);
         if (check === undefined) {
           if (attribute_field_type === 1) {
             setAttributeData([...attributeData, { values: [newValue.id], id: attribute_id }]);
@@ -52,8 +44,7 @@ const Attribute = ({ attribute, attributeData, setAttributeData }) => {
           }
         }
       } else {
-        console.log('here2');
-
+ 
         if (attribute_field_type === 1) {
           setAttributeData([{ values: [newValue.id], id: attribute_id }]);
         } else if (attribute_field_type === 3) {
@@ -145,19 +136,21 @@ const Attribute = ({ attribute, attributeData, setAttributeData }) => {
             <div className={classes.addgroup}>
               {attr.field_type === 1 && (
                 <div className="form-group mt-2 ">
+                  <label className={attr.optional ? '' : classes.required}>{attr.name}</label>
                   <Select
                     onChange={(newValue, actionMeta) =>
                       handleChange(newValue, actionMeta, attr.id, attr.field_type)
                     }
-                    placeholder={attr.name}
+                    placeholder={'Select your' + attr.name}
                     options={options}
                   />
                 </div>
               )}
               {attr.field_type === 2 && (
                 <div className="form-group mt-2 ">
+                  <label className={attr.optional ? '' : classes.required}>{attr.name}</label>
                   <Select
-                    placeholder={attr.name}
+                    placeholder={'Select your' + attr.name}
                     isMulti
                     name="colors"
                     options={options}
@@ -171,8 +164,9 @@ const Attribute = ({ attribute, attributeData, setAttributeData }) => {
               )}
               {attr.field_type === 3 && (
                 <div className="form-group mt-2 ">
+                  <label className={attr.optional ? '' : classes.required}>{attr.name}</label>
                   <CreatableSelect
-                    placeholder={attr.name}
+                    placeholder={'Type your' + attr.name}
                     onChange={(newValue, actionMeta) =>
                       handleChange(newValue, actionMeta, attr.id, attr.field_type)
                     }
@@ -181,8 +175,9 @@ const Attribute = ({ attribute, attributeData, setAttributeData }) => {
               )}
               {attr.field_type === 4 && (
                 <div className="form-group mt-2 ">
+                  <label className={attr.optional ? '' : classes.required}>{attr.name}</label>
                   <CreatableSelect
-                    placeholder={attr.name}
+                    placeholder={'Type your' + attr.name}
                     isMulti
                     onChange={(newValue, actionMeta) =>
                       handleChange(newValue, actionMeta, attr.id, attr.field_type)
@@ -217,10 +212,10 @@ const Attribute = ({ attribute, attributeData, setAttributeData }) => {
                       <img src={groupAvatar} alt="" />
                     </div>
                     <div className={classes.imageDescriptions}>
-                      <span>{ file.name}</span>
+                      <span>{file.name}</span>
                       <span>{file.type}</span>
                     </div>
-                    <div className={classes.cancelImage} onClick={()=>setFile(null)}>
+                    <div className={classes.cancelImage} onClick={() => setFile(null)}>
                       <img src={cancelImage} alt="" />
                     </div>
                   </div>

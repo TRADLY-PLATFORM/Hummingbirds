@@ -19,7 +19,7 @@
 
 .stripeCardBox{
   width:400px;
-  height: 200px;
+  min-height: 200px;
   background: white;
   margin: 30px auto;
   padding: 20px;

@@ -14,8 +14,7 @@ const setLoading=(state, action) => {
 }
 
 const setSearchList = (state, action) => {
-  console.log(state, action);
-  return updateObject(state, {
+   return updateObject(state, {
     error: false,
     searchList: action.searchList.listings,
     loading: false,
@@ -23,8 +22,7 @@ const setSearchList = (state, action) => {
 };
 
 const SearchReducer = (state = initialState, action) => {
-  console.log(action);
-  switch (action.type) {
+   switch (action.type) {
     case actionTypes.START_LOADING:
       return setLoading(state, action);
     

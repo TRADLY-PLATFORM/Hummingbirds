@@ -43,8 +43,7 @@ export const getOrders = (store_id,filterId) => {
       .then((response) => {
         if (response.data.status) {
           dispatch(setOrders(response.data.data.orders));
-          console.log(response);
-        } else {
+         } else {
           console.log(response);
         }
       })
@@ -77,8 +76,7 @@ export const getOrderDetails = (id, store_id) => {
       .then((response) => {
         if (response.data.status) {
           dispatch(setOrderDetails(response.data.data.order));
-          console.log(response);
-        } else {
+         } else {
           console.log(response);
         }
       })

@@ -40,9 +40,7 @@ const ProductDetails = () => {
   const location = useLocation();
   const { id } = useParams();
   const history = useHistory();
-  console.log('====================================');
-  console.log(history);
-  console.log('====================================');
+ 
 
   const error = useSelector((state) => state.product.error);
   const loading = useSelector((state) => state.product.loading);
@@ -63,7 +61,7 @@ const ProductDetails = () => {
     dispatch(actions.initProductDetails(id.split('-')[0], true));
     dispatch(actions.setGeneralConfigsData());
     dispatch(actions.initCurrencies());
-  }, [id]);
+  }, [dispatch, id]);
 
   const setPath = () => {
     dispatch(actions.setAuthRedirectPath(location.pathname));

@@ -104,13 +104,14 @@ const createStoreFailed = (state, action) => {
   return updateObject(state, {
     loading: false,
     error: true,
-    message: action.msg,
+    message: action.message,
   });
 };
 
 const createStoreSuccess = (state, action) => {
   return updateObject(state, {
     loading: false,
+    attribute:null,
   });
 };
 

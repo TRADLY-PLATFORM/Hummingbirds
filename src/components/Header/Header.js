@@ -1,24 +1,19 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable react/prop-types */
+import React, { useEffect } from 'react';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
 import { Link, useLocation } from 'react-router-dom';
 import classes from './Header.module.css';
 import profileUser from '../../assets/images/header/profile-user.png';
 
-import { selectCategoryLists } from '../../store/selectors/product';
-import Listings from '../../containers/Listings/Listings';
-import axios from '../../axios';
-
+ 
 //import CartImage from '../../assets/images/header/cart.svg';
-import CartImage from '../../assets/images/header/active/cartIcon (1).svg';
-import NoProductImage from '../../assets/images/rsz_noimage.png';
-import NoIamgeLogo from '../../assets/images/home/store/noImage.svg';
-import downArrow from '../../assets/images/header/downArrow.png';
+ import downArrow from '../../assets/images/header/downArrow.png';
 
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from "../../store/actions/index"
 
 
-import { Search } from '../Seacrh/Search';
+import { Search } from '../Search/Search';
 import { selectUserId } from '../../store/selectors/auth';
 
 // import Skeleton from '../UI/Skeleton/Skeleton';
@@ -27,18 +22,16 @@ const Header = (props) => {
  
 
   // reducer
-    const isAuthenticated = useSelector((state) => selectUserId(state));
+  const isAuthenticated = useSelector((state) => selectUserId(state));
   const cartList = useSelector((state) => state.cart.cart_list);
-  const { cart, cart_details } = cartList;
+  const {  cart_details } = cartList;
     const currencies = useSelector((state) => state.store.currencies);
 
 
 
   const dispatch = useDispatch()
-  const {pathname,url} = useLocation()
-  console.log('====================================');
-  console.log(pathname);
-  console.log('====================================');
+  const {pathname} = useLocation()
+ 
  
   // 
      useEffect(() => {
@@ -92,15 +85,15 @@ const Header = (props) => {
 
             <div className={classes.dropdownMenu + ' user-menu dropdown-menu'}>
               {userData.get('id', '') === '' ? (
-                <Link className={classes.navLink} to="/sign-in" onClick={()=>setPath(pathname)}>
+                <Link className={classes.navLink} to="/sign-in" onClick={() => setPath(pathname)}>
                   <i className="fa fa-power-off mr-10"></i>Login
                 </Link>
               ) : (
                 <Aux>
+                  <Link className={classes.navLink} to="/profile">
+                    <i className="fa fa-user"></i> My Profile
+                  </Link>
                   {/* <Link className={classes.navLink} to="#">
-                      <i className="fa fa-user"></i> My Profile
-                    </Link>
-                    <Link className={classes.navLink} to="#">
                       <i className="fa fa-cog"></i> Settings
                     </Link> */}
                   <Link className={classes.navLink} to="/logout">
@@ -111,10 +104,11 @@ const Header = (props) => {
             </div>
           </div>
 
-          
-
           <div className={pathname === '/cart' ? classes.cartAreaActive : classes.cartArea}>
-            <Link  to={isAuthenticated?"/cart":"/sign-in"} onClick={!isAuthenticated &&(()=>setPath("/cart"))} >
+            <Link
+              to={isAuthenticated ? '/cart' : '/sign-in'}
+              onClick={!isAuthenticated && (() => setPath('/cart'))}
+            >
               <svg
                 width="22"
                 height="20"
@@ -126,7 +120,9 @@ const Header = (props) => {
               </svg>
 
               <span className={classes.cartText}>Cart</span>
-              {isAuthenticated && cart_details?.length>0 &&(<span className={classes.countCart}>{ cart_details?.length}</span>)}
+              {isAuthenticated && cart_details?.length > 0 && (
+                <span className={classes.countCart}>{cart_details?.length}</span>
+              )}
             </Link>
           </div>
         </div>

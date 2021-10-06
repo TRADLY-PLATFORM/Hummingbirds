@@ -11,7 +11,7 @@
 }
 
 .wellStore {
-   width: 210px;
+ width: 185px !important;
   height: 260px;
   margin-right: 16px;
    padding-top: 31px;
@@ -38,7 +38,7 @@
   font-size: 15px;
   line-height: 22px;
   color: #4a4a4a;
-  min-height: 15px;
+   height: 15px;
 }
 
 .imageDiv img {
@@ -48,7 +48,7 @@
 }
 
 .btnGreenFollow {
-  padding: 7px 13px;
+  padding: 8px 13px;
   border: none;
   background: linear-gradient(180deg, var(--primary_color) 0%, var(--primary_color) 100%);
   border-radius: 24px;
@@ -62,7 +62,7 @@
    text-decoration: none !important;
 }
 .btnGreenUnFollowing {
-  padding: 10px 13px;
+  padding: 8px 13px;
   border: 1px solid var(--primary_color);
   background: white;
   border-radius: 24px;

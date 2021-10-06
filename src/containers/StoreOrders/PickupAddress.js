@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable react/prop-types */
+import React  from 'react';
 import classes from './PickupAddress.module.css';
 
 const PickupAddress = ({ pickupAddress, setPickupAddress, saveAddress }) => {

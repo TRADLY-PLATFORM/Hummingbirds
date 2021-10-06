@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -12,7 +13,7 @@ import Spinner from '../../../components/UI/Spinner/Spinner';
 import { validateEmail } from '../../../shared/utility'; //countryFilter
 import * as actions from '../../../store/actions/index';
 import { selectUserId } from '../../../store/selectors/auth';
-import { isPossiblePhoneNumber, isValidPhoneNumber } from 'libphonenumber-js';
+import {   isValidPhoneNumber } from 'libphonenumber-js';
 import { Helmet } from 'react-helmet';
 
 class SignIn extends Component {
@@ -110,7 +111,7 @@ class SignIn extends Component {
   };
 
   render() {
-    const { isAuthenticated } = this.props;
+    // const { isAuthenticated } = this.props;
     const authType = this.props.configsData.auth_type;
     if (this.props.error && this.state.showError) {
       if (!toast.isActive(this.toastId)) {

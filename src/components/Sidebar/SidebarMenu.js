@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, Redirect, useLocation } from 'react-router-dom';
-import { selectTenantData, selectUserData, selectUserId } from '../../store/selectors/auth';
-import classes from './Sidebar.module.css';
-import * as actions from '../../store/actions/index';
+/* eslint-disable react/prop-types */
+import React  from 'react';
+import {  useSelector } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
+import {  selectUserId } from '../../store/selectors/auth';
+ 
 
 const SidebarMenu = ({ authRedirectHandler }) => {
   // const [redirect, setRedirect] = useState(false);
@@ -15,9 +15,7 @@ const SidebarMenu = ({ authRedirectHandler }) => {
   // };
 
   const isAuthenticated = useSelector((state) => selectUserId(state));
-  const tenantData = useSelector((state) => selectTenantData(state));
-  const userData = useSelector((state) => selectUserData(state));
-
+  
   // let redirectUrl = null;
   // if (redirect) {
   //   redirectUrl = <Redirect to="/sign-in" />;

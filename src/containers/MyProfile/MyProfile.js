@@ -1,104 +1,114 @@
-import React, { Component } from 'react'
-import classes from "./MyProfile.module.css"
-import AvatarImage from '../../assets/images/header/avatar.jpg';
-import {Link} from "react-router-dom";
+import React, { useEffect } from 'react';
+import classes from './MyProfile.module.css';
+import AvatarImage from '../../assets/images/header/profile-user.png';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectUserId } from '../../store/selectors/auth';
+import * as actions from '../../store/actions/index';
 
-export default class MyProfile extends Component {
-    render() {
-        return (
-          <div class="container ">
-            <div className={classes.mycontainer}>
-              <div className="row">
-                <div class="col-md-1 col-lg-1 col-sm-1 col-sx-1">
-                  <img
-                    className={classes.userAvatar}
-                    src={AvatarImage}
-                    alt="User Avatar"
-                  />
-                </div>
-                <div className="col-md-8 col-lg-8 col-sm-1 col-sx-1">
-                  <span>Name</span>
-                  <br />
-                  <span>+1 1111111</span>
-                </div>
-                <div>
-                  <div className="">
-                    <Link to="/editprofile">
-                      <button className={classes.btnGreenStyle}>
-                        Edit Profile
-                      </button>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
+const MyProfile = () => {
+  // reducer
+  const isAuthenticated = useSelector((state) => selectUserId(state));
+  const userDetails = useSelector((state) => state.auth.userDetails);
+  const storeLists = useSelector((state) => state.store.storeLists);
+
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (isAuthenticated) {
+      dispatch(actions.getUserDetails(isAuthenticated));
+      dispatch(actions.userStoreLists(isAuthenticated));
+
+    }
+  }, [dispatch, isAuthenticated]);
+
+  return (
+    <div className="container mt-4">
+      <div className={classes.Mycontainer}>
+        <div className={classes.profileBox}>
+          <div className="col ">
+            <img className={classes.userAvatar} src={AvatarImage} alt="User Avatar" />
+          </div>
+          <div className="col ">
+            <span className={classes.accountName}>
+              {userDetails?.first_name + ' ' + userDetails?.last_name}
+            </span>
             <br />
-            <div className={classes.mycontainer}>
-              <div className="row">
-                <div className="col-lg-12 col-md-12 col-sm-12">
-                  <span>my store</span>
-                  <button className={classes.button}>Add Store</button>
-                  <hr />
-                </div>
-
-                <div className="col-lg-12 col-md-12 col-sm-12">
-                  <p>my union</p>
-                  <hr />
-                </div>
-
-                <div className="col-lg-12 col-md-12 col-sm-12">
-                  <p>my transaction</p>
-                  <hr />
-                </div>
-
-                <div className="col-lg-12 col-md-12 col-sm-12">
-                  <p>my sales</p>
-                  <hr />
-                </div>
-
-                <div className="col-lg-12 col-md-12 col-sm-12">
-                  <p>payment</p>
-                  <hr />
-                </div>
-
-                <div className="col-lg-12 col-md-12 col-sm-12">
-                  <p>movement planner</p>
-                  <hr />
-                </div>
-
-                <div className="col-lg-12 col-md-12 col-sm-12">
-                  <p>languge & currency</p>
-                  <hr />
-                </div>
-
-                <div className="col-lg-12 col-md-12 col-sm-12">
-                  <p>feedback</p>
-                  <hr />
-                </div>
-
-                <div className="col-lg-12 col-md-12 col-sm-12">
-                  <p>Refer a friend</p>
-                  <hr />
-                </div>
-
-                <div className="col-lg-12 col-md-12 col-sm-12">
-                  <p>terms & conditions</p>
-                  <hr />
-                </div>
-
-                <div className="ccol-lg-12 col-md-12 col-sm-12">
-                  <p>Support</p>
-                  <hr />
-                </div>
-
-                <div className="col-lg-12 col-md-12 col-sm-12">
-                  <Link to="/logout">
-                    <button className={classes.logout}>Log out</button>
-                  </Link>
-                </div>
-              </div>
+            <span>{userDetails?.email} </span>
+          </div>
+          <div>
+            <div className="">
+              <Link to="#">
+                <button className={classes.btnGreenStyle}>Edit Profile</button>
+              </Link>
             </div>
           </div>
-        );
-    }
-}
+        </div>
+      </div>
+      <div className={classes.Mycontainer}>
+        <div className="row">
+          <div className="col-lg-12 col-md-12 col-sm-12">
+            <Link className="textDecorationOff" to="/store">
+              My store
+            </Link>
+            {storeLists.length > 0 && (
+              <Link tp="/create-store" className={classes.button}>
+                Create Store
+              </Link>
+            )}
+            <hr />
+          </div>
+
+          <div className="col-lg-12 col-md-12 col-sm-12">
+            <Link className="textDecorationOff" to="/myorder">
+              My Orders
+            </Link>
+            <hr />
+          </div>
+
+          <div className="col-lg-12 col-md-12 col-sm-12">
+            <p>My sales</p>
+            <hr />
+          </div>
+
+          {storeLists.length > 0 && (
+            <div className="col-lg-12 col-md-12 col-sm-12">
+              <Link className="textDecorationOff" to="/payment">
+                Payment
+              </Link>
+              <hr />
+            </div>
+          )}
+
+          <div className="col-lg-12 col-md-12 col-sm-12">
+            <p>Feedback</p>
+            <hr />
+          </div>
+          {/* 
+          <div className="col-lg-12 col-md-12 col-sm-12">
+            <p>Refer a friend</p>
+            <hr />
+          </div> */}
+
+          <div className="col-lg-12 col-md-12 col-sm-12">
+            <p>Terms & conditions</p>
+            <hr />
+          </div>
+
+          <div className="ccol-lg-12 col-md-12 col-sm-12">
+            <p>Support</p>
+            <hr />
+          </div>
+
+          <div className="col-lg-12 col-md-12 col-sm-12">
+            <Link to="/logout">
+              <button className={classes.logout}>Log out</button>
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default MyProfile;

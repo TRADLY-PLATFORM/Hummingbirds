@@ -83,8 +83,7 @@ export const userStoreLists = (userId) => {
       .get('/v1/accounts?page=1&type=accounts&user_id=' + userId)
       .then((response) => {
         if (response.data.status) {
-          console.log(response.data.data);
-          dispatch(setStoreLists(response.data.data.accounts));
+           dispatch(setStoreLists(response.data.data.accounts));
         } else {
           dispatch(fetchStoreListsFailed());
         }
@@ -95,6 +94,7 @@ export const userStoreLists = (userId) => {
   };
 };
 
+// Create Store
 export const createStoreFailed = (msg) => {
   return {
     type: actionTypes.CREATE_STORE_FAILED,
@@ -141,139 +141,6 @@ export const CreateStore = (store, callBack) => {
   };
 };
 
-export const postStoreFollowFailed = () => {
-  return {
-    type: actionTypes.POST_STORE_FOLLOW_FAILED,
-  };
-};
-
-export const postStoreFollowRequest = () => {
-  return {
-    type: actionTypes.POST_STORE_FOLLOW_REQUEST,
-  };
-};
-
-export const postStoreFollowSuccess = () => {
-  return {
-    type: actionTypes.POST_STORE_FOLLOW_SUCCESS,
-  };
-};
-
-export const postStoreFollow = (storeId, IsFollowing) => {
-  return (dispatch) => {
-    dispatch(postStoreFollowRequest());
-    if (IsFollowing === false) {
-      axios
-        .post(`/v1/accounts/${storeId}/follow`)
-        .then((response) => {
-          console.log(response);
-          if (response.data.status) {
-            dispatch(postStoreFollowSuccess());
-          } else {
-            dispatch(postStoreFollowFailed());
-          }
-        })
-        .catch((error) => {
-          dispatch(postStoreFollowFailed());
-        });
-    } else {
-      axios
-        .delete(`/v1/accounts/${storeId}/follow`)
-        .then((response) => {
-          console.log(response);
-          if (response.data.status) {
-            dispatch(postStoreFollowSuccess());
-          } else {
-            dispatch(postStoreFollowFailed());
-          }
-        })
-        .catch((error) => {
-          dispatch(postStoreFollowFailed());
-        });
-    }
-  };
-};
-
-export const getStores = (page, perPageData) => {
-  return (dispatch) => {
-    dispatch(initStoreLists());
-    axios
-      .get(`v1/accounts?page=${page}&type=accounts&per_page=${perPageData}`)
-      .then((response) => {
-        if (response.data.status) {
-          let stores = response.data.data.accounts;
-          console.log(stores);
-          dispatch(setAllStores(response.data.data));
-        } else {
-          dispatch(fetchStoreListsFailed());
-        }
-      })
-      .catch((error) => {
-        dispatch(fetchStoreListsFailed());
-      });
-  };
-};
-
-// Address Search
-export const startSearching = () => {
-  return {
-    type: actionTypes.START_SEARCHING,
-  };
-};
-
-export const setAddress = (address) => {
-  return {
-    type: actionTypes.ADDRESS_SEARCH,
-    addresses: address,
-  };
-};
-
-export const addressSearch = (key) => {
-  return (dispatch) => {
-    dispatch(startSearching());
-
-    axios
-      .get('app/v1/addresses/search?key=' + key)
-      .then((response) => {
-        if (response.data.status) {
-          dispatch(setAddress(response.data.data.addresses));
-          console.log(response);
-        } else {
-          dispatch(setAddress(''));
-        }
-      })
-      .catch((error) => {
-        dispatch(setAddress(''));
-        dispatch(createStoreFailed(error.response.data.error.message));
-      });
-  };
-};
-
-// Set categories
-
-export const setCategories = (categories) => {
-  return {
-    type: actionTypes.SET_ACCOUNTS_CATEGORIES,
-    categories: categories,
-  };
-};
-
-export const accountCategories = () => {
-  return (dispatch) => {
-    axios('v1/categories?parent=0&type=accounts')
-      .then((response) => {
-        if (response.data.status) {
-          console.log(response);
-
-          dispatch(setCategories(response.data.data.categories));
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-};
-
 // Image File Post for Create store
 
 export const SetFiles = (file) => {
@@ -314,8 +181,7 @@ export const initFile = (
     axios(config)
       .then((response) => {
         if (response.data.status) {
-          console.log(response);
-          dispatch(SetFiles(response.data.data.result[0]));
+           dispatch(SetFiles(response.data.data.result[0]));
           const fileURL = response.data.data.result[0];
           const path = fileURL.signedUrl;
           const ImagePath = fileURL.fileUri;
@@ -328,8 +194,7 @@ export const initFile = (
           })
             .then((res) => {
               if (res.status) {
-                console.log(res);
-
+ 
                 const stores = {
                   account: {
                     name: name,
@@ -358,6 +223,266 @@ export const initFile = (
   };
 };
 
+// Edit Store
+export const editStore = (
+  file,
+  image,
+  name,
+  categoryId,
+  description,
+  coordinates,
+  attributeData,
+  accountId,
+  callBack
+) => {
+  return (dispatch) => {
+    dispatch(startLoading());
+ 
+    if (file !== null) {
+        var imageUploadConfig = {
+          method: 'post',
+          url: 'v1/utils/S3signedUploadURL',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          data: {
+            files: [
+              {
+                name: file.name,
+                type: file.type,
+              },
+            ],
+          },
+        };
+      axios(imageUploadConfig)
+        .then((response) => {
+          if (response.data.status) {
+             dispatch(SetFiles(response.data.data.result[0]));
+            const fileURL = response.data.data.result[0];
+            const path = fileURL.signedUrl;
+            const ImagePath = fileURL.fileUri;
+            fetch(path, {
+              method: 'put',
+              headers: {
+                ContentType: file.type,
+              },
+              body: file,
+            })
+              .then((res) => {
+                if (res.status) {
+ 
+                   
+                  var editStoreConfig = {
+                    method: 'put',
+                    url: `v1/accounts/${accountId}`,
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    data: {
+                      account: {
+                        name: name,
+                        category_id: [categoryId],
+                        description: description,
+                        web_address: '',
+                        images: [ImagePath],
+                        coordinates: coordinates,
+                        attributes: attributeData ? attributeData : [{}],
+                        type: 'accounts',
+                      },
+                    },
+                  };
+                  axios(editStoreConfig)
+                    .then((response) => {
+                      if (response.data.status) {
+                        dispatch(createStoreSuccess());
+                        callBack && callBack();
+                      } else {
+                        dispatch(createStoreFailed(response.data.error.message));
+                      }
+                    })
+                    .catch((error) => {
+                      dispatch(createStoreFailed(error.response.data.error.message));
+                    });
+                  
+                   
+                }
+              })
+              .catch((error) => {
+                console.log('Error:' + error.message);
+                dispatch(failedMessage(error.response.data.error.message));
+              });
+          }
+        })
+        .catch((error) => {
+          dispatch(failedMessage(error.response.data.error.message));
+        });
+    } else {
+      var editStoreConfig = {
+        method: 'put',
+        url: `v1/accounts/${accountId}`,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        data: {
+          account: {
+            name: name,
+            category_id: [categoryId],
+            description: description,
+            web_address: '',
+            images: [image],
+            coordinates: coordinates,
+            attributes: attributeData ? attributeData : [{}],
+            type: 'accounts',
+          },
+        },
+      };
+      axios(editStoreConfig)
+        .then((response) => {
+          if (response.data.status) {
+            dispatch(createStoreSuccess());
+            callBack && callBack();
+          } else {
+            dispatch(createStoreFailed(response.data.error.message));
+          }
+        })
+        .catch((error) => {
+          dispatch(createStoreFailed(error.response.data.error.message));
+        });
+    }
+  };
+};
+
+// Store Follow
+export const postStoreFollowFailed = () => {
+  return {
+    type: actionTypes.POST_STORE_FOLLOW_FAILED,
+  };
+};
+
+export const postStoreFollowRequest = () => {
+  return {
+    type: actionTypes.POST_STORE_FOLLOW_REQUEST,
+  };
+};
+
+export const postStoreFollowSuccess = () => {
+  return {
+    type: actionTypes.POST_STORE_FOLLOW_SUCCESS,
+  };
+};
+
+export const postStoreFollow = (storeId, IsFollowing) => {
+  return (dispatch) => {
+    dispatch(postStoreFollowRequest());
+    if (IsFollowing === false) {
+      axios
+        .post(`/v1/accounts/${storeId}/follow`)
+        .then((response) => {
+           if (response.data.status) {
+            dispatch(postStoreFollowSuccess());
+          } else {
+            dispatch(postStoreFollowFailed());
+          }
+        })
+        .catch((error) => {
+          dispatch(postStoreFollowFailed());
+        });
+    } else {
+      axios
+        .delete(`/v1/accounts/${storeId}/follow`)
+        .then((response) => {
+           if (response.data.status) {
+            dispatch(postStoreFollowSuccess());
+          } else {
+            dispatch(postStoreFollowFailed());
+          }
+        })
+        .catch((error) => {
+          dispatch(postStoreFollowFailed());
+        });
+    }
+  };
+};
+
+// Get Store List
+export const getStores = (page, perPageData) => {
+  return (dispatch) => {
+    dispatch(initStoreLists());
+    axios
+      .get(`v1/accounts?page=${page}&type=accounts&per_page=${perPageData}`)
+      .then((response) => {
+        if (response.data.status) {
+          let stores = response.data.data.accounts;
+           dispatch(setAllStores(response.data.data));
+        } else {
+          dispatch(fetchStoreListsFailed());
+        }
+      })
+      .catch((error) => {
+        dispatch(fetchStoreListsFailed());
+      });
+  };
+};
+
+// Address Search
+export const startSearching = () => {
+  return {
+    type: actionTypes.START_SEARCHING,
+  };
+};
+
+export const setAddress = (address) => {
+  return {
+    type: actionTypes.ADDRESS_SEARCH,
+    addresses: address,
+  };
+};
+
+export const addressSearch = (key) => {
+  return (dispatch) => {
+    dispatch(startSearching());
+
+    axios
+      .get('app/v1/addresses/search?key=' + key)
+      .then((response) => {
+        if (response.data.status) {
+          dispatch(setAddress(response.data.data.addresses));
+           
+        } else {
+          dispatch(setAddress(''));
+        }
+      })
+      .catch((error) => {
+        dispatch(setAddress(''));
+        dispatch(createStoreFailed(error.response.data.error.message));
+      });
+  };
+};
+
+// Set categories
+
+export const setCategories = (categories) => {
+  return {
+    type: actionTypes.SET_ACCOUNTS_CATEGORIES,
+    categories: categories,
+  };
+};
+
+export const accountCategories = () => {
+  return (dispatch) => {
+    axios('v1/categories?parent=0&type=accounts')
+      .then((response) => {
+        if (response.data.status) {
+ 
+          dispatch(setCategories(response.data.data.categories));
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
 // Getting Attribute
 
 export const setAttribute = (attribute) => {
@@ -376,8 +501,7 @@ export const initAttribute = (categoryID, type) => {
     axios(config)
       .then((response) => {
         if (response.data.status) {
-          console.log(response);
-          dispatch(setAttribute(response.data.data.attributes));
+           dispatch(setAttribute(response.data.data.attributes));
         }
       })
       .catch((error) => {
@@ -403,10 +527,8 @@ export const initCurrencies = () => {
     };
     axios(config)
       .then((response) => {
-        console.log(response);
-        if (response.data.status) {
-          console.log(response);
-          dispatch(setCurrencies(response.data.data.currencies));
+         if (response.data.status) {
+           dispatch(setCurrencies(response.data.data.currencies));
         }
       })
       .catch((error) => {
@@ -454,8 +576,7 @@ export const initFiles = (
     axios(config)
       .then((response) => {
         if (response.data.status) {
-          console.log(response);
-          // dispatch(SetFiles(response.data.data.result[0]));
+           // dispatch(SetFiles(response.data.data.result[0]));
           const responseFiles = response.data.data.result;
 
           var increment = 0;
@@ -472,8 +593,7 @@ export const initFiles = (
             })
               .then((res) => {
                 if (res.ok) {
-                  console.log('eta ekhane' + res);
-                  increment = increment + 1;
+                   increment = increment + 1;
                   if (increment === files.length) {
                     const listingData = {
                       listing: {
@@ -497,14 +617,12 @@ export const initFiles = (
                 }
               })
               .catch((error) => {
-                console.log('Error:' + error.message);
                 dispatch(failedMessage(error.response.data.error.message));
               });
           }
         }
       })
       .catch((error) => {
-        console.log(error);
         dispatch(failedMessage(error.response.data.error.message));
       });
   };
@@ -525,15 +643,9 @@ export const createProduct = (listing, callBack) => {
     axios(config)
       .then((response) => {
         if (response.data.status) {
-          console.log('====================================');
-          console.log(response);
-          console.log('====================================');
           dispatch(createStoreSuccess());
           callBack && callBack();
         } else {
-          console.log('====================================');
-          console.log(response);
-          console.log('====================================');
           dispatch(failedMessage(response.data.error.message));
         }
       })

@@ -6,24 +6,44 @@
 
 }
 
-.mycontainer{
+.Mycontainer{
     width:80%;
-    margin:0 auto;
+    margin:20px auto;
     background-color: #fff;
     padding: 3rem;
     border-radius: 10px;
+    font-style: normal;
+font-weight: 500;
+font-size: 14px;
+line-height: 17px;
+
+color: #4F4F4F !important;
+}
+.profileBox{
+    display: grid;
+    grid-template-columns: 10% 60% 30%;
+    align-items: center;
 }
 
 .userAvatar {
     margin-top: 4px;
-    width: 40px;
+    width: 70px;
+    height: 70px;
     border-radius: 50% !important;
+}
+.accountName{
+    font-weight: 600;
+font-size: 18px;
+line-height: 22px;
+letter-spacing: -0.385882px;
+color: #000000;
+margin-bottom: 8px;
 }
 
 .btnGreenStyle {
     padding: 8px 13px;
     border: none;
-    background: linear-gradient(180deg, #2BDBC0 0%, #13B58C 100%);
+    background: var(--primary_color);
     border-radius: 24px;
     font-style: normal;
     font-weight: 500;
@@ -51,14 +71,14 @@
 .button{   
     background: #FFFFFF;
     border: 1.1px solid #FFFFFF;
-    color: #13B58C;
+    color: var(--primary_color);
     float:right;
 }
 
 .logout{
         background: #FFFFFF;
         border: 1.1px solid #FFFFFF;
-        color: #13B58C;
+        color: var(--primary_color);
         float:left;
 }
 

@@ -38,3 +38,10 @@
     padding: 20px;
     border: 2px dotted  #2bdbc0;
   }
+
+   .required::after {
+    content: "*";
+    color: rgb(255, 6, 6);
+     top: -5px;
+    right: -10px;
+  }

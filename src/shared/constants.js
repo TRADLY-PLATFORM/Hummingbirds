@@ -1,6 +1,9 @@
 export const priceOptions = [
-  { value: '10_1000', label: '10 to 1000' },
-  { value: '1001_10000', label: '1001 to 10000' },
+  { value: '0_20', label: '0 to 20' },
+  { value: '20_50', label: '20 to 50' },
+  { value: '50_100', label: '50 to 100' },
+  { value: '100_1000', label: '100 to 1000' },
+  { value: '1000_+', label: '1000+' },
 ];
 
 export const sortByOptions = [

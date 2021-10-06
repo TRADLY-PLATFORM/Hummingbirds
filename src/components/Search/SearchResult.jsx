@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams, useLocation } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import * as actions from '../../store/actions/index';
-import Listing from '../Listing/Listing';
-import classes from "./SearchResult.module.css"
+ import classes from "./SearchResult.module.css"
 import NoProductImage from '../../assets/images/rsz_noimage.png';
 import NoIamgeLogo from '../../assets/images/home/store/noImage.svg';
 import backdrop from '../UI/Backdrop/Backdrop';
@@ -17,8 +16,7 @@ const SearchResult = () => {
   const listings = useSelector((state) => state.Search.searchList);
   const loading = useSelector((state) => state.Search.loading);
 
-  const location = useLocation()
-
+ 
   useEffect(() => {
     dispatch(actions.getSearchingResult(key));
   }, [key]);
@@ -33,7 +31,16 @@ const SearchResult = () => {
           color="var(--primary_color)"
           height={100}
           width={100}
-          style={{ display: 'flex', justifyContent: 'center' }}
+          style={{
+            position: 'absolute',
+            right: 0,
+            height: '70%',
+            width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: '500',
+          }}
         />
       ) : listings.length > 0 ? (
         <div div className={classes.find}>

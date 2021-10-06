@@ -19,6 +19,7 @@ const initialState = {
   authRedirectPath: '/',
   userData: {},
   tenantData: {},
+  userDetails:{}
 };
 
 const authStart = (state, action) => {
@@ -26,8 +27,7 @@ const authStart = (state, action) => {
 };
 
 const authSuccess = (state, action) => {
-  console.log(action.data);
-  return updateObject(state, {
+   return updateObject(state, {
     userData: action.data,
     loading: false,
     message: null,
@@ -37,8 +37,7 @@ const authSuccess = (state, action) => {
   });
 };
 const passwordChangeSuccess = (state, action) => {
-  console.log(action.data);
-  return updateObject(state, {
+   return updateObject(state, {
     loading: false,
     message: null,
     error: false,
@@ -144,6 +143,14 @@ export const successTenantConfig = (state, action) => {
     message:null,
   });
 };
+export const setUserDetails = (state, action) => {
+  return updateObject(state, {
+    loading: false,
+    error: false,
+    message: null,
+    userDetails: action.details,
+  });
+};
 
 export const failedTenantConfig = (state, action) => {
   return updateObject(state, {
@@ -166,6 +173,8 @@ const authReducer = (state = initialState, action) => {
       return authLogout(state, action);
     case actionTypes.AUTH_VERIFY:
       return authVerify(state, action);
+    case actionTypes.USER_DETAILS:
+      return setUserDetails(state, action);
     case actionTypes.INIT_COUNTRIES:
       return startCountries(state, action);
     case actionTypes.SET_COUNTRIES:

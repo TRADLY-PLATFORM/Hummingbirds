@@ -1,14 +1,11 @@
 import React, { useEffect } from 'react';
 import classes from './ListingByCategory.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useLocation, useParams, withRouter } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import * as actions from '../../store/actions/index';
-import { priceOptions, sortByOptions, totalCountOfProducts } from '../../shared/constants';
-import Listing from '../../components/Listing/Listing';
-import NoProductImage from '../../assets/images/rsz_noimage.png';
+import {   totalCountOfProducts } from '../../shared/constants';
+ import NoProductImage from '../../assets/images/rsz_noimage.png';
 import NoIamgeLogo from '../../assets/images/home/store/noImage.svg';
-import backdrop from '../../components/UI/Backdrop/Backdrop';
-import spinner from '../../components/UI/Spinner/Spinner';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
 import Loader from 'react-loader-spinner';
 
@@ -21,8 +18,10 @@ const ListingsByCategory = () => {
   const { categoryName } = useParams();
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(actions.initListings(0, '&category_id=' + categoryName.split('-')[0], totalCountOfProducts));
-  }, []);
+    dispatch(
+      actions.initListings(0, '&category_id=' + categoryName.split('-')[0], totalCountOfProducts)
+    );
+  }, [categoryName, dispatch]);
   let listings = useSelector((state) => state.product.listings);
   let loading = useSelector((state) => state.product.loading);
 
@@ -43,9 +42,18 @@ const ListingsByCategory = () => {
             color="var(--primary_color)"
             height={100}
             width={100}
-            style={{ display: 'flex', justifyContent: 'center' }}
+            style={{
+              position: 'absolute',
+              right: 0,
+              height: '70%',
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              zIndex: '500',
+            }}
           />
-        ) : (
+        ) : listings?.length > 0 ? (
           <div className={classes.find}>
             {listings?.map((list, i) => {
               let imagePath = NoProductImage;
@@ -105,6 +113,13 @@ const ListingsByCategory = () => {
                 </Link>
               );
             })}
+          </div>
+        ) : (
+          <div style={{ marginTop: '2em' }} className="alert  alert-info fade in alert-dismissible">
+            <Link to="#" className="close" data-dismiss="alert" aria-label="close" title="close">
+              ×
+            </Link>
+            <strong>oops!</strong> No listings found.
           </div>
         )}
       </Aux>

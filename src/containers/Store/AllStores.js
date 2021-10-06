@@ -46,23 +46,18 @@ const AllStores = () => {
     const storeId = id;
     let IsFollowing = following;
 
+       dispatch(actions.postStoreFollow(storeId, IsFollowing));
  
     setTimeout(() => {
-      dispatch(actions.postStoreFollow(storeId, IsFollowing));
-    }, 1000);
-
-    setTimeout(() => {
       if (!followError) {
-        dispatch(actions.getStores());
+        dispatch(actions.getStores(parseInt(stores.page), stores.accounts.length));
       }
-    }, 2000);
+    }, 1000);
   };
 
   // 
   const handleChange = (selectedOption, selectedName) => {
-    console.log('====================================');
-    console.log(selectedOption, selectedName);
-    console.log('====================================');
+    
     let name = selectedName.name;
     let selectedValue = { ...selectedPart };
     if (selectedOption?.value === null) {
@@ -89,8 +84,7 @@ const AllStores = () => {
 
   // 
   const loadMore = () => {
-    const count = stores.accounts.length ;
-    if (stores.accounts.length !== 100) {
+     if (stores.accounts.length !== 100) {
       dispatch(actions.getStores(parseInt(stores.page), stores.accounts.length + 20));
     } else {
        dispatch(actions.getStores(parseInt(stores.page) + 1, 20));
@@ -137,7 +131,9 @@ const AllStores = () => {
                 <img src={imagePath} alt={store.name} title={store.name} />
               </div>
               <div className={classes.wellStoreDetails}>
-                <p style={{ fontWeight: 'bold', marginBottom: '1em' }}>{name}</p>
+                <p style={{ fontWeight: 'bold', marginBottom: '1em' }}>
+                  {store.name.length < 10 ? store.name : store.name.substring(0, 15) + '..'}
+                </p>
                 <p>{description}</p>
               </div>
 

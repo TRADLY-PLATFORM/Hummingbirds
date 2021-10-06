@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -76,7 +77,11 @@ class PhoneVerification extends Component {
 
     return (
       <div className="row text-center mt-5">
-        <div className={classes.title}>Phone verification</div>
+        <div className={classes.title}>
+          {(this.props.configsData.auth_type === 1 && 'Email') ||
+            (this.props.configsData.auth_type === 3 && 'Phone')} {' '}
+          verification
+        </div>
         <Backdrop show={this.props.loading} />
         <Spinner show={this.props.loading} />
         <ToastContainer
@@ -177,6 +182,7 @@ const mapStateToProps = (state) => {
     authRedirectPath: state.auth.authRedirectPath,
     verifyId: state.auth.verify_id,
     isAuthenticated: state.auth.token,
+    configsData: state.auth.general_configs,
   };
 };
 

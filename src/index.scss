@@ -712,5 +712,9 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-
-
+.textDecorationOff{
+  text-decoration: none;
+}
+.textDecorationOff:hover{
+  text-decoration: none;
+}

@@ -28,8 +28,7 @@ export const initProductDetails = (id,isLoading) => {
         .get('/products/v1/listings/' + id + '?locale=en')
         .then((response) => {
           if (response.data.status) {
-            console.log(response);
-            dispatch(setProductDetails(response.data.data));
+             dispatch(setProductDetails(response.data.data));
           } else {
             dispatch(fetchProductDetailsFailed());
           }
@@ -43,8 +42,7 @@ export const initProductDetails = (id,isLoading) => {
         .get('/products/v1/listings/' + id + '?locale=en')
         .then((response) => {
           if (response.data.status) {
-            console.log(response);
-            dispatch(setProductDetails(response.data.data));
+             dispatch(setProductDetails(response.data.data));
           } else {
             dispatch(fetchProductDetailsFailed());
           }
@@ -199,8 +197,7 @@ export const onProductLikeDisLike = (id, isLiked) => {
       axios
         .post('/products/v1/listings/' + id + '/likes')
         .then((response) => {
-          console.log('response', response);
-          if (response.data.status) {
+           if (response.data.status) {
             dispatch(setProductLikeDisLike('Product Liked Successfully'));
           } else {
             dispatch(fetchProductLikeDisLike());
@@ -213,8 +210,7 @@ export const onProductLikeDisLike = (id, isLiked) => {
       axios
         .delete('/products/v1/listings/' + id + '/likes')
         .then((response) => {
-          console.log('response', response);
-          if (response.data.status) {
+           if (response.data.status) {
             dispatch(setProductLikeDisLike('Product Liked Successfully'));
           } else {
             dispatch(fetchProductLikeDisLike());

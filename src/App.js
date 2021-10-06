@@ -1,6 +1,6 @@
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
-import  { Suspense, lazy } from 'react';
-
+import { Suspense, lazy } from 'react';
 
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 
@@ -12,13 +12,11 @@ import Logout from './containers/Auth/Logout/Logout';
 import PhoneVerification from './containers/Auth/PhoneVerification/PhoneVerification';
 import Listings from './containers/Listings/Listings';
 import AllCategory from './components/Category/AllCategory/AllCategory';
-import ProductDetails from './containers/ProductDetails/ProductDetails';
-import * as actions from '../src/store/actions/index';
+ import * as actions from '../src/store/actions/index';
 import WishList from './containers/WishList/WishList';
 import MyTransactionst from './containers/MyTransactionst/MyTransactionst';
 import MyProfile from './containers/MyProfile/MyProfile';
-import Cart from './containers/Cart/Cart';
-import EditProfile from './containers/EditProfile/EditProfile';
+ import EditProfile from './containers/EditProfile/EditProfile';
 import Group from './containers/Group/Group';
 import StoreDetails from './containers/Store/StoreDetails';
 import myGroup from './containers/Group/myGroup';
@@ -29,13 +27,13 @@ import StoreSuccess from './containers/Store/StoreSuccess';
 import ProductSuccess from './containers/Store/ProductSuccess';
 import NoProduct from './containers/Store/NoProduct';
 import withProduct from './containers/Store/withProduct';
- import reviewPage from './containers/Order/reviewPage';
- import ListingsByCategory from './containers/ListingsByCategory/ListingsByCategory';
+import reviewPage from './containers/Order/reviewPage';
+import ListingsByCategory from './containers/ListingsByCategory/ListingsByCategory';
 import AllStores from './containers/Store/AllStores';
 import SignIn from './containers/Auth/SignIn/SignIn';
 import { ErrorBoundary } from '@sentry/react';
 import ForgotPassword from './containers/Auth/ForgotPassword/ForgotPassword';
-import SearchResult from './components/Seacrh/SearchResult';
+import SearchResult from './components/Search/SearchResult';
 import CreateStore from './containers/Store/CreateStore/CreateStore';
 import Store from './containers/Store/MyStore/Stor';
 import CreateProduct from './containers/Store/CreateProduct/CreateProduct';
@@ -49,10 +47,12 @@ import MyOrder from './containers/Order/MyOrders';
 import DetailOrder from './containers/Order/DetailsOrder';
 import EditStore from './containers/Store/EditStore/EditStore';
 import SetPassword from './containers/Auth/ForgotPassword/SetPassword';
+import PaymentScreen from './containers/Stripe/PaymentScreen';
+import SecondLayout from './hoc/Layout/SecondLayout';
 
 const Layout = lazy(() => import('./hoc/Layout/Layout'));
 const Home = lazy(() => import('./containers/Home/Home'));
- 
+
 class App extends Component {
   componentDidMount() {
     this.props.onTryAuthSignUp();
@@ -64,13 +64,10 @@ class App extends Component {
     this.props.onSetListingsConfigs();
   }
 
-
   render() {
-
     let root = document.documentElement;
-    const color =  this.props.onboarding_configs.app_color_primary;
-    root.style.setProperty("--primary_color",color );
-  
+    const color = this.props.onboarding_configs.app_color_primary;
+    root.style.setProperty('--primary_color', color);
 
     let routes = (
       <Switch>
@@ -95,6 +92,7 @@ class App extends Component {
         <Route path="/wishlist" exact component={WishList} />
         <Route path="/my-transaction" exact component={MyTransactionst} />
         <Route path="/profile" exact component={MyProfile} />
+        <Route path="/payment" exact component={PaymentScreen} />
         {/* <Route path="/cart" exact component={Cart} /> */}
         <Route path="/cart" exact component={BuyNow} />
         <Route path="/checkout-success" exact component={OrderSuccess} />
@@ -123,7 +121,7 @@ class App extends Component {
     );
 
     return (
-      <Suspense fallback >
+      <Suspense fallback>
         <ErrorBoundary>
           {this.props.location.pathname === '/sign-up' ||
           this.props.location.pathname === '/sign-in' ||
@@ -132,7 +130,10 @@ class App extends Component {
           this.props.location.pathname === '/verification/' + this.props.verifyId ? (
             <BeforeAuth>{routes}</BeforeAuth>
           ) : (
-            <Layout>{routes}</Layout>
+            <>
+              {/* <Layout>{routes}</Layout> */}
+              <SecondLayout>{routes}</SecondLayout>
+            </>
           )}
         </ErrorBoundary>
       </Suspense>

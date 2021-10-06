@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import classes from './detailOrder.module.css';
 import { Link, useParams } from 'react-router-dom';
 
-import productImg from '../../assets/images/products/productImg.svg';
-// images
+ // images
 import locationMarker from '../../assets/images/products/locationMarker (1).svg';
 import directionImage from '../../assets/images/products/direction (1).svg';
 
@@ -65,11 +64,13 @@ const DetailOrder = () => {
             width={100}
             style={{
               position: 'absolute',
+              right: 0,
+              height: '70%',
               width: '100%',
-              height: '100%',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
+              zIndex: '500',
             }}
           />
         </>
@@ -274,7 +275,6 @@ const DetailOrder = () => {
                   className="btnOutlineGreenStyle"
                   style={{ marginRight: '15px' }}
                 >
-                  
                   Reorder
                 </Link>
                 <button
@@ -308,7 +308,6 @@ const DetailOrder = () => {
               </div>
             </div>
           </div>
-
         </>
       )}
     </div>

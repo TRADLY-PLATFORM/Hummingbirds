@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useLocation } from 'react-router';
+import { useHistory } from 'react-router';
 import * as actions from '../../../store/actions/index';
 import classes from './BuyNow.module.css';
-import { RadioGroup, RadioButton } from 'react-radio-buttons';
-import Aux from '../../../hoc/Auxiliary/Auxiliary';
+ import Aux from '../../../hoc/Auxiliary/Auxiliary';
 
 // images
 import locationMarker from '../../../assets/images/products/locationMarker (1).svg';
@@ -23,8 +22,7 @@ import ChangeShippingAddress from '../ShippingAddress/ChangeShippingAddress';
 
 const BuyNow = () => {
   // state
-  const [quantity, setQuantity] = useState(1);
-  const [paymentMethod, setPaymentMethod] = useState(null);
+   const [paymentMethod, setPaymentMethod] = useState(null);
   const [shippingMethod, setShippingMethod] = useState(1);
   const [addressForm, setAddressForm] = useState(false);
   const [pickupAddress, setPickupAddress] = useState(true);
@@ -34,12 +32,11 @@ const BuyNow = () => {
   const [selectShippingAddress, setSelectShippingAddress] = useState(null);
   const [selectPickupAddress, setSelectPickupAddress] = useState(null);
 
-  const location = useLocation();
-  const history = useHistory();
+   const history = useHistory();
 
   // reducer
-  const productDetails = useSelector((state) => state.product.productDetails);
-  const { listing } = productDetails;
+  // const productDetails = useSelector((state) => state.product.productDetails);
+  // const { listing } = productDetails;
 
   const payment_methods = useSelector((state) => state.payment.payment_methods);
   const shipping_methods = useSelector((state) => state.payment.shipping_methods);
@@ -71,12 +68,19 @@ const BuyNow = () => {
     let cartData;
     if (increase) {
       if (quantity < listing.max_quantity) {
-        cartData = {
+        
+        if (quantity === listing.stock) {
+          toast.error(`There are not ${quantity+1} products in stock`);
+          return false;
+         } else {
+         cartData = {
           cart: {
             listing_id: listing.id,
             quantity: quantity + 1,
           },
-        };
+        }
+        }
+          
       } else {
         toast.error('The highest quantity is' + '  ' + listing.max_quantity);
         return false;
@@ -96,7 +100,7 @@ const BuyNow = () => {
     }
     dispatch(actions.addToCart(cartData, currencies[0]));
     setTimeout(() => {
-      dispatch(actions.getCartList(currencies[0], shippingMethod));
+      dispatch(actions.getCartList(currencies[0], shipping_methods[0].id));
     }, 700);
   };
 
@@ -214,7 +218,7 @@ const BuyNow = () => {
     <Aux>
       <ToastContainer
         autoClose={2000}
-        position="top-center"
+        position="bottom-right"
         transition={Slide}
         closeOnClick
         rtl={false}
@@ -233,17 +237,19 @@ const BuyNow = () => {
             width={100}
             style={{
               position: 'absolute',
+              right: 0,
+              height: '70%',
               width: '100%',
-              height: '100%',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
+              zIndex: '500',
             }}
           />
         </>
       )}
 
-      {cartList.cart ? (
+      {cartList.cart && (
         <div>
           {cart_details.length > 0 ? (
             <div className={classes.buyNowBox}>
@@ -506,14 +512,6 @@ const BuyNow = () => {
             </div>
           )}
         </div>
-      ) : (
-        <Loader
-          type="ThreeDots"
-          color="var(--primary_color)"
-          height={100}
-          width={100}
-          style={{ display: 'flex', justifyContent: 'center' }}
-        />
       )}
     </Aux>
   );

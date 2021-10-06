@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
  import Leaflet from 'leaflet';
 
@@ -18,9 +19,9 @@ Leaflet.Icon.Default.imagePath = '../node_modules/leaflet';
 
 const Maps = ({ lat, lng, address }) => {
  
-  const containerStyle = {};
+  // const containerStyle = {};
 
-  const position = [51.505, -0.09];
+  // const position = [51.505, -0.09];
   return (
     <>
       <MapContainer

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import classes from './AddProduct.module.css';
 
-import productImg from '../../../assets/images/products/productImg.svg';
-import addProductIcon from '../../../assets/images/products/addProductIcon.svg';
+ import addProductIcon from '../../../assets/images/products/addProductIcon.svg';
 import { Link, useParams, useHistory } from 'react-router-dom';
 import * as actions from '../../../store/actions/index';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,14 +10,12 @@ import locationImage from '../../../assets/images/store/location.png';
 import locationListImage from '../../../assets/images/store/locationList.png';
 
 import closeImage from '../../../assets/images/store/close (1).svg';
-import imageToBase64 from 'image-to-base64/browser';
-import { Slide, toast, ToastContainer } from 'react-toastify';
+ import { Slide, toast, ToastContainer } from 'react-toastify';
 import Backdrop from '../../../components/UI/Backdrop/Backdrop';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import Toast from '../../../components/UI/Toast/Toast';
 import Aux from '../../../hoc/Auxiliary/Auxiliary';
-import Loader from 'react-loader-spinner';
-
+ 
 const CreateProduct = () => {
   // state
   const [title, setTitle] = useState('');
@@ -50,7 +47,7 @@ const CreateProduct = () => {
     if (selectedCategory !== null) {
       dispatch(actions.initAttribute(selectedCategory, 'listings'));
     }
-  }, [selectedCategory]);
+  }, [dispatch, selectedCategory]);
 
   // reducer
   const categories = useSelector((state) => state.product.categoryLists);
@@ -328,7 +325,7 @@ const CreateProduct = () => {
               <label htmlFor="currency">Currency</label>
               <select className={classes.input} name="" id="currency" onChange={selectCurrency}>
                 {currencies?.map((currency, index) => {
-                  return <option value={currency.id}>{currency.code}</option>;
+                  return <option value={currency.id} key={Math.random()}>{currency.code}</option>;
                 })}
               </select>
             </div>
@@ -408,7 +405,7 @@ const CreateProduct = () => {
             >
               <option value="dot">... </option>
               {categories?.map((category) => {
-                return <option value={category.id}>{category.name}</option>;
+                return <option value={category.id} key={Math.random()*80000}>{category.name}</option>;
               })}
             </select>
           </div>

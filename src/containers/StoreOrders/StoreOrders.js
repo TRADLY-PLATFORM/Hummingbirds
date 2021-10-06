@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import classes from './StoreOrders.module.css';
-import { Link, useLocation, useHistory, useParams } from 'react-router-dom';
+import { Link, useLocation, useHistory} from 'react-router-dom';
 
-import orderIcon1 from '../../assets/images/Order/orderIcon1.svg';
-import orderIcon from '../../assets/images/Order/orderIcon.svg';
-import { useDispatch, useSelector } from 'react-redux';
+ import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../store/actions/index';
 import moment from 'moment';
  
@@ -24,21 +22,20 @@ const StoreOrders = () => {
   const loading = useSelector((state) => state.order.loading);
 
 const history = useHistory();
-const { statusID } = useParams();
-const location = useLocation();
+ const location = useLocation();
   const dispatch = useDispatch();
   
     useEffect(() => {
       if (location.state === undefined) {
             dispatch(actions.getOrders(location.search.replace('?', '')));
       }
-    }, [location]);
+    }, [dispatch, location]);
 
     useEffect(() => {
       if (location.state !== undefined) {
         dispatch(actions.getOrders(location.search.replace('?', ''), location.state));
       }
-    }, [location]);
+    }, [dispatch, location]);
   
 
   // function
@@ -68,12 +65,13 @@ const location = useLocation();
             width={100}
             style={{
               position: 'absolute',
+              right: 0,
+              height: '70%',
               width: '100%',
-              height: '100%',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              zIndex: '100',
+              zIndex: '500',
             }}
           />
         </>
@@ -144,7 +142,11 @@ const location = useLocation();
               <div className={classes.transactionContainer} key={index}>
                 <div className={classes.orderShortDetails + ' nopadding col-md-4 '}>
                   <div>
-                    <img className={classes.productImg} src={order_details[0].listing.images[0]} />
+                    <img
+                      className={classes.productImg}
+                      src={order_details[0].listing.images[0]}
+                      alt="orderImage"
+                    />
                   </div>
 
                   <Link

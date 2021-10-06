@@ -5,8 +5,7 @@ import * as actions from '../../../store/actions/index';
 import { Slide, toast, ToastContainer } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { Redirect } from 'react-router';
-import Loader from 'react-loader-spinner';
-
+ 
 
 const SetPassword = () => {
   const [verificationCode, setVerificationCode] = useState(null);
@@ -19,8 +18,7 @@ const SetPassword = () => {
 
   // reducer
   const configsData = useSelector((state) => state.auth.general_configs);
-  const countryList = useSelector((state) => state.auth.countries);
-  const error = useSelector((state) => state.auth.error);
+   const error = useSelector((state) => state.auth.error);
   const message = useSelector((state) => state.auth.message);
   const verifyID = useSelector((state) => state.auth.verify_id);
   const loading = useSelector((state) => state.auth.loading);
