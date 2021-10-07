@@ -112,7 +112,7 @@ const BuyNow = () => {
         listing_id: [id],
       },
     };
-    dispatch(actions.deleteCart(data, currencies[0]));
+    dispatch(actions.deleteCart(data, currencies[0],shipping_methods[0].id));
   };
 
   // Select Payment

@@ -59,7 +59,7 @@ const MyProfile = () => {
             <Link className="textDecorationOff" to="/store">
               My store
             </Link>
-            {storeLists.length > 0 && (
+            {storeLists.length === 0 && (
               <Link tp="/create-store" className={classes.button}>
                 Create Store
               </Link>
@@ -88,10 +88,10 @@ const MyProfile = () => {
             </div>
           )}
 
-          <div className="col-lg-12 col-md-12 col-sm-12">
+          {/* <div className="col-lg-12 col-md-12 col-sm-12">
             <p>Feedback</p>
             <hr />
-          </div>
+          </div> */}
           {/* 
           <div className="col-lg-12 col-md-12 col-sm-12">
             <p>Refer a friend</p>

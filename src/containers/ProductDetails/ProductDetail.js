@@ -7,7 +7,7 @@ import { useLocation, useParams } from 'react-router';
 import Toast from '../../components/UI/Toast/Toast';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
 import Spinner from '../../components/UI/Spinner/Spinner';
- import Backdrop from '../../components/UI/Backdrop/Backdrop';
+import Backdrop from '../../components/UI/Backdrop/Backdrop';
 
 // images
 import starImage from '../../assets/images/products/Star.svg';
@@ -26,10 +26,10 @@ import 'swiper/components/navigation/navigation.min.css';
 
 // import Swiper core and required modules
 import SwiperCore, { Autoplay, Pagination, Navigation } from 'swiper/core';
- import { selectUserId } from '../../store/selectors/auth';
+import { selectUserId } from '../../store/selectors/auth';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { Slide,  ToastContainer } from 'react-toastify';
+import { Slide, ToastContainer } from 'react-toastify';
 import Loader from 'react-loader-spinner';
 
 // install Swiper modules
@@ -213,7 +213,6 @@ const ProductDetail = () => {
 
   return (
     <>
-                 
       <Helmet>
         <title> {listing?.title || 'N/A'}- Buy Online </title>
         <meta name="description" content={`${listing?.description}`} />
@@ -274,15 +273,17 @@ const ProductDetail = () => {
                     {listing?.images.map((img, index) => {
                       return (
                         <SwiperSlide key={index}>
-                          <img className={classes.productImage} src={img} alt='productImage' />
+                          <img className={classes.productImage} src={img} alt="productImage" />
                         </SwiperSlide>
                       );
                     })}
                   </Swiper>
-                  <div className={classes.description}>
-                    <h4 className={classes.descriptionHeader}>Description</h4>
-                    <p className={classes.descriptionBody}>{listing?.description}</p>
-                  </div>
+                  {listing?.description.length > 0 && (
+                    <div className={classes.description}>
+                      <h4 className={classes.descriptionHeader}>Description</h4>
+                      <p className={classes.descriptionBody}>{listing?.description}</p>
+                    </div>
+                  )}
                 </div>
                 <div className={classes.MainPartInfo}>
                   <div className={classes.productHeaderPart}>
@@ -290,6 +291,7 @@ const ProductDetail = () => {
                       {listing?.stock && `Only ${listing?.stock} products in stock`}
                     </p>
                     <h4 className={classes.productName}>{listing?.title}</h4>
+                    <p className={classes.productName}>{listing?.list_price.formatted}</p>
                     <div className={classes.ratingInfo}>
                       <img src={starImage} alt="" />
                       <p>{ratting_data && ratting_data.rating_average}</p>
@@ -365,23 +367,25 @@ const ProductDetail = () => {
                       </Link>
                     )}
                   </div>
-                  <div className={classes.addressBox}>
-                    <div className={classes.markerImage}>
-                      <img src={locationMarker} alt="" />
+                  {listing?.location.formatted_address.length > 0 && (
+                    <div className={classes.addressBox}>
+                      <div className={classes.markerImage}>
+                        <img src={locationMarker} alt="" />
+                      </div>
+                      <div>
+                        <p className={classes.shortAddress}>
+                          {listing?.location.city && `${listing?.location.city}`}
+                          {listing?.location.country && `${listing?.location.country}`}
+                        </p>
+                        <p className={classes.formattedAddress}>
+                          {listing?.location.formatted_address}
+                        </p>
+                      </div>
+                      <div className={classes.directionImage}>
+                        <img src={directionImage} alt="" />
+                      </div>
                     </div>
-                    <div>
-                      <p className={classes.shortAddress}>
-                        {listing?.location.city && `${listing?.location.city}`}
-                        {listing?.location.country && `${listing?.location.country}`}
-                      </p>
-                      <p className={classes.formattedAddress}>
-                        {listing?.location.formatted_address}
-                      </p>
-                    </div>
-                    <div className={classes.directionImage}>
-                      <img src={directionImage} alt="" />
-                    </div>
-                  </div>
+                  )}
                   <div className={classes.storeDetails}>
                     <img
                       src={
@@ -449,8 +453,7 @@ const ProductDetail = () => {
               </div>
             </div>
           </div>
-        )  
-        }
+        )}
       </Aux>
     </>
   );

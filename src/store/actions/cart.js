@@ -100,7 +100,7 @@ export const getCartList = (currency,shippingMethodId) => {
 //   };
 // };
 
-export const deleteCart = (data,currency) => {
+export const deleteCart = (data,currency,shippingMethod) => {
   return (dispatch) => {
     dispatch(startLoading());
      var config = {
@@ -114,7 +114,7 @@ export const deleteCart = (data,currency) => {
 
     axios(config).then((response) => {
       if (response.data.status) {
-          dispatch(getCartList(currency,1));
+          dispatch(getCartList(currency, shippingMethod));
       } else {
         console.log('error', response);
       }
