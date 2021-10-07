@@ -68,6 +68,8 @@ class App extends Component {
     let root = document.documentElement;
     const color = this.props.onboarding_configs.app_color_primary;
     root.style.setProperty('--primary_color', color);
+    const favicon = document.getElementById('favicon');
+    favicon.href = (this.props.onboarding_configs.splash_image);
 
     let routes = (
       <Switch>

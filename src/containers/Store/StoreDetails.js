@@ -47,7 +47,7 @@ class StoreDetails extends Component {
     const { storeId } = this.state;
     this.props.onInitStoreDetails(storeId);
     const filter = '&account_id=' + storeId;
-    this.props.onInitListings(0, filter, totalCountOfProducts);
+    this.props.onInitListings(0, filter, totalCountOfProducts,true);
   }
 
   showMaps = () => {
@@ -290,8 +290,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     onInitStoreDetails: (id) => dispatch(actions.initStoreDetails(id)),
-    onInitListings: (count, filterValue, totalCountOfProducts) =>
-      dispatch(actions.initListings(count, filterValue, totalCountOfProducts)),
+    onInitListings: (count, filterValue, totalCountOfProducts, loading, page) =>
+      dispatch(actions.initListings(count, filterValue, totalCountOfProducts, loading, page)),
     postStoreFollow: (storeId, IsFollowing) =>
       dispatch(actions.postStoreFollow(storeId, IsFollowing)),
     setRedirectPath: (redirectPath) => dispatch(actions.setAuthRedirectPath(redirectPath)),

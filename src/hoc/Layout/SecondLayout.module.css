@@ -10,7 +10,7 @@
   box-shadow: 0 2px 3px -1px rgba(58, 58, 58, 0.013);
  }
  .childrenPart{
-   padding: 8% 10%  4% 10%;
+   padding:150px 10%   4% 10%;
      background-color: #f6f9ff;
   min-height: 100vh;
   }
@@ -22,25 +22,40 @@
    padding: 0 8%;
   }
  .childrenPart{
-   padding: 8% 8%  4% 8%;
+   padding: 150px 8%  4% 8%;
    }
 
 }
+ 
 @media only screen and (max-width: 1700px) {
  .HeaderPart{
-   padding: 0 7%;
+   padding: 0 5%;
   }
  .childrenPart{
-   padding: 8% 8%  4% 8%;
+   padding: 150px 5%  4% 5%;
    }
 
 }
-@media only screen and (max-width: 1700px) {
+
+
+@media only screen and (max-width: 1500px) {
  .HeaderPart{
-   padding: 0 7%;
+   padding: 0 2%;
   }
  .childrenPart{
-   padding: 9% 1%  4% 1%;
+   padding: 150px 2%  4% 2%;
    }
 
 }
+@media only screen and (max-width: 768px) {
+ .HeaderPart{
+    height: 44px !important;
+  }
+  .childrenPart{
+   padding: 50px 2%  4% 2%;
+   }
+   
+}
+
+ 
+ 

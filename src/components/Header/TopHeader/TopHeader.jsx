@@ -9,25 +9,26 @@ import profileUser from '../../../assets/images/header/profile-user.png';
 import { Search } from '../../Search/Search';
 import MoreLogo from '../../../assets/images/home/category/more.svg';
 import Categories from '../../../containers/Home/Categories/Categories';
+import useWindowSize from '../../../components/Hooks/WindowSize/WindowSize';
+import menubarIcon from '../../../assets/images/mobilemenu/menu.png';
+import closeMenu from '../../../assets/images/mobilemenu/close (1).svg';
 
 const TopHeader = () => {
   const [categoriesSet, setCategoriesSet] = useState([]);
+  const [isSiteNavOpen, setIsSiteNavOpen] = useState(false);
 
   const dispatch = useDispatch();
   const { pathname } = useLocation();
+  const { width, height } = useWindowSize();
 
-  const subCategoryRef = useRef()
+  const subCategoryRef = useRef();
 
   //use Effect
   useEffect(() => {
     dispatch(actions.initCategoryLists());
     dispatch(actions.initCurrencies());
     dispatch(actions.getShippingMethod());
-
   }, [0]);
-
-
-
 
   // reducer
   const onboardingConfigs = useSelector((state) => state.auth.onboarding_configs);
@@ -39,10 +40,9 @@ const TopHeader = () => {
   const currencies = useSelector((state) => state.store.currencies);
   const shipping_methods = useSelector((state) => state.payment.shipping_methods);
 
-
   // function
   function getUserName() {
-    return userDetails.first_name  || 'Guest';
+    return userDetails.first_name || 'Guest';
   }
 
   function getUserImage() {
@@ -53,26 +53,32 @@ const TopHeader = () => {
     dispatch(actions.setAuthRedirectPath(pathname, null));
   };
 
-  // 
-    useEffect(() => {
-      if (isAuthenticated && currencies.length > 0 && shipping_methods.length) {
-        dispatch(actions.getCartList(currencies[0], shipping_methods[0].id));
-      }
-    }, [currencies || cartList]);
+  //
+  useEffect(() => {
+    if (isAuthenticated && currencies.length > 0 && shipping_methods.length) {
+      dispatch(actions.getCartList(currencies[0], shipping_methods[0].id));
+    }
+  }, [currencies || cartList]);
 
-    useEffect(() => {
-      if (isAuthenticated) {
-        dispatch(actions.getUserDetails(isAuthenticated));
-       }
-    }, [dispatch, isAuthenticated]);
+  useEffect(() => {
+    if (isAuthenticated) {
+      dispatch(actions.getUserDetails(isAuthenticated));
+    }
+  }, [dispatch, isAuthenticated]);
 
   useEffect(() => {
     if (Categories.length > 0) {
       if (categories.length < 9) {
         setCategoriesSet(categories);
       } else {
-        const sliceLength = 9;
-        let updatedCategories = categories.slice(0, sliceLength);
+        var sliceLength;
+        if (width < 1500) {
+          sliceLength = 5;
+        }
+        if (width < 1000) {
+          sliceLength = 4;
+        }
+        let updatedCategories = categories.slice(0, sliceLength || 9);
         let moreCategory = {
           id: Math.random(),
           name: 'More',
@@ -85,8 +91,8 @@ const TopHeader = () => {
       }
     }
   }, [categories]);
- 
-  // 
+
+  //
   // const categoryHover = () => {
   //   const sub_category_box = document.getElementById('subCategoryBox');
   //   sub_category_box.style.display ='block'
@@ -96,10 +102,32 @@ const TopHeader = () => {
   //   sub_category_box.style.display ='none'
   // }
 
+  //
+  const navButtonClick = () => {
+    if (width > 400) {
+          document.getElementById('sideBar').style.width = '400px';
+
+    }else{
+          document.getElementById('sideBar').style.width = `${width}px`;
+
+    }
+    setIsSiteNavOpen(true);
+  };
+
+  function navButtonOff() {
+    document.getElementById('sideBar').style.width = '0px';
+    setIsSiteNavOpen(false);
+  }
+
   return (
     <div className={classes.topHeaderBox}>
+      <div className={classes.bgEffect} style={{ display: isSiteNavOpen ? 'block' : 'none' }}></div>
       <div className={classes.firstPart}>
-        <div></div>
+        <div className={classes.menubarIcon}>
+          <button type="button" onClick={navButtonClick}>
+            <img style={{ width: '24px', height: '24px' }} src={menubarIcon} alt="" />
+          </button>
+        </div>
         <div>
           <div className={classes.logo}>
             <Link to="/home">
@@ -107,9 +135,13 @@ const TopHeader = () => {
                 <img
                   className="img-fluid"
                   src={onboardingConfigs.splash_image}
-                  style={{ width: '95px', height: '50px' }}
-                  alt="Tradly"
-                  title="Tradly"
+                  style={
+                    width > 768
+                      ? { width: '95px', height: '50px' }
+                      : { width: '95px', height: '44px' }
+                  }
+                  alt={onboardingConfigs.app_name}
+                  title={onboardingConfigs.app_name}
                 />
               ) : (
                 'Loading...'
@@ -118,52 +150,56 @@ const TopHeader = () => {
           </div>
         </div>
         <div className={classes.userPart}>
-          <div>
-            <Link
-              onClick={!isAuthenticated && (() => setPath('/wishlist'))}
-              to={isAuthenticated ? '/wishlist' : '/sign-in'}
-              style={{
-                display: 'flex ',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: '44px',
-              }}
-            >
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill={pathname === '/wishlist' ? 'var(--primary_color)' : '#959393'}
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M21.6328 6.64689C21.3187 5.91948 20.8657 5.2603 20.2992 4.70627C19.7323 4.15058 19.064 3.70898 18.3305 3.40549C17.5699 3.08953 16.7541 2.92781 15.9305 2.9297C14.775 2.9297 13.6477 3.24611 12.668 3.84377C12.4336 3.98674 12.2109 4.14377 12 4.31486C11.7891 4.14377 11.5664 3.98674 11.332 3.84377C10.3523 3.24611 9.225 2.9297 8.06953 2.9297C7.2375 2.9297 6.43125 3.08908 5.66953 3.40549C4.93359 3.71017 4.27031 4.14845 3.70078 4.70627C3.13359 5.25968 2.6805 5.91901 2.36719 6.64689C2.04141 7.40392 1.875 8.20783 1.875 9.03517C1.875 9.81564 2.03438 10.6289 2.35078 11.4563C2.61563 12.1477 2.99531 12.8649 3.48047 13.5891C4.24922 14.7352 5.30625 15.9305 6.61875 17.1422C8.79375 19.1508 10.9477 20.5383 11.0391 20.5945L11.5945 20.9508C11.8406 21.1078 12.157 21.1078 12.4031 20.9508L12.9586 20.5945C13.05 20.536 15.2016 19.1508 17.3789 17.1422C18.6914 15.9305 19.7484 14.7352 20.5172 13.5891C21.0023 12.8649 21.3844 12.1477 21.6469 11.4563C21.9633 10.6289 22.1227 9.81564 22.1227 9.03517C22.125 8.20783 21.9586 7.40392 21.6328 6.64689Z" />
-              </svg>
-            </Link>
-          </div>
-          <div>
-            {
-              <Link
-                onClick={!isAuthenticated && (() => setPath('/store'))}
-                to={isAuthenticated ? '/store' : '/sign-in'}
-                style={{
-                  display: 'flex ',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  width: '44px',
-                }}
-              >
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill={pathname === '/store' ? 'var(--primary_color)' : '#959393'}
-                  xmlns="http://www.w3.org/2000/svg"
+          {width > 768 && (
+            <>
+              <div>
+                <Link
+                  onClick={!isAuthenticated && (() => setPath('/wishlist'))}
+                  to={isAuthenticated ? '/wishlist' : '/sign-in'}
+                  style={{
+                    display: 'flex ',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '44px',
+                  }}
                 >
-                  <path d="M21.546 7.93789L19.4386 4.49805C19.2502 4.18926 18.9158 4 18.5586 4H5.44014C5.08296 4 4.7485 4.18926 4.56017 4.49805L2.45277 7.93789C1.36498 9.71426 2.32938 12.1846 4.36209 12.4668C4.50821 12.4867 4.65758 12.4967 4.80695 12.4967C5.7681 12.4967 6.61885 12.065 7.20334 11.3977C7.78782 12.065 8.64182 12.4967 9.59973 12.4967C10.5609 12.4967 11.4116 12.065 11.9961 11.3977C12.5806 12.065 13.4346 12.4967 14.3925 12.4967C15.3537 12.4967 16.2044 12.065 16.7889 11.3977C17.3766 12.065 18.2274 12.4967 19.1853 12.4967C19.3379 12.4967 19.484 12.4867 19.6301 12.4668C21.6693 12.1879 22.637 9.71758 21.546 7.93789ZM19.1918 13.5625C18.8671 13.5625 18.5456 13.5127 18.2339 13.4363V16.75H5.76486V13.4363C5.45313 13.5094 5.13166 13.5625 4.80695 13.5625C4.61212 13.5625 4.41404 13.5492 4.22246 13.5227C4.04062 13.4961 3.86203 13.4529 3.68993 13.4031V19.9375C3.68993 20.5252 4.15427 21 4.72902 21H19.2762C19.851 21 20.3153 20.5252 20.3153 19.9375V13.4031C20.1399 13.4563 19.9646 13.4994 19.7828 13.5227C19.5847 13.5492 19.3899 13.5625 19.1918 13.5625Z" />
-                </svg>
-              </Link>
-            }
-          </div>
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill={pathname === '/wishlist' ? 'var(--primary_color)' : '#959393'}
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M21.6328 6.64689C21.3187 5.91948 20.8657 5.2603 20.2992 4.70627C19.7323 4.15058 19.064 3.70898 18.3305 3.40549C17.5699 3.08953 16.7541 2.92781 15.9305 2.9297C14.775 2.9297 13.6477 3.24611 12.668 3.84377C12.4336 3.98674 12.2109 4.14377 12 4.31486C11.7891 4.14377 11.5664 3.98674 11.332 3.84377C10.3523 3.24611 9.225 2.9297 8.06953 2.9297C7.2375 2.9297 6.43125 3.08908 5.66953 3.40549C4.93359 3.71017 4.27031 4.14845 3.70078 4.70627C3.13359 5.25968 2.6805 5.91901 2.36719 6.64689C2.04141 7.40392 1.875 8.20783 1.875 9.03517C1.875 9.81564 2.03438 10.6289 2.35078 11.4563C2.61563 12.1477 2.99531 12.8649 3.48047 13.5891C4.24922 14.7352 5.30625 15.9305 6.61875 17.1422C8.79375 19.1508 10.9477 20.5383 11.0391 20.5945L11.5945 20.9508C11.8406 21.1078 12.157 21.1078 12.4031 20.9508L12.9586 20.5945C13.05 20.536 15.2016 19.1508 17.3789 17.1422C18.6914 15.9305 19.7484 14.7352 20.5172 13.5891C21.0023 12.8649 21.3844 12.1477 21.6469 11.4563C21.9633 10.6289 22.1227 9.81564 22.1227 9.03517C22.125 8.20783 21.9586 7.40392 21.6328 6.64689Z" />
+                  </svg>
+                </Link>
+              </div>
+              <div>
+                {
+                  <Link
+                    onClick={!isAuthenticated && (() => setPath('/store'))}
+                    to={isAuthenticated ? '/store' : '/sign-in'}
+                    style={{
+                      display: 'flex ',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: '44px',
+                    }}
+                  >
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill={pathname === '/store' ? 'var(--primary_color)' : '#959393'}
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M21.546 7.93789L19.4386 4.49805C19.2502 4.18926 18.9158 4 18.5586 4H5.44014C5.08296 4 4.7485 4.18926 4.56017 4.49805L2.45277 7.93789C1.36498 9.71426 2.32938 12.1846 4.36209 12.4668C4.50821 12.4867 4.65758 12.4967 4.80695 12.4967C5.7681 12.4967 6.61885 12.065 7.20334 11.3977C7.78782 12.065 8.64182 12.4967 9.59973 12.4967C10.5609 12.4967 11.4116 12.065 11.9961 11.3977C12.5806 12.065 13.4346 12.4967 14.3925 12.4967C15.3537 12.4967 16.2044 12.065 16.7889 11.3977C17.3766 12.065 18.2274 12.4967 19.1853 12.4967C19.3379 12.4967 19.484 12.4867 19.6301 12.4668C21.6693 12.1879 22.637 9.71758 21.546 7.93789ZM19.1918 13.5625C18.8671 13.5625 18.5456 13.5127 18.2339 13.4363V16.75H5.76486V13.4363C5.45313 13.5094 5.13166 13.5625 4.80695 13.5625C4.61212 13.5625 4.41404 13.5492 4.22246 13.5227C4.04062 13.4961 3.86203 13.4529 3.68993 13.4031V19.9375C3.68993 20.5252 4.15427 21 4.72902 21H19.2762C19.851 21 20.3153 20.5252 20.3153 19.9375V13.4031C20.1399 13.4563 19.9646 13.4994 19.7828 13.5227C19.5847 13.5492 19.3899 13.5625 19.1918 13.5625Z" />
+                    </svg>
+                  </Link>
+                }
+              </div>
+            </>
+          )}
           <div className={classes.cartArea}>
             <Link
               to={isAuthenticated ? '/cart' : '/sign-in'}
@@ -211,10 +247,7 @@ const TopHeader = () => {
             <div className={classes.dropdownMenu + ' user-menu dropdown-menu'}>
               {isAuthenticated ? (
                 <div>
-                  <Link
-                    className={classes.navLink}
-                    to={isAuthenticated ? '/profile' : '/sign-in'}
-                   >
+                  <Link className={classes.navLink} to={isAuthenticated ? '/profile' : '/sign-in'}>
                     <i className="fa fa-user"></i> My Profile
                   </Link>
                   <Link className={classes.navLink} to="/logout">
@@ -247,11 +280,9 @@ const TopHeader = () => {
                     key={Math.random() * 300000}
                     className={classes.categoryBox}
                   >
-                   
-                      {category.name.length < 9
-                        ? category.name
-                        : category.name.substring(0, 6) + '..'}
-                     
+                    {category.name.length < 9
+                      ? category.name
+                      : category.name.substring(0, 6) + '..'}
                   </Link>
                 </>
               );
@@ -262,6 +293,108 @@ const TopHeader = () => {
           <Search />
         </div>
       </div>
+      <div id="sideBar" className={classes.sideBar}>
+        {isSiteNavOpen && (
+          <>
+            <div className={classes.mobilenavHeader}>
+              <Link to="/home">
+                {onboardingConfigs.splash_image !== '' ? (
+                  <img
+                    className="img-fluid"
+                    src={onboardingConfigs.splash_image}
+                    style={{ width: '95px', height: '50px' }}
+                    alt={onboardingConfigs.app_name}
+                    title={onboardingConfigs.app_name}
+                  />
+                ) : (
+                  'Loading...'
+                )}
+              </Link>
+              <div className={classes.mobileHeaderIcons}>
+                <div>
+                  <Link
+                    onClick={(!isAuthenticated && (() => setPath('/wishlist')), navButtonOff)}
+                    to={isAuthenticated ? '/wishlist' : '/sign-in'}
+                    style={{
+                      display: 'flex ',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: '44px',
+                    }}
+                  >
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill={pathname === '/wishlist' ? 'var(--primary_color)' : '#959393'}
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M21.6328 6.64689C21.3187 5.91948 20.8657 5.2603 20.2992 4.70627C19.7323 4.15058 19.064 3.70898 18.3305 3.40549C17.5699 3.08953 16.7541 2.92781 15.9305 2.9297C14.775 2.9297 13.6477 3.24611 12.668 3.84377C12.4336 3.98674 12.2109 4.14377 12 4.31486C11.7891 4.14377 11.5664 3.98674 11.332 3.84377C10.3523 3.24611 9.225 2.9297 8.06953 2.9297C7.2375 2.9297 6.43125 3.08908 5.66953 3.40549C4.93359 3.71017 4.27031 4.14845 3.70078 4.70627C3.13359 5.25968 2.6805 5.91901 2.36719 6.64689C2.04141 7.40392 1.875 8.20783 1.875 9.03517C1.875 9.81564 2.03438 10.6289 2.35078 11.4563C2.61563 12.1477 2.99531 12.8649 3.48047 13.5891C4.24922 14.7352 5.30625 15.9305 6.61875 17.1422C8.79375 19.1508 10.9477 20.5383 11.0391 20.5945L11.5945 20.9508C11.8406 21.1078 12.157 21.1078 12.4031 20.9508L12.9586 20.5945C13.05 20.536 15.2016 19.1508 17.3789 17.1422C18.6914 15.9305 19.7484 14.7352 20.5172 13.5891C21.0023 12.8649 21.3844 12.1477 21.6469 11.4563C21.9633 10.6289 22.1227 9.81564 22.1227 9.03517C22.125 8.20783 21.9586 7.40392 21.6328 6.64689Z" />
+                    </svg>
+                  </Link>
+                </div>
+                <div>
+                  {
+                    <Link
+                      onClick={(!isAuthenticated && (() => setPath('/store')), navButtonOff)}
+                      to={isAuthenticated ? '/store' : '/sign-in'}
+                      style={{
+                        display: 'flex ',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: '44px',
+                      }}
+                    >
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill={pathname === '/store' ? 'var(--primary_color)' : '#959393'}
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path d="M21.546 7.93789L19.4386 4.49805C19.2502 4.18926 18.9158 4 18.5586 4H5.44014C5.08296 4 4.7485 4.18926 4.56017 4.49805L2.45277 7.93789C1.36498 9.71426 2.32938 12.1846 4.36209 12.4668C4.50821 12.4867 4.65758 12.4967 4.80695 12.4967C5.7681 12.4967 6.61885 12.065 7.20334 11.3977C7.78782 12.065 8.64182 12.4967 9.59973 12.4967C10.5609 12.4967 11.4116 12.065 11.9961 11.3977C12.5806 12.065 13.4346 12.4967 14.3925 12.4967C15.3537 12.4967 16.2044 12.065 16.7889 11.3977C17.3766 12.065 18.2274 12.4967 19.1853 12.4967C19.3379 12.4967 19.484 12.4867 19.6301 12.4668C21.6693 12.1879 22.637 9.71758 21.546 7.93789ZM19.1918 13.5625C18.8671 13.5625 18.5456 13.5127 18.2339 13.4363V16.75H5.76486V13.4363C5.45313 13.5094 5.13166 13.5625 4.80695 13.5625C4.61212 13.5625 4.41404 13.5492 4.22246 13.5227C4.04062 13.4961 3.86203 13.4529 3.68993 13.4031V19.9375C3.68993 20.5252 4.15427 21 4.72902 21H19.2762C19.851 21 20.3153 20.5252 20.3153 19.9375V13.4031C20.1399 13.4563 19.9646 13.4994 19.7828 13.5227C19.5847 13.5492 19.3899 13.5625 19.1918 13.5625Z" />
+                      </svg>
+                    </Link>
+                  }
+                </div>
+                <button
+                  className={classes.closeBtn}
+                  onClick={navButtonOff}
+                  style={{ display: isSiteNavOpen ? 'block' : 'none' }}
+                >
+                  <img style={{ width: '20px', height: '20px' }} src={closeMenu} alt="" />
+                </button>
+              </div>
+            </div>
+            <div>
+              <div className={classes.mobilecategories}>
+                {categories?.length > 0 &&
+                  categories?.map((category) => {
+                    let categoryName = category.name.replace(/\//g, '@');
+
+                    return (
+                      <>
+                        <Link
+                          onClick={navButtonOff}
+                          to={
+                            categoryName === 'More'
+                              ? '/categories'
+                              : `/lc/${category.id}-${categoryName}`
+                          }
+                          key={Math.random() * 700000}
+                          className={classes.mobileCategory}
+                        >
+                          {category.name}
+                        </Link>
+                      </>
+                    );
+                  })}
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+
       {/* <div id="subCategoryBox" className={classes.subCategoryBox}>
         <ul>
           <li>Ahsan</li>

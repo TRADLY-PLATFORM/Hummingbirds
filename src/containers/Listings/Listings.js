@@ -57,7 +57,7 @@ class Listings extends Component {
   };
 
   componentDidMount() {
-    this.props.onInitListings(0, '', totalCountOfProducts);
+    this.props.onInitListings(0, '', totalCountOfProducts,true);
     this.props.onCategoryLists();
     this.props.onSupplierLists();
   }
@@ -112,14 +112,14 @@ class Listings extends Component {
           let repeated = false;
           for (let index = 0; index < location.length; index++) {
             const element = location[index];
-            if (element.value === item.getIn(['location', 'country'])) {
+            if (element.value === item.getIn(['location', 'formatted_address'])) {
               repeated = true;
             }
           }
           if (repeated === false) {
             return location.push({
-              label: item.getIn(['location', 'country'], ''),
-              value: item.getIn(['location', 'country'], ''),
+              label: item.getIn(['location', 'formatted_address'], ''),
+              value: item.getIn(['location', 'formatted_address'], ''),
             });
           }
         });
@@ -174,12 +174,36 @@ class Listings extends Component {
         search: search,
       });
     }
-    this.props.onInitListings(count, filter, totalCountOfProducts);
+
+    if (btn) {
+      if (this.props.allListings.length === 100) {
+        this.props.onInitListings(0, filter, totalCountOfProducts, false,(parseInt(this.props.page)+1));
+      } else {
+        this.props.onInitListings(count, filter, totalCountOfProducts, false,parseInt(this.props.page));
+      }
+    } else {
+      if (this.state.selectedOption.categoryValue === null) {
+         this.props.onInitListings(
+           count,
+           filter,
+           totalCountOfProducts,
+           true,
+           parseInt(this.props.page)
+         );
+       }
+         this.props.onInitListings(
+           count,
+           filter,
+           this.props.allListings?.length,
+           true,
+           parseInt(this.props.page)
+         );
+    }
   };
 
   render() {
     const { location } = this.props;
- 
+
     let listing = '';
     let showLoadButton = null;
     const { listings, allListings, total_records, loading, seoConfigs } = this.props;
@@ -191,14 +215,19 @@ class Listings extends Component {
       )
       .filter((item) =>
         locationValue !== null
-          ? item.getIn(['location', 'country'], '') === locationValue.value
+          ? item.getIn(['location', 'formatted_address'], '') === locationValue.value
           : item
       );
 
     if (!loading && allListings !== null) {
       if (productsListing.size > 0) {
         listing = <Listing listings={productsListing} total_records={total_records} />;
-        if (total_records > totalCountOfProducts && productsListing.size !== total_records && supplierValue === null && locationValue === null) {
+        if (
+          total_records > totalCountOfProducts &&
+          productsListing.size !== total_records &&
+          supplierValue === null &&
+          locationValue === null
+        ) {
           showLoadButton = (
             <div className="col-sm-12">
               <button
@@ -260,7 +289,7 @@ class Listings extends Component {
               handleChange={this.handleChange}
             />
             <div className={classes.listArray}>
-              {allListings?.length &&
+              {allListings  &&
                 (productsListing.size > 0 ? (
                   productsListing?.map((list) => {
                     return (
@@ -305,7 +334,7 @@ class Listings extends Component {
                   })
                 ) : (
                   <div
-                    style={{ marginTop: '5em',width:'100%' }}
+                    style={{ marginTop: '5em', width: '100%' }}
                     className="  alert alert-danger fade in alert-dismissible"
                   >
                     <Link
@@ -346,8 +375,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onInitListings: (count, filterValue, totalCountOfProducts) =>
-      dispatch(actions.initListings(count, filterValue, totalCountOfProducts)),
+    onInitListings: (count, filterValue, totalCountOfProducts,loading,page) =>
+      dispatch(actions.initListings(count, filterValue, totalCountOfProducts,loading,page)),
     onCategoryLists: () => dispatch(actions.initCategoryLists()),
     onSupplierLists: () => dispatch(actions.initSupplierLists()),
   };

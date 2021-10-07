@@ -33,7 +33,7 @@ const Store = () => {
   useEffect(() => {
        if (storeLists.length > 0) {
         const filter = '&account_id=' + storeLists[0].id;
-        dispatch(actions.initListings(0, filter, totalCountOfProducts));
+        dispatch(actions.initListings(0, filter, totalCountOfProducts,true));
       }
    }, [dispatch, storeLists]);
 

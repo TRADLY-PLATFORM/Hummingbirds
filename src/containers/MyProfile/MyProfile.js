@@ -22,12 +22,20 @@ const MyProfile = () => {
     }
   }, [dispatch, isAuthenticated]);
 
+   function getUserImage() {
+     return userDetails.profile_pic || '';
+   }
+
   return (
     <div className="container mt-4">
       <div className={classes.Mycontainer}>
         <div className={classes.profileBox}>
           <div className="col ">
-            <img className={classes.userAvatar} src={AvatarImage} alt="User Avatar" />
+            <img
+              className={classes.userAvatar}
+              src={getUserImage() !== '' ? getUserImage() : AvatarImage}
+              alt="User Avatar"
+            />
           </div>
           <div className="col ">
             <span className={classes.accountName}>
