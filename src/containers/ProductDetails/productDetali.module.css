@@ -173,7 +173,7 @@ border-radius: 4px;
 padding: 16px;
 margin-top: 16px;
 display: grid;
-grid-template-columns: 7% 60% 33%;
+grid-template-columns: 7% 80% 13%;
  
 }
 .markerImage{
@@ -236,7 +236,7 @@ text-decoration: none !important;
 
 
 .followButton{
-margin-left: 147px;
+/* margin-left: 147px; */
 }
 
 
@@ -295,23 +295,103 @@ border-radius: 4px;
   margin-bottom: 15px;
   margin-top: 10px;
 }
- 
+.attributeRow{
+  display: grid;
+  grid-template-columns: 50% 50%;
+} 
 
 @media only screen and (max-width: 1500px) {
 .productDetailsBox {
   /* position: absolute; */
-   width: 1005px;
+   width: 10025px;
 }
 .MainPart {
   display: grid;
   grid-template-columns: 500px 500px;
   grid-column-gap: 25px;
+  justify-content: center;
  }
  
  .productImage {
   background-color: #FEFEFE;
   width: 100%;
   height: 500px;
+}
+
+}
+@media only screen and (max-width: 1100px) {
+.productDetailsBox {
+  /* position: absolute; */
+   width: 825px;
+}
+.MainPart {
+  display: grid;
+  grid-template-columns: 400px 400px;
+  grid-column-gap: 25px;
+  justify-content: center;
+ }
+ 
+ .productImage {
+  background-color: #FEFEFE;
+  width: 400px !important;
+  height: 400px;
+}
+
+}
+@media only screen and (max-width: 900px) {
+.productDetailsBox {
+  /* position: absolute; */
+   width: 400px ;
+}
+.MainPart {
+  display: grid;
+  grid-template-columns: 400px ;
+  grid-row-gap: 25px;
+  justify-content: center;
+ }
+ .breadCrumb{
+  margin-left: 0;
+}
+ 
+ .productImage {
+  background-color: #FEFEFE;
+  width: 400px !important;
+  height: 400px;
+}
+.productName{
+  font-size: 24px;
+}
+
+.addToCart {
+  height:40px ;
+   font-weight: 600;
+  font-size: 16px;
+ }
+
+.buyNow {
+   height:40px ;
+   font-weight: 600;
+  font-size: 16px;
+ }
+
+}
+@media only screen and (max-width: 400px) {
+.productDetailsBox {
+  /* position: absolute; */
+   width: 100vw ;
+}
+
+.MainPart {
+  display: grid;
+  grid-template-columns: 100%;
+  grid-row-gap: 25px;
+  justify-content: center;
+ }
+ 
+ .productImage {
+  background-color: #FEFEFE;
+  width: 100vw !important;
+  height:  100%;
 }
 
 }

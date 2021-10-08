@@ -229,12 +229,11 @@ class Listings extends Component {
           locationValue === null
         ) {
           showLoadButton = (
-            <div className="col-sm-12">
+            <div className="col-xm-12">
               <button
                 className="btnGreenStyle pull-right mt-4"
                 onClick={() => this.loadMore(true)}
-                style={{ marginBottom: '50px' }}
-              >
+               >
                 Load More
               </button>
             </div>
@@ -289,7 +288,7 @@ class Listings extends Component {
               handleChange={this.handleChange}
             />
             <div className={classes.listArray}>
-              {allListings  &&
+              {allListings &&
                 (productsListing.size > 0 ? (
                   productsListing?.map((list) => {
                     return (
@@ -350,7 +349,7 @@ class Listings extends Component {
                   </div>
                 ))}
             </div>
-            {showLoadButton}
+            <div>{showLoadButton}</div>
           </div>
         </Aux>
       </>

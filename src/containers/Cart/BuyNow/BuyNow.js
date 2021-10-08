@@ -270,23 +270,25 @@ const BuyNow = () => {
                               <p className={classes.productTitle}>{listing?.title}</p>
                               <p className={classes.price}>{listing.list_price.formatted}</p>
                             </div>
-                            <div className={classes.deleteBox}>
-                              <button onClick={() => deleteSelectedCart(listing.id)}>
-                                <img src={deleteIcon} alt="" />
-                              </button>
-                            </div>
-                            <div className={classes.quantityButtons}>
-                              <button
-                                onClick={() => updateCartQuantity(listing, item.quantity, false)}
-                              >
-                                -
-                              </button>
-                              <span>{item.quantity}</span>
-                              <button
-                                onClick={() => updateCartQuantity(listing, item.quantity, true)}
-                              >
-                                +
-                              </button>
+                            <div className={classes.buttonBox}>
+                              <div className={classes.deleteBox}>
+                                <button onClick={() => deleteSelectedCart(listing.id)}>
+                                  <img src={deleteIcon} alt="" />
+                                </button>
+                              </div>
+                              <div className={classes.quantityButtons}>
+                                <button
+                                  onClick={() => updateCartQuantity(listing, item.quantity, false)}
+                                >
+                                  -
+                                </button>
+                                <span>{item.quantity}</span>
+                                <button
+                                  onClick={() => updateCartQuantity(listing, item.quantity, true)}
+                                >
+                                  +
+                                </button>
+                              </div>
                             </div>
                           </div>
                         </>
@@ -500,7 +502,7 @@ const BuyNow = () => {
           ) : (
             <div className={classes.noCartList}>
               <div>
-                <img src={groupImage} alt="" />
+                <img className={classes.noCartListImage} src={groupImage} alt="" />
               </div>
               <div className={classes.noCartListMessage}>
                 <h4>No Items in Cart List.</h4>

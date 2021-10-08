@@ -1,84 +1,122 @@
 .profilecard {
-    border: 1px solid #FFFFFF;
-    border-radius: 10px;
-    background-color: white;
-
-
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  background-color: white;
 }
 
-.Mycontainer{
-    width:80%;
-    margin:20px auto;
-    background-color: #fff;
-    padding: 3rem;
-    border-radius: 10px;
-    font-style: normal;
-font-weight: 500;
-font-size: 14px;
-line-height: 17px;
+.Mycontainer {
+  width: 700px;
+  margin: 20px auto;
+  background-color: #fff;
+  padding: 3rem;
+  border-radius: 10px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
 
-color: #4F4F4F !important;
+  color: #4f4f4f !important;
 }
-.profileBox{
-    display: grid;
-    grid-template-columns: 10% 60% 30%;
-    align-items: center;
+.profileBox {
+  display: grid;
+  grid-template-columns: 15% 60% 25%;
+  align-items: center;
 }
 
 .userAvatar {
-    margin-top: 4px;
-    width: 70px;
-    height: 70px;
-    border-radius: 50% !important;
+  margin-top: 4px;
+  width: 70px;
+  height: 70px;
+  border-radius: 50% !important;
 }
-.accountName{
-    font-weight: 600;
-font-size: 18px;
-line-height: 22px;
-letter-spacing: -0.385882px;
-color: #000000;
-margin-bottom: 8px;
+.accountName {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: -0.385882px;
+  color: #000000;
+  margin-bottom: 8px;
 }
 
 .btnGreenStyle {
-    padding: 8px 13px;
-    border: none;
-    background: var(--primary_color);
-    border-radius: 24px;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 17px;
-    /* identical to box height */
-    color: #FFFFFF;
-    float: right;
+  padding: 8px 13px;
+  border: none;
+  background: var(--primary_color);
+  border-radius: 24px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  /* identical to box height */
+  color: #ffffff;
+  float: right;
 }
 
-
-.profilelist{
-    background-color: #fff;
+.profilelist {
+  background-color: #fff;
 }
 
-.profileinfo{
-        border: 1px solid #FFFFFF;
-        border-radius: 10px;
-        padding: 10rem;
-        background-color: white;
-
-
+.profileinfo {
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  padding: 10rem;
+  background-color: white;
 }
 
-.button{   
-    background: #FFFFFF;
-    border: 1.1px solid #FFFFFF;
-    color: var(--primary_color);
-    float:right;
+.button {
+  background: #ffffff;
+  border: 1.1px solid #ffffff;
+  color: var(--primary_color);
+  float: right;
 }
 
-.logout{
-        background: #FFFFFF;
-        border: 1.1px solid #FFFFFF;
-        color: var(--primary_color);
-        float:left;
+.logout {
+  background: #ffffff;
+  border: 1.1px solid #ffffff;
+  color: var(--primary_color);
+  float: left;
 }
 
+@media only screen and (max-width: 800px) {
+  .userAvatar {
+    width: 50px;
+    height: 50px;
+  }
+
+  .Mycontainer {
+    width: 90vw;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .userAvatar {
+    width: 30px;
+    height: 30px;
+  }
+
+  .profileBox {
+    display: grid;
+    grid-template-columns: 15% 50% 35%;
+    align-items: center;
+  }
+}
+@media only screen and (max-width: 400px) {
+      .Mycontainer {
+    width: 90vw;
+  }
+  .userAvatar {
+    width: 30px;
+    height: 30px;
+  }
+
+  .profileBox {
+    display: grid;
+    grid-template-columns: 15% 40% 45%;
+    align-items: center;
+  }
+  .btnGreenStyle {
+  padding: 5px 10px;
+    font-size: 12px;
+
+}
+}

@@ -19,42 +19,36 @@ import { selectUserId } from '../../store/selectors/auth';
 // import Skeleton from '../UI/Skeleton/Skeleton';
 
 const Header = (props) => {
- 
+  //
+  useEffect(() => {
+    dispatch(actions.initCurrencies());
+    dispatch(actions.getShippingMethod());
+  }, [0]);
 
   // reducer
   const isAuthenticated = useSelector((state) => selectUserId(state));
   const cartList = useSelector((state) => state.cart.cart_list);
-  const {  cart_details } = cartList;
-    const currencies = useSelector((state) => state.store.currencies);
+  const { cart_details } = cartList;
+  const currencies = useSelector((state) => state.store.currencies);
+  const shipping_methods = useSelector((state) => state.payment.shipping_methods);
 
+  const dispatch = useDispatch();
+  const { pathname } = useLocation();
 
-
-  const dispatch = useDispatch()
-  const {pathname} = useLocation()
- 
- 
-  // 
-     useEffect(() => {
-      dispatch(actions.initCurrencies());
-    }, [0]);
-
-    useEffect(() => {
-      if (isAuthenticated && currencies.length > 0) {
-        dispatch(actions.getCartList(currencies[0],1));
-      }
-    }, [currencies || cartList]);
+  useEffect(() => {
+    if (isAuthenticated && currencies.length > 0) {
+      dispatch(actions.getCartList(currencies[0], shipping_methods[0].id));
+    }
+  }, [currencies || cartList]);
 
   const { userData } = props;
-   function getUserName() {
+  function getUserName() {
     return userData.get('first_name', 'Guest') + ' ' + userData.get('last_name', '');
   }
 
   function getUserImage() {
     return userData.get('profile_pic', '');
   }
-
- 
-
 
   const setPath = (pathname) => {
     dispatch(actions.setAuthRedirectPath(pathname, null));

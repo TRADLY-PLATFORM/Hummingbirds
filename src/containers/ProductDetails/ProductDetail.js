@@ -30,7 +30,9 @@ import { selectUserId } from '../../store/selectors/auth';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { Slide, ToastContainer } from 'react-toastify';
+
 import Loader from 'react-loader-spinner';
+import useWindowSize from '../../components/Hooks/WindowSize/WindowSize';
 
 // install Swiper modules
 SwiperCore.use([Autoplay, Pagination, Navigation]);
@@ -39,7 +41,7 @@ const ProductDetail = () => {
   const location = useLocation();
 
   const { id } = useParams();
-  // const { width, height } = useWindowSize();
+  const { width, height } = useWindowSize();
 
   // Reducer
   const productDetails = useSelector((state) => state.product.productDetails);
@@ -129,41 +131,33 @@ const ProductDetail = () => {
         return (
           <div key={index}>
             {attr.field_type === 1 && (
-              <div>
-                <div className={classes.DetailsLeft + ' col-lg-6 col-sm-6 col-md-6'}>
-                  {attr.name}
-                </div>
-                <div className={classes.DetailsRight + ' col-lg-6 col-sm-6 col-md-6'}>
+              <div className={classes.attributeRow}>
+                <div className={classes.DetailsLeft}>{attr.name}</div>
+                <div className={classes.DetailsRight}>
                   {attr.values.map((item) => item.name).join(', ')}
                 </div>
               </div>
             )}
             {attr.field_type === 2 && (
-              <div key={index}>
-                <div className={classes.DetailsLeft + ' col-lg-6 col-sm-6 col-md-6'}>
-                  {attr.name}
-                </div>
-                <div className={classes.DetailsRight + ' col-lg-6 col-sm-6 col-md-6'}>
+              <div className={classes.attributeRow} key={index}>
+                <div className={classes.DetailsLeft}>{attr.name}</div>
+                <div className={classes.DetailsRight}>
                   {attr.values.map((item) => item.name).join(', ')}
                 </div>
               </div>
             )}
             {attr.field_type === 3 && (
-              <div key={index}>
-                <div className={classes.DetailsLeft + ' col-lg-6 col-sm-6 col-md-6'}>
-                  {attr.name}
-                </div>
-                <div className={classes.DetailsRight + ' col-lg-6 col-sm-6 col-md-6'}>
+              <div className={classes.attributeRow} key={index}>
+                <div className={classes.DetailsLeft}>{attr.name}</div>
+                <div className={classes.DetailsRight}>
                   {attr.values.map((item) => item).join(', ')}
                 </div>
               </div>
             )}
             {attr.field_type === 4 && (
-              <div key={index}>
-                <div className={classes.DetailsLeft + ' col-lg-6 col-sm-6 col-md-6'}>
-                  {attr.name}
-                </div>
-                <div className={classes.DetailsRight + ' col-lg-6 col-sm-6 col-md-6'}>
+              <div className={classes.attributeRow} key={index}>
+                <div className={classes.DetailsLeft}>{attr.name}</div>
+                <div className={classes.DetailsRight}>
                   {attr.values.map((item) => item).join(', ')}
                 </div>
               </div>
@@ -211,6 +205,9 @@ const ProductDetail = () => {
     }, 1000);
   };
 
+  //
+  // }
+
   return (
     <>
       <Helmet>
@@ -255,7 +252,7 @@ const ProductDetail = () => {
 
         {!loading && (
           <div className={classes.productDetailsBanner}>
-            <div className={classes.productDetailsBox}>
+            <div id="productDetailsBox" className={classes.productDetailsBox}>
               <div className={classes.MainPart}>
                 <div>
                   <Swiper
@@ -441,11 +438,9 @@ const ProductDetail = () => {
                       <h4 className={classes.detailsHeader}>Details</h4>
                       <div className={classes.attributePart}>{getAttributes()}</div>
 
-                      <div className={classes.DetailsLeft + ' col-lg-6 col-sm-6 col-md-6'}>
-                        Category
-                      </div>
-                      <div className={classes.DetailsRight + ' col-lg-6 col-sm-6 col-md-6'}>
-                        {getCategoryIds()}
+                      <div className={classes.attributeRow}>
+                        <div className={classes.DetailsLeft}>Category</div>
+                        <div className={classes.DetailsRight}>{getCategoryIds()}</div>
                       </div>
                     </div>
                   </div>

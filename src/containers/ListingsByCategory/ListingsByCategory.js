@@ -61,8 +61,7 @@ const ListingsByCategory = () => {
         <button
           className="btnGreenStyle pull-right mt-4"
           onClick={ loadMore}
-          style={{ marginBottom: '50px' }}
-        >
+         >
           Load More
         </button>
       </div>

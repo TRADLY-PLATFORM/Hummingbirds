@@ -27,10 +27,10 @@ const MyProfile = () => {
    }
 
   return (
-    <div className="container mt-4">
+    <div className=" mt-4">
       <div className={classes.Mycontainer}>
         <div className={classes.profileBox}>
-          <div className="col ">
+          <div className="col">
             <img
               className={classes.userAvatar}
               src={getUserImage() !== '' ? getUserImage() : AvatarImage}
@@ -42,9 +42,9 @@ const MyProfile = () => {
               {userDetails?.first_name + ' ' + userDetails?.last_name}
             </span>
             <br />
-            <span>{userDetails?.email} </span>
+            {/* <p>{userDetails?.email} </p> */}
           </div>
-          <div>
+          <div className={classes.editProfileButton}>
             <div className="">
               <Link to="#">
                 <button className={classes.btnGreenStyle}>Edit Profile</button>

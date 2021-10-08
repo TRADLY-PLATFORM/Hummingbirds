@@ -6,7 +6,7 @@ import classes from './AllStores.module.css';
 import { Link, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
-import backdrop from '../../components/UI/Backdrop/Backdrop';
+// import backdrop from '../../components/UI/Backdrop/Backdrop';
 import spinner from '../../components/UI/Spinner/Spinner';
 import { selectUserId } from '../../store/selectors/auth';
 import StoreFilter from './StoreFilter';
@@ -115,7 +115,7 @@ const AllStores = () => {
           if (description.length > 15) {
             description = description.substring(0, 15) + '..';
           }
-          let name = store.name;
+          // let name = store.name;
           // if (description.length > 15) {
           //   name = name.substring(0, 15) + '..';
           // }

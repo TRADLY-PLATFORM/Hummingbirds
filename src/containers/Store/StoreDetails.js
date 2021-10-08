@@ -193,25 +193,23 @@ class StoreDetails extends Component {
         <div className={classes.storeDetailsBox}>
           <div className="container-fluid">
             <div className={classes.bannerDescText + ' row'}>
-              <div className=" col-lg-12 mb1">
-                <div className="col-xs-5 col-lg-3">
+              <div className={classes.desCriptionRow}>
+                <div className=" textBold">
                   Descriptions <span className="float-right">:</span>
                 </div>
-                <div className="col-xs-7 col-lg-9">
-                  {storeDetails.get('description', '') || 'N/A'}
-                </div>
+                <div className=" pl-10">{storeDetails.get('description', '') || 'N/A'}</div>
               </div>
-              <div className="col-lg-12 mb1">
-                <div className="col-xs-5 col-lg-3">
-                  categories <span className="float-right">:</span>
+              <div className={classes.storeRow}>
+                <div className="  textBold">
+                  categories <span className="float-right ">:</span>
                 </div>
-                <div className="col-xs-7 col-lg-9">{this.getCategory()}</div>
+                <div className="pl-10 ">{this.getCategory()}</div>
               </div>
-              <div className="col-lg-12 mb1">
-                <div className="col-xs-5 col-lg-3">
+              <div className={classes.storeRow}>
+                <div className="  textBold">
                   Location <span className="float-right">:</span>
                 </div>
-                <div className="col-xs-7 col-lg-9">
+                <div className=" pl-10">
                   <span> {storeDetails.getIn(['location', 'formatted_address'], 'N/A')}</span>
                   <Modal show={this.state.maps} modalClosed={this.closeMaps}>
                     <Maps
@@ -220,26 +218,26 @@ class StoreDetails extends Component {
                       address={storeDetails.getIn(['location', 'formatted_address'], 'N/A')}
                     />
                   </Modal>
-                  <button
+                  {/* <button
                     type="button"
                     className="btn btn-outline-success float-right"
                     onClick={this.showMaps}
                   >
                     Get Direction
-                  </button>
+                  </button> */}
                 </div>
               </div>
-              <div className=" col-lg-12 mb1">
-                <div className="col-xs-5 col-lg-3">
+              <div className={classes.storeRow}>
+                <div className=" textBold">
                   Total Followers <span className="float-right">:</span>
                 </div>
-                <div className="col-xs-7 col-lg-9">{storeDetails.get('total_followers', '')}</div>
+                <div className="pl-10 ">{storeDetails.get('total_followers', '')}</div>
               </div>
-              <div className="col-lg-12 mb1">
-                <div className="col-xs-5  col-lg-3">
+              <div className={classes.storeRow}>
+                <div className="  textBold">
                   Total Listings <span className="float-right">:</span>
                 </div>
-                <div className="col-xs-7 col-lg-9">{storeDetails.get('total_listings', '')}</div>
+                <div className="pl-10">{storeDetails.get('total_listings', '')}</div>
               </div>
             </div>
           </div>
