@@ -18,10 +18,27 @@ const Attribute = ({ attribute, attributeData, setAttributeData }) => {
     fileInput.click();
   };
 
-  const imageUpload = async (e) => {
+  const imageUpload = async (e, attribute_id) => {
     setImage(URL.createObjectURL(e.target.files[0]));
     setFile(e.target.files[0]);
- 
+
+    if (attributeData !== null) {
+      const check = attributeData?.find((attr) => attr.id === attribute_id);
+      if (check === undefined) {
+        setAttributeData([
+          ...attributeData,
+          { values: [e.target.files[0]], id: attribute_id, uploadFile: true },
+        ]);
+      } else {
+        const findOut = attributeData.filter((attr) => attr.id !== attribute_id);
+        setAttributeData([
+          ...findOut,
+          { values: [e.target.files[0]], id: attribute_id, uploadFile: true },
+        ]);
+      }
+    } else {
+      setAttributeData([{ values: [e.target.files[0]], id: attribute_id, uploadFile: true }]);
+    }
   };
 
   const handleChange = (newValue, actionMeta, attribute_id, attribute_field_type) => {
@@ -201,7 +218,7 @@ const Attribute = ({ attribute, attributeData, setAttributeData }) => {
                           id="attachmentClick"
                           name="imageUpload"
                           accept="image/*"
-                          onChange={(e) => imageUpload(e)}
+                          onChange={(e) => imageUpload(e, attr.id)}
                         />
                       </div>
                       <button className={classes.photoUploadButton} onClick={imageUploadClick}>

@@ -23,25 +23,58 @@
    padding: 2px 8px;
   }
 
-  .attachMentBox{
-    display: grid;
-    grid-template-columns: 40% 60%;
-    align-items: center;
-    height: 100px;
-  }
+ 
 .groupAvatar{
   height: 100px;
   width: 80%;
 }
   .photoUploadButton{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    padding: 20px;
-    border: 2px dotted  #2bdbc0;
+    padding: 10px;
+    border: 3px dashed  var(--primary_color);
   }
+  .uploadedImage{
+  display: grid;
+  grid-template-columns: 10% 70% 20%;
+  align-items: center;
+  padding: 5px 10px;
+  border: 1px solid black;
+  width: 100%;
+  position: relative;
+}
+.uploadedImage img{
+  height: 50px;
+}
+.imageDescriptions{
+  margin-left: 15px;
+  display: flex;
+  flex-direction: column;
+  font-size: 15px;
+}
+.cancelImage{
+   display: flex;
+   justify-content: end;  
+
+ }
+.cancelImage img{
+   cursor: pointer;
+  height: 25px;
+}
 
    .required::after {
     content: "*";
     color: rgb(255, 6, 6);
      top: -5px;
     right: -10px;
+  }
+
+    @media only screen and (max-width: 500px) {
+      .uploadedImage{
+  display: grid;
+  grid-template-columns: 20% 70% 10%;}
+  
   }

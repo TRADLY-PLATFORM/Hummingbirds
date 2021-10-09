@@ -19,9 +19,23 @@ const Attribute = ({ attribute, attributeData, setAttributeData }) => {
     fileInput.click();
   };
 
-  const imageUpload = async (e) => {
-     setFile(e.target.files[0]);
- 
+  const imageUpload = async (e, attribute_id) => {
+    setFile(e.target.files[0]);
+    if (attributeData !== null) {
+      const check = attributeData?.find((attr) => attr.id === attribute_id);
+      if (check === undefined) {
+           setAttributeData([...attributeData, { values: [e.target.files[0]], id: attribute_id,uploadFile:true }]);
+        
+      } else {
+       const findOut = attributeData.filter((attr) => attr.id !== attribute_id);
+       setAttributeData([
+         ...findOut,
+         { values: [e.target.files[0]], id: attribute_id, uploadFile: true },
+       ]);
+      }
+    } else {
+        setAttributeData([{ values: [e.target.files[0]], id: attribute_id, uploadFile: true }]);
+    }
   };
 
   const handleChange = (newValue, actionMeta, attribute_id, attribute_field_type) => {
@@ -141,7 +155,7 @@ const Attribute = ({ attribute, attributeData, setAttributeData }) => {
                     onChange={(newValue, actionMeta) =>
                       handleChange(newValue, actionMeta, attr.id, attr.field_type)
                     }
-                    placeholder={'Select your' + attr.name}
+                    placeholder={'Select your' + ' ' + attr.name}
                     options={options}
                   />
                 </div>
@@ -150,7 +164,7 @@ const Attribute = ({ attribute, attributeData, setAttributeData }) => {
                 <div className="form-group mt-2 ">
                   <label className={attr.optional ? '' : classes.required}>{attr.name}</label>
                   <Select
-                    placeholder={'Select your' + attr.name}
+                    placeholder={'Select your' + ' ' + attr.name}
                     isMulti
                     name="colors"
                     options={options}
@@ -166,7 +180,7 @@ const Attribute = ({ attribute, attributeData, setAttributeData }) => {
                 <div className="form-group mt-2 ">
                   <label className={attr.optional ? '' : classes.required}>{attr.name}</label>
                   <CreatableSelect
-                    placeholder={'Type your' + attr.name}
+                    placeholder={'Type your' + ' ' + attr.name}
                     onChange={(newValue, actionMeta) =>
                       handleChange(newValue, actionMeta, attr.id, attr.field_type)
                     }
@@ -177,7 +191,7 @@ const Attribute = ({ attribute, attributeData, setAttributeData }) => {
                 <div className="form-group mt-2 ">
                   <label className={attr.optional ? '' : classes.required}>{attr.name}</label>
                   <CreatableSelect
-                    placeholder={'Type your' + attr.name}
+                    placeholder={'Type your' + ' ' + attr.name}
                     isMulti
                     onChange={(newValue, actionMeta) =>
                       handleChange(newValue, actionMeta, attr.id, attr.field_type)
@@ -197,7 +211,7 @@ const Attribute = ({ attribute, attributeData, setAttributeData }) => {
                           id="attachmentClick"
                           name="imageUpload"
                           accept="image/*"
-                          onChange={(e) => imageUpload(e)}
+                          onChange={(e) => imageUpload(e,attr.id)}
                         />
                       </div>
                       <button className={classes.photoUploadButton} onClick={imageUploadClick}>

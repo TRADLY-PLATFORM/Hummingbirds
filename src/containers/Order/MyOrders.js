@@ -106,20 +106,20 @@ const MyOrder = () => {
        </div> */}
 
       {orders.length > 0 && (
-        <div className="row ">
-          <div className="col-md-4 nopaddingLeft nopaddingRight">
+        <div className={classes.headerRow}>
+          <div className=" ">
             <h4 className={classes.orderHistory}>Order History</h4>
           </div>
-          <div className="col-md-2  center nopaddingLeft nopaddingRight">
+          <div className="  center    ">
             <h4 className={classes.orderHistory}>Date</h4>
           </div>
-          <div className="col-md-2 center nopaddingLeft nopaddingRight">
+          <div className=" center  ">
             <h4 className={classes.orderHistory}>Price</h4>
           </div>
-          <div className="col-md-2 center center nopaddingLeft nopaddingRight">
+          <div className=" center ">
             <h4 className={classes.orderHistory}>Current Status</h4>
           </div>
-          <div className="col-md-2 center center nopaddingLeft nopaddingRight">
+          <div className=" center  ">
             <h4 className={classes.orderHistory}>Change Status</h4>
           </div>
         </div>
@@ -131,7 +131,7 @@ const MyOrder = () => {
             const { order_details } = order;
             return (
               <div className={classes.transactionContainer} key={index}>
-                <div className={classes.orderShortDetails + ' nopadding col-md-4 '}>
+                <div className={classes.orderShortDetails  }>
                   <div>
                     <img
                       className={classes.productImg}
@@ -150,21 +150,21 @@ const MyOrder = () => {
                     </div>
                   </Link>
                 </div>
-                <div className="col-md-2  nopadding">
+                <div className=" ">
                   <span className="center">
                     {changeDateFormat(order.created_at, 'DD/MM/YYYY')}{' '}
                   </span>
                 </div>
-                <div className="col-md-2 nopadding">
+                <div className=" ">
                   {' '}
                   <h4 className="center"> {order.list_total.formatted}</h4>
                 </div>
-                <div className="col-md-2 nopadding  center">
+                <div className="center ">
                   <button className={'btnOutlineGreenStyle text-center '}>
                     {orderStatus(order.order_status)}
                   </button>
                 </div>
-                <div className=" col-md-2   nopadding center">
+                <div className="center ">
                   <button className={'btnGreenStyle'}>Change Status</button>
                 </div>
               </div>

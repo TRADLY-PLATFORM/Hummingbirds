@@ -60,7 +60,7 @@ const MyProfile = () => {
               My store
             </Link>
             {storeLists.length === 0 && (
-              <Link tp="/create-store" className={classes.button}>
+              <Link to="/create-store" className={classes.button}>
                 Create Store
               </Link>
             )}

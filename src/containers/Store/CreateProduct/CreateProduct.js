@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import classes from './AddProduct.module.css';
 
- import addProductIcon from '../../../assets/images/products/addProductIcon.svg';
+import addProductIcon from '../../../assets/images/products/addProductIcon.svg';
 import { Link, useParams, useHistory } from 'react-router-dom';
 import * as actions from '../../../store/actions/index';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,12 +10,13 @@ import locationImage from '../../../assets/images/store/location.png';
 import locationListImage from '../../../assets/images/store/locationList.png';
 
 import closeImage from '../../../assets/images/store/close (1).svg';
- import { Slide, toast, ToastContainer } from 'react-toastify';
+import { Slide, toast, ToastContainer } from 'react-toastify';
 import Backdrop from '../../../components/UI/Backdrop/Backdrop';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import Toast from '../../../components/UI/Toast/Toast';
 import Aux from '../../../hoc/Auxiliary/Auxiliary';
- 
+import Select from 'react-select';
+
 const CreateProduct = () => {
   // state
   const [title, setTitle] = useState('');
@@ -31,7 +32,8 @@ const CreateProduct = () => {
   const [imagePath, setImagePath] = useState([{ id: 'addIcon', path: addProductIcon }]);
   const [files, setFiles] = useState([]);
   const [fullFile, setFullFile] = useState([]);
-  const [showError, setShowError] = useState(false)
+  const [showError, setShowError] = useState(false);
+  // const [options, setOptions] = useState([{ value: 'dot', label: '...' }]);
 
   // Params
   const { accountId } = useParams();
@@ -59,18 +61,27 @@ const CreateProduct = () => {
   const errorMessage = useSelector((state) => state.store.message);
   const listingsConfigs = useSelector((state) => state.auth.listings_configs);
 
+  //
+  let options;
+     if (categories.length > 0) {
+      options =categories.map((category) =>
+      {
+        return { value: category.id, label: category.name }; 
+         }
+      );
+  }
+ 
   // function
   //
   const handleImageClick = () => {
-        setShowError(false);
+    setShowError(false);
 
     let fileInput = document.getElementById('fileInput');
-    if (files.length !== parseInt(listingsConfigs.listing_pictures_count) ) {
+    if (files.length !== parseInt(listingsConfigs.listing_pictures_count)) {
       fileInput.click();
     } else {
-      toast.error("You can't add more photo")
+      toast.error("You can't add more photo");
     }
-    
   };
 
   const imageUpload = async (e) => {
@@ -95,7 +106,7 @@ const CreateProduct = () => {
     const target = e.target;
     const name = target.name;
     const value = target.value;
-     
+
     if (name === 'Product Title') {
       setTitle(value);
     } else if (name === 'Product Description') {
@@ -113,17 +124,14 @@ const CreateProduct = () => {
         setShippingCharge(value);
       }
     }
-    setShowError(false)
+    setShowError(false);
   };
 
   //
-  const selectCategory = () => {
-    const selectedValue = document.getElementById('categories').value;
-    if (selectedValue === 'dot') {
-      setSelectedCategory(null);
-    } else {
-      setSelectedCategory(selectedValue);
-    }
+  const selectCategory = (newValue) => {
+     
+      setSelectedCategory(newValue.value);
+    
   };
   //
   const selectCurrency = () => {
@@ -159,9 +167,9 @@ const CreateProduct = () => {
 
   //
   const addProductClick = () => {
-      //  if (currency === null) {
-      //    setCurrency(currencies[0].id);
-      //  }
+    //  if (currency === null) {
+    //    setCurrency(currencies[0].id);
+    //  }
     if (title === '') {
       toast.error('Title is required');
       return false;
@@ -180,7 +188,7 @@ const CreateProduct = () => {
       );
       return false;
     }
- 
+
     if (coordinates === null) {
       toast.error('Address is required');
       return false;
@@ -193,7 +201,7 @@ const CreateProduct = () => {
       toast.error('Category is required');
       return false;
     }
-    setShowError(true)
+    setShowError(true);
     dispatch(
       actions.initFiles(
         accountId,
@@ -214,7 +222,7 @@ const CreateProduct = () => {
   };
 
   if (error && showError) {
-    toast.error(errorMessage)
+    toast.error(errorMessage);
   }
 
   return (
@@ -401,21 +409,12 @@ const CreateProduct = () => {
 
           <div className="form-group mt-2">
             <label htmlFor="categories">Category</label>
-            <select
+            <Select
               name="category"
               id="categories"
-              className={classes.input}
-              onChange={selectCategory}
-            >
-              <option value="dot">... </option>
-              {categories?.map((category) => {
-                return (
-                  <option value={category.id} key={Math.random() * 80000}>
-                    {category.name}
-                  </option>
-                );
-              })}
-            </select>
+              onChange={(newValue) => selectCategory(newValue)}
+              options={options}
+            />
           </div>
         </div>
         {attribute && (

@@ -83,7 +83,7 @@ export const userStoreLists = (userId) => {
       .get('/v1/accounts?page=1&type=accounts&user_id=' + userId)
       .then((response) => {
         if (response.data.status) {
-           dispatch(setStoreLists(response.data.data.accounts));
+          dispatch(setStoreLists(response.data.data.accounts));
         } else {
           dispatch(fetchStoreListsFailed());
         }
@@ -181,7 +181,7 @@ export const initFile = (
     axios(config)
       .then((response) => {
         if (response.data.status) {
-           dispatch(SetFiles(response.data.data.result[0]));
+          dispatch(SetFiles(response.data.data.result[0]));
           const fileURL = response.data.data.result[0];
           const path = fileURL.signedUrl;
           const ImagePath = fileURL.fileUri;
@@ -194,21 +194,91 @@ export const initFile = (
           })
             .then((res) => {
               if (res.status) {
- 
-                const stores = {
-                  account: {
-                    name: name,
-                    category_id: [categoryId],
-                    description: description,
-                    web_address: '',
-                    images: [ImagePath],
-                    coordinates: coordinates,
-                    attributes: attributeData ? attributeData : [{}],
-                    type: 'accounts',
-                  },
-                };
+                if (attributeData !== null) {
+                  const check = attributeData.find((attr) => attr.uploadFile);
+                  if (check === undefined) {
+                    let stores = {
+                      account: {
+                        name: name,
+                        category_id: [categoryId],
+                        description: description,
+                        web_address: '',
+                        images: [ImagePath],
+                        coordinates: coordinates,
+                        attributes: attributeData,
+                        type: 'accounts',
+                      },
+                    };
+                    dispatch(CreateStore(stores, callBack));
+                  } else {
+                    let imageUploadConfig = {
+                      method: 'post',
+                      url: 'v1/utils/S3signedUploadURL',
+                      headers: {
+                        'Content-Type': 'application/json',
+                      },
+                      data: {
+                        files: [
+                          {
+                            name: check.values[0].name,
+                            type: check.values[0].type,
+                          },
+                        ],
+                      },
+                    };
 
-                dispatch(CreateStore(stores, callBack));
+                    axios(imageUploadConfig).then((response) => {
+                      if (response.data.status) {
+                        const fileURL = response.data.data.result[0];
+                        const path = fileURL.signedUrl;
+                        const ImagePath2 = fileURL.fileUri;
+                        fetch(path, {
+                          method: 'put',
+                          headers: {
+                            ContentType: check.values[0].type,
+                          },
+                          body: check.values[0],
+                        })
+                          .then((res) => {
+                            const filter = attributeData.filter((attr) => !attr.uploadFile);
+                            const attributeUpdate = [
+                              ...filter,
+                              { values: [ImagePath2], id: check.id },
+                            ];
+                            let stores = {
+                              account: {
+                                name: name,
+                                category_id: [categoryId],
+                                description: description,
+                                web_address: '',
+                                images: [ImagePath2],
+                                coordinates: coordinates,
+                                attributes: attributeUpdate,
+                                type: 'accounts',
+                              },
+                            };
+                            dispatch(CreateStore(stores, callBack));
+                          })
+                          .catch((error) => {
+                            console.log('Error:' + error.message);
+                          });
+                      }
+                    });
+                  }
+                } else {
+                  let stores = {
+                    account: {
+                      name: name,
+                      category_id: [categoryId],
+                      description: description,
+                      web_address: '',
+                      images: [ImagePath],
+                      coordinates: coordinates,
+                      type: 'accounts',
+                    },
+                  };
+                  dispatch(CreateStore(stores, callBack));
+                }
               }
             })
             .catch((error) => {
@@ -237,27 +307,27 @@ export const editStore = (
 ) => {
   return (dispatch) => {
     dispatch(startLoading());
- 
+
     if (file !== null) {
-        var imageUploadConfig = {
-          method: 'post',
-          url: 'v1/utils/S3signedUploadURL',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          data: {
-            files: [
-              {
-                name: file.name,
-                type: file.type,
-              },
-            ],
-          },
-        };
+      let imageUploadConfig = {
+        method: 'post',
+        url: 'v1/utils/S3signedUploadURL',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        data: {
+          files: [
+            {
+              name: file.name,
+              type: file.type,
+            },
+          ],
+        },
+      };
       axios(imageUploadConfig)
         .then((response) => {
           if (response.data.status) {
-             dispatch(SetFiles(response.data.data.result[0]));
+            dispatch(SetFiles(response.data.data.result[0]));
             const fileURL = response.data.data.result[0];
             const path = fileURL.signedUrl;
             const ImagePath = fileURL.fileUri;
@@ -270,15 +340,117 @@ export const editStore = (
             })
               .then((res) => {
                 if (res.status) {
- 
-                   
-                  var editStoreConfig = {
-                    method: 'put',
-                    url: `v1/accounts/${accountId}`,
-                    headers: {
-                      'Content-Type': 'application/json',
-                    },
-                    data: {
+                  if (attributeData !== null) {
+                    const check = attributeData.find((attr) => attr.uploadFile);
+                    if (check === undefined) {
+                      const data = {
+                        account: {
+                          name: name,
+                          category_id: [categoryId],
+                          description: description,
+                          web_address: '',
+                          images: [ImagePath],
+                          coordinates: coordinates,
+                          attributes: attributeData,
+                          type: 'accounts',
+                        },
+                      };
+                      var editStoreConfig = {
+                        method: 'put',
+                        url: `v1/accounts/${accountId}`,
+                        headers: {
+                          'Content-Type': 'application/json',
+                        },
+                        data: data,
+                      };
+                      axios(editStoreConfig)
+                        .then((response) => {
+                          if (response.data.status) {
+                            dispatch(createStoreSuccess());
+                            callBack && callBack();
+                          } else {
+                            dispatch(createStoreFailed(response.data.error.message));
+                          }
+                        })
+                        .catch((error) => {
+                          dispatch(createStoreFailed(error.response.data.error.message));
+                        });
+                    } else {
+                      var imageUploadConfig = {
+                        method: 'post',
+                        url: 'v1/utils/S3signedUploadURL',
+                        headers: {
+                          'Content-Type': 'application/json',
+                        },
+                        data: {
+                          files: [
+                            {
+                              name: check.values[0].name,
+                              type: check.values[0].type,
+                            },
+                          ],
+                        },
+                      };
+
+                      axios(imageUploadConfig).then((response) => {
+                        if (response.data.status) {
+                          const fileURL = response.data.data.result[0];
+                          const path = fileURL.signedUrl;
+                          const ImagePath2 = fileURL.fileUri;
+                          fetch(path, {
+                            method: 'put',
+                            headers: {
+                              ContentType: check.values[0].type,
+                            },
+                            body: check.values[0],
+                          })
+                            .then((res) => {
+                              const filter = attributeData.filter((attr) => !attr.uploadFile);
+                              const attributeUpdate = [
+                                ...filter,
+                                { values: [ImagePath2], id: check.id },
+                              ];
+                              const data = {
+                                account: {
+                                  name: name,
+                                  category_id: [categoryId],
+                                  description: description,
+                                  web_address: '',
+                                  images: [ImagePath],
+                                  coordinates: coordinates,
+                                  attributes: attributeUpdate,
+                                  type: 'accounts',
+                                },
+                              };
+                              var editStoreConfig = {
+                                method: 'put',
+                                url: `v1/accounts/${accountId}`,
+                                headers: {
+                                  'Content-Type': 'application/json',
+                                },
+                                data: data,
+                              };
+                              axios(editStoreConfig)
+                                .then((response) => {
+                                  if (response.data.status) {
+                                    dispatch(createStoreSuccess());
+                                    callBack && callBack();
+                                  } else {
+                                    dispatch(createStoreFailed(response.data.error.message));
+                                  }
+                                })
+                                .catch((error) => {
+                                  dispatch(createStoreFailed(error.response.data.error.message));
+                                });
+                            })
+                            .catch((error) => {
+                              console.log('Error:' + error.message);
+                            });
+                        }
+                      });
+                    }
+                  } else {
+                    const data = {
                       account: {
                         name: name,
                         category_id: [categoryId],
@@ -286,10 +458,128 @@ export const editStore = (
                         web_address: '',
                         images: [ImagePath],
                         coordinates: coordinates,
-                        attributes: attributeData ? attributeData : [{}],
                         type: 'accounts',
                       },
+                    };
+                    let editStoreConfig = {
+                      method: 'put',
+                      url: `v1/accounts/${accountId}`,
+                      headers: {
+                        'Content-Type': 'application/json',
+                      },
+                      data: data,
+                    };
+                    axios(editStoreConfig)
+                      .then((response) => {
+                        if (response.data.status) {
+                          dispatch(createStoreSuccess());
+                          callBack && callBack();
+                        } else {
+                          dispatch(createStoreFailed(response.data.error.message));
+                        }
+                      })
+                      .catch((error) => {
+                        dispatch(createStoreFailed(error.response.data.error.message));
+                      });
+                  }
+                }
+              })
+              .catch((error) => {
+                console.log('Error:' + error);
+                dispatch(failedMessage(error.response.data.error.message));
+              });
+          }
+        })
+        .catch((error) => {
+          dispatch(failedMessage(error.response.data.error.message));
+        });
+    } else {
+      if (attributeData !== null) {
+        const check = attributeData.find((attr) => attr.uploadFile);
+        if (check === undefined) {
+          const data = {
+            account: {
+              name: name,
+              category_id: [categoryId],
+              description: description,
+              web_address: '',
+              images: [image],
+              coordinates: coordinates,
+              attributes: attributeData,
+              type: 'accounts',
+            },
+          };
+          let editStoreConfig = {
+            method: 'put',
+            url: `v1/accounts/${accountId}`,
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            data: data,
+          };
+          axios(editStoreConfig)
+            .then((response) => {
+              if (response.data.status) {
+                dispatch(createStoreSuccess());
+                callBack && callBack();
+              } else {
+                dispatch(createStoreFailed(response.data.error.message));
+              }
+            })
+            .catch((error) => {
+              dispatch(createStoreFailed(error.response.data.error.message));
+            });
+        } else {
+          let imageUploadConfig = {
+            method: 'post',
+            url: 'v1/utils/S3signedUploadURL',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            data: {
+              files: [
+                {
+                  name: check.values[0].name,
+                  type: check.values[0].type,
+                },
+              ],
+            },
+          };
+
+          axios(imageUploadConfig).then((response) => {
+            if (response.data.status) {
+              const fileURL = response.data.data.result[0];
+              const path = fileURL.signedUrl;
+              const ImagePath = fileURL.fileUri;
+              fetch(path, {
+                method: 'put',
+                headers: {
+                  ContentType: check.values[0].type,
+                },
+                body: check.values[0],
+              })
+                .then((res) => {
+                  const filter = attributeData.filter((attr) => !attr.uploadFile);
+                  const attributeUpdate = [...filter, { values: [ImagePath], id: check.id }];
+                  const data = {
+                    account: {
+                      name: name,
+                      category_id: [categoryId],
+                      description: description,
+                      web_address: '',
+                      images: [image],
+                      coordinates: coordinates,
+                      attributes: attributeUpdate,
+                      type: 'accounts',
                     },
+                  };
+                  let editStoreConfig = {
+                    method: 'put',
+                    url: `v1/accounts/${accountId}`,
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    data: data,
                   };
                   axios(editStoreConfig)
                     .then((response) => {
@@ -303,27 +593,15 @@ export const editStore = (
                     .catch((error) => {
                       dispatch(createStoreFailed(error.response.data.error.message));
                     });
-                  
-                   
-                }
-              })
-              .catch((error) => {
-                console.log('Error:' + error.message);
-                dispatch(failedMessage(error.response.data.error.message));
-              });
-          }
-        })
-        .catch((error) => {
-          dispatch(failedMessage(error.response.data.error.message));
-        });
-    } else {
-      var editStoreConfig = {
-        method: 'put',
-        url: `v1/accounts/${accountId}`,
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        data: {
+                })
+                .catch((error) => {
+                  console.log('Error:' + error.message);
+                });
+            }
+          });
+        }
+      } else {
+        const data = {
           account: {
             name: name,
             category_id: [categoryId],
@@ -331,23 +609,30 @@ export const editStore = (
             web_address: '',
             images: [image],
             coordinates: coordinates,
-            attributes: attributeData ? attributeData : [{}],
             type: 'accounts',
           },
-        },
-      };
-      axios(editStoreConfig)
-        .then((response) => {
-          if (response.data.status) {
-            dispatch(createStoreSuccess());
-            callBack && callBack();
-          } else {
-            dispatch(createStoreFailed(response.data.error.message));
-          }
-        })
-        .catch((error) => {
-          dispatch(createStoreFailed(error.response.data.error.message));
-        });
+        };
+        let editStoreConfig = {
+          method: 'put',
+          url: `v1/accounts/${accountId}`,
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          data: data,
+        };
+        axios(editStoreConfig)
+          .then((response) => {
+            if (response.data.status) {
+              dispatch(createStoreSuccess());
+              callBack && callBack();
+            } else {
+              dispatch(createStoreFailed(response.data.error.message));
+            }
+          })
+          .catch((error) => {
+            dispatch(createStoreFailed(error.response.data.error.message));
+          });
+      }
     }
   };
 };
@@ -378,7 +663,7 @@ export const postStoreFollow = (storeId, IsFollowing) => {
       axios
         .post(`/v1/accounts/${storeId}/follow`)
         .then((response) => {
-           if (response.data.status) {
+          if (response.data.status) {
             dispatch(postStoreFollowSuccess());
           } else {
             dispatch(postStoreFollowFailed());
@@ -391,7 +676,7 @@ export const postStoreFollow = (storeId, IsFollowing) => {
       axios
         .delete(`/v1/accounts/${storeId}/follow`)
         .then((response) => {
-           if (response.data.status) {
+          if (response.data.status) {
             dispatch(postStoreFollowSuccess());
           } else {
             dispatch(postStoreFollowFailed());
@@ -413,7 +698,7 @@ export const getStores = (page, perPageData) => {
       .then((response) => {
         if (response.data.status) {
           let stores = response.data.data.accounts;
-           dispatch(setAllStores(response.data.data));
+          dispatch(setAllStores(response.data.data));
         } else {
           dispatch(fetchStoreListsFailed());
         }
@@ -447,7 +732,6 @@ export const addressSearch = (key) => {
       .then((response) => {
         if (response.data.status) {
           dispatch(setAddress(response.data.data.addresses));
-           
         } else {
           dispatch(setAddress(''));
         }
@@ -473,7 +757,6 @@ export const accountCategories = () => {
     axios('v1/categories?parent=0&type=accounts')
       .then((response) => {
         if (response.data.status) {
- 
           dispatch(setCategories(response.data.data.categories));
         }
       })
@@ -501,7 +784,7 @@ export const initAttribute = (categoryID, type) => {
     axios(config)
       .then((response) => {
         if (response.data.status) {
-           dispatch(setAttribute(response.data.data.attributes));
+          dispatch(setAttribute(response.data.data.attributes));
         }
       })
       .catch((error) => {
@@ -527,8 +810,8 @@ export const initCurrencies = () => {
     };
     axios(config)
       .then((response) => {
-         if (response.data.status) {
-           dispatch(setCurrencies(response.data.data.currencies));
+        if (response.data.status) {
+          dispatch(setCurrencies(response.data.data.currencies));
         }
       })
       .catch((error) => {
@@ -576,7 +859,7 @@ export const initFiles = (
     axios(config)
       .then((response) => {
         if (response.data.status) {
-           // dispatch(SetFiles(response.data.data.result[0]));
+          // dispatch(SetFiles(response.data.data.result[0]));
           const responseFiles = response.data.data.result;
 
           var increment = 0;
@@ -593,26 +876,110 @@ export const initFiles = (
             })
               .then((res) => {
                 if (res.ok) {
-                   increment = increment + 1;
+                  increment = increment + 1;
                   if (increment === files.length) {
-                    const listingData = {
-                      listing: {
-                        list_price: price,
-                        shipping_charges: shippingCharge,
-                        description: description,
-                        account_id: accountId,
-                        currency_id: currency,
-                        stock: quantity,
-                        attributes: attributeData ? attributeData : [{}],
-                        title: title,
-                        offer_percent: 0,
-                        images: responseFiles.map((res) => res.fileUri),
-                        category_id: [selectedCategory],
-                        coordinates: coordinates,
-                        type: 'listings',
-                      },
-                    };
-                    dispatch(createProduct(listingData, callBack));
+                     
+                    if (attributeData !== null) {
+                      const check = attributeData.find((attr) => attr.uploadFile);
+                      if (check === undefined) {
+                        const listingData = {
+                          listing: {
+                            list_price: price,
+                            shipping_charges: shippingCharge,
+                            description: description,
+                            account_id: accountId,
+                            currency_id: currency,
+                            stock: quantity,
+                            attributes: attributeData ,
+                            title: title,
+                            offer_percent: 0,
+                            images: responseFiles.map((res) => res.fileUri),
+                            category_id: [selectedCategory],
+                            coordinates: coordinates,
+                            type: 'listings',
+                          },
+                        };
+                      dispatch(createProduct(listingData, callBack));
+                      } else {
+                        let imageUploadConfig = {
+                          method: 'post',
+                          url: 'v1/utils/S3signedUploadURL',
+                          headers: {
+                            'Content-Type': 'application/json',
+                          },
+                          data: {
+                            files: [
+                              {
+                                name: check.values[0].name,
+                                type: check.values[0].type,
+                              },
+                            ],
+                          },
+                        };
+
+                        axios(imageUploadConfig).then((response) => {
+                          if (response.data.status) {
+                            const fileURL = response.data.data.result[0];
+                            const path = fileURL.signedUrl;
+                            const ImagePath2 = fileURL.fileUri;
+                            fetch(path, {
+                              method: 'put',
+                              headers: {
+                                ContentType: check.values[0].type,
+                              },
+                              body: check.values[0],
+                            })
+                              .then((res) => {
+                                const filter = attributeData.filter((attr) => !attr.uploadFile);
+                                const attributeUpdate = [
+                                  ...filter,
+                                  { values: [ImagePath2], id: check.id },
+                                ];
+                               const listingData = {
+                                 listing: {
+                                   list_price: price,
+                                   shipping_charges: shippingCharge,
+                                   description: description,
+                                   account_id: accountId,
+                                   currency_id: currency,
+                                   stock: quantity,
+                                   attributes: attributeUpdate,
+                                   title: title,
+                                   offer_percent: 0,
+                                   images: responseFiles.map((res) => res.fileUri),
+                                   category_id: [selectedCategory],
+                                   coordinates: coordinates,
+                                   type: 'listings',
+                                 },
+                               };
+                               dispatch(createProduct(listingData, callBack));
+                              })
+                              .catch((error) => {
+                                console.log('Error:' + error.message);
+                              });
+                          }
+                        });
+                      }
+                    } else {
+                     const listingData = {
+                       listing: {
+                         list_price: price,
+                         shipping_charges: shippingCharge,
+                         description: description,
+                         account_id: accountId,
+                         currency_id: currency,
+                         stock: quantity,
+                          title: title,
+                         offer_percent: 0,
+                         images: responseFiles.map((res) => res.fileUri),
+                         category_id: [selectedCategory],
+                         coordinates: coordinates,
+                         type: 'listings',
+                       },
+                     };
+                     dispatch(createProduct(listingData, callBack));
+                    }
+
                   }
                 }
               })
@@ -653,4 +1020,55 @@ export const createProduct = (listing, callBack) => {
         dispatch(failedMessage(error.response?.data?.error?.message));
       });
   };
+};
+
+// Attribute file upload
+const attributeFileUpload = (attributes) => {
+  const check = attributes.find((attr) => attr.uploadFile);
+  const filter = attributes.filter((attr) => !attr.uploadFile);
+
+  if (check !== undefined) {
+    var imageUploadConfig = {
+      method: 'post',
+      url: 'v1/utils/S3signedUploadURL',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: {
+        files: [
+          {
+            name: check.values[0].name,
+            type: check.values[0].type,
+          },
+        ],
+      },
+    };
+
+    axios(imageUploadConfig).then((response) => {
+      if (response.data.status) {
+        const fileURL = response.data.data.result[0];
+        const path = fileURL.signedUrl;
+        const ImagePath = fileURL.fileUri;
+        fetch(path, {
+          method: 'put',
+          headers: {
+            ContentType: check.values[0].type,
+          },
+          body: check.values[0],
+        })
+          .then((res) => {
+            const change = { values: [ImagePath], id: check.id };
+            console.log('====================================');
+            console.log([...filter, change]);
+            console.log('====================================');
+            return [...filter, change];
+          })
+          .catch((error) => {
+            console.log('Error:' + error.message);
+          });
+      }
+    });
+  } else {
+    return attributes;
+  }
 };

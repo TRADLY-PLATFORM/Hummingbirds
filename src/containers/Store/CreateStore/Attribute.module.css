@@ -73,3 +73,10 @@
      top: -5px;
     right: -10px;
   }
+
+  @media only screen and (max-width: 500px) {
+      .uploadedImage{
+  display: grid;
+  grid-template-columns: 20% 70% 10%;}
+  
+  }

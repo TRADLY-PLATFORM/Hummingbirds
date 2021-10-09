@@ -1,4 +1,4 @@
-import React from 'react';
+ import React from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Aux from '../../../hoc/Auxiliary/Auxiliary';
@@ -47,7 +47,9 @@ const EditStore = () => {
   //
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(actions.userStoreLists(isAuthenticated));
+    if(isAuthenticated){
+      dispatch(actions.userStoreLists(isAuthenticated));
+    }
         dispatch(actions.accountCategories());
 
   }, [dispatch, isAuthenticated]);
@@ -83,7 +85,7 @@ const EditStore = () => {
         toast.error('Category is required');
          return false;
       }
-
+      
    
         dispatch(
           actions.editStore(

@@ -128,6 +128,8 @@
   position: absolute;
   top: 70px;
   overflow-y: scroll;
+    z-index: 20 ;
+
 }
 .addressList {
   display: flex;
@@ -162,5 +164,14 @@
   .mycontainer {
     width: 100%;
   }
+  
+}
+@media only screen and (max-width: 500px) {
+ .chargesBox{
+   display: grid;
+   grid-template-columns: 100%;
+   align-items: center;
+   grid-column-gap: 20px;
+ }
   
 }

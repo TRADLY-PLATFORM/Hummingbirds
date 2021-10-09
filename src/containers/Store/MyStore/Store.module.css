@@ -116,7 +116,7 @@ height: 126px;
    flex-direction: column;
    justify-content: center;
    align-items: center;
-
+text-align: center;
  }
 
  .noListingBox h3{
@@ -245,8 +245,8 @@ font-weight: bold;
     margin-top: 30px;
   }
   .storeHeader{
-   padding-left: 34px;
-   padding-right: 34px;
+   padding-left:4%;
+   padding-right: 4%;
  }
  
   .fashionStore img {
@@ -260,9 +260,11 @@ font-weight: bold;
  .followBtn{
     display: flex;
    flex-direction: column;   
-   justify-content: center;
+   justify-content: space-between;
    align-items: center;
  }
+ .followBtn a{
+  }
  .myStoreProducts{
     padding-left: 4%;
   padding-right:4%;
@@ -298,16 +300,28 @@ font-weight: bold;
 .bottomDesc span  {
   padding-left: 4px;
 }
+.followBtn{
+  min-height: 40px;
+    display: flex;
+   flex-direction: row;   
+   justify-content: space-between;
+   align-items: center;
+ }
 
 }
 
 
 @media only screen and (max-width: 460px) {
+
+  .storeBanner{
+ width: 100%;
+ height: 117px;}
   .find {
     display: grid;
      grid-template-columns: 150px 150px !important;
       margin: 0  ;
   }
+
  .latestTrend {
    width: 100% !important;
  }
