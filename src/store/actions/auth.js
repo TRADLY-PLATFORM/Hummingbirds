@@ -508,3 +508,31 @@ export const getUserDetails = (userID) => {
       });
   };
 };
+
+
+// Payment configs
+
+
+export const PaymentsConfigs = (data) => {
+  return {
+    type: actionTypes.PAYMENTS_CONFIGS,
+    configs: data,
+  };
+};
+
+export const setPaymentsConfigs = () => {
+  return (dispatch) => {
+    axios
+      .get('v1/configs?key_group=payments')
+      .then((response) => {
+         if (response.status) {
+
+          dispatch(PaymentsConfigs(response.data.data.configs));
+           
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};

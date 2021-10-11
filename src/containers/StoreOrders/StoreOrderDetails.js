@@ -204,7 +204,7 @@ const StoreOrderDetails = () => {
                         <p>{item.listing.title}</p>
                         <p>
                           <span>Quantity : {item.quantity}</span>{' '}
-                          <span className="textColor" style={{ marginLeft: '40%' }}>
+                          <span className="textColor" style={{float:'right' }}>
                             {item.list_price.formatted}
                           </span>
                         </p>

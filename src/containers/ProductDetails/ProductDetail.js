@@ -285,7 +285,11 @@ const ProductDetail = () => {
                 <div className={classes.MainPartInfo}>
                   <div className={classes.productHeaderPart}>
                     <p className={classes.stockMessage}>
-                      {listing?.stock && `Only ${listing?.stock} products in stock`}
+                      {listing?.stock > 0 ? (
+                        `Only ${listing.stock} products in stock`
+                      ) : (
+                        <span className={classes.soldoutButton}>Sold out</span>
+                      )}
                     </p>
                     <h4 className={classes.productName}>{listing?.title}</h4>
                     <p className={classes.productName}>{listing?.list_price.formatted}</p>
@@ -295,7 +299,8 @@ const ProductDetail = () => {
                       <span>{ratting_data?.rating_count} Ratings</span>
                     </div>
                     <div className={classes.buttons}>
-                      {isAuthenticated ? (
+                      {listing?.stock > 0  && (
+                        isAuthenticated ? (
                         <>
                           {listing?.in_cart ? (
                             <Link
@@ -343,7 +348,9 @@ const ProductDetail = () => {
                             Buy Now
                           </Link>
                         </>
+                      )
                       )}
+                      
                     </div>
                     {isAuthenticated ? (
                       <div className={classes.likeBtn}>
@@ -364,7 +371,7 @@ const ProductDetail = () => {
                       </Link>
                     )}
                   </div>
-                  {listing?.location.formatted_address.length > 0 && (
+                  {listing?.location.formatted_address?.length > 0 && (
                     <div className={classes.addressBox}>
                       <div className={classes.markerImage}>
                         <img src={locationMarker} alt="" />

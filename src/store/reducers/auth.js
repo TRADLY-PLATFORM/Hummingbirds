@@ -16,6 +16,7 @@ const initialState = {
   seo_configs:{},
   accounts_configs:{},
   listings_configs:{},
+  payments_configs:{},
   authRedirectPath: '/',
   userData: {},
   tenantData: {},
@@ -106,6 +107,13 @@ const setListingsConfigs = (state, action) => {
     loading: false,
   });
 };
+const setPaymentsConfigs = (state, action) => {
+  
+  return updateObject(state, {
+    payments_configs: action.configs,
+    loading: false,
+  });
+};
 
 const fetchCountriesFailed = (state, action) => {
   return updateObject(state, {
@@ -190,6 +198,8 @@ const authReducer = (state = initialState, action) => {
       return setAccountsConfigs(state, action);
     case actionTypes.LISTINGS_CONFIGS:
       return setListingsConfigs(state, action);
+    case actionTypes.PAYMENTS_CONFIGS:
+      return setPaymentsConfigs(state, action);
 
     case actionTypes.FETCH_COUNTRIES_FAILED:
       return fetchCountriesFailed(state, action);

@@ -21,7 +21,7 @@ const PickupAddress = ({ pickupAddress, setPickupAddress, saveAddress }) => {
       </div>
       <form action="" onsubmit="return false" onSubmit={(e) => saveAddress(e)}>
         <div className={classes.inputsField}>
-          <div className=" form-group col-md-12 nopaddingLeft ">
+          <div className=" form-group col-xs-12 col-sm-12 col-md-12 nopadding ">
             <input
               required
               autoComplete="off"
@@ -32,7 +32,7 @@ const PickupAddress = ({ pickupAddress, setPickupAddress, saveAddress }) => {
               placeholder=" Name"
             />
           </div>
-          <div className=" form-group col-md-12 nopaddingLeft ">
+          <div className="form-group col-xs-12 col-sm-12 col-md-12 nopadding ">
             <input
               required
               onChange={handleGetData}
@@ -43,7 +43,7 @@ const PickupAddress = ({ pickupAddress, setPickupAddress, saveAddress }) => {
             />
           </div>
 
-          <div className="form-group ">
+          <div className="form-group col-xs-12 col-sm-12 col-md-12 nopadding ">
             <input
               required
               onChange={handleGetData}
@@ -55,7 +55,7 @@ const PickupAddress = ({ pickupAddress, setPickupAddress, saveAddress }) => {
           </div>
 
           <div className="form-group ">
-            <div className="col-md-4 nopaddingLeft">
+            <div className="col-xs-12 nopadding col-md-3  mr-10">
               <input
                 required
                 onChange={handleGetData}
@@ -65,7 +65,7 @@ const PickupAddress = ({ pickupAddress, setPickupAddress, saveAddress }) => {
                 placeholder="Country"
               />
             </div>
-            <div className="col-md-4 nopadding">
+            <div className="col-xs-12 nopadding  col-md-3  mr-10">
               <input
                 required
                 onChange={handleGetData}
@@ -75,7 +75,7 @@ const PickupAddress = ({ pickupAddress, setPickupAddress, saveAddress }) => {
                 placeholder="state"
               />
             </div>
-            <div className="col-md-4 nopaddingRight">
+            <div className="col-xs-12  nopadding  col-md-3">
               <input
                 required
                 onChange={handleGetData}

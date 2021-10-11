@@ -41,7 +41,13 @@ const MyOrder = () => {
   };
   //
   const handleChange = (newValue, actionMeta) => {
-    history.push({ pathname: `/myorder/${newValue.value.replace(' ', '-')}`, state: newValue.id });
+    if(newValue.id !==0){
+      history.push({ pathname: `/myorder/${newValue.value.replace(' ', '-')}`, state: newValue.id });
+    } else {
+      history.push({
+        pathname: `/myorder`,
+       });
+    }
   };
  
   return (
@@ -67,12 +73,12 @@ const MyOrder = () => {
           />
         </>
       )}
-      <div className="row" style={{ marginBottom: '37px' }}>
-        <div className={classes.pageTitle + ' col-md-8 nopaddingLeft nopaddingRight'}>
+      <div className={ classes.headerLine}style={{ marginBottom: '37px' }}>
+        <div className={classes.pageTitle  }>
           <h2>My Orders </h2>
         </div>
 
-        <div className="col-md-4">
+        <div className="  ">
           <div className={classes.SortbyMenu}>
             <p className={classes.filter}>Filter by:</p>
             <Select
@@ -110,28 +116,28 @@ const MyOrder = () => {
           <div className=" ">
             <h4 className={classes.orderHistory}>Order History</h4>
           </div>
-          <div className="  center    ">
+          <div className={classes.orderDateBox}>
             <h4 className={classes.orderHistory}>Date</h4>
           </div>
           <div className=" center  ">
             <h4 className={classes.orderHistory}>Price</h4>
           </div>
-          <div className=" center ">
+          <div className={classes.currentStatus}>
             <h4 className={classes.orderHistory}>Current Status</h4>
           </div>
-          <div className=" center  ">
+          <div className={classes.changeStatusButton}>
             <h4 className={classes.orderHistory}>Change Status</h4>
           </div>
         </div>
       )}
 
-      <div className="row">
+      <div className="">
         {orders.length > 0 ? (
           orders?.map((order, index) => {
             const { order_details } = order;
             return (
               <div className={classes.transactionContainer} key={index}>
-                <div className={classes.orderShortDetails  }>
+                <div className={classes.orderShortDetails}>
                   <div>
                     <img
                       className={classes.productImg}
@@ -140,7 +146,7 @@ const MyOrder = () => {
                     />
                   </div>
 
-                  <Link className="offTextDecoration" to={`/myorder-details/${order.id}`}>
+                  <Link className="offTextDecoration" to={`/myorderdetails/${order.id}`}>
                     <div style={{ cursor: 'pointer' }} onClick>
                       <p className={classes.transactionDetails}>{order_details[0].listing.title}</p>
                       <p className={classes.bottomDesc}>#Order ID : {order.id}</p>
@@ -150,7 +156,7 @@ const MyOrder = () => {
                     </div>
                   </Link>
                 </div>
-                <div className=" ">
+                <div className={classes.orderDateBox}>
                   <span className="center">
                     {changeDateFormat(order.created_at, 'DD/MM/YYYY')}{' '}
                   </span>
@@ -159,12 +165,12 @@ const MyOrder = () => {
                   {' '}
                   <h4 className="center"> {order.list_total.formatted}</h4>
                 </div>
-                <div className="center ">
+                <div className={classes.currentStatus}>
                   <button className={'btnOutlineGreenStyle text-center '}>
                     {orderStatus(order.order_status)}
                   </button>
                 </div>
-                <div className="center ">
+                <div className={classes.changeStatusButton}>
                   <button className={'btnGreenStyle'}>Change Status</button>
                 </div>
               </div>

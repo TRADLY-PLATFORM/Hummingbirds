@@ -265,7 +265,8 @@ const BuyNow = () => {
                           <div className={classes.cartItemBox} key={index}>
                             <div className={classes.productDescription}>
                               <p className={classes.stockMessage}>
-                                {listing.stock && `Only ${listing.stock} products in stock`}
+                                {  listing.stock > 0 ?
+                                  `Only ${listing.stock} products in stock`: <span className={classes.soldoutButton}>Sold out</span>}
                               </p>
                               <p className={classes.productTitle}>{listing?.title}</p>
                               <p className={classes.price}>{listing.list_price.formatted}</p>

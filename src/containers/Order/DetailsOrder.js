@@ -21,7 +21,7 @@ const DetailOrder = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(actions.getOrderDetails(id));
-  }, [0]);
+  }, []);
 
   // reducer
   const orderDetails = useSelector((state) => state.order.order_details);
@@ -174,7 +174,7 @@ const DetailOrder = () => {
                         <p>{item.listing.title}</p>
                         <p>
                           <span>Quantity : {item.quantity}</span>{' '}
-                          <span className="textColor" style={{ marginLeft: '40%' }}>
+                          <span className="textColor" style={{float:'right' }}>
                             {item.list_price.formatted}
                           </span>
                         </p>

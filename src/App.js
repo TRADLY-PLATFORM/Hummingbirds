@@ -41,17 +41,23 @@ import ProductDetail from './containers/ProductDetails/ProductDetail';
 import BuyNow from './containers/Cart/BuyNow/BuyNow';
 import OrderSuccess from './containers/Cart/OrderSuccess/OrderSuccess';
 import StoreOrders from './containers/StoreOrders/StoreOrders';
-import StoreOrderDetails from './containers/StoreOrders/StoreOrderDetails';
+// import StoreOrderDetails from './containers/StoreOrders/StoreOrderDetails';
 import Card from './containers/Stripe/Card';
 import MyOrder from './containers/Order/MyOrders';
-import DetailOrder from './containers/Order/DetailsOrder';
+// import DetailOrder from './containers/Order/DetailsOrder';
 import EditStore from './containers/Store/EditStore/EditStore';
 import SetPassword from './containers/Auth/ForgotPassword/SetPassword';
 import PaymentScreen from './containers/Stripe/PaymentScreen';
-import SecondLayout from './hoc/Layout/SecondLayout';
+// import SecondLayout from './hoc/Layout/SecondLayout';
+  
 
-const Layout = lazy(() => import('./hoc/Layout/Layout'));
+// export var stripeKey;
+
+// const Layout = lazy(() => import('./hoc/Layout/Layout'));
+const SecondLayout = lazy(() => import('./hoc/Layout/SecondLayout'));
 const Home = lazy(() => import('./containers/Home/Home'));
+const DetailOrder = lazy(() => import('./containers/Order/DetailsOrder'));
+const StoreOrderDetails = lazy(() => import('./containers/StoreOrders/StoreOrderDetails'));
 
 class App extends Component {
   componentDidMount() {
@@ -62,15 +68,22 @@ class App extends Component {
     this.props.onSetCurrency();
     this.props.onSetAccountsConfigs();
     this.props.onSetListingsConfigs();
+    this.props.onSetPaymentsConfigs();
   }
 
   render() {
     let root = document.documentElement;
-    const color = this.props.onboarding_configs.app_color_primary;
+    const color = this.props.onboarding_configs.app_color_primary || 'black';
     root.style.setProperty('--primary_color', color);
     const favicon = document.getElementById('favicon');
     favicon.href = (this.props.onboarding_configs.splash_image);
 
+    // if(this.props.payment_configs){
+    //      stripeKey = this.props.payment_configs.stripe_api_publishable_key;
+    // }
+// console.log('====================================');
+// console.log(StripePublishKey);
+// console.log('====================================');
     let routes = (
       <Switch>
         <Route path="/sign-up" exact component={SignUp} />
@@ -97,6 +110,7 @@ class App extends Component {
         <Route path="/payment" exact component={PaymentScreen} />
         {/* <Route path="/cart" exact component={Cart} /> */}
         <Route path="/cart" exact component={BuyNow} />
+        <Route path="/card" excat component={Card} />
         <Route path="/checkout-success" exact component={OrderSuccess} />
         <Route path="/editprofile" excat component={EditProfile} />
         <Route path="/group" excat component={Group} />
@@ -106,18 +120,17 @@ class App extends Component {
         <Route path="/transactionsuccess" excat component={transactionSuccess} />
         <Route path="/myorder" excat component={MyOrder} />
         <Route path="/myorder/statusID" excat component={MyOrder} />
+        <Route path="/myorderdetails/:id" excat component={DetailOrder} />
         <Route path="/storeorders" excat component={StoreOrders} />
         <Route path="/storeorders/statusID" excat component={StoreOrders} />
+        <Route path="/storeorder-details/:id" excat component={StoreOrderDetails} />
         <Route path="/storesuccess" excat component={StoreSuccess} />
         <Route path="/productsuccess" excat component={ProductSuccess} />
         <Route path="/noproduct" excat component={NoProduct} />
         <Route path="/withproduct" excat component={withProduct} />
         <Route path="/addproduct/:accountId" excat component={CreateProduct} />
         <Route path="/reviewpage" excat component={reviewPage} />
-        <Route path="/myorder-details/:id" excat component={DetailOrder} />
-        <Route path="/storeorder-details/:id" excat component={StoreOrderDetails} />
         <Route path="/search/:key" excat component={SearchResult} />
-        <Route path="/card" excat component={Card} />
         <Redirect to="/" />
       </Switch>
     );
@@ -147,6 +160,7 @@ const mapStateToProps = (state) => {
   return {
     verifyId: state.auth.verify_id,
     onboarding_configs: state.auth.onboarding_configs,
+    payment_configs:state.auth.payments_configs
   };
 };
 
@@ -159,6 +173,7 @@ const mapDispatchToProps = (dispatch) => {
     onSetSeoConfigs: () => dispatch(actions.setSeoConfigs()),
     onSetAccountsConfigs: () => dispatch(actions.setAccountsConfigs()),
     onSetListingsConfigs: () => dispatch(actions.setListingsConfigs()),
+    onSetPaymentsConfigs: () => dispatch(actions.setPaymentsConfigs()),
     onSetCurrency: () => dispatch(actions.initCurrencies()),
   };
 };

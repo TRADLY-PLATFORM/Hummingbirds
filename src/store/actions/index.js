@@ -14,6 +14,7 @@ export {
   setAccountsConfigs,
   setListingsConfigs,
   getUserDetails,
+  setPaymentsConfigs,
 } from './auth';
 
 export {
