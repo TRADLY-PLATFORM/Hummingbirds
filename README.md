@@ -113,12 +113,12 @@ There are three environment files that can be run and built separately.
 
 1. Change "REACT_APP_DOMAIN_URL" from environment files and add your website url there.This is for SEO purpose. If you don't change this variable then you face many problems in SEO.
 2. Once you sign up with [Tradly Sandbox](https://superadmin.sandbox.tradly.app), you can get your API key (It is public key).After that you create a variable in your environment files called "REACT_APP_API_KEY"  And put the API key here.
-3. Here is some client/web specific things you might need to change. 3rd party integrations with Stripe, Firebase, Sentry need your own account Keys for it to work.  
+3. Enter your stripe publishable key in REACT_APP_API_STRIPE_KEY variable in environment files.
+4. Here is some client/web specific things you might need to change. 3rd party integrations with Stripe, Firebase, Sentry need your own account Keys for it to work.  
 
 ```tsx
 // constants.js
 
-    StripePublishKey: 'abc',
     dsn: 'https://abc.ingest.sentry.io/5896058',
 
  ```

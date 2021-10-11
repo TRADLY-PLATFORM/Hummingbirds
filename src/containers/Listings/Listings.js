@@ -20,6 +20,7 @@ import {
   selectTotalListings,
 } from '../../store/selectors/product';
 import PropTypes from 'prop-types';
+import Loader from 'react-loader-spinner';
 
 import classes from './Listings.module.css';
 
@@ -278,8 +279,31 @@ class Listings extends Component {
           <link rel="canonical" href={location.pathname} />
         </Helmet>
         <Aux>
-          <Backdrop show={loading} />
-          <Spinner show={loading} />
+          {/* <Backdrop show={loading} />
+          <Spinner show={loading} /> */}
+
+          {loading && (
+            <>
+              <div className={classes.Backdrop}>
+                <Loader
+                  type="ThreeDots"
+                  color="var(--primary_color)"
+                  height={100}
+                  width={100}
+                  style={{
+                    position: 'absolute',
+                    right: 0,
+                    height: '100vh',
+                    width: '100%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    zIndex: '500',
+                  }}
+                />
+              </div>
+            </>
+          )}
 
           <div className={classes.allListingsBox}>
             <Filter

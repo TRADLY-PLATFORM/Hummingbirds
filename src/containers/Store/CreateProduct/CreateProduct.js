@@ -11,8 +11,10 @@ import locationListImage from '../../../assets/images/store/locationList.png';
 
 import closeImage from '../../../assets/images/store/close (1).svg';
 import { Slide, toast, ToastContainer } from 'react-toastify';
-import Backdrop from '../../../components/UI/Backdrop/Backdrop';
-import Spinner from '../../../components/UI/Spinner/Spinner';
+// import Backdrop from '../../../components/UI/Backdrop/Backdrop';
+// import Spinner from '../../../components/UI/Spinner/Spinner';
+import Loader from 'react-loader-spinner';
+
 import Toast from '../../../components/UI/Toast/Toast';
 import Aux from '../../../hoc/Auxiliary/Auxiliary';
 import Select from 'react-select';
@@ -227,8 +229,26 @@ const CreateProduct = () => {
 
   return (
     <Aux>
-      <Backdrop show={loading} />
-      <Spinner show={loading} />
+      {loading && (
+        <div className={classes.Backdrop}>
+          <Loader
+            type="ThreeDots"
+            color="var(--primary_color)"
+            height={100}
+            width={100}
+            style={{
+              position: 'absolute',
+              right: 0,
+              height: '100vh',
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              zIndex: '500',
+            }}
+          />
+        </div>
+      )}
       {errorMessage && <Toast message={errorMessage} type="error" />}
 
       <ToastContainer

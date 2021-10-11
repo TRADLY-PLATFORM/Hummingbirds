@@ -8,8 +8,9 @@ import 'react-phone-input-2/lib/bootstrap.css';
 import classes from './SignUp.module.css';
 import { toast, ToastContainer, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Backdrop from '../../../components/UI/Backdrop/Backdrop';
-import Spinner from '../../../components/UI/Spinner/Spinner';
+// import Backdrop from '../../../components/UI/Backdrop/Backdrop';
+// import Spinner from '../../../components/UI/Spinner/Spinner';
+import Loader from 'react-loader-spinner';
 import {  validateEmail } from '../../../shared/utility'; //countryFilter
 import * as actions from '../../../store/actions/index';
 import { selectUserId } from '../../../store/selectors/auth';
@@ -204,8 +205,28 @@ class SignUp extends Component {
           />
         </Helmet>
         <div className="row">
-          <Backdrop show={this.props.loading} />
-          <Spinner show={this.props.loading} />
+          {/* <Backdrop show={this.props.loading} />
+          <Spinner show={this.props.loading} /> */}
+          {this.props.loading && (
+            <div className={classes.Backdrop}>
+              <Loader
+                type="ThreeDots"
+                color="var(--primary_color)"
+                height={100}
+                width={100}
+                style={{
+                  position: 'absolute',
+                  right: 0,
+                  height: '100vh',
+                  width: '100%',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  zIndex: '500',
+                }}
+              />
+            </div>
+          )}
           <ToastContainer
             autoClose={2000}
             position="top-center"

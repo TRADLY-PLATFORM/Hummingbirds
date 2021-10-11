@@ -7,13 +7,13 @@ import * as actions from '../../../store/actions/index';
 import { Slide, toast, ToastContainer } from 'react-toastify';
 import { validateEmail } from '../../../shared/utility';
 import { isValidNumber } from 'libphonenumber-js';
- 
+import Loader from 'react-loader-spinner';
+
 const ForgotPassword = () => {
   const [email, setEmail] = useState(null);
   const [number, setNumber] = useState(null);
   const [dialCode, setDialCode] = useState(null);
-    const [showError, setShowError] = useState(false);
-
+  const [showError, setShowError] = useState(false);
 
   //
   const dispatch = useDispatch();
@@ -24,7 +24,6 @@ const ForgotPassword = () => {
     dispatch(actions.initCountries());
   }, [0]);
 
- 
   // reducer
   const configsData = useSelector((state) => state.auth.general_configs);
   const countryList = useSelector((state) => state.auth.countries);
@@ -48,7 +47,7 @@ const ForgotPassword = () => {
         onChange={(mobile, country, e) => {
           setNumber(mobile);
           setDialCode(country.dialCode);
-          setShowError(false)
+          setShowError(false);
         }}
         name="mobile"
       />
@@ -57,7 +56,7 @@ const ForgotPassword = () => {
 
   const handleChange = (e) => {
     setEmail(e.target.value);
-    setShowError(false)
+    setShowError(false);
   };
 
   //
@@ -79,36 +78,35 @@ const ForgotPassword = () => {
         toast.error('Invalid phone number');
       }
     }
- setShowError(true)
+    setShowError(true);
 
     let users;
     if (authType === 1) {
       users = {
         user: {
-           email:  email,
-         },
+          email: email,
+        },
       };
     } else if (authType === 3) {
       users = {
         user: {
-           mobile: number.slice(dialCode.length),
-           dial_code: dialCode,
-         },
+          mobile: number.slice(dialCode.length),
+          dial_code: dialCode,
+        },
       };
     }
     dispatch(actions.password_recovery(users));
   };
 
-
   // showing Error
   if (error && showError) {
-    toast.error(message)
+    toast.error(message);
   }
   // Set path
   let authRedirect = null;
   if (verifyID !== null) {
-    authRedirect= <Redirect to={`/forgot-password/verification`} />;
-   }
+    authRedirect = <Redirect to={`/forgot-password/verification`} />;
+  }
 
   return (
     <>
@@ -124,10 +122,24 @@ const ForgotPassword = () => {
       />
       {authRedirect}
       {loading && (
-        <>
-          <div className={classes.Backdrop}></div>
-           
-        </>
+        <div className={classes.Backdrop}>
+          <Loader
+            type="ThreeDots"
+            color="var(--primary_color)"
+            height={100}
+            width={100}
+            style={{
+              position: 'absolute',
+              right: 0,
+              height: '100vh',
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              zIndex: '500',
+            }}
+          />
+        </div>
       )}
       <div className="col-lg-12 nopaddingLeft">
         <h5 className={classes.titleAccount}>Forgot your password ?</h5>

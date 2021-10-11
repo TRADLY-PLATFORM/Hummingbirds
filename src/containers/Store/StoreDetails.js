@@ -260,8 +260,8 @@ class StoreDetails extends Component {
         </Helmet>
 
         <Aux>
-          <Backdrop show={this.props.loading} />
-          <Spinner show={this.props.loading} />
+          {/* <Backdrop show={this.props.loading} />
+          <Spinner show={this.props.loading} /> */}
           <div>{storeContent}</div>
         </Aux>
       </>

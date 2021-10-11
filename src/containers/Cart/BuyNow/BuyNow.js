@@ -230,23 +230,24 @@ const BuyNow = () => {
 
       {(loading || paymentLoading) && (
         <>
-          <div className={classes.Backdrop}></div>
-          <Loader
-            type="ThreeDots"
-            color="var(--primary_color)"
-            height={100}
-            width={100}
-            style={{
-              position: 'absolute',
-              right: 0,
-              height: '70%',
-              width: '100%',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              zIndex: '500',
-            }}
-          />
+          <div className={classes.Backdrop}>
+            <Loader
+              type="ThreeDots"
+              color="var(--primary_color)"
+              height={100}
+              width={100}
+              style={{
+                position: 'absolute',
+                right: 0,
+                height: '100vh',
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                zIndex: '500',
+              }}
+            />
+          </div>
         </>
       )}
 
@@ -265,8 +266,11 @@ const BuyNow = () => {
                           <div className={classes.cartItemBox} key={index}>
                             <div className={classes.productDescription}>
                               <p className={classes.stockMessage}>
-                                {  listing.stock > 0 ?
-                                  `Only ${listing.stock} products in stock`: <span className={classes.soldoutButton}>Sold out</span>}
+                                {listing.stock > 0 ? (
+                                  `Only ${listing.stock} products in stock`
+                                ) : (
+                                  <span className={classes.soldoutButton}>Sold out</span>
+                                )}
                               </p>
                               <p className={classes.productTitle}>{listing?.title}</p>
                               <p className={classes.price}>{listing.list_price.formatted}</p>
@@ -304,7 +308,9 @@ const BuyNow = () => {
                         <button
                           key={index}
                           className={
-                            shippingMethod?.id === method.id ? 'btnGreenStyle' : 'btnOutlineGreenStyle'
+                            shippingMethod?.id === method.id
+                              ? 'btnGreenStyle'
+                              : 'btnOutlineGreenStyle'
                           }
                           onClick={() => selectShippingMethod(method)}
                         >
@@ -434,7 +440,9 @@ const BuyNow = () => {
                         <button
                           key={index}
                           className={
-                            paymentMethod?.id === method.id ? 'btnGreenStyle' : 'btnOutlineGreenStyle'
+                            paymentMethod?.id === method.id
+                              ? 'btnGreenStyle'
+                              : 'btnOutlineGreenStyle'
                           }
                           onClick={() => selectPaymentMethod(method)}
                         >

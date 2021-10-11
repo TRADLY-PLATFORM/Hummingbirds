@@ -54,7 +54,7 @@ const WishList = () => {
 
        <div className="">
          {loading ? (
-           <Loader
+           <div className={classes.Backdrop}><Loader
              type="ThreeDots"
              color="var(--primary_color)"
              height={100}
@@ -62,14 +62,15 @@ const WishList = () => {
              style={{
                position: 'absolute',
                right: 0,
-               height: '70%',
+               height: '100vh',
                width: '100%',
                display: 'flex',
                justifyContent: 'center',
                alignItems: 'center',
                zIndex: '500',
              }}
-           />
+           /></div>
+           
          ) : wishList.length && wishList?.length > 0 ? (
            <div className={classes.wishList}>
              {wishList.map((list, i) => {

@@ -66,22 +66,24 @@ const Home = () => {
       {/* <Spinner show={loading || followLoading} /> */}
 
       {!categories.length > 0 ? (
-        <Loader
-          type="ThreeDots"
-          color="var(--primary_color)"
-          height={100}
-          width={100}
-          style={{
-            position: 'absolute',
-            right: 0,
-            height: '70%',
-            width: '100%',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            zIndex: '500',
-          }}
-        />
+        <div className={classes.Backdrop}>
+          <Loader
+            type="ThreeDots"
+            color="var(--primary_color)"
+            height={100}
+            width={100}
+            style={{
+              position: 'absolute',
+              right: 0,
+              height: '100vh',
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              zIndex: '500',
+            }}
+          />
+        </div>
       ) : (
         <>
           <div className={classes.homeContent}>

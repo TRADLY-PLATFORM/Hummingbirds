@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
- import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { useSelector } from 'react-redux';
 import classes from './Card.module.css';
 import { toast, ToastContainer, Slide } from 'react-toastify';
@@ -47,9 +47,9 @@ const Card = () => {
       setLoading(false);
 
       toast.error(stripeError.message);
-       return;
+      return;
     }
-    
+
     history.push(`/checkout-success`);
   };
 
@@ -68,23 +68,24 @@ const Card = () => {
       />
       {loading && (
         <>
-          <div className={classes.Backdrop}></div>
-          <Loader
-            type="ThreeDots"
-            color="var(--primary_color)"
-            height={100}
-            width={100}
-            style={{
-              position: 'absolute',
-              right: 0,
-              height: '70%',
-              width: '100%',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              zIndex: '500',
-            }}
-          />
+          <div className={classes.Backdrop}>
+            <Loader
+              type="ThreeDots"
+              color="var(--primary_color)"
+              height={100}
+              width={100}
+              style={{
+                position: 'absolute',
+                right: 0,
+                height: '100vh',
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                zIndex: '500',
+              }}
+            />
+          </div>
         </>
       )}
       <div className={classes.stripeCardBox}>

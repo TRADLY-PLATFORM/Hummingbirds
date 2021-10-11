@@ -7,10 +7,11 @@ import { Link, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
 // import backdrop from '../../components/UI/Backdrop/Backdrop';
-import spinner from '../../components/UI/Spinner/Spinner';
+// import spinner from '../../components/UI/Spinner/Spinner';
 import { selectUserId } from '../../store/selectors/auth';
 import StoreFilter from './StoreFilter';
 import { priceOptions, sortByOptions } from '../../shared/constants';
+import Loader from 'react-loader-spinner';
 
 const AllStores = () => {
 
@@ -98,74 +99,93 @@ const AllStores = () => {
         <meta name="description" content=" All stores list . You can select a store" />
         <link rel="canonical" href={location.pathname} />
       </Helmet>
-      {followLoading ? <div className={classes.Backdrop}></div> : null}
+      {followLoading && (
+        <div className={classes.Backdrop}>
+          <Loader
+            type="ThreeDots"
+            color="var(--primary_color)"
+            height={100}
+            width={100}
+            style={{
+              position: 'absolute',
+              right: 0,
+              height: '100vh',
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              zIndex: '500',
+            }}
+          />
+        </div>
+      )}
 
-      <spinner show={followLoading} />
+      {/* <spinner show={followLoading} /> */}
       <div className={classes.filterBox}>
         <StoreFilter selectedPart={selectedPart} options={options} handleChange={handleChange} />
       </div>
-      <div className={classes.storesStyle}>
-        {stores?.accounts?.map((store, i) => {
-          let imagePath = AllenSollyLogo;
-          if (store.images.length > 0) {
-            imagePath = store.images[0];
-          }
+      <div className={classes.allStoresBox}>
+        <div className={classes.storesStyle}>
+          {stores?.accounts?.map((store, i) => {
+            let imagePath = AllenSollyLogo;
+            if (store.images.length > 0) {
+              imagePath = store.images[0];
+            }
 
-          let description = store.description;
-          if (description.length > 15) {
-            description = description.substring(0, 15) + '..';
-          }
-          // let name = store.name;
-          // if (description.length > 15) {
-          //   name = name.substring(0, 15) + '..';
-          // }
+            let description = store.description;
+            if (description.length > 15) {
+              description = description.substring(0, 15) + '..';
+            }
+            // let name = store.name;
+            // if (description.length > 15) {
+            //   name = name.substring(0, 15) + '..';
+            // }
 
-          return (
-            <Link
-              className={classes.wellStore + ' col-lg-12'}
-              key={i}
-              to={`/a/${store.id}-${store.name}`}
-              style={{ textDecoration: 'none' }}
-            >
-              <div className={classes.imageDiv}>
-                <img src={imagePath} alt={store.name} title={store.name} />
-              </div>
-              <div className={classes.wellStoreDetails}>
-                <p style={{ fontWeight: 'bold', marginBottom: '1em' }}>
-                  {store.name.length < 10 ? store.name : store.name.substring(0, 15) + '..'}
-                </p>
-                <p>{description}</p>
-              </div>
+            return (
+              <Link
+                className={classes.wellStore + ' col-lg-12'}
+                key={i}
+                to={`/a/${store.id}-${store.name}`}
+                style={{ textDecoration: 'none' }}
+              >
+                <div className={classes.imageDiv}>
+                  <img src={imagePath} alt={store.name} title={store.name} />
+                </div>
+                <div className={classes.wellStoreDetails}>
+                  <p style={{ fontWeight: 'bold', marginBottom: '1em' }}>
+                    {store.name.length < 10 ? store.name : store.name.substring(0, 15) + '..'}
+                  </p>
+                  <p>{description}</p>
+                </div>
 
-              {isAuthenticated ? (
-                <Link
-                  style={{ textDecoration: 'none' }}
-                  className={
-                    (store.following ? classes.btnGreenFollow : classes.btnGreenUnFollowing) +
-                    ' mt-5'
-                  }
-                  onClick={() => postStoreFollow(store.id, store.following)}
-                  to="/stores"
-                >
-                  {store.following ? 'Following' : 'Follow'}
-                </Link>
-              ) : (
-                <Link to="/sign-in" onClick={setPath}>
-                  <button className={classes.btnGreenUnFollowing + ' mt-5'}>Follow</button>
-                </Link>
-              )}
-            </Link>
-          );
-        })}
-      </div>
-      <div className="col-sm-12">
-        <button
-          className="btnGreenStyle pull-right mt-4"
-          onClick={() =>loadMore()}
-          style={{ marginBottom: '50px' }}
-        >
-          Load More
-        </button>
+                {isAuthenticated ? (
+                  <Link
+                    style={{ textDecoration: 'none' }}
+                    className={
+                      (store.following ? classes.btnGreenFollow : classes.btnGreenUnFollowing) +
+                      ' mt-5'
+                    }
+                    onClick={() => postStoreFollow(store.id, store.following)}
+                    to="/stores"
+                  >
+                    {store.following ? 'Following' : 'Follow'}
+                  </Link>
+                ) : (
+                  <Link to="/sign-in" onClick={setPath}>
+                    <button className={classes.btnGreenUnFollowing + ' mt-5'}>Follow</button>
+                  </Link>
+                )}
+              </Link>
+            );
+          })}
+        </div>
+        {stores?.total_records !== stores?.accounts?.length && (
+          <div className="col-sm-12 mt-4">
+            <button className="btnGreenStyle pull-right  " onClick={() => loadMore()}>
+              Load More
+            </button>
+          </div>
+        )}
       </div>
     </Aux>
   );

@@ -4,8 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import Aux from '../../../hoc/Auxiliary/Auxiliary';
 import { Link, useHistory } from 'react-router-dom';
   import { toast, ToastContainer, Slide } from 'react-toastify';
-import Backdrop from '../../../components/UI/Backdrop/Backdrop';
-import Spinner from '../../../components/UI/Spinner/Spinner';
+// import Backdrop from '../../../components/UI/Backdrop/Backdrop';
+// import Spinner from '../../../components/UI/Spinner/Spinner';
+import Loader from 'react-loader-spinner';
+
 import * as actions from '../../../store/actions/index';
 import classes from './CreateStore.module.css';
 
@@ -181,8 +183,28 @@ const CreateStore = () => {
   return (
     <Aux>
       {redirectUrl}
-      <Backdrop show={loading} />
-      <Spinner show={loading} />
+      {/* <Backdrop show={loading} />
+      <Spinner show={loading} /> */}
+      {loading && (
+        <div className={classes.Backdrop}>
+          <Loader
+            type="ThreeDots"
+            color="var(--primary_color)"
+            height={100}
+            width={100}
+            style={{
+              position: 'absolute',
+              right: 0,
+              height: '100vh',
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              zIndex: '500',
+            }}
+          />
+        </div>
+      )}
       {errorMessage && <Toast message={errorMessage} type="error" />}
 
       <ToastContainer

@@ -216,8 +216,28 @@ const ProductDetail = () => {
         <link rel="canonical" href={location.pathname} />
       </Helmet>
       <Aux>
-        <Backdrop show={loading} />
-        <Spinner show={loading} />
+        {/* <Backdrop show={loading} />
+        <Spinner show={loading} /> */}
+        {loading && (
+          <div className={classes.Backdrop}>
+            <Loader
+              type="ThreeDots"
+              color="var(--primary_color)"
+              height={100}
+              width={100}
+              style={{
+                position: 'absolute',
+                right: 0,
+                height: '100vh',
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                zIndex: '500',
+              }}
+            />
+          </div>
+        )}
         <ToastContainer
           autoClose={2000}
           position="bottom-right"
@@ -299,58 +319,62 @@ const ProductDetail = () => {
                       <span>{ratting_data?.rating_count} Ratings</span>
                     </div>
                     <div className={classes.buttons}>
-                      {listing?.stock > 0  && (
-                        isAuthenticated ? (
-                        <>
-                          {listing?.in_cart ? (
+                      {listing?.stock > 0 &&
+                        (isAuthenticated ? (
+                          isAuthenticated !== listing?.account.user.id && (
+                            <>
+                              {listing?.in_cart ? (
+                                <Link
+                                  to="/cart"
+                                  type="button"
+                                  className={classes.addToCart}
+                                  onClick={addCart}
+                                >
+                                  Go To Cart
+                                </Link>
+                              ) : (
+                                <button
+                                  type="button"
+                                  className={classes.addToCart}
+                                  onClick={addCart}
+                                >
+                                  Add To Cart
+                                </button>
+                              )}
+
+                              <Link
+                                onClick={addCart}
+                                type="button"
+                                className={classes.buyNow}
+                                to={{
+                                  pathname: `/cart`,
+                                  state: { option: 'Buy Now' },
+                                }}
+                              >
+                                Buy Now
+                              </Link>
+                            </>
+                          )
+                        ) : (
+                          <>
                             <Link
-                              to="/cart"
+                              onClick={setPath}
+                              to="/sign-in"
                               type="button"
                               className={classes.addToCart}
-                              onClick={addCart}
                             >
-                              Go To Cart
-                            </Link>
-                          ) : (
-                            <button type="button" className={classes.addToCart} onClick={addCart}>
                               Add To Cart
-                            </button>
-                          )}
-
-                          <Link
-                            onClick={addCart}
-                            type="button"
-                            className={classes.buyNow}
-                            to={{
-                              pathname: `/cart`,
-                              state: { option: 'Buy Now' },
-                            }}
-                          >
-                            Buy Now
-                          </Link>
-                        </>
-                      ) : (
-                        <>
-                          <Link
-                            onClick={setPath}
-                            to="/sign-in"
-                            type="button"
-                            className={classes.addToCart}
-                          >
-                            Add To Cart
-                          </Link>
-                          <Link
-                            onClick={setPath}
-                            to="/sign-in"
-                            type="button"
-                            className={classes.buyNow}
-                          >
-                            Buy Now
-                          </Link>
-                        </>
-                      )
-                      )}
-                      
+                            </Link>
+                            <Link
+                              onClick={setPath}
+                              to="/sign-in"
+                              type="button"
+                              className={classes.buyNow}
+                            >
+                              Buy Now
+                            </Link>
+                          </>
+                        ))}
                     </div>
                     {isAuthenticated ? (
                       <div className={classes.likeBtn}>

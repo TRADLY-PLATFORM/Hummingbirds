@@ -14,7 +14,7 @@ const spinner = (props) => {
       style={{
         position: 'absolute',
         right: 0,
-        height: '70%',
+        height: '100vh',
         width: '100%',
         display: 'flex',
         justifyContent: 'center',

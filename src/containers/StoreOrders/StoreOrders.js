@@ -1,89 +1,84 @@
 import React, { useEffect, useState } from 'react';
 import classes from './StoreOrders.module.css';
-import { Link, useLocation, useHistory} from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 
- import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../store/actions/index';
 import moment from 'moment';
- 
+
 import Loader from 'react-loader-spinner';
 import { options, orderStatus } from '../../shared/Status';
 import Select from 'react-select';
 
 import groupImage from '../../assets/images/Order/Group 3.png';
 
- 
 const StoreOrders = () => {
-// 
-  const[accountId,setAccountId]=useState(null)
+  //
+  const [accountId, setAccountId] = useState(null);
 
   // reducer
   const orders = useSelector((state) => state.order.orders);
   const loading = useSelector((state) => state.order.loading);
 
-const history = useHistory();
- const location = useLocation();
+  const history = useHistory();
+  const location = useLocation();
   const dispatch = useDispatch();
-  
-    useEffect(() => {
-      if (location.state === undefined) {
-            dispatch(actions.getOrders(location.search.replace('?', '')));
-      }
-    }, [dispatch, location]);
 
-    useEffect(() => {
-      if (location.state !== undefined) {
-        dispatch(actions.getOrders(location.search.replace('?', ''), location.state));
-      }
-    }, [dispatch, location]);
-  
+  useEffect(() => {
+    if (location.state === undefined) {
+      dispatch(actions.getOrders(location.search.replace('?', '')));
+    }
+  }, [dispatch, location]);
+
+  useEffect(() => {
+    if (location.state !== undefined) {
+      dispatch(actions.getOrders(location.search.replace('?', ''), location.state));
+    }
+  }, [dispatch, location]);
 
   // function
   // Date convertor
   const changeDateFormat = (timestamp, format) => {
     return moment(timestamp * 1000).format(format);
   };
-  // 
-    const handleChange = (newValue, actionMeta) => {
-
-       if (newValue.id !== 0) {
-         history.push({
-           pathname: `/storeorders/${newValue.value.replace(' ', '-')}`,
-           state: newValue.id,
-           search: location.search.replace('?', ''),
-         });
-       } else {
-          history.push({
-            pathname: `/storeorders`,
-            search: location.search.replace('?', ''),
-            });
-       }
-
-     
-    };
-
+  //
+  const handleChange = (newValue, actionMeta) => {
+    if (newValue.id !== 0) {
+      history.push({
+        pathname: `/storeorders/${newValue.value.replace(' ', '-')}`,
+        state: newValue.id,
+        search: location.search.replace('?', ''),
+      });
+    } else {
+      history.push({
+        pathname: `/storeorders`,
+        search: location.search.replace('?', ''),
+      });
+    }
+  };
 
   return (
     <div className={classes.myOrdersBox}>
       {loading && (
         <>
-          <div className={classes.Backdrop}></div>
-          <Loader
-            type="ThreeDots"
-            color="var(--primary_color)"
-            height={100}
-            width={100}
-            style={{
-              position: 'absolute',
-              right: 0,
-              height: '70%',
-              width: '100%',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              zIndex: '500',
-            }}
-          />
+          <div className={classes.Backdrop}>
+            <Loader
+              type="ThreeDots"
+              color="var(--primary_color)"
+              height={100}
+              width={100}
+              style={{
+                position: 'absolute',
+                right: 0,
+                height: '100vh',
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                zIndex: '500',
+              }}
+            />
+          </div>
         </>
       )}
       <div className={classes.headerLine} style={{ marginBottom: '37px' }}>

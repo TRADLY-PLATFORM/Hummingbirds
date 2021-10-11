@@ -227,8 +227,8 @@ const TopHeader = () => {
             </Link>
           </div>
           <div className={classes.userArea + ' dropdown'}>
-            <Link
-              to="#"
+            <div
+               
               className="dropdown-toggle"
               data-toggle="dropdown"
               aria-haspopup="true"
@@ -242,7 +242,7 @@ const TopHeader = () => {
               />
               <span className={classes.spanName}>{getUserName()}</span>
               <img src={downArrow} className={classes.downArrow} alt="" />
-            </Link>
+            </div>
 
             <div className={classes.dropdownMenu + ' user-menu dropdown-menu'}>
               {isAuthenticated ? (

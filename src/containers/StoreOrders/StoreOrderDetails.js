@@ -78,8 +78,7 @@ const StoreOrderDetails = () => {
     <div className={classes.orderDetalsBox}>
       {loading && (
         <>
-          <div className={classes.Backdrop}></div>
-          <Loader
+          <div className={classes.Backdrop}><Loader
             type="ThreeDots"
             color="var(--primary_color)"
             height={100}
@@ -87,14 +86,15 @@ const StoreOrderDetails = () => {
             style={{
               position: 'absolute',
               right: 0,
-              height: '70%',
+              height: '100vh',
               width: '100%',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
               zIndex: '500',
             }}
-          />
+          /></div>
+          
         </>
       )}
       {orderDetails !== null && (
