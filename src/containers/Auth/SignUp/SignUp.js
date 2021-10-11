@@ -204,7 +204,7 @@ class SignUp extends Component {
             content=" Widest Range of Mobile & Tablets, Home Appliances, Tv, Audio, Home & Living At Tradly | Best Prices ? Fast DELIVERY | Cash on Delivery ? Effortless Shopping ? Best Customer Care!"
           />
         </Helmet>
-        <div className="row">
+        <div className="">
           {/* <Backdrop show={this.props.loading} />
           <Spinner show={this.props.loading} /> */}
           {this.props.loading && (
@@ -242,7 +242,7 @@ class SignUp extends Component {
             <p style={{ color: `{primary_color}` }}>{this.props.configsData.registration_title}</p>
           </div>
 
-          <div className={classes.formBox + 'col-lg-12 nopaddingLeft'}>
+          <div className={classes.formBox + 'col-lg-12 nopadding'}>
             <h5 className={classes.titleAccount}>Create your account</h5>
             <br />
             <form action="" method="post" onSubmit={this.onSubmit}>

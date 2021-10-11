@@ -203,7 +203,7 @@ class SignIn extends Component {
            />
            {authRedirect}
 
-           <div className="col-lg-12 nopaddingLeft">
+           <div className="col-lg-12 nopadding">
              <h5 className={classes.titleAccount}>Login to your account</h5>
              <br />
              <form action="" method="post" onSubmit={this.onSubmit}>

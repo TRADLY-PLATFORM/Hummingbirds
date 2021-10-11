@@ -82,7 +82,7 @@ const SetPassword = () => {
    }
 
   return (
-    <div className="col-lg-12 nopaddingLeft">
+    <div className="col-lg-12 nopadding">
       <ToastContainer
         autoClose={2000}
         position="top-center"

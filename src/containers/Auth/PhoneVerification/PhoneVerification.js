@@ -78,7 +78,7 @@ class PhoneVerification extends Component {
     }
 
     return (
-      <div className="row text-center mt-5">
+      <div className=" text-center mt-5">
         <div className={classes.title}>
           {(this.props.configsData.auth_type === 1 && 'Email') ||
             (this.props.configsData.auth_type === 3 && 'Phone')}{' '}
@@ -118,12 +118,12 @@ class PhoneVerification extends Component {
         />
 
         {authRedirect}
-        <div className="col-lg-12 nopaddingLeft">
+        <div className="col-lg-12 nopadding">
           <h5 className={classes.titleAccount}>Enter verification code here</h5>
           <br />
           <form action="" method="post" onSubmit={this.onSubmit}>
-            <div className="row text-center mt-4">
-              <div>
+            <div className=" text-center mt-4">
+              <div className="form-group">
                 <input
                   type="text"
                   className={classes.PhoneDigit}

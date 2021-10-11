@@ -141,7 +141,7 @@ const ForgotPassword = () => {
           />
         </div>
       )}
-      <div className="col-lg-12 nopaddingLeft">
+      <div className="col-lg-12 nopadding">
         <h5 className={classes.titleAccount}>Forgot your password ?</h5>
         <p className={classes.subTitle}>
           Enter your{' '}
