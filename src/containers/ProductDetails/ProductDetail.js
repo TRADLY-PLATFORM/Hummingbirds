@@ -415,19 +415,21 @@ const ProductDetail = () => {
                     </div>
                   )}
                   <div className={classes.storeDetails}>
-                    <img
-                      src={
-                        listing?.account.images.length > 0 ? listing?.account.images[0] : noImage
-                      }
-                      alt=""
-                      className={classes.storeImage}
-                    />
-                    <Link
-                      className={classes.storeName}
-                      to={`/a/${listing?.account_id}-${listing?.account.name}`}
-                    >
-                      {listing?.account.name}
-                    </Link>
+                    <div className={classes.storeNameRow}>
+                      <img
+                        src={
+                          listing?.account.images.length > 0 ? listing?.account.images[0] : noImage
+                        }
+                        alt=""
+                        className={classes.storeImage}
+                      />
+                      <Link
+                        className={classes.storeName}
+                        to={`/a/${listing?.account_id}-${listing?.account.name}`}
+                      >
+                        {listing?.account.name}
+                      </Link>
+                    </div>
                     {/* <p className={classes.storeName}>{listing?.account.name}</p> */}
                     <div className={classes.followButton}>
                       {isAuthenticated ? (

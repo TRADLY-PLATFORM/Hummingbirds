@@ -222,8 +222,14 @@ box-shadow: 0px 8px 28px rgba(0, 0, 0, 0.07);
 border-radius: 4px;
 margin-top: 16px;
 display: flex;
+justify-content: space-between;
 align-items: center;
 padding: 16px;
+}
+.storeNameRow{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .storeImage{
@@ -234,8 +240,7 @@ padding: 16px;
 }
 .storeName{
   margin: 0;
-  width: 300px;
-  font-weight: 500;
+   font-weight: 500;
 font-size: 14px;
 line-height: 17px; 
 color: #121212;
