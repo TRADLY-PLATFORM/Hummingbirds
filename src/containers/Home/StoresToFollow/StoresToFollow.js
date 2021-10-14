@@ -17,6 +17,7 @@ import 'swiper/components/pagination/pagination.min.css';
 
 // import Swiper core and required modules
 import SwiperCore, { Navigation, Pagination } from 'swiper/core';
+import { getThumbnailImage } from '../../../shared/constants';
 
 // install Swiper modules
 SwiperCore.use([Navigation, Pagination]);
@@ -47,7 +48,7 @@ const StoresToFollow = ({ storesToFollow }) => {
   arrayListings = storesToFollow?.accounts?.map((list, i) => {
     let imagePath = AllenSollyLogo;
      if (list.images.length > 0) {
-      imagePath = list.images[0];
+      imagePath = getThumbnailImage(list.images[0])  ;
     }
 
     let description = list.description;

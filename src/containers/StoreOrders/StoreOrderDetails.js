@@ -14,6 +14,7 @@ import { changeStatus, orderStatus } from '../../shared/Status';
 import Modal from '../../components/UI/Modal/Modal';
 import Loader from 'react-loader-spinner';
 import PickupAddress from './PickupAddress';
+import { getThumbnailImage } from '../../shared/constants';
 
 const StoreOrderDetails = () => {
   const [statusModal, setStatusModal] = useState(false);
@@ -198,13 +199,13 @@ const StoreOrderDetails = () => {
                   return (
                     <div className={classes.productItem} key={Math.random() * 1000}>
                       <div className={classes.productImage}>
-                        <img src={item.listing.images[0]} alt="" />
+                        <img src={getThumbnailImage(item.listing.images[0])} alt="" />
                       </div>
                       <div className={classes.productDescription}>
                         <p>{item.listing.title}</p>
                         <p>
                           <span>Quantity : {item.quantity}</span>{' '}
-                          <span className="textColor" style={{float:'right' }}>
+                          <span className="textColor" style={{ float: 'right' }}>
                             {item.list_price.formatted}
                           </span>
                         </p>

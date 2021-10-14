@@ -6,6 +6,7 @@ import NoIamgeLogo from '../../assets/images/home/store/noImage.svg';
 import NoProductImage from '../../assets/images/rsz_noimage.png';
 import { Link } from 'react-router-dom';
 import Loader from 'react-loader-spinner';
+import { getThumbnailImage } from '../../shared/constants';
 
 const WishList = () => {
   const dispatch = useDispatch();
@@ -76,9 +77,9 @@ const WishList = () => {
              {wishList.map((list, i) => {
                let productImage = NoProductImage;
                if (list.images[0] !== undefined) {
-                 productImage = list.images[0];
+                 productImage = getThumbnailImage(list.images[0]) ;
                }
-               let storelogo = list.account.images[0];
+               let storelogo = list.account.images[0] && getThumbnailImage(list.account.images[0]);
                let price = list.list_price.formatted !== undefined ? list.list_price.formatted : '';
                return (
                  <Link

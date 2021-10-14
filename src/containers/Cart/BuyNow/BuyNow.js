@@ -19,6 +19,7 @@ import { Link } from 'react-router-dom';
 import backdrop from '../../../components/UI/Backdrop/Backdrop';
 import spinner from '../../../components/UI/Spinner/Spinner';
 import ChangeShippingAddress from '../ShippingAddress/ChangeShippingAddress';
+import { getThumbnailImage } from '../../../shared/constants';
 
 const BuyNow = () => {
   // state
@@ -57,11 +58,11 @@ const BuyNow = () => {
   }, [0]);
 
   useEffect(() => {
-    if (currencies.length > 0 && shipping_methods.lenth) {
+    if (currencies.length > 0 && shipping_methods.lenth>0) {
       setShippingMethod(shipping_methods[0]);
       dispatch(actions.getCartList(currencies[0], shipping_methods[0].id));
     }
-  }, [currencies]);
+  }, [currencies, dispatch, shipping_methods]);
 
   // function
 
@@ -462,7 +463,7 @@ const BuyNow = () => {
                       const listing = item.listing;
                       return (
                         <div className={classes.productShortDescription} key={index}>
-                          <img src={listing?.images[0]} alt="" />
+                          <img src={getThumbnailImage(listing?.images[0])} alt="" />
                           <div className={classes.shortDescription}>
                             <p className={classes.shortDescriptionTitle}>{listing.title}</p>
                             <p className={classes.shortDescriptionStoreName}>

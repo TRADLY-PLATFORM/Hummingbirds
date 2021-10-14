@@ -12,6 +12,7 @@ import Loader from 'react-loader-spinner';
 import Select from 'react-select';
  
 import groupImage from '../../assets/images/Order/Group 3.png';
+import { getThumbnailImage } from '../../shared/constants';
 
 const MyOrder = () => {
   const orders = useSelector((state) => state.order.orders);
@@ -141,7 +142,7 @@ const MyOrder = () => {
                   <div>
                     <img
                       className={classes.productImg}
-                      src={order_details[0].listing.images[0]}
+                      src={getThumbnailImage(order_details[0].listing.images[0])}
                       alt="orderImage"
                     />
                   </div>

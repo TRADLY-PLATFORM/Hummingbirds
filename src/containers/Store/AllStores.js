@@ -10,7 +10,7 @@ import Aux from '../../hoc/Auxiliary/Auxiliary';
 // import spinner from '../../components/UI/Spinner/Spinner';
 import { selectUserId } from '../../store/selectors/auth';
 import StoreFilter from './StoreFilter';
-import { priceOptions, sortByOptions } from '../../shared/constants';
+import { getThumbnailImage, priceOptions, sortByOptions } from '../../shared/constants';
 import Loader from 'react-loader-spinner';
 
 const AllStores = () => {
@@ -129,7 +129,7 @@ const AllStores = () => {
           {stores?.accounts?.map((store, i) => {
             let imagePath = AllenSollyLogo;
             if (store.images.length > 0) {
-              imagePath = store.images[0];
+              imagePath = getThumbnailImage(store.images[0]) ;
             }
 
             let description = store.description;

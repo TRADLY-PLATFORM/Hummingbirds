@@ -2,6 +2,7 @@ import React from 'react';
 import classes from './Listing.module.css';
  import { Link } from 'react-router-dom';
 import NoIamgeLogo from '../../assets/images/home/store/noImage.svg';
+import { getThumbnailImage } from '../../shared/constants';
 
 const listing = (props) => {
   let listArray = props.listings.map((list) => {
@@ -16,7 +17,7 @@ const listing = (props) => {
         >
           <div className={classes.latestTrend}>
             <img
-              src={list.getIn(['images', 0])}
+              src={getThumbnailImage(list.getIn(['images', 0])) }
               className={classes.storeImage}
               alt={list.get('title', '')}
               title={list.get('title', '')}
@@ -24,7 +25,7 @@ const listing = (props) => {
             <p className={classes.storeTitle}>{list.get('title', '')}</p>
             <div className={classes.bottomDesc}>
               <img
-                src={list.getIn(['account', 'images', 0]) || NoIamgeLogo}
+                src={list.getIn(['account', 'images', 0])? getThumbnailImage(list.getIn(['account', 'images', 0])) : NoIamgeLogo}
                 alt={list.get('title', '')}
                 title={list.getIn(['account', 'name'])}
               />{' '}

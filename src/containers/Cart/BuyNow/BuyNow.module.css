@@ -229,17 +229,25 @@ padding: 5px;
   width: 70px;
   margin-right: 5px;
 }
+.shortDescription{
+  display: flex;
+  flex-direction: column;
+   justify-content: space-between;
+   height: 70%;
+}
 
 .shortDescriptionTitle {
   font-weight: 600;
   font-size: 14px;
   line-height: 17px;
   color: var(--primary_color);
+  margin: 0;
 }
 .shortDescriptionStoreName {
   font-weight: 500;
   font-size: 14px;
   color: #4f4f4f;
+  margin: 0;
 }
 .shortDescriptionAddress img {
   height: 11px;

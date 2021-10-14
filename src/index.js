@@ -16,34 +16,31 @@ import GroupReducer from './store/reducers/group';
 import wishListReducer from './store/reducers/wishList';
 import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
-import { dsn, StripePublishKey } from './shared/constants';
+import { dsn } from './shared/constants';
 import SearchReducer from './store/reducers/Search';
 import PaymentReducer from './store/reducers/payment';
 import CartReducer from './store/reducers/cart';
 import orderReducer from './store/reducers/order';
-import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
- // import * as Sentry from "@sentry/browser";
+  // import * as Sentry from "@sentry/browser";
 
 // Sentry.init({
 //     dsn: "http://3f99218da0aa4b1ab32e13029b3b8895@ec2-54-175-98-88.compute-1.amazonaws.com/1"
 // });
-//  Sentry.init({
-//   dsn: dsn,
-//   integrations: [new Integrations.BrowserTracing()],
+ Sentry.init({
+  dsn: dsn,
+  integrations: [new Integrations.BrowserTracing()],
 
-//   environment: 'production',
-//   // Set tracesSampleRate to 1.0 to capture 100%
-//   // of transactions for performance monitoring.
-//   // We recommend adjusting this value in production
-//   tracesSampleRate: 1.0,
-// });
+  environment: 'production',
+  // Set tracesSampleRate to 1.0 to capture 100%
+  // of transactions for performance monitoring.
+  // We recommend adjusting this value in production
+  tracesSampleRate: 1.0,
+});
 const sentryReduxEnhancer = Sentry.createReduxEnhancer({
   // Optionally pass options listed below
 });
 
- const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
-
+ 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
@@ -56,7 +53,7 @@ const rootReducer = combineReducers({
   Search: SearchReducer,
   payment: PaymentReducer,
   cart: CartReducer,
-  order: orderReducer
+  order: orderReducer,
 });
 
 const store = createStore(
@@ -68,9 +65,7 @@ const store = createStore(
 const app = (
   <Provider store={store}>
     <BrowserRouter>
-      <Elements stripe={stripePromise}>
-        <App />
-      </Elements>
+       <App />
     </BrowserRouter>
   </Provider>
 );

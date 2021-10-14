@@ -275,7 +275,7 @@ const CreateProduct = () => {
               type="file"
               id="fileInput"
               name="imageUpload"
-              accept="image/*"
+              accept="image/png,image/jpg"
               onChange={(e) => imageUpload(e)}
             />
             {imagePath.map((image) => {

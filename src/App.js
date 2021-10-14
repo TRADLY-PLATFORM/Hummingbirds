@@ -49,7 +49,9 @@ import EditStore from './containers/Store/EditStore/EditStore';
 import SetPassword from './containers/Auth/ForgotPassword/SetPassword';
 import PaymentScreen from './containers/Stripe/PaymentScreen';
 // import SecondLayout from './hoc/Layout/SecondLayout';
-  
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+ 
 
 // export var stripeKey;
 
@@ -73,14 +75,15 @@ class App extends Component {
 
   render() {
     let root = document.documentElement;
-    const color = this.props.onboarding_configs.app_color_primary || 'black';
+    const color = this.props.onboarding_configs.app_color_primary  ;
     root.style.setProperty('--primary_color', color);
     const favicon = document.getElementById('favicon');
     favicon.href = (this.props.onboarding_configs.splash_image);
 
-    // if(this.props.payment_configs){
-    //      stripeKey = this.props.payment_configs.stripe_api_publishable_key;
-    // }
+ 
+     const stripePromise = loadStripe(this.props.payment_configs?.stripe_api_publishable_key);
+
+ 
 // console.log('====================================');
 // console.log(StripePublishKey);
 // console.log('====================================');
@@ -147,7 +150,12 @@ class App extends Component {
           ) : (
             <>
               {/* <Layout>{routes}</Layout> */}
-              <SecondLayout>{routes}</SecondLayout>
+              {this.props.payment_configs !== null &&
+                  this.props.onboarding_configs !== {} &&(
+                  <Elements stripe={stripePromise}>
+                    <SecondLayout>{routes}</SecondLayout>
+                  </Elements>
+                )}
             </>
           )}
         </ErrorBoundary>

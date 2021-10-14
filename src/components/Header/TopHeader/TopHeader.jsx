@@ -55,10 +55,10 @@ const TopHeader = () => {
 
   //
   useEffect(() => {
-    if (isAuthenticated && currencies.length > 0 && shipping_methods.length) {
+    if (isAuthenticated && currencies.length > 0 && shipping_methods.length>0) {
       dispatch(actions.getCartList(currencies[0], shipping_methods[0].id));
     }
-  }, [currencies || cartList]);
+  }, [currencies, dispatch, isAuthenticated, shipping_methods]);
 
   useEffect(() => {
     if (isAuthenticated) {

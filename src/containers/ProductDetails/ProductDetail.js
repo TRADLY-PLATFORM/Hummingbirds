@@ -33,6 +33,7 @@ import { Slide, ToastContainer } from 'react-toastify';
 
 import Loader from 'react-loader-spinner';
 import useWindowSize from '../../components/Hooks/WindowSize/WindowSize';
+import { getThumbnailImage } from '../../shared/constants';
 
 // install Swiper modules
 SwiperCore.use([Autoplay, Pagination, Navigation]);
@@ -418,7 +419,9 @@ const ProductDetail = () => {
                     <div className={classes.storeNameRow}>
                       <img
                         src={
-                          listing?.account.images.length > 0 ? listing?.account.images[0] : noImage
+                          listing?.account.images.length > 0
+                            ? getThumbnailImage(listing?.account.images[0])
+                            : noImage
                         }
                         alt=""
                         className={classes.storeImage}

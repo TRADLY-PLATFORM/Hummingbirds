@@ -1,6 +1,7 @@
 .storeDetailsBox{
     padding-left: 43px;
   padding-right:38px ;
+  padding-bottom: 30px;
 }
 
 .breadCrumb {
@@ -17,6 +18,19 @@
   color: #13b58c;
   opacity: 0.7;
 }
+.Backdrop {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 
 .noStore {
   font-weight: 500;

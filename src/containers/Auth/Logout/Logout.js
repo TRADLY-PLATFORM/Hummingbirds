@@ -9,7 +9,7 @@ class Logout extends Component {
     this.props.onLogout();
     setTimeout(() => {
       this.props.onSetOnboardingConfigsData();
-          this.props.onSetCurrency();
+      this.props.onSetCurrency();
 
      }, 1000);
     

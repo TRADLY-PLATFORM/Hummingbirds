@@ -16,7 +16,7 @@ const initialState = {
   seo_configs:{},
   accounts_configs:{},
   listings_configs:{},
-  payments_configs:{},
+  payments_configs:null,
   authRedirectPath: '/',
   userData: {},
   tenantData: {},

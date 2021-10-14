@@ -15,7 +15,7 @@ import Loader from 'react-loader-spinner';
 // import Backdrop from '../../../components/UI/Backdrop/Backdrop';
 // import Spinner from '../../../components/UI/Spinner/Spinner';
 import AllenSollyLogo from '../../../assets/images/home/store/allenSolly.svg';
-import { totalCountOfProducts } from '../../../shared/constants';
+import { getThumbnailImage, totalCountOfProducts } from '../../../shared/constants';
 
 const Store = () => {
   const dispatch = useDispatch();
@@ -59,7 +59,11 @@ const Store = () => {
                       <div className={classes.fashionStore}>
                         <div>
                           {list.images[0] ? (
-                            <img src={list.images[0]} alt={storeName} title={storeName} />
+                            <img
+                              src={getThumbnailImage(list.images[0])}
+                              alt={storeName}
+                              title={storeName}
+                            />
                           ) : (
                             <img src={AllenSollyLogo} alt={storeName} title={storeName} />
                           )}
@@ -104,7 +108,7 @@ const Store = () => {
                           {listings?.map((list) => {
                             let imagePath = NoProductImage;
                             if (list.images[0] !== undefined) {
-                              imagePath = list.images[0];
+                              imagePath = getThumbnailImage(list.images[0]);
                             }
                             return (
                               <Link
@@ -131,7 +135,7 @@ const Store = () => {
                                     {list.account !== undefined && list.account.images[0] ? (
                                       <>
                                         <img
-                                          src={list.account.images[0]}
+                                          src={getThumbnailImage(list.account.images[0])}
                                           alt={list.account.name}
                                           title={list.account.name}
                                         />

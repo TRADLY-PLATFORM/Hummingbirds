@@ -251,7 +251,7 @@ export const initFile = (
                                 category_id: [categoryId],
                                 description: description,
                                 web_address: '',
-                                images: [ImagePath2],
+                                images: [ImagePath],
                                 coordinates: coordinates,
                                 attributes: attributeUpdate,
                                 type: 'accounts',

@@ -3,7 +3,7 @@ import classes from './ListingByCategory.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import * as actions from '../../store/actions/index';
-import {   totalCountOfProducts } from '../../shared/constants';
+import {   getThumbnailImage, totalCountOfProducts } from '../../shared/constants';
  import NoProductImage from '../../assets/images/rsz_noimage.png';
 import NoIamgeLogo from '../../assets/images/home/store/noImage.svg';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
@@ -11,7 +11,6 @@ import Loader from 'react-loader-spinner';
 
 
 import { Helmet } from 'react-helmet';
-import backdrop from '../../components/UI/Backdrop/Backdrop';
 
 const ListingsByCategory = () => {
   const location = useLocation();
@@ -105,7 +104,7 @@ const ListingsByCategory = () => {
               {listings?.map((list, i) => {
                 let imagePath = NoProductImage;
                 if (list.images[0] !== undefined) {
-                  imagePath = list.images[0];
+                  imagePath =getThumbnailImage(list.images[0]) ;
                 }
                 return (
                   <Link
@@ -128,7 +127,7 @@ const ListingsByCategory = () => {
                         {list.account !== undefined && list.account.images[0] ? (
                           <>
                             <img
-                              src={list.account.images[0]}
+                              src={getThumbnailImage(list.account.images[0])}
                               alt={list.account.name}
                               title={list.account.name}
                             />

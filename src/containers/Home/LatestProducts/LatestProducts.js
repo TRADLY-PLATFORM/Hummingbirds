@@ -15,6 +15,7 @@ import 'swiper/components/pagination/pagination.min.css';
 
 // import Swiper core and required modules
 import SwiperCore, { Navigation, Pagination } from 'swiper/core';
+import { getThumbnailImage } from '../../../shared/constants';
 
 // install Swiper modules
 SwiperCore.use([Navigation, Pagination]);
@@ -35,7 +36,7 @@ const LatestProducts = ({ products }) => {
   arrayListings = products?.listings?.map((list, i) => {
     let imagePath = NoProductImage;
     if (list.images[0] !== undefined) {
-      imagePath = list.images[0];
+      imagePath = getThumbnailImage(list.images[0]) ;
     }
 
     return (
@@ -60,7 +61,7 @@ const LatestProducts = ({ products }) => {
             {list.account !== undefined && list.account.images[0] ? (
               <div className={classes.bottomDesc}>
                 <img
-                  src={list.account.images[0]}
+                  src={getThumbnailImage(list.account.images[0]) }
                   alt={list.account.name}
                   title={list.account.name}
                 />

@@ -7,12 +7,10 @@ import { Map } from 'immutable';
 import { Helmet } from 'react-helmet';
 import NoIamgeLogo from '../../assets/images/home/store/noImage.svg';
 
-import Backdrop from '../../components/UI/Backdrop/Backdrop';
-import Spinner from '../../components/UI/Spinner/Spinner';
-import * as actions from '../../store/actions/index';
+  import * as actions from '../../store/actions/index';
 import Listing from '../../components/Listing/Listing';
 import Filter from '../../components/Listing/Filter/Filter';
-import { priceOptions, sortByOptions, totalCountOfProducts } from '../../shared/constants';
+import { getThumbnailImage, priceOptions, sortByOptions, totalCountOfProducts } from '../../shared/constants';
 import {
   selectCategoryLists,
   selectSupplierLists,
@@ -329,7 +327,7 @@ class Listings extends Component {
                         >
                           <div className={classes.latestTrend}>
                             <img
-                              src={list.getIn(['images', 0])}
+                              src={getThumbnailImage(list.getIn(['images', 0]))}
                               className={classes.storeImage}
                               alt={list.get('title', '')}
                               title={list.get('title', '')}
@@ -337,7 +335,7 @@ class Listings extends Component {
                             <p className={classes.storeTitle}>{list.get('title', '')}</p>
                             <div className={classes.bottomDesc}>
                               <img
-                                src={list.getIn(['account', 'images', 0]) || NoIamgeLogo}
+                                src={list.getIn(['account', 'images', 0])? getThumbnailImage(list.getIn(['account', 'images', 0]))  : NoIamgeLogo}
                                 alt={list.get('title', '')}
                                 title={list.getIn(['account', 'name'])}
                               />{' '}

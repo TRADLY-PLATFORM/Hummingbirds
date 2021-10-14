@@ -248,7 +248,7 @@ const EditStore = () => {
                       type="file"
                       id="fileInput"
                       name="imageUpload"
-                      accept="image/*"
+                      accept=".png,.jpg"
                       onChange={(e) => imageUpload(e)}
                     />
                   </div>

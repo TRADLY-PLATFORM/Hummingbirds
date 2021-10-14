@@ -19,3 +19,9 @@ export const MapKey = 'AIzaSyBAV63gkOE0d0eSV_3rIagJfzMwDcbzPnM';
 export const dsn = 'https://ab22fdcc8ad24c7babc4d07ae7d20642@o396771.ingest.sentry.io/5284098';
 export const StripePublishKey =
   'pk_live_51HPL2tIRWtZLg0gEweEutqoNl644fPiGpnu0oKo5Vd3xHI3PT7MAJ3fkOKzWI8nh3IEhyTveQItawczNH22zK9OH00rcfT0fBU';
+
+ export function getThumbnailImage(file) {
+    let filename = file.split('/').pop();
+    let fileURl = file.replace(filename, 'thumb_' + filename);
+    return fileURl;
+  }
