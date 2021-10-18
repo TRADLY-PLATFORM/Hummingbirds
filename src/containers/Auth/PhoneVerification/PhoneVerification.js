@@ -1,11 +1,14 @@
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import classes from './PhoneVerification.module.css';
 import { toast, ToastContainer, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Backdrop from '../../../components/UI/Backdrop/Backdrop';
-import Spinner from '../../../components/UI/Spinner/Spinner';
+// import Backdrop from '../../../components/UI/Backdrop/Backdrop';
+// import Spinner from '../../../components/UI/Spinner/Spinner';
+import Loader from 'react-loader-spinner';
+
 import * as actions from '../../../store/actions/index';
 class PhoneVerification extends Component {
   state = {
@@ -75,10 +78,34 @@ class PhoneVerification extends Component {
     }
 
     return (
-      <div className="row text-center mt-5">
-        <div className={classes.title}>Phone verification</div>
-        <Backdrop show={this.props.loading} />
-        <Spinner show={this.props.loading} />
+      <div className=" text-center mt-5">
+        <div className={classes.title}>
+          {(this.props.configsData.auth_type === 1 && 'Email') ||
+            (this.props.configsData.auth_type === 3 && 'Phone')}{' '}
+          verification
+        </div>
+        {/* <Backdrop show={this.props.loading} />
+        <Spinner show={this.props.loading} /> */}
+        {this.props.loading && (
+          <div className={classes.Backdrop}>
+            <Loader
+              type="ThreeDots"
+              color="var(--primary_color)"
+              height={100}
+              width={100}
+              style={{
+                position: 'absolute',
+                right: 0,
+                height: '100vh',
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                zIndex: '500',
+              }}
+            />
+          </div>
+        )}
         <ToastContainer
           autoClose={2000}
           position="top-center"
@@ -91,12 +118,12 @@ class PhoneVerification extends Component {
         />
 
         {authRedirect}
-        <div className="col-lg-12 nopaddingLeft">
+        <div className="col-lg-12 nopadding">
           <h5 className={classes.titleAccount}>Enter verification code here</h5>
           <br />
           <form action="" method="post" onSubmit={this.onSubmit}>
-            <div className="row text-center mt-4">
-              <div>
+            <div className=" text-center mt-4">
+              <div className="form-group">
                 <input
                   type="text"
                   className={classes.PhoneDigit}
@@ -177,6 +204,7 @@ const mapStateToProps = (state) => {
     authRedirectPath: state.auth.authRedirectPath,
     verifyId: state.auth.verify_id,
     isAuthenticated: state.auth.token,
+    configsData: state.auth.general_configs,
   };
 };
 

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
 import { toast, ToastContainer, Slide } from 'react-toastify'; //, Zoom, Flip, Bounce
 import "react-toastify/dist/ReactToastify.css";
@@ -21,7 +22,17 @@ class Toast extends Component{
             }
         }
 
-        return (<ToastContainer position="top-center" transition={Slide} closeOnClick rtl={false} pauseOnVisibilityChange draggable pauseOnHover/>);
+        return (
+          <ToastContainer
+            position="bottom-right"
+            transition={Slide}
+            closeOnClick
+            rtl={false}
+            pauseOnVisibilityChange
+            draggable
+            pauseOnHover
+          />
+        );
     }
 }
 // autoClose={1000} 

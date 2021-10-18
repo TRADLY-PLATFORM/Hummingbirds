@@ -16,9 +16,11 @@ const initialState = {
   seo_configs:{},
   accounts_configs:{},
   listings_configs:{},
+  payments_configs:null,
   authRedirectPath: '/',
   userData: {},
   tenantData: {},
+  userDetails:{}
 };
 
 const authStart = (state, action) => {
@@ -26,8 +28,7 @@ const authStart = (state, action) => {
 };
 
 const authSuccess = (state, action) => {
-  console.log(action.data);
-  return updateObject(state, {
+   return updateObject(state, {
     userData: action.data,
     loading: false,
     message: null,
@@ -37,8 +38,7 @@ const authSuccess = (state, action) => {
   });
 };
 const passwordChangeSuccess = (state, action) => {
-  console.log(action.data);
-  return updateObject(state, {
+   return updateObject(state, {
     loading: false,
     message: null,
     error: false,
@@ -107,6 +107,13 @@ const setListingsConfigs = (state, action) => {
     loading: false,
   });
 };
+const setPaymentsConfigs = (state, action) => {
+  
+  return updateObject(state, {
+    payments_configs: action.configs,
+    loading: false,
+  });
+};
 
 const fetchCountriesFailed = (state, action) => {
   return updateObject(state, {
@@ -144,6 +151,14 @@ export const successTenantConfig = (state, action) => {
     message:null,
   });
 };
+export const setUserDetails = (state, action) => {
+  return updateObject(state, {
+    loading: false,
+    error: false,
+    message: null,
+    userDetails: action.details,
+  });
+};
 
 export const failedTenantConfig = (state, action) => {
   return updateObject(state, {
@@ -166,6 +181,8 @@ const authReducer = (state = initialState, action) => {
       return authLogout(state, action);
     case actionTypes.AUTH_VERIFY:
       return authVerify(state, action);
+    case actionTypes.USER_DETAILS:
+      return setUserDetails(state, action);
     case actionTypes.INIT_COUNTRIES:
       return startCountries(state, action);
     case actionTypes.SET_COUNTRIES:
@@ -181,6 +198,8 @@ const authReducer = (state = initialState, action) => {
       return setAccountsConfigs(state, action);
     case actionTypes.LISTINGS_CONFIGS:
       return setListingsConfigs(state, action);
+    case actionTypes.PAYMENTS_CONFIGS:
+      return setPaymentsConfigs(state, action);
 
     case actionTypes.FETCH_COUNTRIES_FAILED:
       return fetchCountriesFailed(state, action);

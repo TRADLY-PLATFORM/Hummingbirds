@@ -17,16 +17,14 @@ const setLoading = (state, action) => {
 };
 
 const setOrdersList = (state, action) => {
-  console.log(state, action);
-  return updateObject(state, {
+   return updateObject(state, {
     loading: false,
     error: false,
     orders: action.orders,
   });
 };
 const setOrderDetails = (state, action) => {
-  console.log(state, action);
-  return updateObject(state, {
+   return updateObject(state, {
     loading: false,
     error: false,
     order_details: action.order_details,
@@ -34,8 +32,7 @@ const setOrderDetails = (state, action) => {
 };
 
 const orderReducer = (state = initialState, action) => {
-  console.log(action);
-  switch (action.type) {
+   switch (action.type) {
     case actionTypes.ORDER_LOADING:
       return setLoading(state, action);
 

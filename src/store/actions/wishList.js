@@ -21,8 +21,7 @@ export const getWishlist = () => {
       .then((response) => {
         if (response.data.status) {
           dispatch(setWishList(response.data.data.listings));
-          console.log(response);
-        } else {
+         } else {
           console.log(response);
         }
       })

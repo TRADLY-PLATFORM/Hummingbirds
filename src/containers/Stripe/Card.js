@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { withRouter } from 'react-router-dom';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { useSelector } from 'react-redux';
 import classes from './Card.module.css';
@@ -48,10 +47,9 @@ const Card = () => {
       setLoading(false);
 
       toast.error(stripeError.message);
-      console.log(stripeError.message);
       return;
     }
-    
+
     history.push(`/checkout-success`);
   };
 
@@ -60,7 +58,7 @@ const Card = () => {
       {' '}
       <ToastContainer
         autoClose={2000}
-        position="top-center"
+        position="bottom-right"
         transition={Slide}
         closeOnClick
         rtl={false}
@@ -70,21 +68,24 @@ const Card = () => {
       />
       {loading && (
         <>
-          <div className={classes.Backdrop}></div>
-          <Loader
-            type="ThreeDots"
-            color="var(--primary_color)"
-            height={100}
-            width={100}
-            style={{
-              position: 'absolute',
-              width: '100%',
-              height: '100%',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          />
+          <div className={classes.Backdrop}>
+            <Loader
+              type="ThreeDots"
+              color="var(--primary_color)"
+              height={100}
+              width={100}
+              style={{
+                position: 'absolute',
+                right: 0,
+                height: '100vh',
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                zIndex: '500',
+              }}
+            />
+          </div>
         </>
       )}
       <div className={classes.stripeCardBox}>

@@ -5,6 +5,19 @@
     border-radius: 10px;
     padding: 4rem;
 }
+.Backdrop {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 
 .button {
     font-size: 18px;
@@ -128,6 +141,8 @@
   position: absolute;
   top: 70px;
   overflow-y: scroll;
+    z-index: 20 ;
+
 }
 .addressList {
   display: flex;
@@ -162,5 +177,14 @@
   .mycontainer {
     width: 100%;
   }
+  
+}
+@media only screen and (max-width: 500px) {
+ .chargesBox{
+   display: grid;
+   grid-template-columns: 100%;
+   align-items: center;
+   grid-column-gap: 20px;
+ }
   
 }

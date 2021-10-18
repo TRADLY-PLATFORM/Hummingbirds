@@ -5,7 +5,7 @@ import * as actions from '../../../store/actions/index';
 import { Slide, toast, ToastContainer } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { Redirect } from 'react-router';
-import Loader from 'react-loader-spinner';
+ import Loader from 'react-loader-spinner';
 
 
 const SetPassword = () => {
@@ -19,8 +19,7 @@ const SetPassword = () => {
 
   // reducer
   const configsData = useSelector((state) => state.auth.general_configs);
-  const countryList = useSelector((state) => state.auth.countries);
-  const error = useSelector((state) => state.auth.error);
+   const error = useSelector((state) => state.auth.error);
   const message = useSelector((state) => state.auth.message);
   const verifyID = useSelector((state) => state.auth.verify_id);
   const loading = useSelector((state) => state.auth.loading);
@@ -83,7 +82,7 @@ const SetPassword = () => {
    }
 
   return (
-    <div className="col-lg-12 nopaddingLeft">
+    <div className="col-lg-12 nopadding">
       <ToastContainer
         autoClose={2000}
         position="top-center"
@@ -96,10 +95,24 @@ const SetPassword = () => {
       />
       {authRedirect}
       {loading && (
-        <>
-          <div className={classes.Backdrop}></div>
-           
-        </>
+        <div className={classes.Backdrop}>
+          <Loader
+            type="ThreeDots"
+            color="var(--primary_color)"
+            height={100}
+            width={100}
+            style={{
+              position: 'absolute',
+              right: 0,
+              height: '100vh',
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              zIndex: '500',
+            }}
+          />
+        </div>
       )}
       <h4 className={classes.title}>Forgot your password ?</h4>
       <p className={classes.subTitle}>

@@ -16,8 +16,7 @@ const setLoading = (state, action) => {
 
 
 const setWishList = (state, action) => {
-  console.log(state, action);
-  return updateObject(state, {
+   return updateObject(state, {
     loading: false,
     error: false,
     wishLists: action.wishList,
@@ -25,8 +24,7 @@ const setWishList = (state, action) => {
 };
 
 const wishListReducer = (state = initialState, action) => {
-  console.log(action);
-  switch (action.type) {
+   switch (action.type) {
     case actionTypes.START_LOADING:
       return setLoading(state, action);
 

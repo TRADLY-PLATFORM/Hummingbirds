@@ -1,8 +1,12 @@
 .groupSuccess {
+    
     display: grid;
     justify-items: center;
     text-align: center;
     margin-top: 30px;
+    background: #fefefe;
+    box-shadow: 0px 8px 28px rgba(0, 0, 0, 0.07);
+    padding: 20px;
 }
 
 .pageTitel {
@@ -28,4 +32,13 @@
     line-height: 17px;
     color: #FFFFFF;
     float: left;
+}
+
+@media only screen and (max-width: 768px) {
+
+    .pageTitel {
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 44px;
+}
 }

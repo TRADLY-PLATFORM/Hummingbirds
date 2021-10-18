@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -7,16 +8,16 @@ import 'react-phone-input-2/lib/bootstrap.css';
 import classes from './SignUp.module.css';
 import { toast, ToastContainer, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Backdrop from '../../../components/UI/Backdrop/Backdrop';
-import Spinner from '../../../components/UI/Spinner/Spinner';
-import { countryFilter, validateEmail } from '../../../shared/utility'; //countryFilter
+// import Backdrop from '../../../components/UI/Backdrop/Backdrop';
+// import Spinner from '../../../components/UI/Spinner/Spinner';
+import Loader from 'react-loader-spinner';
+import {  validateEmail } from '../../../shared/utility'; //countryFilter
 import * as actions from '../../../store/actions/index';
 import { selectUserId } from '../../../store/selectors/auth';
 import PhoneInput from 'react-phone-input-2';
-import { isPossiblePhoneNumber, isValidPhoneNumber } from 'libphonenumber-js';
+import {   isValidPhoneNumber } from 'libphonenumber-js';
 import { Helmet } from 'react-helmet';
-import primary_color from '../../../commonCss';
-
+ 
 class SignUp extends Component {
   state = {
     firstName: '',
@@ -203,9 +204,29 @@ class SignUp extends Component {
             content=" Widest Range of Mobile & Tablets, Home Appliances, Tv, Audio, Home & Living At Tradly | Best Prices ? Fast DELIVERY | Cash on Delivery ? Effortless Shopping ? Best Customer Care!"
           />
         </Helmet>
-        <div className="row">
-          <Backdrop show={this.props.loading} />
-          <Spinner show={this.props.loading} />
+        <div className="">
+          {/* <Backdrop show={this.props.loading} />
+          <Spinner show={this.props.loading} /> */}
+          {this.props.loading && (
+            <div className={classes.Backdrop}>
+              <Loader
+                type="ThreeDots"
+                color="var(--primary_color)"
+                height={100}
+                width={100}
+                style={{
+                  position: 'absolute',
+                  right: 0,
+                  height: '100vh',
+                  width: '100%',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  zIndex: '500',
+                }}
+              />
+            </div>
+          )}
           <ToastContainer
             autoClose={2000}
             position="top-center"
@@ -221,7 +242,7 @@ class SignUp extends Component {
             <p style={{ color: `{primary_color}` }}>{this.props.configsData.registration_title}</p>
           </div>
 
-          <div className={classes.formBox + 'col-lg-12 nopaddingLeft'}>
+          <div className={classes.formBox + 'col-lg-12 nopadding'}>
             <h5 className={classes.titleAccount}>Create your account</h5>
             <br />
             <form action="" method="post" onSubmit={this.onSubmit}>

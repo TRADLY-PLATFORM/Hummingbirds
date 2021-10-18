@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable react/prop-types */
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../../store/actions/index';
 import AllenSollyLogo from '../../../assets/images/home/store/allenSolly.svg';
 import { Link, useLocation } from 'react-router-dom';
 import classes from './StoreToFollow.module.css';
-import ItemsCarousel from 'react-items-carousel';
-import backdrop from '../../../components/UI/Backdrop/Backdrop';
-import spinner from '../../../components/UI/Spinner/Spinner';
-import useWindowSize from '../../../components/Hooks/WindowSize/WindowSize';
-import { selectUserId } from '../../../store/selectors/auth';
+ import { selectUserId } from '../../../store/selectors/auth';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -20,15 +17,14 @@ import 'swiper/components/pagination/pagination.min.css';
 
 // import Swiper core and required modules
 import SwiperCore, { Navigation, Pagination } from 'swiper/core';
+import { getThumbnailImage } from '../../../shared/constants';
 
 // install Swiper modules
 SwiperCore.use([Navigation, Pagination]);
 
 const StoresToFollow = ({ storesToFollow }) => {
-  const [activeItemIndex, setActiveItemIndex] = useState(0);
-  const { width, height } = useWindowSize();
-  const [isFollow, setIsFollow] = useState();
-
+  //  const { width, height } = useWindowSize();
+ 
   const dispatch = useDispatch();
     const { pathname } = useLocation();
 
@@ -36,10 +32,8 @@ const StoresToFollow = ({ storesToFollow }) => {
   //   dispatch(actions.initStoresToFollow());
   // }, [0]);
 
-  const categories = useSelector((state) => state.home.collections);
-  const followError = useSelector((state) => state.store.error);
-  const followLoading = useSelector((state) => state.store.loading);
-  const isAuthenticated = useSelector((state) => selectUserId(state));
+   const followError = useSelector((state) => state.store.error);
+   const isAuthenticated = useSelector((state) => selectUserId(state));
 
 
   
@@ -54,7 +48,7 @@ const StoresToFollow = ({ storesToFollow }) => {
   arrayListings = storesToFollow?.accounts?.map((list, i) => {
     let imagePath = AllenSollyLogo;
      if (list.images.length > 0) {
-      imagePath = list.images[0];
+      imagePath = getThumbnailImage(list.images[0])  ;
     }
 
     let description = list.description;
@@ -70,23 +64,15 @@ const StoresToFollow = ({ storesToFollow }) => {
         IsFollowing = true;
       }
 
-      setTimeout(() => {
-        dispatch(actions.postStoreFollow(storeId, IsFollowing));
-      }, 500);
-
+      dispatch(actions.postStoreFollow(storeId, IsFollowing));
+ 
       setTimeout(() => { 
         if (!followError) {
           dispatch(actions.initStoresToFollow());
         }
       }, 1000);
     };
-    let slideView;
-    if (width > 780) {
-      slideView =1
-    }
-    else if (width > 1180) {
-      slideView = 5;
-    }
+  
       return (
         <Link className={classes.wellStore} key={i} id={list.id} to={`/a/${list.id}-${list.name}`}>
           <div className={classes.imageDiv}>
@@ -164,7 +150,7 @@ const StoresToFollow = ({ storesToFollow }) => {
               // }}
             >
               {arrayListings?.map((list, i) => (
-                <SwiperSlide className={classes.swiperSlide}>{list}</SwiperSlide>
+                <SwiperSlide className={classes.swiperSlide} key={Math.random()*7000000}>{list}</SwiperSlide>
               ))}
             </Swiper>
           </div>

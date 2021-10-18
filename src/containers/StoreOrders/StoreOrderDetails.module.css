@@ -6,9 +6,12 @@
     left: 0;
     top: 0;
     background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
 }
 
 .orderDetalsBox {
+  margin-top: 20px;
   padding: 40px;
 }
 
@@ -55,8 +58,8 @@
 .receiptRow {
   /* width: 70%; */
   display: grid;
-  grid-template-columns: 30% 70%;
-  align-items: center;
+ grid-template-columns: 33% 67%;
+   align-items: center;
 }
 .receiptRow p {
   font-size: 18px;
@@ -67,14 +70,14 @@
 }
 
 .receiptAmountPart {
-    width: 30%;
+  width: 30%;
   justify-content: center;
- }
- .receiptAmountPart  .receiptRow{
-   justify-content: right;
-     grid-template-columns: 26% 30%;
+}
+.receiptAmountPart .receiptRow {
+  justify-content: right;
+  grid-template-columns: 50% 30%;
+}
 
- }
 .button {
   font-size: 2rem;
   background: none;
@@ -428,4 +431,135 @@ color: #606A7B;
   min-height: 30px;
 }
  
- 
+ @media only screen and (max-width: 1350px) {
+  .orderDetalsBox {
+    padding: 10px;
+  }
+  .receiptRow {
+    display: grid;
+    grid-template-columns: 40% 60%;
+  }
+  .orderReceipt {
+    padding: 20px;
+  }
+  .receiptHeader,
+  .receiptFooter {
+    padding: 20px;
+  }
+  .receiptDetails {
+    padding: 0 20px;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .TimelineBox {
+    margin-top: 20px;
+    padding: 18px;
+  }
+}
+@media only screen and (max-width: 900px) {
+  .orderReceipt {
+    display: none;
+  }
+  .receiptHeader,
+  .receiptFooter {
+    padding: 20px;
+  }
+  .receiptDetails {
+    padding: 0 20px;
+  }
+
+  .TimelineBox {
+    margin-top: 20px;
+    padding: 18px;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .timelineItem,
+  .timelineItemActive {
+    margin-left: 30px;
+    display: grid;
+    grid-template-columns: 5% 40% 50%;
+    position: relative;
+  }
+
+  .AddressBox {
+    margin-top: 20px;
+    position: relative;
+    display: grid;
+    grid-template-columns: 7% 80% 13%;
+  }
+}
+@media only screen and (max-width: 500px) {
+   .pickupAddressForm {
+   
+  padding: 20px;
+   
+}
+  .productItem {
+    width: 100%;
+    padding: 10px;
+    min-height: 133px;
+    grid-template-columns: 30% 70%;
+  }
+
+  .productDescription p {
+    font-weight: 600;
+    font-size: 13px;
+      margin-bottom: 4px;
+
+  }
+  .reviewButtonBox {
+  margin-top: 5px;
+font-size: 12px !important;
+}
+
+  .productImage {
+    display: flex;
+    justify-content: center;
+  }
+  .productImage img {
+    height: 80px;
+    width: 80px;
+  }
+
+  .AddressBox {
+    margin-top: 20px;
+    position: relative;
+    display: grid;
+    grid-template-columns: 10% 80% 10%;
+  }
+  .TimelineBox {
+    min-height: 350px;
+
+    background: #ffffff;
+    box-shadow: 0px 8px 28px rgba(0, 0, 0, 0.07);
+    border-radius: 8px;
+    padding: 10px;
+  }
+  .timelineItem,
+  .timelineItemActive {
+    margin-left: 10px;
+    display: grid;
+    grid-template-columns: 5% 40% 55%;
+    position: relative;
+  }
+}
+@media only screen and (max-width: 350px) {
+    .pickupAddressForm {
+   
+  padding: 10px;
+   
+}
+  .TimelineBox {
+    border-radius: 5px;
+    padding: 10px;
+  }
+  .timelineItem,
+  .timelineItemActive {
+    margin-left: 10px;
+    display: grid;
+    grid-template-columns: 8% 40% 52%;
+    position: relative;
+  }
+}

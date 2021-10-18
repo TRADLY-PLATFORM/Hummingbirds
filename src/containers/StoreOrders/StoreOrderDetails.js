@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import classes from './StoreOrderDetails.module.css';
-import { Link, useParams, useLocation } from 'react-router-dom';
+import {  useParams, useLocation } from 'react-router-dom';
 
-import productImg from '../../assets/images/products/productImg.svg';
-// images
+ // images
 import locationMarker from '../../assets/images/products/locationMarker (1).svg';
 import directionImage from '../../assets/images/products/direction (1).svg';
 
@@ -15,6 +14,7 @@ import { changeStatus, orderStatus } from '../../shared/Status';
 import Modal from '../../components/UI/Modal/Modal';
 import Loader from 'react-loader-spinner';
 import PickupAddress from './PickupAddress';
+import { getThumbnailImage } from '../../shared/constants';
 
 const StoreOrderDetails = () => {
   const [statusModal, setStatusModal] = useState(false);
@@ -28,7 +28,7 @@ const StoreOrderDetails = () => {
   useEffect(() => {
     dispatch(actions.getOrderDetails(id, location.search));
     dispatch(actions.getAddress('pickup'));
-  }, [location]);
+  }, [dispatch, id, location]);
 
   // reducer
   const orderDetails = useSelector((state) => state.order.order_details);
@@ -74,29 +74,28 @@ const StoreOrderDetails = () => {
     }, 700);
     setOpenModal(false);
   };
-console.log('====================================');
-  console.log(orderDetails?.pickup_address);
-console.log('====================================');
+ 
   return (
     <div className={classes.orderDetalsBox}>
       {loading && (
         <>
-          <div className={classes.Backdrop}></div>
-          <Loader
+          <div className={classes.Backdrop}><Loader
             type="ThreeDots"
             color="var(--primary_color)"
             height={100}
             width={100}
             style={{
               position: 'absolute',
+              right: 0,
+              height: '100vh',
               width: '100%',
-              height: '100%',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
-              zIndex:"100"
+              zIndex: '500',
             }}
-          />
+          /></div>
+          
         </>
       )}
       {orderDetails !== null && (
@@ -140,7 +139,7 @@ console.log('====================================');
                         </p>
                       </p>
                     ) : (
-                      <div style={{marginTop:"17px"}}>
+                      <div style={{ marginTop: '17px' }}>
                         <button
                           className={classes.addAddressButton}
                           onClick={() => setOpenModal(true)}
@@ -200,13 +199,13 @@ console.log('====================================');
                   return (
                     <div className={classes.productItem} key={Math.random() * 1000}>
                       <div className={classes.productImage}>
-                        <img src={item.listing.images[0]} alt="" />
+                        <img src={getThumbnailImage(item.listing.images[0])} alt="" />
                       </div>
                       <div className={classes.productDescription}>
                         <p>{item.listing.title}</p>
                         <p>
                           <span>Quantity : {item.quantity}</span>{' '}
-                          <span className="textColor" style={{ marginLeft: '40%' }}>
+                          <span className="textColor" style={{ float: 'right' }}>
                             {item.list_price.formatted}
                           </span>
                         </p>

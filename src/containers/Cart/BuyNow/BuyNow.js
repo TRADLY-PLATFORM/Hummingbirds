@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useLocation } from 'react-router';
+import { useHistory } from 'react-router';
 import * as actions from '../../../store/actions/index';
 import classes from './BuyNow.module.css';
-import { RadioGroup, RadioButton } from 'react-radio-buttons';
-import Aux from '../../../hoc/Auxiliary/Auxiliary';
+ import Aux from '../../../hoc/Auxiliary/Auxiliary';
 
 // images
 import locationMarker from '../../../assets/images/products/locationMarker (1).svg';
@@ -20,26 +19,25 @@ import { Link } from 'react-router-dom';
 import backdrop from '../../../components/UI/Backdrop/Backdrop';
 import spinner from '../../../components/UI/Spinner/Spinner';
 import ChangeShippingAddress from '../ShippingAddress/ChangeShippingAddress';
+import { getThumbnailImage } from '../../../shared/constants';
 
 const BuyNow = () => {
   // state
-  const [quantity, setQuantity] = useState(1);
-  const [paymentMethod, setPaymentMethod] = useState(null);
-  const [shippingMethod, setShippingMethod] = useState(1);
+   const [paymentMethod, setPaymentMethod] = useState(null);
+  const [shippingMethod, setShippingMethod] = useState(null);
   const [addressForm, setAddressForm] = useState(false);
-  const [pickupAddress, setPickupAddress] = useState(true);
+  const [pickupAddress, setPickupAddress] = useState(false);
   const [shippingAddress, setShippingAddress] = useState({ type: 'delivery' });
   const [openModal, setOpenModal] = useState(false);
   const [changeModal, setChangeModal] = useState(false);
   const [selectShippingAddress, setSelectShippingAddress] = useState(null);
   const [selectPickupAddress, setSelectPickupAddress] = useState(null);
 
-  const location = useLocation();
-  const history = useHistory();
+   const history = useHistory();
 
   // reducer
-  const productDetails = useSelector((state) => state.product.productDetails);
-  const { listing } = productDetails;
+  // const productDetails = useSelector((state) => state.product.productDetails);
+  // const { listing } = productDetails;
 
   const payment_methods = useSelector((state) => state.payment.payment_methods);
   const shipping_methods = useSelector((state) => state.payment.shipping_methods);
@@ -60,10 +58,11 @@ const BuyNow = () => {
   }, [0]);
 
   useEffect(() => {
-    if (currencies.length > 0) {
-      dispatch(actions.getCartList(currencies[0], shippingMethod));
+    if (currencies.length > 0 && shipping_methods.lenth>0) {
+      setShippingMethod(shipping_methods[0]);
+      dispatch(actions.getCartList(currencies[0], shipping_methods[0].id));
     }
-  }, [currencies]);
+  }, [currencies, dispatch, shipping_methods]);
 
   // function
 
@@ -71,12 +70,19 @@ const BuyNow = () => {
     let cartData;
     if (increase) {
       if (quantity < listing.max_quantity) {
-        cartData = {
+        
+        if (quantity === listing.stock) {
+          toast.error(`There are not ${quantity+1} products in stock`);
+          return false;
+         } else {
+         cartData = {
           cart: {
             listing_id: listing.id,
             quantity: quantity + 1,
           },
-        };
+        }
+        }
+          
       } else {
         toast.error('The highest quantity is' + '  ' + listing.max_quantity);
         return false;
@@ -96,7 +102,7 @@ const BuyNow = () => {
     }
     dispatch(actions.addToCart(cartData, currencies[0]));
     setTimeout(() => {
-      dispatch(actions.getCartList(currencies[0], shippingMethod));
+      dispatch(actions.getCartList(currencies[0], shipping_methods[0].id));
     }, 700);
   };
 
@@ -107,17 +113,17 @@ const BuyNow = () => {
         listing_id: [id],
       },
     };
-    dispatch(actions.deleteCart(data, currencies[0]));
+    dispatch(actions.deleteCart(data, currencies[0],shipping_methods[0].id));
   };
 
   // Select Payment
-  const selectPaymentMethod = (e) => {
-    setPaymentMethod(e.id);
+  const selectPaymentMethod = (method) => {
+    setPaymentMethod(method);
   };
 
   // Select Shipping Method
   const selectShippingMethod = (item) => {
-    setShippingMethod(item.id);
+    setShippingMethod(item);
     dispatch(actions.getCartList(currencies[0], item.id));
     if (item.type === 'delivery') {
       dispatch(actions.getAddress(item.type));
@@ -174,7 +180,7 @@ const BuyNow = () => {
       toast.error('Shipping Method is required');
       return false;
     }
-    if (shippingMethod === 10) {
+    if (shippingMethod.type === 'delivery') {
       if (selectShippingAddress === null) {
         toast.error('Select Your One shipping Address');
         return false;
@@ -186,23 +192,23 @@ const BuyNow = () => {
     }
 
     let data;
-    if (shippingMethod === 10) {
+    if (shippingMethod.type === 'delivery') {
       data = {
         order: {
-          payment_method_id: paymentMethod,
-          shipping_method_id: shippingMethod,
+          payment_method_id: paymentMethod.id,
+          shipping_method_id: shippingMethod.id,
           shipping_address_id: selectShippingAddress,
         },
       };
     } else {
       data = {
         order: {
-          payment_method_id: paymentMethod,
-          shipping_method_id: shippingMethod,
+          payment_method_id: paymentMethod.id,
+          shipping_method_id: shippingMethod.id,
          },
       }
     }
-    if(paymentMethod !== 9){
+    if(paymentMethod.type !== 'stripe'){
       dispatch(actions.clickCheckout(data, () => history.push(`/checkout-success`)));
     }else{
           dispatch(actions.clickCheckout(data, () => history.push(`/card`),'stripe'));
@@ -214,7 +220,7 @@ const BuyNow = () => {
     <Aux>
       <ToastContainer
         autoClose={2000}
-        position="top-center"
+        position="bottom-right"
         transition={Slide}
         closeOnClick
         rtl={false}
@@ -225,25 +231,28 @@ const BuyNow = () => {
 
       {(loading || paymentLoading) && (
         <>
-          <div className={classes.Backdrop}></div>
-          <Loader
-            type="ThreeDots"
-            color="var(--primary_color)"
-            height={100}
-            width={100}
-            style={{
-              position: 'absolute',
-              width: '100%',
-              height: '100%',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          />
+          <div className={classes.Backdrop}>
+            <Loader
+              type="ThreeDots"
+              color="var(--primary_color)"
+              height={100}
+              width={100}
+              style={{
+                position: 'absolute',
+                right: 0,
+                height: '100vh',
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                zIndex: '500',
+              }}
+            />
+          </div>
         </>
       )}
 
-      {cartList.cart ? (
+      {cartList.cart && (
         <div>
           {cart_details.length > 0 ? (
             <div className={classes.buyNowBox}>
@@ -258,28 +267,34 @@ const BuyNow = () => {
                           <div className={classes.cartItemBox} key={index}>
                             <div className={classes.productDescription}>
                               <p className={classes.stockMessage}>
-                                {listing.stock && `Only ${listing.stock} products in stock`}
+                                {listing.stock > 0 ? (
+                                  `Only ${listing.stock} products in stock`
+                                ) : (
+                                  <span className={classes.soldoutButton}>Sold out</span>
+                                )}
                               </p>
                               <p className={classes.productTitle}>{listing?.title}</p>
                               <p className={classes.price}>{listing.list_price.formatted}</p>
                             </div>
-                            <div className={classes.deleteBox}>
-                              <button onClick={() => deleteSelectedCart(listing.id)}>
-                                <img src={deleteIcon} alt="" />
-                              </button>
-                            </div>
-                            <div className={classes.quantityButtons}>
-                              <button
-                                onClick={() => updateCartQuantity(listing, item.quantity, false)}
-                              >
-                                -
-                              </button>
-                              <span>{item.quantity}</span>
-                              <button
-                                onClick={() => updateCartQuantity(listing, item.quantity, true)}
-                              >
-                                +
-                              </button>
+                            <div className={classes.buttonBox}>
+                              <div className={classes.deleteBox}>
+                                <button onClick={() => deleteSelectedCart(listing.id)}>
+                                  <img src={deleteIcon} alt="" />
+                                </button>
+                              </div>
+                              <div className={classes.quantityButtons}>
+                                <button
+                                  onClick={() => updateCartQuantity(listing, item.quantity, false)}
+                                >
+                                  -
+                                </button>
+                                <span>{item.quantity}</span>
+                                <button
+                                  onClick={() => updateCartQuantity(listing, item.quantity, true)}
+                                >
+                                  +
+                                </button>
+                              </div>
                             </div>
                           </div>
                         </>
@@ -294,7 +309,9 @@ const BuyNow = () => {
                         <button
                           key={index}
                           className={
-                            shippingMethod === method.id ? 'btnGreenStyle' : 'btnOutlineGreenStyle'
+                            shippingMethod?.id === method.id
+                              ? 'btnGreenStyle'
+                              : 'btnOutlineGreenStyle'
                           }
                           onClick={() => selectShippingMethod(method)}
                         >
@@ -424,7 +441,9 @@ const BuyNow = () => {
                         <button
                           key={index}
                           className={
-                            paymentMethod === method.id ? 'btnGreenStyle' : 'btnOutlineGreenStyle'
+                            paymentMethod?.id === method.id
+                              ? 'btnGreenStyle'
+                              : 'btnOutlineGreenStyle'
                           }
                           onClick={() => selectPaymentMethod(method)}
                         >
@@ -444,7 +463,7 @@ const BuyNow = () => {
                       const listing = item.listing;
                       return (
                         <div className={classes.productShortDescription} key={index}>
-                          <img src={listing?.images[0]} alt="" />
+                          <img src={getThumbnailImage(listing?.images[0])} alt="" />
                           <div className={classes.shortDescription}>
                             <p className={classes.shortDescriptionTitle}>{listing.title}</p>
                             <p className={classes.shortDescriptionStoreName}>
@@ -493,7 +512,7 @@ const BuyNow = () => {
           ) : (
             <div className={classes.noCartList}>
               <div>
-                <img src={groupImage} alt="" />
+                <img className={classes.noCartListImage} src={groupImage} alt="" />
               </div>
               <div className={classes.noCartListMessage}>
                 <h4>No Items in Cart List.</h4>
@@ -506,14 +525,6 @@ const BuyNow = () => {
             </div>
           )}
         </div>
-      ) : (
-        <Loader
-          type="ThreeDots"
-          color="var(--primary_color)"
-          height={100}
-          width={100}
-          style={{ display: 'flex', justifyContent: 'center' }}
-        />
       )}
     </Aux>
   );

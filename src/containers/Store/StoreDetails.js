@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
 import { Link } from 'react-router-dom';
@@ -6,10 +7,7 @@ import { connect } from 'react-redux';
 
 import classes from './Store.module.css';
 import AllenSollyLogo from '../../assets/images/home/store/allenSolly.svg';
-import StoreBanner from '../../assets/images/store/store.svg';
-import Backdrop from '../../components/UI/Backdrop/Backdrop';
-import Spinner from '../../components/UI/Spinner/Spinner';
-import * as actions from '../../store/actions/index';
+  import * as actions from '../../store/actions/index';
 
 import Maps from '../../components/UI/Maps/Maps';
 import Modal from '../../components/UI/Modal/Modal';
@@ -18,9 +16,12 @@ import { totalCountOfProducts } from '../../shared/constants';
 import Listing from '../../components/Listing/Listing';
 import { selectListings, selectTotalListings } from '../../store/selectors/product';
 import { selectUserId } from '../../store/selectors/auth';
+import { getThumbnailImage } from '../../shared/constants';
 
 import { Helmet } from 'react-helmet';
 import PropTypes from 'prop-types';
+import Loader from 'react-loader-spinner';
+
 
 class StoreDetails extends Component {
   constructor(props) {
@@ -47,7 +48,7 @@ class StoreDetails extends Component {
     const { storeId } = this.state;
     this.props.onInitStoreDetails(storeId);
     const filter = '&account_id=' + storeId;
-    this.props.onInitListings(0, filter, totalCountOfProducts);
+    this.props.onInitListings(0, filter, totalCountOfProducts, true);
   }
 
   showMaps = () => {
@@ -68,7 +69,7 @@ class StoreDetails extends Component {
     return '';
   };
   setPath = () => {
-     this.props.setRedirectPath(this.props.location.pathname);
+    this.props.setRedirectPath(this.props.location.pathname);
   };
 
   postStoreFollow = () => {
@@ -98,8 +99,34 @@ class StoreDetails extends Component {
       }
     }, 2000);
   };
+
+  loadMore = () => {
+    const { storeId } = this.state;
+
+    let count = this.props.allListings.length;
+    const filter = '&account_id=' + storeId;
+
+    if (this.props.allListings.length === 100) {
+      this.props.onInitListings(
+        0,
+        filter,
+        totalCountOfProducts,
+        false,
+        parseInt(this.props.page) + 1
+      );
+    } else {
+      this.props.onInitListings(
+        count,
+        filter,
+        totalCountOfProducts,
+        false,
+        parseInt(this.props.page)
+      );
+    }
+  };
+
   render() {
-    const { storeDetails, listings, total_records, loading ,allListings} = this.props;
+    const { storeDetails, listings, total_records, loading, allListings } = this.props;
     let listing = '';
     let showLoadButton = null;
     let storeContent = null;
@@ -108,7 +135,7 @@ class StoreDetails extends Component {
       storeDetails.getIn(['user', 'first_name'], '') +
       ' ' +
       storeDetails.getIn(['user', 'last_name'], '');
-    if (listings && listings.size === 0 && !loading && allListings !== null ) {
+    if (listings && listings.size === 0 && !loading && allListings !== null) {
       listing = (
         <div style={{ marginTop: '5em' }} className="alert alert-danger fade in alert-dismissible">
           <Link to="#" className="close" data-dismiss="alert" aria-label="close" title="close">
@@ -119,15 +146,13 @@ class StoreDetails extends Component {
       );
     }
     if (listings && listings.size > 0) {
-      listing = <Listing listings={listings} total_records={total_records} />;
+      listing = (
+        <Listing listings={listings} total_records={total_records} message="Store details" />
+      );
       if (total_records > totalCountOfProducts && listings.size !== total_records) {
         showLoadButton = (
           <div className="col-sm-12">
-            <button
-              className="btnGreenStyle pull-right mt-4"
-              onClick={this.loadMore}
-              style={{ marginBottom: '50px' }}
-            >
+            <button className="btnGreenStyle pull-right mt-4" onClick={this.loadMore}>
               Load More
             </button>
           </div>
@@ -146,12 +171,12 @@ class StoreDetails extends Component {
                 <div>
                   {storeDetails.getIn(['images', 0], '') !== '' ? (
                     <img
-                      src={storeDetails.getIn(['images', 0], '')}
-                      alt="Woman accesories"
-                      title="Woman accesories"
+                      src={getThumbnailImage(storeDetails.getIn(['images', 0], ''))}
+                      alt={storeName}
+                      title={storeName}
                     />
                   ) : (
-                    <img src={AllenSollyLogo} alt="Woman accesories" title="Woman accesories" />
+                    <img src={AllenSollyLogo} alt={storeName} title={storeName} />
                   )}
                 </div>
 
@@ -191,27 +216,25 @@ class StoreDetails extends Component {
           </div>
         </div>
         <div className={classes.storeDetailsBox}>
-          <div class="container-fluid">
+          <div className="container-fluid">
             <div className={classes.bannerDescText + ' row'}>
-              <div className=" col-lg-12 mb1">
-                <div className="col-xs-5 col-lg-3">
+              <div className={classes.desCriptionRow}>
+                <div className=" textBold">
                   Descriptions <span className="float-right">:</span>
                 </div>
-                <div className="col-xs-7 col-lg-9">
-                  {storeDetails.get('description', '') || 'N/A'}
-                </div>
+                <div className=" pl-10">{storeDetails.get('description', '') || 'N/A'}</div>
               </div>
-              <div className="col-lg-12 mb1">
-                <div className="col-xs-5 col-lg-3">
-                  categories <span className="float-right">:</span>
+              <div className={classes.storeRow}>
+                <div className="  textBold">
+                  categories <span className="float-right ">:</span>
                 </div>
-                <div className="col-xs-7 col-lg-9">{this.getCategory()}</div>
+                <div className="pl-10 ">{this.getCategory()}</div>
               </div>
-              <div className="col-lg-12 mb1">
-                <div className="col-xs-5 col-lg-3">
+              <div className={classes.storeRow}>
+                <div className="  textBold">
                   Location <span className="float-right">:</span>
                 </div>
-                <div className="col-xs-7 col-lg-9">
+                <div className=" pl-10">
                   <span> {storeDetails.getIn(['location', 'formatted_address'], 'N/A')}</span>
                   <Modal show={this.state.maps} modalClosed={this.closeMaps}>
                     <Maps
@@ -220,36 +243,35 @@ class StoreDetails extends Component {
                       address={storeDetails.getIn(['location', 'formatted_address'], 'N/A')}
                     />
                   </Modal>
-                  <button
+                  {/* <button
                     type="button"
                     className="btn btn-outline-success float-right"
                     onClick={this.showMaps}
                   >
                     Get Direction
-                  </button>
+                  </button> */}
                 </div>
               </div>
-              <div className=" col-lg-12 mb1">
-                <div className="col-xs-5 col-lg-3">
+              <div className={classes.storeRow}>
+                <div className=" textBold">
                   Total Followers <span className="float-right">:</span>
                 </div>
-                <div className="col-xs-7 col-lg-9">{storeDetails.get('total_followers', '')}</div>
+                <div className="pl-10 ">{storeDetails.get('total_followers', '')}</div>
               </div>
-              <div className="col-lg-12 mb1">
-                <div className="col-xs-5  col-lg-3">
+              <div className={classes.storeRow}>
+                <div className="  textBold">
                   Total Listings <span className="float-right">:</span>
                 </div>
-                <div className="col-xs-7 col-lg-9">{storeDetails.get('total_listings', '')}</div>
+                <div className="pl-10">{storeDetails.get('total_listings', '')}</div>
               </div>
             </div>
           </div>
           {listing}
+          {showLoadButton}
         </div>
       </Aux>
     );
-    const { match, location, history } = this.props;
-
-    const buisnessName = process.env.REACT_APP_BUSINESS_NAME;
+    const { location } = this.props;
 
     return (
       <>
@@ -263,8 +285,30 @@ class StoreDetails extends Component {
         </Helmet>
 
         <Aux>
-          <Backdrop show={this.props.loading} />
-          <Spinner show={this.props.loading} />
+          {/* <Backdrop show={this.props.loading} />
+          <Spinner show={this.props.loading} /> */}
+          {(this.props.loading || this.props.listingsLoading) && (
+            <>
+              <div className={classes.Backdrop}>
+                <Loader
+                  type="ThreeDots"
+                  color="var(--primary_color)"
+                  height={100}
+                  width={100}
+                  style={{
+                    position: 'absolute',
+                    right: 0,
+                    height: '100vh',
+                    width: '100%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    zIndex: '500',
+                  }}
+                />
+              </div>
+            </>
+          )}
           <div>{storeContent}</div>
         </Aux>
       </>
@@ -276,6 +320,7 @@ const mapStateToProps = (state) => {
   return {
     error: state.store.error,
     loading: state.store.loading,
+    listingsLoading: state.product.loading,
     storeDetails: selectStoreDetails(state),
     storeLists: state.store.storeLists,
     isAuthenticated: selectUserId(state),
@@ -284,15 +329,16 @@ const mapStateToProps = (state) => {
     token: state.auth.token,
     total_records: selectTotalListings(state),
     listings: selectListings(state),
-    allListings:  state.product.listings,
+    allListings: state.product.listings,
+    page: state.product.page,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onInitStoreDetails: (id) => dispatch(actions.initStoreDetails(id)),
-    onInitListings: (count, filterValue, totalCountOfProducts) =>
-      dispatch(actions.initListings(count, filterValue, totalCountOfProducts)),
+    onInitListings: (count, filterValue, totalCountOfProducts, loading, page) =>
+      dispatch(actions.initListings(count, filterValue, totalCountOfProducts, loading, page)),
     postStoreFollow: (storeId, IsFollowing) =>
       dispatch(actions.postStoreFollow(storeId, IsFollowing)),
     setRedirectPath: (redirectPath) => dispatch(actions.setAuthRedirectPath(redirectPath)),

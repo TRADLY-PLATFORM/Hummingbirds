@@ -1,0 +1,41 @@
+.stripePaymentBox{
+   margin: 50px auto;
+  width: 50%;
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+}
+.title{
+  margin-top: 26px;
+  font-weight: 600;
+font-size: 18px;
+line-height: 21px;
+text-align: center;
+color: #4A4A4A;
+
+}
+.subTitle{
+  width: 70%;
+  margin:20px auto;
+  font-weight: normal;
+font-size: 16px;
+line-height: 17px;
+text-align: center;
+
+color: #4A4A4A;
+
+}
+.bottomDesc{
+  margin-top: 20px;
+font-weight: normal;
+font-size: 14px;
+line-height: 15px;
+text-align: center;
+color: #A4A4A4;
+}

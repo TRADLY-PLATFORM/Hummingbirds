@@ -1,14 +1,18 @@
 .Backdrop {
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    z-index: 100;
-    left: 0;
-    top: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .orderDetalsBox {
+  margin-top: 20px;
   padding: 40px;
 }
 
@@ -42,20 +46,20 @@
 }
 
 .receiptDetails {
-    width: 100%;
+  width: 100%;
   display: flex;
   /* grid-template-columns: 50% 50%; */
   padding: 0 30px;
   justify-content: space-between;
 }
 
-.receiptDescriptionPart{
-    width: 40%;
+.receiptDescriptionPart {
+  width: 40%;
 }
 .receiptRow {
   /* width: 70%; */
   display: grid;
-  grid-template-columns: 26% 70%;
+  grid-template-columns: 33% 67%;
   align-items: center;
 }
 .receiptRow p {
@@ -67,14 +71,13 @@
 }
 
 .receiptAmountPart {
-    width: 30%;
+  width: 30%;
   justify-content: center;
- }
- .receiptAmountPart  .receiptRow{
-   justify-content: right;
-     grid-template-columns: 26% 30%;
-
- }
+}
+.receiptAmountPart .receiptRow {
+  justify-content: right;
+  grid-template-columns: 50% 30%;
+}
 
 .button {
   font-size: 2rem;
@@ -83,7 +86,7 @@
   color: #13b58c;
   padding-top: 25px;
 }
- 
+
 .btnGreenStyle {
   padding: 8px 27px;
   border: none;
@@ -94,9 +97,9 @@
   font-size: 14px;
   line-height: 17px;
   color: #ffffff;
-     box-sizing: border-box;
-     box-shadow: 0px 4px 8px #D7C9FF;
- }
+  box-sizing: border-box;
+  box-shadow: 0px 4px 8px #d7c9ff;
+}
 
 .btnReviewAll {
   padding: 8px 13px;
@@ -118,7 +121,6 @@
   margin: 10px 0px;
 }
 
- 
 .input {
   width: 343px;
   height: 107px;
@@ -169,10 +171,6 @@
   text-align: center;
 }
 
- 
- 
- 
- 
 /* productsDetailsBox */
 
 .productsDetailsBox {
@@ -185,54 +183,51 @@
 .productItem {
   width: 100%;
   padding: 18px;
-   min-height: 133px ;
+  min-height: 133px;
   background: #ffffff;
   box-shadow: 0px 8px 28px rgba(0, 0, 0, 0.07);
   border-radius: 8px;
   display: grid;
   grid-template-columns: 25% 70%;
   align-items: center;
-    margin: 30px 0;
-
+  margin: 30px 0;
 }
 
 .productImage {
   display: flex;
   justify-content: center;
- }
- .productImage img{
-     height: 100px;
+}
+.productImage img {
+  height: 100px;
   width: 100px;
- }
-.productDescription p{
-    font-weight: 600;
-font-size: 18px;
-line-height: 22px;
-color: #323742;
-margin-bottom: 9px;
-margin-left: 10px;
 }
-.reviewButtonBox{
-    margin-top: 15px;
-    border-top: 1px solid #E9E8E8;
-    padding: 7px;
-    display: flex;
-    justify-content: center;
+.productDescription p {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  color: #323742;
+  margin-bottom: 9px;
+  margin-left: 10px;
 }
-
+.reviewButtonBox {
+  margin-top: 15px;
+  border-top: 1px solid #e9e8e8;
+  padding: 7px;
+  display: flex;
+  justify-content: center;
+}
 
 /* Address */
-.Address{
-
+.Address {
 }
-.Address{
+.Address {
   width: 100%;
-    border-radius: 4px;
+  border-radius: 4px;
   padding: 16px;
   margin-top: 30px;
-background: #FFFFFF;
-box-shadow: 0px 8px 28px rgba(0, 0, 0, 0.07);
-border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0px 8px 28px rgba(0, 0, 0, 0.07);
+  border-radius: 8px;
 }
 .AddressHeader {
   font-weight: 500;
@@ -261,11 +256,11 @@ border-radius: 8px;
 }
 .formattedAddress {
   margin-top: 5px;
-   font-weight: 500;
-font-size: 18px;
-line-height: 18px;
- 
-color: #606A7B;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 18px;
+
+  color: #606a7b;
 }
 .directionImage {
   width: 100%;
@@ -274,78 +269,77 @@ color: #606A7B;
   align-items: center;
 }
 
-
 /*  */
-.TimelineBox{
-     min-height: 499px;
+.TimelineBox {
+  min-height: 499px;
 
-background: #FFFFFF;
-box-shadow: 0px 8px 28px rgba(0, 0, 0, 0.07);
-border-radius: 8px; 
-padding: 18px;
+  background: #ffffff;
+  box-shadow: 0px 8px 28px rgba(0, 0, 0, 0.07);
+  border-radius: 8px;
+  padding: 18px;
 }
-.trackOrder{
-    display:flex;
-    justify-content: space-between;
-    margin-bottom: 30px;
+.trackOrder {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
 }
-.timelineHeader{
-    font-weight: 600;
-font-size: 18px;
-line-height: 20px;
-color: #212121;
+.timelineHeader {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 20px;
+  color: #212121;
 }
-.orderIdInTimeline{
-    font-weight: 500;
-font-size: 18px;
-line-height: 18px;
-/* identical to box height, or 100% */
+.orderIdInTimeline {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 18px;
+  /* identical to box height, or 100% */
 
-
-color: #606A7B;
-
+  color: #606a7b;
 }
-.trackOrderHeader{
+.trackOrderHeader {
   border-bottom: 4px solid var(--primary_color) !important;
 }
-.AmmountInTimeline{
-    font-size: 18px;
-line-height: 18px;
-font-weight: bold;
+.AmmountInTimeline {
+  font-size: 18px;
+  line-height: 18px;
+  font-weight: bold;
 }
 
 /*  */
-.timeline{
+.timeline {
   position: relative;
 }
-.progressBar{
+.progressBar {
   content: ' ';
   position: absolute;
   width: 4px;
   height: 80%;
-  background:  var(--primary_color);
+  background: var(--primary_color);
   top: 0;
   left: 0;
   margin-top: 6px;
   margin-left: 5%;
 }
-.timelineItem,.timelineItemActive{
-    margin-left: 38px;
-  display: grid ;
+.timelineItem,
+.timelineItemActive {
+  margin-left: 38px;
+  display: grid;
   grid-template-columns: 5% 40% 40%;
   position: relative;
- }
-.timelineItem::before,.timelineItemActive::before{
-  margin-top: 6px;
-    content: '';
-  	display: block;
-	border-radius: 100%;
-    width: 12px;
-     height: 12px;
-background: var(--primary_color);
 }
-.timelineItemActive::after{
-   width: 4px;
+.timelineItem::before,
+.timelineItemActive::before {
+  margin-top: 6px;
+  content: '';
+  display: block;
+  border-radius: 100%;
+  width: 12px;
+  height: 12px;
+  background: var(--primary_color);
+}
+.timelineItemActive::after {
+  width: 4px;
   height: 100%;
   margin-top: 6px;
   content: '';
@@ -354,52 +348,175 @@ background: var(--primary_color);
   margin-left: 4px;
 }
 
-.statusHeader{
-  display:flex;
-    flex-direction:column;
+.statusHeader {
+  display: flex;
+  flex-direction: column;
 }
-.statusHeader p{
+.statusHeader p {
   font-weight: 500;
-font-size: 14px;
-line-height: 24px;
- color: #606A7B;
- margin-bottom: 1px !important;
+  font-size: 14px;
+  line-height: 24px;
+  color: #606a7b;
+  margin-bottom: 1px !important;
 }
 
-.statusTime{
+.statusTime {
   margin-left: 20%;
-    display:flex;
-    flex-direction:column;
-     text-align: end;
+  display: flex;
+  flex-direction: column;
+  text-align: end;
 }
-.statusTime p{
+.statusTime p {
   font-weight: 500;
-font-size: 14px;
-line-height: 24px;
-text-align: right;
-color: #606A7B;
+  font-size: 14px;
+  line-height: 24px;
+  text-align: right;
+  color: #606a7b;
 }
 
-.timelineButtons{
+.timelineButtons {
   margin-top: 40px;
   display: flex;
   justify-content: center;
 }
 
 /*  */
-.AvailableStatus{
+.AvailableStatus {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
-.AvailableStatus button{
+.AvailableStatus button {
   margin: 20px;
 }
-.AvailableStatusHeader{
-   font-weight: 500;
+.AvailableStatusHeader {
+  font-weight: 500;
   font-size: 20px;
   line-height: 24px;
   color: var(--primary_color);
   text-align: center;
   margin: 20px 0;
+}
+
+@media only screen and (max-width: 1350px) {
+  .orderDetalsBox {
+    padding: 10px;
+  }
+  .receiptRow {
+    display: grid;
+    grid-template-columns: 40% 60%;
+  }
+  .orderReceipt {
+    padding: 20px;
+  }
+  .receiptHeader,
+  .receiptFooter {
+    padding: 20px;
+  }
+  .receiptDetails {
+    padding: 0 20px;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .TimelineBox {
+    margin-top: 20px;
+    padding: 18px;
+  }
+}
+@media only screen and (max-width: 900px) {
+  .orderReceipt {
+    display: none;
+  }
+  .receiptHeader,
+  .receiptFooter {
+    padding: 20px;
+  }
+  .receiptDetails {
+    padding: 0 20px;
+  }
+
+  .TimelineBox {
+    margin-top: 20px;
+    padding: 18px;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .timelineItem,
+  .timelineItemActive {
+    margin-left: 30px;
+    display: grid;
+    grid-template-columns: 5% 40% 50%;
+    position: relative;
+  }
+
+  .AddressBox {
+    margin-top: 20px;
+    position: relative;
+    display: grid;
+    grid-template-columns: 7% 80% 13%;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .productItem {
+    width: 100%;
+    padding: 10px;
+    min-height: 133px;
+    grid-template-columns: 30% 70%;
+  }
+
+  .productDescription p {
+    font-weight: 600;
+    font-size: 13px;
+      margin-bottom: 4px;
+
+  }
+  .reviewButtonBox {
+  margin-top: 5px;
+font-size: 12px !important;
+}
+
+  .productImage {
+    display: flex;
+    justify-content: center;
+  }
+  .productImage img {
+    height: 80px;
+    width: 80px;
+  }
+
+  .AddressBox {
+    margin-top: 20px;
+    position: relative;
+    display: grid;
+    grid-template-columns: 10% 80% 10%;
+  }
+  .TimelineBox {
+    min-height: 350px;
+
+    background: #ffffff;
+    box-shadow: 0px 8px 28px rgba(0, 0, 0, 0.07);
+    border-radius: 8px;
+    padding: 10px;
+  }
+  .timelineItem,
+  .timelineItemActive {
+    margin-left: 10px;
+    display: grid;
+    grid-template-columns: 5% 40% 55%;
+    position: relative;
+  }
+}
+@media only screen and (max-width: 350px) {
+  .TimelineBox {
+    border-radius: 5px;
+    padding: 10px;
+  }
+  .timelineItem,
+  .timelineItemActive {
+    margin-left: 10px;
+    display: grid;
+    grid-template-columns: 8% 40% 52%;
+    position: relative;
+  }
 }

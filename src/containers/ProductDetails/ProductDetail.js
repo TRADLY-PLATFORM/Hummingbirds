@@ -7,7 +7,6 @@ import { useLocation, useParams } from 'react-router';
 import Toast from '../../components/UI/Toast/Toast';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
 import Spinner from '../../components/UI/Spinner/Spinner';
-import Skeleton from '../../components/UI/Skeleton/Skeleton';
 import Backdrop from '../../components/UI/Backdrop/Backdrop';
 
 // images
@@ -27,12 +26,14 @@ import 'swiper/components/navigation/navigation.min.css';
 
 // import Swiper core and required modules
 import SwiperCore, { Autoplay, Pagination, Navigation } from 'swiper/core';
-import useWindowSize from '../../components/Hooks/WindowSize/WindowSize';
 import { selectUserId } from '../../store/selectors/auth';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { Slide, toast, ToastContainer } from 'react-toastify';
+import { Slide, ToastContainer } from 'react-toastify';
+
 import Loader from 'react-loader-spinner';
+import useWindowSize from '../../components/Hooks/WindowSize/WindowSize';
+import { getThumbnailImage } from '../../shared/constants';
 
 // install Swiper modules
 SwiperCore.use([Autoplay, Pagination, Navigation]);
@@ -51,21 +52,21 @@ const ProductDetail = () => {
   const error = useSelector((state) => state.product.error);
   const loading = useSelector((state) => state.product.loading);
   const message = useSelector((state) => state.product.message);
-  const token = useSelector((state) => state.auth.token);
-  const followLoading = useSelector((state) => state.store.loading);
+  // const token = useSelector((state) => state.auth.token);
+  // const followLoading = useSelector((state) => state.store.loading);
   const followError = useSelector((state) => state.store.error);
   const followMessage = useSelector((state) => state.store.message);
-  const configsData = useSelector((state) => state.auth.general_configs);
+  // const configsData = useSelector((state) => state.auth.general_configs);
   const currencies = useSelector((state) => state.store.currencies);
   const cartError = useSelector((state) => state.cart.error);
   const cartErrorMessage = useSelector((state) => state.cart.message);
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(actions.initProductDetails(id.split('-')[0]), true);
+    dispatch(actions.initProductDetails(id.split('-')[0], true));
     dispatch(actions.setGeneralConfigsData());
     dispatch(actions.initCurrencies());
-  }, [id]);
+  }, [dispatch, id]);
 
   // function
 
@@ -131,41 +132,33 @@ const ProductDetail = () => {
         return (
           <div key={index}>
             {attr.field_type === 1 && (
-              <div>
-                <div className={classes.DetailsLeft + ' col-lg-6 col-sm-6 col-md-6'}>
-                  {attr.name}
-                </div>
-                <div className={classes.DetailsRight + ' col-lg-6 col-sm-6 col-md-6'}>
+              <div className={classes.attributeRow}>
+                <div className={classes.DetailsLeft}>{attr.name}</div>
+                <div className={classes.DetailsRight}>
                   {attr.values.map((item) => item.name).join(', ')}
                 </div>
               </div>
             )}
             {attr.field_type === 2 && (
-              <div key={index}>
-                <div className={classes.DetailsLeft + ' col-lg-6 col-sm-6 col-md-6'}>
-                  {attr.name}
-                </div>
-                <div className={classes.DetailsRight + ' col-lg-6 col-sm-6 col-md-6'}>
+              <div className={classes.attributeRow} key={index}>
+                <div className={classes.DetailsLeft}>{attr.name}</div>
+                <div className={classes.DetailsRight}>
                   {attr.values.map((item) => item.name).join(', ')}
                 </div>
               </div>
             )}
             {attr.field_type === 3 && (
-              <div key={index}>
-                <div className={classes.DetailsLeft + ' col-lg-6 col-sm-6 col-md-6'}>
-                  {attr.name}
-                </div>
-                <div className={classes.DetailsRight + ' col-lg-6 col-sm-6 col-md-6'}>
+              <div className={classes.attributeRow} key={index}>
+                <div className={classes.DetailsLeft}>{attr.name}</div>
+                <div className={classes.DetailsRight}>
                   {attr.values.map((item) => item).join(', ')}
                 </div>
               </div>
             )}
             {attr.field_type === 4 && (
-              <div key={index}>
-                <div className={classes.DetailsLeft + ' col-lg-6 col-sm-6 col-md-6'}>
-                  {attr.name}
-                </div>
-                <div className={classes.DetailsRight + ' col-lg-6 col-sm-6 col-md-6'}>
+              <div className={classes.attributeRow} key={index}>
+                <div className={classes.DetailsLeft}>{attr.name}</div>
+                <div className={classes.DetailsRight}>
                   {attr.values.map((item) => item).join(', ')}
                 </div>
               </div>
@@ -213,41 +206,42 @@ const ProductDetail = () => {
     }, 1000);
   };
 
+  //
+  // }
+
   return (
     <>
-      {loading ? (
-        <>
-          <div className={classes.Backdrop}></div>
-          <Loader
-            type="ThreeDots"
-            color="var(--primary_color)"
-            height={100}
-            width={100}
-            style={{
-              position: 'absolute',
-              width: '100%',
-              height: '100%',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              zIndex: '500',
-            }}
-          />
-        </>
-      ) : (
-        <></>
-      )}
       <Helmet>
         <title> {listing?.title || 'N/A'}- Buy Online </title>
         <meta name="description" content={`${listing?.description}`} />
         <link rel="canonical" href={location.pathname} />
       </Helmet>
       <Aux>
-        <Backdrop show={loading} />
-        <Spinner show={loading} />
+        {/* <Backdrop show={loading} />
+        <Spinner show={loading} /> */}
+        {loading && (
+          <div className={classes.Backdrop}>
+            <Loader
+              type="ThreeDots"
+              color="var(--primary_color)"
+              height={100}
+              width={100}
+              style={{
+                position: 'absolute',
+                right: 0,
+                height: '100vh',
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                zIndex: '500',
+              }}
+            />
+          </div>
+        )}
         <ToastContainer
           autoClose={2000}
-          position="top-center"
+          position="bottom-right"
           transition={Slide}
           closeOnClick
           rtl={false}
@@ -277,9 +271,9 @@ const ProductDetail = () => {
           )}
         </div>
 
-        {listing ? (
+        {!loading && (
           <div className={classes.productDetailsBanner}>
-            <div className={classes.productDetailsBox}>
+            <div id="productDetailsBox" className={classes.productDetailsBox}>
               <div className={classes.MainPart}>
                 <div>
                   <Swiper
@@ -297,77 +291,91 @@ const ProductDetail = () => {
                     {listing?.images.map((img, index) => {
                       return (
                         <SwiperSlide key={index}>
-                          <img className={classes.productImage} src={img} />
+                          <img className={classes.productImage} src={img} alt="productImage" />
                         </SwiperSlide>
                       );
                     })}
                   </Swiper>
-                  <div className={classes.description}>
-                    <h4 className={classes.descriptionHeader}>Description</h4>
-                    <p className={classes.descriptionBody}>{listing?.description}</p>
-                  </div>
+                  {listing?.description.length > 0 && (
+                    <div className={classes.description}>
+                      <h4 className={classes.descriptionHeader}>Description</h4>
+                      <p className={classes.descriptionBody}>{listing?.description}</p>
+                    </div>
+                  )}
                 </div>
                 <div className={classes.MainPartInfo}>
                   <div className={classes.productHeaderPart}>
                     <p className={classes.stockMessage}>
-                      {listing?.stock && `Only ${listing?.stock} products in stock`}
+                      {listing?.stock > 0 ? (
+                        `Only ${listing.stock} products in stock`
+                      ) : (
+                        <span className={classes.soldoutButton}>Sold out</span>
+                      )}
                     </p>
                     <h4 className={classes.productName}>{listing?.title}</h4>
+                    <p className={classes.productName}>{listing?.list_price.formatted}</p>
                     <div className={classes.ratingInfo}>
                       <img src={starImage} alt="" />
                       <p>{ratting_data && ratting_data.rating_average}</p>
                       <span>{ratting_data?.rating_count} Ratings</span>
                     </div>
                     <div className={classes.buttons}>
-                      {isAuthenticated ? (
-                        <>
-                          {listing?.in_cart ? (
+                      {listing?.stock > 0 &&
+                        (isAuthenticated ? (
+                          isAuthenticated !== listing?.account.user.id && (
+                            <>
+                              {listing?.in_cart ? (
+                                <Link
+                                  to="/cart"
+                                  type="button"
+                                  className={classes.addToCart}
+                                  onClick={addCart}
+                                >
+                                  Go To Cart
+                                </Link>
+                              ) : (
+                                <button
+                                  type="button"
+                                  className={classes.addToCart}
+                                  onClick={addCart}
+                                >
+                                  Add To Cart
+                                </button>
+                              )}
+
+                              <Link
+                                onClick={addCart}
+                                type="button"
+                                className={classes.buyNow}
+                                to={{
+                                  pathname: `/cart`,
+                                  state: { option: 'Buy Now' },
+                                }}
+                              >
+                                Buy Now
+                              </Link>
+                            </>
+                          )
+                        ) : (
+                          <>
                             <Link
-                              to="/cart"
+                              onClick={setPath}
+                              to="/sign-in"
                               type="button"
                               className={classes.addToCart}
-                              onClick={addCart}
                             >
-                              Go To Cart
-                            </Link>
-                          ) : (
-                            <button type="button" className={classes.addToCart} onClick={addCart}>
                               Add To Cart
-                            </button>
-                          )}
-
-                          <Link
-                            onClick={addCart}
-                            type="button"
-                            className={classes.buyNow}
-                            to={{
-                              pathname: `/cart`,
-                              state: { option: 'Buy Now' },
-                            }}
-                          >
-                            Buy Now
-                          </Link>
-                        </>
-                      ) : (
-                        <>
-                          <Link
-                            onClick={setPath}
-                            to="/sign-in"
-                            type="button"
-                            className={classes.addToCart}
-                          >
-                            Add To Cart
-                          </Link>
-                          <Link
-                            onClick={setPath}
-                            to="/sign-in"
-                            type="button"
-                            className={classes.buyNow}
-                          >
-                            Buy Now
-                          </Link>
-                        </>
-                      )}
+                            </Link>
+                            <Link
+                              onClick={setPath}
+                              to="/sign-in"
+                              type="button"
+                              className={classes.buyNow}
+                            >
+                              Buy Now
+                            </Link>
+                          </>
+                        ))}
                     </div>
                     {isAuthenticated ? (
                       <div className={classes.likeBtn}>
@@ -388,37 +396,43 @@ const ProductDetail = () => {
                       </Link>
                     )}
                   </div>
-                  <div className={classes.addressBox}>
-                    <div className={classes.markerImage}>
-                      <img src={locationMarker} alt="" />
+                  {listing?.location.formatted_address?.length > 0 && (
+                    <div className={classes.addressBox}>
+                      <div className={classes.markerImage}>
+                        <img src={locationMarker} alt="" />
+                      </div>
+                      <div>
+                        <p className={classes.shortAddress}>
+                          {listing?.location.city && `${listing?.location.city}`}
+                          {listing?.location.country && `${listing?.location.country}`}
+                        </p>
+                        <p className={classes.formattedAddress}>
+                          {listing?.location.formatted_address}
+                        </p>
+                      </div>
+                      <div className={classes.directionImage}>
+                        <img src={directionImage} alt="" />
+                      </div>
                     </div>
-                    <div>
-                      <p className={classes.shortAddress}>
-                        {listing?.location.city && `${listing?.location.city}`}
-                        {listing?.location.country && `${listing?.location.country}`}
-                      </p>
-                      <p className={classes.formattedAddress}>
-                        {listing?.location.formatted_address}
-                      </p>
-                    </div>
-                    <div className={classes.directionImage}>
-                      <img src={directionImage} alt="" />
-                    </div>
-                  </div>
+                  )}
                   <div className={classes.storeDetails}>
-                    <img
-                      src={
-                        listing?.account.images.length > 0 ? listing?.account.images[0] : noImage
-                      }
-                      alt=""
-                      className={classes.storeImage}
-                    />
-                    <Link
-                      className={classes.storeName}
-                      to={`/a/${listing?.account_id}-${listing?.account.name}`}
-                    >
-                      {listing?.account.name}
-                    </Link>
+                    <div className={classes.storeNameRow}>
+                      <img
+                        src={
+                          listing?.account.images.length > 0
+                            ? getThumbnailImage(listing?.account.images[0])
+                            : noImage
+                        }
+                        alt=""
+                        className={classes.storeImage}
+                      />
+                      <Link
+                        className={classes.storeName}
+                        to={`/a/${listing?.account_id}-${listing?.account.name}`}
+                      >
+                        {listing?.account.name}
+                      </Link>
+                    </div>
                     {/* <p className={classes.storeName}>{listing?.account.name}</p> */}
                     <div className={classes.followButton}>
                       {isAuthenticated ? (
@@ -460,11 +474,9 @@ const ProductDetail = () => {
                       <h4 className={classes.detailsHeader}>Details</h4>
                       <div className={classes.attributePart}>{getAttributes()}</div>
 
-                      <div className={classes.DetailsLeft + ' col-lg-6 col-sm-6 col-md-6'}>
-                        Category
-                      </div>
-                      <div className={classes.DetailsRight + ' col-lg-6 col-sm-6 col-md-6'}>
-                        {getCategoryIds()}
+                      <div className={classes.attributeRow}>
+                        <div className={classes.DetailsLeft}>Category</div>
+                        <div className={classes.DetailsRight}>{getCategoryIds()}</div>
                       </div>
                     </div>
                   </div>
@@ -472,25 +484,6 @@ const ProductDetail = () => {
               </div>
             </div>
           </div>
-        ) : (
-          <>
-            <Loader
-              type="ThreeDots"
-              color="var(--primary_color)"
-              height={100}
-              width={100}
-              style={{
-                position: 'absolute',
-                top: '150px',
-                width: '100%',
-                height: '100%',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                zIndex: '500',
-              }}
-            />
-          </>
         )}
       </Aux>
     </>

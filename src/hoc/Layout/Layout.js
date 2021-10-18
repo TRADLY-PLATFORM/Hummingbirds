@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+/* eslint-disable react/prop-types */
+import React   from 'react';
 import Aux from '../Auxiliary/Auxiliary';
-import { Link, withRouter, Redirect, useLocation } from 'react-router-dom';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { Link,  useLocation } from 'react-router-dom';
+import {  useDispatch, useSelector } from 'react-redux';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import Header from '../../components/Header/Header';
 import classes from './Layout.module.css';
@@ -10,18 +11,15 @@ import HomeLogo from '../../assets/images/sidebar/home.svg';
 import HomeActiveLogo from '../../assets/images/sidebar/active/home.svg';
 import WishlistLogo from '../../assets/images/sidebar/wishlist.svg';
 import WishlistActiveLogo from '../../assets/images/sidebar/active/wishlist.svg';
-import TransactionLogo from '../../assets/images/sidebar/transaction.svg';
-import TransactionActiveLogo from '../../assets/images/sidebar/active/transaction.svg';
-import StoreLogo from '../../assets/images/sidebar/store.svg';
+ import StoreLogo from '../../assets/images/sidebar/store.svg';
 import StoreActiveLogo from '../../assets/images/sidebar/active/store.svg';
-import PropTypes from 'prop-types';
-import * as actions from '../../store/actions/index';
+ import * as actions from '../../store/actions/index';
 import { useState } from 'react';
 import menubarIcon from '../../assets/images/mobilemenu/menu.png';
 import closeMenu from '../../assets/images/mobilemenu/close.png';
 import profileUser from '../../assets/images/header/profile-user.png';
 import arrow from '../../assets/images/mobilemenu/down-arrow.png';
-import { Search } from '../../components/Seacrh/Search';
+import { Search } from '../../components/Search/Search';
 
 const Layout = (props) => {
   const isAuthenticated = useSelector((state) => selectUserId(state));

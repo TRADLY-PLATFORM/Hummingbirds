@@ -7,6 +7,9 @@
     left: 0;
     top: 0;
     background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .cardHeader{
@@ -19,7 +22,7 @@
 
 .stripeCardBox{
   width:400px;
-  height: 200px;
+  min-height: 200px;
   background: white;
   margin: 30px auto;
   padding: 20px;
@@ -67,3 +70,11 @@
   line-height: 20px;
   color: #fefefe;
   }
+
+
+  @media only screen and (max-width: 500px) {
+ .stripeCardBox{
+  width:95vw;
+ 
+  }
+}

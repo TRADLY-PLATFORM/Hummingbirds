@@ -1,6 +1,6 @@
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
-import  { Suspense, lazy } from 'react';
-
+import { Suspense, lazy } from 'react';
 
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 
@@ -12,13 +12,11 @@ import Logout from './containers/Auth/Logout/Logout';
 import PhoneVerification from './containers/Auth/PhoneVerification/PhoneVerification';
 import Listings from './containers/Listings/Listings';
 import AllCategory from './components/Category/AllCategory/AllCategory';
-import ProductDetails from './containers/ProductDetails/ProductDetails';
-import * as actions from '../src/store/actions/index';
+ import * as actions from '../src/store/actions/index';
 import WishList from './containers/WishList/WishList';
 import MyTransactionst from './containers/MyTransactionst/MyTransactionst';
 import MyProfile from './containers/MyProfile/MyProfile';
-import Cart from './containers/Cart/Cart';
-import EditProfile from './containers/EditProfile/EditProfile';
+ import EditProfile from './containers/EditProfile/EditProfile';
 import Group from './containers/Group/Group';
 import StoreDetails from './containers/Store/StoreDetails';
 import myGroup from './containers/Group/myGroup';
@@ -29,13 +27,13 @@ import StoreSuccess from './containers/Store/StoreSuccess';
 import ProductSuccess from './containers/Store/ProductSuccess';
 import NoProduct from './containers/Store/NoProduct';
 import withProduct from './containers/Store/withProduct';
- import reviewPage from './containers/Order/reviewPage';
- import ListingsByCategory from './containers/ListingsByCategory/ListingsByCategory';
+import reviewPage from './containers/Order/reviewPage';
+import ListingsByCategory from './containers/ListingsByCategory/ListingsByCategory';
 import AllStores from './containers/Store/AllStores';
 import SignIn from './containers/Auth/SignIn/SignIn';
 import { ErrorBoundary } from '@sentry/react';
 import ForgotPassword from './containers/Auth/ForgotPassword/ForgotPassword';
-import SearchResult from './components/Seacrh/SearchResult';
+import SearchResult from './components/Search/SearchResult';
 import CreateStore from './containers/Store/CreateStore/CreateStore';
 import Store from './containers/Store/MyStore/Stor';
 import CreateProduct from './containers/Store/CreateProduct/CreateProduct';
@@ -43,16 +41,26 @@ import ProductDetail from './containers/ProductDetails/ProductDetail';
 import BuyNow from './containers/Cart/BuyNow/BuyNow';
 import OrderSuccess from './containers/Cart/OrderSuccess/OrderSuccess';
 import StoreOrders from './containers/StoreOrders/StoreOrders';
-import StoreOrderDetails from './containers/StoreOrders/StoreOrderDetails';
+// import StoreOrderDetails from './containers/StoreOrders/StoreOrderDetails';
 import Card from './containers/Stripe/Card';
 import MyOrder from './containers/Order/MyOrders';
-import DetailOrder from './containers/Order/DetailsOrder';
+// import DetailOrder from './containers/Order/DetailsOrder';
 import EditStore from './containers/Store/EditStore/EditStore';
 import SetPassword from './containers/Auth/ForgotPassword/SetPassword';
-
-const Layout = lazy(() => import('./hoc/Layout/Layout'));
-const Home = lazy(() => import('./containers/Home/Home'));
+import PaymentScreen from './containers/Stripe/PaymentScreen';
+// import SecondLayout from './hoc/Layout/SecondLayout';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
  
+
+// export var stripeKey;
+
+// const Layout = lazy(() => import('./hoc/Layout/Layout'));
+const SecondLayout = lazy(() => import('./hoc/Layout/SecondLayout'));
+const Home = lazy(() => import('./containers/Home/Home'));
+const DetailOrder = lazy(() => import('./containers/Order/DetailsOrder'));
+const StoreOrderDetails = lazy(() => import('./containers/StoreOrders/StoreOrderDetails'));
+
 class App extends Component {
   componentDidMount() {
     this.props.onTryAuthSignUp();
@@ -62,16 +70,23 @@ class App extends Component {
     this.props.onSetCurrency();
     this.props.onSetAccountsConfigs();
     this.props.onSetListingsConfigs();
+    this.props.onSetPaymentsConfigs();
   }
 
-
   render() {
-
     let root = document.documentElement;
-    const color =  this.props.onboarding_configs.app_color_primary;
-    root.style.setProperty("--primary_color",color );
-  
+    const color = this.props.onboarding_configs.app_color_primary  ;
+    root.style.setProperty('--primary_color', color);
+    const favicon = document.getElementById('favicon');
+    favicon.href = (this.props.onboarding_configs.splash_image);
 
+ 
+     const stripePromise = loadStripe(this.props.payment_configs?.stripe_api_publishable_key);
+
+ 
+// console.log('====================================');
+// console.log(StripePublishKey);
+// console.log('====================================');
     let routes = (
       <Switch>
         <Route path="/sign-up" exact component={SignUp} />
@@ -95,8 +110,10 @@ class App extends Component {
         <Route path="/wishlist" exact component={WishList} />
         <Route path="/my-transaction" exact component={MyTransactionst} />
         <Route path="/profile" exact component={MyProfile} />
+        <Route path="/payment" exact component={PaymentScreen} />
         {/* <Route path="/cart" exact component={Cart} /> */}
         <Route path="/cart" exact component={BuyNow} />
+        <Route path="/card" excat component={Card} />
         <Route path="/checkout-success" exact component={OrderSuccess} />
         <Route path="/editprofile" excat component={EditProfile} />
         <Route path="/group" excat component={Group} />
@@ -106,24 +123,23 @@ class App extends Component {
         <Route path="/transactionsuccess" excat component={transactionSuccess} />
         <Route path="/myorder" excat component={MyOrder} />
         <Route path="/myorder/statusID" excat component={MyOrder} />
+        <Route path="/myorderdetails/:id" excat component={DetailOrder} />
         <Route path="/storeorders" excat component={StoreOrders} />
         <Route path="/storeorders/statusID" excat component={StoreOrders} />
+        <Route path="/storeorder-details/:id" excat component={StoreOrderDetails} />
         <Route path="/storesuccess" excat component={StoreSuccess} />
         <Route path="/productsuccess" excat component={ProductSuccess} />
         <Route path="/noproduct" excat component={NoProduct} />
         <Route path="/withproduct" excat component={withProduct} />
         <Route path="/addproduct/:accountId" excat component={CreateProduct} />
         <Route path="/reviewpage" excat component={reviewPage} />
-        <Route path="/myorder-details/:id" excat component={DetailOrder} />
-        <Route path="/storeorder-details/:id" excat component={StoreOrderDetails} />
         <Route path="/search/:key" excat component={SearchResult} />
-        <Route path="/card" excat component={Card} />
         <Redirect to="/" />
       </Switch>
     );
 
     return (
-      <Suspense fallback >
+      <Suspense fallback>
         <ErrorBoundary>
           {this.props.location.pathname === '/sign-up' ||
           this.props.location.pathname === '/sign-in' ||
@@ -132,7 +148,15 @@ class App extends Component {
           this.props.location.pathname === '/verification/' + this.props.verifyId ? (
             <BeforeAuth>{routes}</BeforeAuth>
           ) : (
-            <Layout>{routes}</Layout>
+            <>
+              {/* <Layout>{routes}</Layout> */}
+              {this.props.payment_configs !== null &&
+                  this.props.onboarding_configs !== {} &&(
+                  <Elements stripe={stripePromise}>
+                    <SecondLayout>{routes}</SecondLayout>
+                  </Elements>
+                )}
+            </>
           )}
         </ErrorBoundary>
       </Suspense>
@@ -144,6 +168,7 @@ const mapStateToProps = (state) => {
   return {
     verifyId: state.auth.verify_id,
     onboarding_configs: state.auth.onboarding_configs,
+    payment_configs:state.auth.payments_configs
   };
 };
 
@@ -156,6 +181,7 @@ const mapDispatchToProps = (dispatch) => {
     onSetSeoConfigs: () => dispatch(actions.setSeoConfigs()),
     onSetAccountsConfigs: () => dispatch(actions.setAccountsConfigs()),
     onSetListingsConfigs: () => dispatch(actions.setListingsConfigs()),
+    onSetPaymentsConfigs: () => dispatch(actions.setPaymentsConfigs()),
     onSetCurrency: () => dispatch(actions.initCurrencies()),
   };
 };

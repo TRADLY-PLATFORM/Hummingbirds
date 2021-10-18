@@ -1,10 +1,8 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect } from 'react';
 import classes from './myOrder.module.css';
-import { Link, useHistory, useParams, useLocation } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 
-import orderIcon1 from '../../assets/images/Order/orderIcon1.svg';
-import orderIcon from '../../assets/images/Order/orderIcon.svg';
-import { useDispatch, useSelector } from 'react-redux';
+ import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../store/actions/index';
 import moment from 'moment';
 
@@ -12,30 +10,29 @@ import { options, orderStatus } from '../../shared/Status';
 import Loader from 'react-loader-spinner';
 
 import Select from 'react-select';
-import storeSuccess from '../Store/StoreSuccess';
-
+ 
 import groupImage from '../../assets/images/Order/Group 3.png';
+import { getThumbnailImage } from '../../shared/constants';
 
 const MyOrder = () => {
   const orders = useSelector((state) => state.order.orders);
   const loading = useSelector((state) => state.order.loading);
 
   const history = useHistory();
-  const { statusID } = useParams();
-  const location = useLocation();
+   const location = useLocation();
 
   const dispatch = useDispatch();
   useEffect(() => {
     if (location.state === undefined) {
       dispatch(actions.getOrders());
     }
-  }, [location]);
+  }, [dispatch, location]);
 
   useEffect(() => {
     if (location.state !== undefined) {
       dispatch(actions.getOrders(undefined, location.state));
     }
-  }, [location]);
+  }, [dispatch, location]);
 
   //
   // function
@@ -45,41 +42,44 @@ const MyOrder = () => {
   };
   //
   const handleChange = (newValue, actionMeta) => {
-    history.push({ pathname: `/myorder/${newValue.value.replace(' ', '-')}`, state: newValue.id });
+    if(newValue.id !==0){
+      history.push({ pathname: `/myorder/${newValue.value.replace(' ', '-')}`, state: newValue.id });
+    } else {
+      history.push({
+        pathname: `/myorder`,
+       });
+    }
   };
-
-  console.log('====================================');
-  console.log(location);
-  console.log('====================================');
-
+ 
   return (
     <div className={classes.myOrdersBox}>
       {loading && (
         <>
-          <div className={classes.Backdrop}></div>
-          <Loader
+          <div className={classes.Backdrop}><Loader
             type="ThreeDots"
             color="var(--primary_color)"
             height={100}
             width={100}
             style={{
               position: 'absolute',
+              right: 0,
+              height: '100vh',
               width: '100%',
-              height: '100%',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
               zIndex: '500',
             }}
-          />
+          /></div>
+          
         </>
       )}
-      <div className="row" style={{ marginBottom: '37px' }}>
-        <div className={classes.pageTitle + ' col-md-8 nopaddingLeft nopaddingRight'}>
+      <div className={ classes.headerLine}style={{ marginBottom: '37px' }}>
+        <div className={classes.pageTitle  }>
           <h2>My Orders </h2>
         </div>
 
-        <div className="col-md-4">
+        <div className="  ">
           <div className={classes.SortbyMenu}>
             <p className={classes.filter}>Filter by:</p>
             <Select
@@ -113,37 +113,41 @@ const MyOrder = () => {
        </div> */}
 
       {orders.length > 0 && (
-        <div className="row ">
-          <div className="col-md-4 nopaddingLeft nopaddingRight">
+        <div className={classes.headerRow}>
+          <div className=" ">
             <h4 className={classes.orderHistory}>Order History</h4>
           </div>
-          <div className="col-md-2  center nopaddingLeft nopaddingRight">
+          <div className={classes.orderDateBox}>
             <h4 className={classes.orderHistory}>Date</h4>
           </div>
-          <div className="col-md-2 center nopaddingLeft nopaddingRight">
+          <div className=" center  ">
             <h4 className={classes.orderHistory}>Price</h4>
           </div>
-          <div className="col-md-2 center center nopaddingLeft nopaddingRight">
+          <div className={classes.currentStatus}>
             <h4 className={classes.orderHistory}>Current Status</h4>
           </div>
-          <div className="col-md-2 center center nopaddingLeft nopaddingRight">
+          <div className={classes.changeStatusButton}>
             <h4 className={classes.orderHistory}>Change Status</h4>
           </div>
         </div>
       )}
 
-      <div className="row">
+      <div className="">
         {orders.length > 0 ? (
           orders?.map((order, index) => {
             const { order_details } = order;
             return (
               <div className={classes.transactionContainer} key={index}>
-                <div className={classes.orderShortDetails + ' nopadding col-md-4 '}>
+                <div className={classes.orderShortDetails}>
                   <div>
-                    <img className={classes.productImg} src={order_details[0].listing.images[0]} />
+                    <img
+                      className={classes.productImg}
+                      src={getThumbnailImage(order_details[0].listing.images[0])}
+                      alt="orderImage"
+                    />
                   </div>
 
-                  <Link className="offTextDecoration" to={`/myorder-details/${order.id}`}>
+                  <Link className="offTextDecoration" to={`/myorderdetails/${order.id}`}>
                     <div style={{ cursor: 'pointer' }} onClick>
                       <p className={classes.transactionDetails}>{order_details[0].listing.title}</p>
                       <p className={classes.bottomDesc}>#Order ID : {order.id}</p>
@@ -153,21 +157,21 @@ const MyOrder = () => {
                     </div>
                   </Link>
                 </div>
-                <div className="col-md-2  nopadding">
+                <div className={classes.orderDateBox}>
                   <span className="center">
                     {changeDateFormat(order.created_at, 'DD/MM/YYYY')}{' '}
                   </span>
                 </div>
-                <div className="col-md-2 nopadding">
+                <div className=" ">
                   {' '}
                   <h4 className="center"> {order.list_total.formatted}</h4>
                 </div>
-                <div className="col-md-2 nopadding  center">
+                <div className={classes.currentStatus}>
                   <button className={'btnOutlineGreenStyle text-center '}>
                     {orderStatus(order.order_status)}
                   </button>
                 </div>
-                <div className=" col-md-2   nopadding center">
+                <div className={classes.changeStatusButton}>
                   <button className={'btnGreenStyle'}>Change Status</button>
                 </div>
               </div>

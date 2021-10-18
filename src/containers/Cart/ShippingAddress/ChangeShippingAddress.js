@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable react/prop-types */
+import React  from 'react';
 import classes from './ShippingAddress.module.css';
 
 const ChangeShippingAddress = ({ shippingAddress, setShippingAddress, ChangeAddress }) => {
@@ -16,11 +17,11 @@ const ChangeShippingAddress = ({ shippingAddress, setShippingAddress, ChangeAddr
   return (
     <div className={classes.shippingAddress}>
       <div className={classes.headerStyle}>
-        <h4>Shipping Address</h4>
+        <h4>Change your Shipping Address</h4>
       </div>
       <form action="" onsubmit="return false" onSubmit={(e) => ChangeAddress(e)}>
         <div className={classes.inputsField}>
-          <div className=" form-group col-md-12 nopaddingLeft ">
+          <div className=" form-group col-xs-12 col-sm-12 col-md-12 nopadding ">
             <input
               required
               autoComplete="off"
@@ -31,7 +32,7 @@ const ChangeShippingAddress = ({ shippingAddress, setShippingAddress, ChangeAddr
               placeholder=" Name"
             />
           </div>
-          <div className=" form-group col-md-12 nopaddingLeft ">
+          <div className=" form-group col-xs-12 col-sm-12 col-md-12 nopadding ">
             <input
               required
               onChange={handleGetData}
@@ -42,7 +43,7 @@ const ChangeShippingAddress = ({ shippingAddress, setShippingAddress, ChangeAddr
             />
           </div>
 
-          <div className="form-group ">
+          <div className="form-group col-xs-12 col-sm-12 col-md-12 nopadding">
             <input
               required
               onChange={handleGetData}
@@ -54,7 +55,7 @@ const ChangeShippingAddress = ({ shippingAddress, setShippingAddress, ChangeAddr
           </div>
 
           <div className="form-group ">
-            <div className="col-md-4 nopaddingLeft">
+            <div className="col-xs-12 nopadding col-md-3  mr-10">
               <input
                 required
                 onChange={handleGetData}
@@ -64,7 +65,7 @@ const ChangeShippingAddress = ({ shippingAddress, setShippingAddress, ChangeAddr
                 placeholder="Country"
               />
             </div>
-            <div className="col-md-4 nopadding">
+            <div className="col-xs-12 nopadding col-md-3  mr-10">
               <input
                 required
                 onChange={handleGetData}
@@ -74,7 +75,7 @@ const ChangeShippingAddress = ({ shippingAddress, setShippingAddress, ChangeAddr
                 placeholder="state"
               />
             </div>
-            <div className="col-md-4 nopaddingRight">
+            <div className="col-xs-12 nopadding col-md-3 ">
               <input
                 required
                 onChange={handleGetData}

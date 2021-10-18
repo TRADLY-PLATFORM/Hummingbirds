@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -7,12 +8,14 @@ import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/bootstrap.css';
 import { toast, ToastContainer, Slide } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Backdrop from '../../../components/UI/Backdrop/Backdrop';
-import Spinner from '../../../components/UI/Spinner/Spinner';
+// import Backdrop from '../../../components/UI/Backdrop/Backdrop';
+// import Spinner from '../../../components/UI/Spinner/Spinner';
+import Loader from 'react-loader-spinner';
+
 import { validateEmail } from '../../../shared/utility'; //countryFilter
 import * as actions from '../../../store/actions/index';
 import { selectUserId } from '../../../store/selectors/auth';
-import { isPossiblePhoneNumber, isValidPhoneNumber } from 'libphonenumber-js';
+import {   isValidPhoneNumber } from 'libphonenumber-js';
 import { Helmet } from 'react-helmet';
 
 class SignIn extends Component {
@@ -110,7 +113,7 @@ class SignIn extends Component {
   };
 
   render() {
-    const { isAuthenticated } = this.props;
+    // const { isAuthenticated } = this.props;
     const authType = this.props.configsData.auth_type;
     if (this.props.error && this.state.showError) {
       if (!toast.isActive(this.toastId)) {
@@ -153,90 +156,111 @@ class SignIn extends Component {
       );
     }
      return (
-      <div>
-        <Helmet>
-          <title>Tradly Web - Sign In</title>
-          <meta
-            name="description"
-            content=" Widest Range of Mobile & Tablets, Home Appliances, Tv, Audio, Home & Living At Tradly | Best Prices ? Fast DELIVERY | Cash on Delivery ? Effortless Shopping ? Best Customer Care!"
-          />
-        </Helmet>
-        <div className="">
-          <div className={classes.title}>
-            <p>{this.props.configsData.registration_title}</p>
-          </div>
-          <Backdrop show={this.props.loading} />
-          <Spinner show={this.props.loading} />
-          <ToastContainer
-            autoClose={2000}
-            position="top-center"
-            transition={Slide}
-            closeOnClick
-            rtl={false}
-            pauseOnVisibilityChange
-            draggable
-            pauseOnHover
-          />
-          {authRedirect}
+       <div>
+         <Helmet>
+           <title>Tradly Web - Sign In</title>
+           <meta
+             name="description"
+             content=" Widest Range of Mobile & Tablets, Home Appliances, Tv, Audio, Home & Living At Tradly | Best Prices ? Fast DELIVERY | Cash on Delivery ? Effortless Shopping ? Best Customer Care!"
+           />
+         </Helmet>
+         <div className="">
+           <div className={classes.title}>
+             <p>{this.props.configsData.registration_title}</p>
+           </div>
+           {/* <Backdrop show={this.props.loading} />
+           <Spinner show={this.props.loading} /> */}
+           {this.props.loading && (
+             <div className={classes.Backdrop}>
+               <Loader
+                 type="ThreeDots"
+                 color="var(--primary_color)"
+                 height={100}
+                 width={100}
+                 style={{
+                   position: 'absolute',
+                   right: 0,
+                   height: '100vh',
+                   width: '100%',
+                   display: 'flex',
+                   justifyContent: 'center',
+                   alignItems: 'center',
+                   zIndex: '500',
+                 }}
+               />
+             </div>
+           )}
 
-          <div className="col-lg-12 nopaddingLeft">
-            <h5 className={classes.titleAccount}>Login to your account</h5>
-            <br />
-            <form action="" method="post" onSubmit={this.onSubmit}>
-              {authType === 1 ? (
-                <div className="form-group mt-4">
-                  <input
-                    className={classes.input}
-                    name="email"
-                    type="text"
-                    placeholder="Email"
-                    value={this.state.email}
-                    onChange={this.handleChange}
-                    autoComplete="off"
-                  />
-                </div>
-              ) : (
-                <div className="form-group mt-4">{defaultCountry}</div>
-              )}
+           <ToastContainer
+             autoClose={2000}
+             position="top-center"
+             transition={Slide}
+             closeOnClick
+             rtl={false}
+             pauseOnVisibilityChange
+             draggable
+             pauseOnHover
+           />
+           {authRedirect}
 
-              <div className="form-group mt-4">
-                <input
-                  className={classes.input}
-                  type="password"
-                  name="password"
-                  value={this.state.password}
-                  placeholder="Password"
-                  onChange={this.handleChange}
-                />
-              </div>
+           <div className="col-lg-12 nopadding">
+             <h5 className={classes.titleAccount}>Login to your account</h5>
+             <br />
+             <form action="" method="post" onSubmit={this.onSubmit}>
+               {authType === 1 ? (
+                 <div className="form-group mt-4">
+                   <input
+                     className={classes.input}
+                     name="email"
+                     type="text"
+                     placeholder="Email"
+                     value={this.state.email}
+                     onChange={this.handleChange}
+                     autoComplete="off"
+                   />
+                 </div>
+               ) : (
+                 <div className="form-group mt-4">{defaultCountry}</div>
+               )}
 
-              <div className="form-group mt-5">
-                <button type="submit" className={classes.button}>
-                  Login
-                </button>
-              </div>
+               <div className="form-group mt-4">
+                 <input
+                   className={classes.input}
+                   type="password"
+                   name="password"
+                   value={this.state.password}
+                   placeholder="Password"
+                   onChange={this.handleChange}
+                 />
+               </div>
 
-              <div className="text-center mt-5">
-                <Link to="/forgot-password" className="text-center whiteColor noDecoration">
-                  Forgot Password ?
-                </Link>
-              </div>
+               <div className="form-group mt-5">
+                 <button type="submit" className={classes.button}>
+                   Login
+                 </button>
+               </div>
 
-              <div className="text-center mt-5">
-                <Link to="/sign-up" className="text-center whiteColor noDecoration">
-                  Don't have an account ? Sign Up
-                </Link>
-              </div>
-              <div className="text-center mt-5">
-                <Link to="/" className="text-center whiteColor noDecoration">
-                  <i className="fa fa-home fontIconSize"></i> Back to home
-                </Link>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    );
+               <div className="text-center mt-5">
+                 <Link to="/forgot-password" className="text-center whiteColor noDecoration">
+                   Forgot Password ?
+                 </Link>
+               </div>
+
+               <div className="text-center mt-5">
+                 <Link to="/sign-up" className="text-center whiteColor noDecoration">
+                   Don't have an account ? Sign Up
+                 </Link>
+               </div>
+               <div className="text-center mt-5">
+                 <Link to="/" className="text-center whiteColor noDecoration">
+                   <i className="fa fa-home fontIconSize"></i> Back to home
+                 </Link>
+               </div>
+             </form>
+           </div>
+         </div>
+       </div>
+     );
   }
 }
 

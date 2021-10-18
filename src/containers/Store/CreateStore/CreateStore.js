@@ -3,45 +3,36 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Aux from '../../../hoc/Auxiliary/Auxiliary';
 import { Link, useHistory } from 'react-router-dom';
-import { connect } from 'react-redux';
-import ArrowLogo from '../../../assets/images/products/arrow.svg';
-import { toast, ToastContainer, Slide } from 'react-toastify';
-import Backdrop from '../../../components/UI/Backdrop/Backdrop';
-import Spinner from '../../../components/UI/Spinner/Spinner';
+  import { toast, ToastContainer, Slide } from 'react-toastify';
+// import Backdrop from '../../../components/UI/Backdrop/Backdrop';
+// import Spinner from '../../../components/UI/Spinner/Spinner';
+import Loader from 'react-loader-spinner';
+
 import * as actions from '../../../store/actions/index';
 import classes from './CreateStore.module.css';
 
 import groupAvatar from '../../../assets/images/uploadPlaceholder.svg';
-import cancelImage from '../../../assets/images/store/cancel@2x.png';
-
-import axios from '../../../axios';
-import axios2 from 'axios';
-import imageToBase64 from 'image-to-base64/browser';
-import Toast from '../../../components/UI/Toast/Toast';
+ 
+ import Toast from '../../../components/UI/Toast/Toast';
 
 import locationImage from '../../../assets/images/store/location.png';
 import locationListImage from '../../../assets/images/store/locationList.png';
 
-import closeImage from '../../../assets/images/store/close.png';
+import closeImage from '../../../assets/images/store/close (1).svg';
 import { useEffect } from 'react';
 import { selectUserId } from '../../../store/selectors/auth';
 import Attribute from './Attribute';
- 
+
 const CreateStore = () => {
   const [showError, setShowError] = useState(false);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [type, setType] = useState(null);
   const [store_address, setStore_address] = useState('');
-  const [active, setActive] = useState('');
   const [image, setImage] = useState(null);
-  const [imagePath, setImagePath] = useState('');
-  const [base64, setBase64] = useState({});
   const [coordinates, setCoordinates] = useState(null);
   const [file, setFile] = useState(null);
-   const [attributeData, setAttributeData] = useState(null);
-
-
+  const [attributeData, setAttributeData] = useState(null);
 
   const dispatch = useDispatch();
 
@@ -53,27 +44,25 @@ const CreateStore = () => {
 
   // State from Redux
   const loading = useSelector((state) => state.store.loading);
-  const isAuthentication = useSelector((state) => state.auth.token !== null);
-  const authRedirectPath = useSelector((state) => state.auth.authRedirectPath);
-  const userId = useSelector((state) => state.auth.userId);
-  const token = useSelector((state) => state.auth.token);
+  // const isAuthentication = useSelector((state) => state.auth.token !== null);
+  // const authRedirectPath = useSelector((state) => state.auth.authRedirectPath);
+  // const userId = useSelector((state) => state.auth.userId);
+  // const token = useSelector((state) => state.auth.token);
   const categories = useSelector((state) => state.store.categories);
   const addresses = useSelector((state) => state.store.addresses);
-  const fileURL = useSelector((state) => state.store.file);
+  // const fileURL = useSelector((state) => state.store.file);
   const attribute = useSelector((state) => state.store.attribute);
   const isAuthenticated = useSelector((state) => selectUserId(state));
- const errorMessage = useSelector((state) => state.store.message);
+  const errorMessage = useSelector((state) => state.store.message);
 
-
-   
   // function
   const createStore = (e) => {
     e.preventDefault();
     let call;
 
-    if(image===null){
-       toast.error('Image is required');
-       return false;
+    if (image === null) {
+      toast.error('Image is required');
+      return false;
     }
     if (name === '') {
       toast.error('Store name is required');
@@ -89,7 +78,7 @@ const CreateStore = () => {
       return false;
     }
     // if (attribute) {
-      
+
     // }
 
     if (file !== null) {
@@ -108,9 +97,7 @@ const CreateStore = () => {
           () => history.push(`/storesuccess?id=${isAuthenticated}`)
         )
       );
- 
     } else {
-      
       const stores = {
         account: {
           name: name,
@@ -124,7 +111,6 @@ const CreateStore = () => {
         },
       };
 
- 
       dispatch(
         actions.CreateStore(stores, () => history.push(`/storesuccess?id=${isAuthenticated}`))
       );
@@ -150,7 +136,7 @@ const CreateStore = () => {
   const getType = (category) => {
     setAttributeData(null);
     setType(category);
-     dispatch(actions.initAttribute(category.id,'accounts'));
+    dispatch(actions.initAttribute(category.id, 'accounts'));
   };
 
   const imageUploadClick = () => {
@@ -158,11 +144,9 @@ const CreateStore = () => {
     fileInput.click();
   };
   const imageUpload = async (e) => {
- 
     setImage(URL.createObjectURL(e.target.files[0]));
     setFile(e.target.files[0]);
-
-   };
+  };
 
   // Address Search
   const handleAddressSearch = (e) => {
@@ -195,19 +179,37 @@ const CreateStore = () => {
     border: '1px solid  var(--primary_color)',
   };
   const deActive = {};
-  console.log('====================================');
-  console.log(attributeData);
-  console.log('====================================');
+   
   return (
     <Aux>
       {redirectUrl}
-      <Backdrop show={loading} />
-      <Spinner show={loading} />
+      {/* <Backdrop show={loading} />
+      <Spinner show={loading} /> */}
+      {loading && (
+        <div className={classes.Backdrop}>
+          <Loader
+            type="ThreeDots"
+            color="var(--primary_color)"
+            height={100}
+            width={100}
+            style={{
+              position: 'absolute',
+              right: 0,
+              height: '100vh',
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              zIndex: '500',
+            }}
+          />
+        </div>
+      )}
       {errorMessage && <Toast message={errorMessage} type="error" />}
 
       <ToastContainer
         autoClose={2000}
-        position="top-center"
+        position="bottom-right"
         transition={Slide}
         closeOnClick
         rtl={false}
@@ -227,7 +229,7 @@ const CreateStore = () => {
                     viewBox="0 0 16 14"
                     fill="var(--primary_color)"
                     xmlns="http://www.w3.org/2000/svg"
-                    style={{marginRight:'10px'}}
+                    style={{ marginRight: '10px' }}
                   >
                     <path d="M16 6V8H4L8 12L7 14L0 7L7 0L8 2L4 6H16Z" />
                   </svg>
@@ -245,7 +247,7 @@ const CreateStore = () => {
                 <div className="p-2">
                   <img
                     id="imageid"
-                    className={image?classes.imageAvatar:classes.groupAvatar}
+                    className={image ? classes.imageAvatar : classes.groupAvatar}
                     src={image ? image : groupAvatar}
                     alt="Stores"
                   />
@@ -257,7 +259,7 @@ const CreateStore = () => {
                       type="file"
                       id="fileInput"
                       name="imageUpload"
-                      accept="image/*"
+                      accept=".png , .jpg"
                       onChange={(e) => imageUpload(e)}
                     />
                   </div>

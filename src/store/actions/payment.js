@@ -263,3 +263,101 @@ export const callPaymentIntent = (key, callback) => {
       });
   };
 };
+
+
+// call Stripe Connect
+
+export const setStripeConnect = (data) => {
+  return {
+    type: actionTypes.STRIPE_CONNECT,
+    stripeConnect: data,
+  };
+};
+
+export const callStripeConnect = (accountId) => {
+  return (dispatch) => {
+    dispatch(startLoading());
+    const url = `v1/payments/stripe/connect/account?account_id=${accountId}`;
+    var config = {
+      method: 'get',
+      url: url,
+    };
+    axios(config)
+      .then((response) => {
+        if (response.data.status) {
+          dispatch(setStripeConnect(response.data.data));
+        } else {
+          console.log(response);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+// call Express Login
+
+export const setExpressLogin = (data) => {
+  return {
+    type: actionTypes.CREATE_EXPRESS_LOGIN,
+    expressLogin: data,
+  };
+};
+
+export const callExpressLogin = (accountId) => {
+  return (dispatch) => {
+    dispatch(startLoading());
+    const url = `app/v1/payments/stripe/connect/login_links`;
+    var config = {
+      method: 'post',
+      url:url,
+      data: {
+        account_id: accountId,
+      },
+    };
+    axios(config)
+      .then((response) => {
+        if (response.status) {
+              dispatch(setExpressLogin(response.data.data.login_link));
+          } else {
+          console.log(response);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+// call Create Stripe 
+
+export const createStripeAccount = (data) => {
+  return {
+    type: actionTypes.CREATE_STRIPE_ACCOUNT,
+    data: data,
+  };
+};
+
+export const callCreateStripeAccount = (accountId) => {
+  return (dispatch) => {
+    dispatch(startLoading());
+    const url = `app/v1/payments/stripe/connect/account_links`;
+    var config = {
+      method: 'post',
+      url:url,
+      data: {
+        account_id: accountId,
+      },
+    };
+    axios(config)
+      .then((response) => {
+        if (response.status) {
+                window.open(response.data.data.account_link);
+          } else {
+          console.log(response);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};

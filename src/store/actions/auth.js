@@ -45,6 +45,8 @@ export const authFail = (error) => {
 
 export const logout = () => {
   localStorage.clear();
+  window.location.reload();
+
   return {
     type: actionTypes.AUTH_LOGOUT,
   };
@@ -123,8 +125,7 @@ export const auth = (userData, isSignup) => {
            if (isSignup) {
             if (response.data.status) {
               let encodeVerifyId = btoa(response.data.data.verify_id);
-              console.log(encodeVerifyId);
-              dispatch(setVerifyID(encodeVerifyId));
+               dispatch(setVerifyID(encodeVerifyId));
               // dispatch(setAuthRedirectPath('/verification/' + encodeVerifyId, encodeVerifyId));
             } else {
               dispatch(authFail('Something is wrong, Please try again'));
@@ -132,8 +133,7 @@ export const auth = (userData, isSignup) => {
             }
           } else {
             if (response.data.status) {
-              console.log(response);
-              const setTimeExpiry = EXPIRY_TIME;
+               const setTimeExpiry = EXPIRY_TIME;
               const expirationDate = new Date(new Date().getTime() + setTimeExpiry * 1000);
               //   localStorage.setItem('token', response.data.data.user.key.auth_key);
               //   localStorage.setItem('refresh_key', response.data.data.user.key.refresh_key);
@@ -206,8 +206,7 @@ export const password_recovery = (userData) => {
       .then((response) => {
         if (response.data.status) {
           let encodeVerifyId = btoa(response.data.data.verify_id);
-          console.log(encodeVerifyId);
-          dispatch(setVerifyID(encodeVerifyId));
+           dispatch(setVerifyID(encodeVerifyId));
         } else {
           dispatch(authFail('Something is wrong, Please try again'));
           return false;
@@ -318,8 +317,7 @@ export const initCountries = () => {
           },
         })
         .then((response) => {
-          console.log(response);
-          var result = response.data.data.countries.map((v) => {
+           var result = response.data.data.countries.map((v) => {
             return v;
           });
           // localStorage.setItem('countryStorage', ENCRYPT(JSON.stringify(result)));
@@ -363,8 +361,7 @@ export const setTenantConfig = () => {
       axios
         .get(`/v1/tenants/${process.env.REACT_APP_TENANT_NAME}/configs`)
         .then((response) => {
-          console.log(response);
-          localStorage.setItem('tenant_key', response.data.data.key.app_key);
+           localStorage.setItem('tenant_key', response.data.data.key.app_key);
           localStorage.setItem('tenant_data', JSON.stringify(response.data.data));
           dispatch(successTenantConfig(response.data.data));
         })
@@ -382,8 +379,7 @@ export const setGeneralConfigsData = () => {
     axios
       .get('v1/configs?key_group=general')
       .then((response) => {
-        console.log(response);
-        if (response.status) {
+         if (response.status) {
           dispatch(getConfigs(response.data.data.configs));
            
         }
@@ -398,8 +394,7 @@ export const setOnboardingConfigsData = () => {
     axios
       .get('v1/configs?key_group=onboarding')
       .then((response) => {
-        console.log(response);
-        if (response.status) {
+         if (response.status) {
           dispatch(getOnboardingConfigs(response.data.data.configs));
           localStorage.setItem('primary_color', response.data.data.configs.app_color_primary);
           localStorage.setItem('logo_path', response.data.data.configs.splash_image);
@@ -428,8 +423,7 @@ export const setSeoConfigs = () => {
     axios
       .get('v1/configs?key_group=seo')
       .then((response) => {
-        console.log(response);
-        if (response.status) {
+         if (response.status) {
  
           dispatch(SEOConfigs(response.data.data.configs));
            
@@ -455,8 +449,7 @@ export const setAccountsConfigs = () => {
     axios
       .get('v1/configs?key_group=accounts')
       .then((response) => {
-        console.log(response);
-        if (response.status) {
+         if (response.status) {
  
           dispatch(AccountsConfigs(response.data.data.configs));
            
@@ -482,10 +475,61 @@ export const setListingsConfigs = () => {
     axios
       .get('v1/configs?key_group=listings')
       .then((response) => {
-        console.log(response);
-        if (response.status) {
+         if (response.status) {
 
           dispatch(ListingsConfigs(response.data.data.configs));
+           
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+// User Details
+
+
+export const setUserDetails = (data) => {
+  return {
+    type: actionTypes.USER_DETAILS,
+    details: data,
+  };
+};
+
+export const getUserDetails = (userID) => {
+  return (dispatch) => {
+    axios
+      .get(`v1/users/${userID}`)
+      .then((response) => {
+         if (response.status) {
+          dispatch(setUserDetails(response.data.data.user));
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+
+// Payment configs
+
+
+export const PaymentsConfigs = (data) => {
+  return {
+    type: actionTypes.PAYMENTS_CONFIGS,
+    configs: data,
+  };
+};
+
+export const setPaymentsConfigs = () => {
+  return (dispatch) => {
+    axios
+      .get('v1/configs?key_group=payments')
+      .then((response) => {
+         if (response.status) {
+
+          dispatch(PaymentsConfigs(response.data.data.configs));
            
         }
       })

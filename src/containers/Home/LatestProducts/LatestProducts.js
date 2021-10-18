@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import * as actions from '../../../store/actions/index';
-
+/* eslint-disable react/prop-types */
+import React  from 'react';
+  
 import classes from './LatestProduct.module.css';
 import NoIamgeLogo from '../../../assets/images/home/store/noImage.svg';
 import { Link } from 'react-router-dom';
 import NoProductImage from '../../../assets/images/rsz_noimage.png';
-import ItemsCarousel from 'react-items-carousel';
-import { size } from 'underscore';
-import useWindowSize from '../../../components/Hooks/WindowSize/WindowSize';
+//  import useWindowSize from '../../../components/Hooks/WindowSize/WindowSize';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -18,17 +15,17 @@ import 'swiper/components/pagination/pagination.min.css';
 
 // import Swiper core and required modules
 import SwiperCore, { Navigation, Pagination } from 'swiper/core';
+import { getThumbnailImage } from '../../../shared/constants';
 
 // install Swiper modules
 SwiperCore.use([Navigation, Pagination]);
 
 const LatestProducts = ({ products }) => {
-  const [activeItemIndex, setActiveItemIndex] = useState(0);
-  const { width, height } = useWindowSize();
-  const collections = useSelector((state) => state.home.collections);
+  //  const { width, height } = useWindowSize();
+  // const collections = useSelector((state) => state.home.collections);
 
  
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   // useEffect(() => {
   //    dispatch(actions.initLatestProducts());
   // }, [0])
@@ -39,14 +36,14 @@ const LatestProducts = ({ products }) => {
   arrayListings = products?.listings?.map((list, i) => {
     let imagePath = NoProductImage;
     if (list.images[0] !== undefined) {
-      imagePath = list.images[0];
+      imagePath = getThumbnailImage(list.images[0]) ;
     }
 
     return (
       <Link
       
         to={{
-          pathname: `/l/${list.id}-${list.title.replace('%', '')}`,
+          pathname: `/l/${list.id}-${list.title.replace('%', '').replace('/','')}`,
           state: { prevPath: 'Home' },
         }}
         key={i}
@@ -64,7 +61,7 @@ const LatestProducts = ({ products }) => {
             {list.account !== undefined && list.account.images[0] ? (
               <div className={classes.bottomDesc}>
                 <img
-                  src={list.account.images[0]}
+                  src={getThumbnailImage(list.account.images[0]) }
                   alt={list.account.name}
                   title={list.account.name}
                 />
@@ -138,7 +135,7 @@ const LatestProducts = ({ products }) => {
               // }}
             >
               {arrayListings?.map((list, i) => (
-                <SwiperSlide className={classes.swiperSlider}>{list}</SwiperSlide>
+                <SwiperSlide className={classes.swiperSlider} key={Math.random()*600000}>{list}</SwiperSlide>
               ))}
             </Swiper>
           </div>

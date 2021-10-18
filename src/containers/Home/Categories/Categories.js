@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import * as actions from '../../../store/actions/index';
-import MoreLogo from '../../../assets/images/home/category/more.svg';
+/* eslint-disable react/prop-types */
+import React, {  useState } from 'react';
+ import MoreLogo from '../../../assets/images/home/category/more.svg';
 import Category from '../../../components/Category/Category';
 import classes from './Categories.module.css';
-import useWindowSize from '../../../components/Hooks/WindowSize/WindowSize';
+// import useWindowSize from '../../../components/Hooks/WindowSize/WindowSize';
 
 const Categories = ({ categories }) => {
   // const Categories = useSelector((state) => state.home.categories);
  
   const [categorySet, setCategorySet] = useState([...categories]);
-  const { width, height } = useWindowSize();
+  // const { width, height } = useWindowSize();
    // useEffect(() => {
   //   dispatch(actions.initCategories());
   // }, [0]);

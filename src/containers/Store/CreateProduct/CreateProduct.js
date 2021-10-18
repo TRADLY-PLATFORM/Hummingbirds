@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import classes from './AddProduct.module.css';
 
-import productImg from '../../../assets/images/products/productImg.svg';
 import addProductIcon from '../../../assets/images/products/addProductIcon.svg';
 import { Link, useParams, useHistory } from 'react-router-dom';
 import * as actions from '../../../store/actions/index';
@@ -11,13 +10,14 @@ import locationImage from '../../../assets/images/store/location.png';
 import locationListImage from '../../../assets/images/store/locationList.png';
 
 import closeImage from '../../../assets/images/store/close (1).svg';
-import imageToBase64 from 'image-to-base64/browser';
 import { Slide, toast, ToastContainer } from 'react-toastify';
-import Backdrop from '../../../components/UI/Backdrop/Backdrop';
-import Spinner from '../../../components/UI/Spinner/Spinner';
+// import Backdrop from '../../../components/UI/Backdrop/Backdrop';
+// import Spinner from '../../../components/UI/Spinner/Spinner';
+import Loader from 'react-loader-spinner';
+
 import Toast from '../../../components/UI/Toast/Toast';
 import Aux from '../../../hoc/Auxiliary/Auxiliary';
-import Loader from 'react-loader-spinner';
+import Select from 'react-select';
 
 const CreateProduct = () => {
   // state
@@ -34,7 +34,8 @@ const CreateProduct = () => {
   const [imagePath, setImagePath] = useState([{ id: 'addIcon', path: addProductIcon }]);
   const [files, setFiles] = useState([]);
   const [fullFile, setFullFile] = useState([]);
-  const [showError, setShowError] = useState(false)
+  const [showError, setShowError] = useState(false);
+  // const [options, setOptions] = useState([{ value: 'dot', label: '...' }]);
 
   // Params
   const { accountId } = useParams();
@@ -50,7 +51,7 @@ const CreateProduct = () => {
     if (selectedCategory !== null) {
       dispatch(actions.initAttribute(selectedCategory, 'listings'));
     }
-  }, [selectedCategory]);
+  }, [dispatch, selectedCategory]);
 
   // reducer
   const categories = useSelector((state) => state.product.categoryLists);
@@ -62,18 +63,27 @@ const CreateProduct = () => {
   const errorMessage = useSelector((state) => state.store.message);
   const listingsConfigs = useSelector((state) => state.auth.listings_configs);
 
+  //
+  let options;
+     if (categories.length > 0) {
+      options =categories.map((category) =>
+      {
+        return { value: category.id, label: category.name }; 
+         }
+      );
+  }
+ 
   // function
   //
   const handleImageClick = () => {
-        setShowError(false);
+    setShowError(false);
 
     let fileInput = document.getElementById('fileInput');
-    if (files.length !== parseInt(listingsConfigs.listing_pictures_count) ) {
+    if (files.length !== parseInt(listingsConfigs.listing_pictures_count)) {
       fileInput.click();
     } else {
-      toast.error("You can't add more photo")
+      toast.error("You can't add more photo");
     }
-    
   };
 
   const imageUpload = async (e) => {
@@ -98,7 +108,7 @@ const CreateProduct = () => {
     const target = e.target;
     const name = target.name;
     const value = target.value;
-     
+
     if (name === 'Product Title') {
       setTitle(value);
     } else if (name === 'Product Description') {
@@ -116,17 +126,14 @@ const CreateProduct = () => {
         setShippingCharge(value);
       }
     }
-    setShowError(false)
+    setShowError(false);
   };
 
   //
-  const selectCategory = () => {
-    const selectedValue = document.getElementById('categories').value;
-    if (selectedValue === 'dot') {
-      setSelectedCategory(null);
-    } else {
-      setSelectedCategory(selectedValue);
-    }
+  const selectCategory = (newValue) => {
+     
+      setSelectedCategory(newValue.value);
+    
   };
   //
   const selectCurrency = () => {
@@ -162,9 +169,9 @@ const CreateProduct = () => {
 
   //
   const addProductClick = () => {
-      //  if (currency === null) {
-      //    setCurrency(currencies[0].id);
-      //  }
+    //  if (currency === null) {
+    //    setCurrency(currencies[0].id);
+    //  }
     if (title === '') {
       toast.error('Title is required');
       return false;
@@ -183,7 +190,7 @@ const CreateProduct = () => {
       );
       return false;
     }
- 
+
     if (coordinates === null) {
       toast.error('Address is required');
       return false;
@@ -196,7 +203,7 @@ const CreateProduct = () => {
       toast.error('Category is required');
       return false;
     }
-    setShowError(true)
+    setShowError(true);
     dispatch(
       actions.initFiles(
         accountId,
@@ -217,18 +224,36 @@ const CreateProduct = () => {
   };
 
   if (error && showError) {
-    toast.error(errorMessage)
+    toast.error(errorMessage);
   }
 
   return (
     <Aux>
-      <Backdrop show={loading} />
-      <Spinner show={loading} />
+      {loading && (
+        <div className={classes.Backdrop}>
+          <Loader
+            type="ThreeDots"
+            color="var(--primary_color)"
+            height={100}
+            width={100}
+            style={{
+              position: 'absolute',
+              right: 0,
+              height: '100vh',
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              zIndex: '500',
+            }}
+          />
+        </div>
+      )}
       {errorMessage && <Toast message={errorMessage} type="error" />}
 
       <ToastContainer
         autoClose={2000}
-        position="top-center"
+        position="bottom-right"
         transition={Slide}
         closeOnClick
         rtl={false}
@@ -250,7 +275,7 @@ const CreateProduct = () => {
               type="file"
               id="fileInput"
               name="imageUpload"
-              accept="image/*"
+              accept="image/png,image/jpg"
               onChange={(e) => imageUpload(e)}
             />
             {imagePath.map((image) => {
@@ -328,7 +353,11 @@ const CreateProduct = () => {
               <label htmlFor="currency">Currency</label>
               <select className={classes.input} name="" id="currency" onChange={selectCurrency}>
                 {currencies?.map((currency, index) => {
-                  return <option value={currency.id}>{currency.code}</option>;
+                  return (
+                    <option value={currency.id} key={Math.random()}>
+                      {currency.code}
+                    </option>
+                  );
                 })}
               </select>
             </div>
@@ -400,17 +429,12 @@ const CreateProduct = () => {
 
           <div className="form-group mt-2">
             <label htmlFor="categories">Category</label>
-            <select
+            <Select
               name="category"
               id="categories"
-              className={classes.input}
-              onChange={selectCategory}
-            >
-              <option value="dot">... </option>
-              {categories?.map((category) => {
-                return <option value={category.id}>{category.name}</option>;
-              })}
-            </select>
+              onChange={(newValue) => selectCategory(newValue)}
+              options={options}
+            />
           </div>
         </div>
         {attribute && (

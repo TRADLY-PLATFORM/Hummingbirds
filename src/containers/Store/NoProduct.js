@@ -16,7 +16,7 @@ export default class NoProduct extends Component {
               </div>
               <div className={classes.mycontainer}>
                 <div className="row">
-                  <div class="col-md-1 col-lg-1 col-sm-1 col-sx-1">
+                  <div className="col-md-1 col-lg-1 col-sm-1 col-sx-1">
                     <img
                       className={classes.userAvatar}
                       src={AvatarImage}
