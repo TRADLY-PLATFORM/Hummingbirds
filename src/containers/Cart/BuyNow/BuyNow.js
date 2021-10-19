@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import * as actions from '../../../store/actions/index';
 import classes from './BuyNow.module.css';
- import Aux from '../../../hoc/Auxiliary/Auxiliary';
+import Aux from '../../../hoc/Auxiliary/Auxiliary';
 
 // images
 import locationMarker from '../../../assets/images/products/locationMarker (1).svg';
@@ -23,7 +23,7 @@ import { getThumbnailImage } from '../../../shared/constants';
 
 const BuyNow = () => {
   // state
-   const [paymentMethod, setPaymentMethod] = useState(null);
+  const [paymentMethod, setPaymentMethod] = useState(null);
   const [shippingMethod, setShippingMethod] = useState(null);
   const [addressForm, setAddressForm] = useState(false);
   const [pickupAddress, setPickupAddress] = useState(false);
@@ -33,7 +33,7 @@ const BuyNow = () => {
   const [selectShippingAddress, setSelectShippingAddress] = useState(null);
   const [selectPickupAddress, setSelectPickupAddress] = useState(null);
 
-   const history = useHistory();
+  const history = useHistory();
 
   // reducer
   // const productDetails = useSelector((state) => state.product.productDetails);
@@ -47,6 +47,7 @@ const BuyNow = () => {
   const paymentLoading = useSelector((state) => state.payment.loading);
   const cartList = useSelector((state) => state.cart.cart_list);
   const { cart, cart_details } = cartList;
+  const listingsConfigs = useSelector((state) => state.auth.listings_configs);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -54,11 +55,10 @@ const BuyNow = () => {
     dispatch(actions.getPaymentMethods());
     dispatch(actions.getShippingMethod());
     dispatch(actions.callEphemeralKey());
-
   }, [0]);
 
   useEffect(() => {
-    if (currencies.length > 0 && shipping_methods.lenth>0) {
+    if (currencies.length > 0 && shipping_methods.lenth > 0) {
       setShippingMethod(shipping_methods[0]);
       dispatch(actions.getCartList(currencies[0], shipping_methods[0].id));
     }
@@ -70,19 +70,17 @@ const BuyNow = () => {
     let cartData;
     if (increase) {
       if (quantity < listing.max_quantity) {
-        
         if (quantity === listing.stock) {
-          toast.error(`There are not ${quantity+1} products in stock`);
+          toast.error(`There are not ${quantity + 1} products in stock`);
           return false;
-         } else {
-         cartData = {
-          cart: {
-            listing_id: listing.id,
-            quantity: quantity + 1,
-          },
+        } else {
+          cartData = {
+            cart: {
+              listing_id: listing.id,
+              quantity: quantity + 1,
+            },
+          };
         }
-        }
-          
       } else {
         toast.error('The highest quantity is' + '  ' + listing.max_quantity);
         return false;
@@ -113,7 +111,7 @@ const BuyNow = () => {
         listing_id: [id],
       },
     };
-    dispatch(actions.deleteCart(data, currencies[0],shipping_methods[0].id));
+    dispatch(actions.deleteCart(data, currencies[0], shipping_methods[0].id));
   };
 
   // Select Payment
@@ -162,7 +160,7 @@ const BuyNow = () => {
     const addressData = {
       address: { ...shippingAddress },
     };
-    dispatch(actions.changeAddress(addressData,selectShippingAddress));
+    dispatch(actions.changeAddress(addressData, selectShippingAddress));
     setTimeout(() => {
       dispatch(actions.getAddress('delivery'));
     }, 700);
@@ -205,15 +203,14 @@ const BuyNow = () => {
         order: {
           payment_method_id: paymentMethod.id,
           shipping_method_id: shippingMethod.id,
-         },
-      }
+        },
+      };
     }
-    if(paymentMethod.type !== 'stripe'){
+    if (paymentMethod.type !== 'stripe') {
       dispatch(actions.clickCheckout(data, () => history.push(`/checkout-success`)));
-    }else{
-          dispatch(actions.clickCheckout(data, () => history.push(`/card`),'stripe'));
+    } else {
+      dispatch(actions.clickCheckout(data, () => history.push(`/card`), 'stripe'));
     }
-
   };
 
   return (
@@ -266,13 +263,15 @@ const BuyNow = () => {
                         <>
                           <div className={classes.cartItemBox} key={index}>
                             <div className={classes.productDescription}>
-                              <p className={classes.stockMessage}>
-                                {listing.stock > 0 ? (
-                                  `Only ${listing.stock} products in stock`
-                                ) : (
-                                  <span className={classes.soldoutButton}>Sold out</span>
-                                )}
-                              </p>
+                              {listingsConfigs.enable_stock && (
+                                <p className={classes.stockMessage}>
+                                  {listing.stock > 0 ? (
+                                    `Only ${listing.stock} products in stock`
+                                  ) : (
+                                    <span className={classes.soldoutButton}>Sold out</span>
+                                  )}
+                                </p>
+                              )}
                               <p className={classes.productTitle}>{listing?.title}</p>
                               <p className={classes.price}>{listing.list_price.formatted}</p>
                             </div>
@@ -321,7 +320,7 @@ const BuyNow = () => {
                     })}
                   </div>
                 </div>
-                {pickupAddress && (
+                {(pickupAddress && listingsConfigs.listing_address_enabled )&& (
                   <div className={classes.pickupAddress}>
                     <h4 className={classes.pickupAddressHeader}>Pickup Address</h4>
                     <div className={classes.pickupAddressBox}>

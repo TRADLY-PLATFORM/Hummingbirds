@@ -4,6 +4,7 @@ import Aux from '../../hoc/Auxiliary/Auxiliary';
 import { Link } from 'react-router-dom';
 import { List } from 'immutable';
 import { connect } from 'react-redux';
+import ReactMarkdown from 'react-markdown';
 
 import classes from './Store.module.css';
 import AllenSollyLogo from '../../assets/images/home/store/allenSolly.svg';
@@ -222,7 +223,9 @@ class StoreDetails extends Component {
                 <div className=" textBold">
                   Descriptions <span className="float-right">:</span>
                 </div>
-                <div className=" pl-10">{storeDetails.get('description', '') || 'N/A'}</div>
+                <div className=" pl-10">
+                  <ReactMarkdown>{storeDetails.get('description', '') || 'N/A'}</ReactMarkdown>
+                </div>
               </div>
               <div className={classes.storeRow}>
                 <div className="  textBold">
