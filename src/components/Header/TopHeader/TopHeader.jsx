@@ -137,8 +137,8 @@ const TopHeader = () => {
                   src={onboardingConfigs.splash_image}
                   style={
                     width > 768
-                      ? { width: '95px', height: '50px' }
-                      : { width: '95px', height: '44px' }
+                      ? { height: '50px' }
+                      : { height: '44px' }
                   }
                   alt={onboardingConfigs.app_name}
                   title={onboardingConfigs.app_name}
