@@ -8,7 +8,7 @@ import ReactMarkdown from 'react-markdown';
 
 import classes from './Store.module.css';
 import AllenSollyLogo from '../../assets/images/home/store/allenSolly.svg';
-  import * as actions from '../../store/actions/index';
+import * as actions from '../../store/actions/index';
 
 import Maps from '../../components/UI/Maps/Maps';
 import Modal from '../../components/UI/Modal/Modal';
@@ -22,7 +22,6 @@ import { getThumbnailImage } from '../../shared/constants';
 import { Helmet } from 'react-helmet';
 import PropTypes from 'prop-types';
 import Loader from 'react-loader-spinner';
-
 
 class StoreDetails extends Component {
   constructor(props) {
@@ -127,7 +126,7 @@ class StoreDetails extends Component {
   };
 
   render() {
-    const { storeDetails, listings, total_records, loading, allListings } = this.props;
+    const { storeDetails, listings, total_records, loading, allListings, seoConfigs } = this.props;
     let listing = '';
     let showLoadButton = null;
     let storeContent = null;
@@ -276,13 +275,48 @@ class StoreDetails extends Component {
     );
     const { location } = this.props;
 
+    // seo title
+    const seoTitle = (text) => {
+      if (text) {
+        const check = text.includes('{account_title}');
+        if (check) {
+          return text.replace('{account_title}', storeName);
+        }
+        return text;
+      }
+    };
+
+    // Seo description
+    const seoDescription = (text) => {
+      if (text) {
+        const check = text.includes('{account_title}');
+        const check2 = text.includes('{account_description}');
+        if (check && check2) {
+          const first = text.replace('{account_title}', storeName);
+          return first.replace(
+            '{account_description}',
+            storeDetails.get('description', '') || 'N/A'
+          );
+        } else if (check) {
+          return text.replace('{account_title}', storeName);
+        } else if (check2) {
+          return text.replace(
+            '{account_description}',
+            storeDetails.get('description', '') || 'N/A'
+          );
+        }
+
+        return text;
+      }
+    };
+
     return (
       <>
         <Helmet>
-          <title>Find items sold by {storeName}. Buy online</title>
+          <title>{`${seoTitle(seoConfigs.meta_account_title)}`}</title>
           <meta
             name="description"
-            content={`Products sold by ${storeName}. Chat and buy from mobile app. `}
+            content={`${seoDescription(seoConfigs.meta_account_description)} `}
           />
           <link rel="canonical" href={location.pathname} />
         </Helmet>
@@ -334,6 +368,7 @@ const mapStateToProps = (state) => {
     listings: selectListings(state),
     allListings: state.product.listings,
     page: state.product.page,
+    seoConfigs: state.auth.seo_configs,
   };
 };
 

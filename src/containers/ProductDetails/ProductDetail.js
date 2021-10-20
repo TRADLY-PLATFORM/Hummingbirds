@@ -62,6 +62,8 @@ const ProductDetail = () => {
   const cartError = useSelector((state) => state.cart.error);
   const cartErrorMessage = useSelector((state) => state.cart.message);
   const listingsConfigs = useSelector((state) => state.auth.listings_configs);
+  const seo_configs = useSelector((state) => state.auth.seo_configs);
+
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -211,13 +213,41 @@ const ProductDetail = () => {
   //
   // }
 
+  // seo title
+  const seoTitle = (text) => {
+   if(text){
+      const check = text.includes('{listing_title}');
+      if (check) {
+        return text.replace('{listing_title}', listing?.title);
+      }
+      return text;
+   }
+  }
+
+  // Seo description
+   const seoDescription = (text) => {
+     if (text) {
+       const check = text.includes('{listing_description}');
+       if (check) {
+         return text.replace('{listing_description}', listing?.description);
+       }
+       return text;
+    }
+   };
+
+
   return (
     <>
-      <Helmet>
-        <title> {listing?.title || 'N/A'}- Buy Online </title>
-        <meta name="description" content={`${listing?.description}`} />
-        <link rel="canonical" href={location.pathname} />
-      </Helmet>
+      {!loading && (
+        <Helmet>
+          <title> {seoTitle(seo_configs.meta_listing_title)} </title>
+          <meta
+            name="description"
+            content={`${seoDescription(seo_configs.meta_listing_description)}`}
+          />
+          <link rel="canonical" href={location.pathname} />
+        </Helmet>
+      )}
       <Aux>
         {/* <Backdrop show={loading} />
         <Spinner show={loading} /> */}

@@ -272,8 +272,8 @@ class Listings extends Component {
     return (
       <>
         <Helmet>
-          <title>{seoConfigs.meta_listing_title}</title>
-          <meta name="description" content={seoConfigs.meta_listing_description} />
+          <title>{seoConfigs.meta_title}</title>
+          <meta name="description" content={seoConfigs.meta_description} />
           <link rel="canonical" href={location.pathname} />
         </Helmet>
         <Aux>
@@ -335,7 +335,11 @@ class Listings extends Component {
                             <p className={classes.storeTitle}>{list.get('title', '')}</p>
                             <div className={classes.bottomDesc}>
                               <img
-                                src={list.getIn(['account', 'images', 0])? getThumbnailImage(list.getIn(['account', 'images', 0]))  : NoIamgeLogo}
+                                src={
+                                  list.getIn(['account', 'images', 0])
+                                    ? getThumbnailImage(list.getIn(['account', 'images', 0]))
+                                    : NoIamgeLogo
+                                }
                                 alt={list.get('title', '')}
                                 title={list.getIn(['account', 'name'])}
                               />{' '}
