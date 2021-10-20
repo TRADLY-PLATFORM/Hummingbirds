@@ -32,7 +32,7 @@ const LatestProducts = ({ products }) => {
   // const products = useSelector((state) => state.home.latestProducts);
 
   let arrayListings = [];
-  let title = products.title;
+  let title = products?.title;
   arrayListings = products?.listings?.map((list, i) => {
     let imagePath = NoProductImage;
     if (list.images[0] !== undefined) {

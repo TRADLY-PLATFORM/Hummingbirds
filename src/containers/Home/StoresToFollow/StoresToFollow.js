@@ -43,7 +43,7 @@ const StoresToFollow = ({ storesToFollow }) => {
 
   // const [followSet,setFollowSet] = useState()
   let arrayListings = [];
-  let title = storesToFollow.title;
+  let title = storesToFollow?.title;
 
   arrayListings = storesToFollow?.accounts?.map((list, i) => {
     let imagePath = AllenSollyLogo;
