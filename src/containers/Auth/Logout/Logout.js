@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -8,7 +9,7 @@ class Logout extends Component {
     this.props.onLogout();
     setTimeout(() => {
       this.props.onSetOnboardingConfigsData();
-          this.props.onSetCurrency();
+      this.props.onSetCurrency();
 
      }, 1000);
     

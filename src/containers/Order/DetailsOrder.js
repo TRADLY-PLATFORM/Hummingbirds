@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import classes from './detailOrder.module.css';
 import { Link, useParams } from 'react-router-dom';
 
-import productImg from '../../assets/images/products/productImg.svg';
-// images
+ // images
 import locationMarker from '../../assets/images/products/locationMarker (1).svg';
 import directionImage from '../../assets/images/products/direction (1).svg';
 
@@ -14,6 +13,7 @@ import moment from 'moment';
 import { changeStatus, orderStatus } from '../../shared/Status';
 import Modal from '../../components/UI/Modal/Modal';
 import Loader from 'react-loader-spinner';
+import { getThumbnailImage } from '../../shared/constants';
 
 const DetailOrder = () => {
   const [statusModal, setStatusModal] = useState(false);
@@ -22,7 +22,7 @@ const DetailOrder = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(actions.getOrderDetails(id));
-  }, [0]);
+  }, []);
 
   // reducer
   const orderDetails = useSelector((state) => state.order.order_details);
@@ -57,21 +57,23 @@ const DetailOrder = () => {
     <div className={classes.orderDetalsBox}>
       {loading && (
         <>
-          <div className={classes.Backdrop}></div>
-          <Loader
+          <div className={classes.Backdrop}><Loader
             type="ThreeDots"
             color="var(--primary_color)"
             height={100}
             width={100}
             style={{
               position: 'absolute',
+              right: 0,
+              height: '100vh',
               width: '100%',
-              height: '100%',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
+              zIndex: '500',
             }}
-          />
+          /></div>
+          
         </>
       )}
       {orderDetails !== null && (
@@ -89,7 +91,7 @@ const DetailOrder = () => {
                 </div>
                 <div className={classes.receiptRow}>
                   <p>Timestamp</p>
-                  <p>{changeDateFormat(orderDetails.created_at, 'DD,MMM,YYYY')}</p>
+                  <p>{changeDateFormat(orderDetails.created_at, 'DD/MMM/YYYY')}</p>
                 </div>
                 <div className={classes.receiptRow} style={{ alignItems: 'start' }}>
                   <p>{orderDetails.shipping_method.name} Address</p>
@@ -133,30 +135,30 @@ const DetailOrder = () => {
                     return (
                       <div key={index} className={classes.receiptRow}>
                         <p className="textBold">{item.listing.title}</p>
-                        <p className="textColor center">{item.list_price.formatted}</p>
+                        <p className="textColor  ">{item.list_price.formatted}</p>
                       </div>
                     );
                   })}
                   <div className={classes.receiptRow}>
                     <p>Delivery</p>
-                    <p className="center">{orderDetails.shipping_total.formatted}</p>
+                    <p className=" ">{orderDetails.shipping_total.formatted}</p>
                   </div>
                   <div className={classes.receiptRow}>
                     <p className="textBold">Total</p>
-                    <p className="textColor center">{orderDetails.grand_total.formatted}</p>
+                    <p className="textColor  ">{orderDetails.grand_total.formatted}</p>
                   </div>
                 </div>
               </div>
             </div>
             <div className={classes.receiptFooter}>
               <h4>{orderDetails.account.name}</h4>
-              <button
+              {/* <button
                 style={{ width: '160px', height: '36px' }}
                 className=" btnGreenStyle"
                 onClick={() => window.print()}
               >
                 Print
-              </button>
+              </button> */}
             </div>
           </div>
 
@@ -167,13 +169,13 @@ const DetailOrder = () => {
                   return (
                     <div className={classes.productItem} key={Math.random() * 1000}>
                       <div className={classes.productImage}>
-                        <img src={item.listing.images[0]} alt="" />
+                        <img src={getThumbnailImage(item.listing.images[0])} alt="" />
                       </div>
                       <div className={classes.productDescription}>
                         <p>{item.listing.title}</p>
                         <p>
                           <span>Quantity : {item.quantity}</span>{' '}
-                          <span className="textColor" style={{ marginLeft: '40%' }}>
+                          <span className="textColor" style={{ float: 'right' }}>
                             {item.list_price.formatted}
                           </span>
                         </p>
@@ -230,12 +232,12 @@ const DetailOrder = () => {
                     <p className={classes.timelineHeader}>Track Order</p>
                     <p className={classes.orderIdInTimeline}>Order Id - {orderDetails.id}</p>
                   </div>
-                  <div>
+                  {/* <div>
                     <p className={classes.AmmountInTimeline}>
                       <span>Amt:</span>{' '}
                       <span className="textColor">{orderDetails.grand_total.formatted}</span>
                     </p>
-                  </div>
+                  </div> */}
                 </div>
                 <div className={classes.timeline}>
                   {/* <div className={classes.progressBar}></div> */}
@@ -254,7 +256,7 @@ const DetailOrder = () => {
                             <p style={{ color: ' #212121' }}> {orderStatus(item.status)}</p>
                           </div>
                           <div className={classes.statusTime}>
-                            <p>{changeDateFormat(item.created_at, 'DD,MM,YYYY')}</p>
+                            <p>{changeDateFormat(item.created_at, 'DD/MM/YYYY')}</p>
                             <p> {changeDateFormat(item.created_at, 'hh:mm:ss a')}</p>
                           </div>
                         </div>
@@ -274,7 +276,6 @@ const DetailOrder = () => {
                   className="btnOutlineGreenStyle"
                   style={{ marginRight: '15px' }}
                 >
-                  
                   Reorder
                 </Link>
                 <button
@@ -308,7 +309,6 @@ const DetailOrder = () => {
               </div>
             </div>
           </div>
-
         </>
       )}
     </div>

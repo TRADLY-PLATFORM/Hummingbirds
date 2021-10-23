@@ -16,7 +16,7 @@ const initialState = {
 const initProductDetails = (state, action) => {
   return updateObject(state, {
     loading: true,
-    productDetails:[],
+    productDetails: [],
   });
 };
 
@@ -34,9 +34,16 @@ const fetchProductDetailsFailed = (state, action) => {
 };
 
 const initListings = (state, action) => {
-  return updateObject(state, {
-    loading: true,
-  });
+  if (action.setNull === 'true') {
+    return updateObject(state, {
+      loading: true,
+      listings: null,
+    });
+  } else {
+    return updateObject(state, {
+      loading: true,
+    });
+  }
 };
 
 const setListings = (state, action) => {

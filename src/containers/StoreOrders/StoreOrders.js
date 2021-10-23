@@ -1,89 +1,93 @@
 import React, { useEffect, useState } from 'react';
 import classes from './StoreOrders.module.css';
-import { Link, useLocation, useHistory, useParams } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 
-import orderIcon1 from '../../assets/images/Order/orderIcon1.svg';
-import orderIcon from '../../assets/images/Order/orderIcon.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../../store/actions/index';
 import moment from 'moment';
- 
+
 import Loader from 'react-loader-spinner';
 import { options, orderStatus } from '../../shared/Status';
 import Select from 'react-select';
 
 import groupImage from '../../assets/images/Order/Group 3.png';
+import { getThumbnailImage } from '../../shared/constants';
 
- 
 const StoreOrders = () => {
-// 
-  const[accountId,setAccountId]=useState(null)
+  //
+  const [accountId, setAccountId] = useState(null);
 
   // reducer
   const orders = useSelector((state) => state.order.orders);
   const loading = useSelector((state) => state.order.loading);
 
-const history = useHistory();
-const { statusID } = useParams();
-const location = useLocation();
+  const history = useHistory();
+  const location = useLocation();
   const dispatch = useDispatch();
-  
-    useEffect(() => {
-      if (location.state === undefined) {
-            dispatch(actions.getOrders(location.search.replace('?', '')));
-      }
-    }, [location]);
 
-    useEffect(() => {
-      if (location.state !== undefined) {
-        dispatch(actions.getOrders(location.search.replace('?', ''), location.state));
-      }
-    }, [location]);
-  
+  useEffect(() => {
+    if (location.state === undefined) {
+      dispatch(actions.getOrders(location.search.replace('?', '')));
+    }
+  }, [dispatch, location]);
+
+  useEffect(() => {
+    if (location.state !== undefined) {
+      dispatch(actions.getOrders(location.search.replace('?', ''), location.state));
+    }
+  }, [dispatch, location]);
 
   // function
   // Date convertor
   const changeDateFormat = (timestamp, format) => {
     return moment(timestamp * 1000).format(format);
   };
-  // 
-    const handleChange = (newValue, actionMeta) => {
+  //
+  const handleChange = (newValue, actionMeta) => {
+    if (newValue.id !== 0) {
       history.push({
         pathname: `/storeorders/${newValue.value.replace(' ', '-')}`,
         state: newValue.id,
         search: location.search.replace('?', ''),
       });
-    };
-
+    } else {
+      history.push({
+        pathname: `/storeorders`,
+        search: location.search.replace('?', ''),
+      });
+    }
+  };
 
   return (
     <div className={classes.myOrdersBox}>
       {loading && (
         <>
-          <div className={classes.Backdrop}></div>
-          <Loader
-            type="ThreeDots"
-            color="var(--primary_color)"
-            height={100}
-            width={100}
-            style={{
-              position: 'absolute',
-              width: '100%',
-              height: '100%',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              zIndex: '100',
-            }}
-          />
+          <div className={classes.Backdrop}>
+            <Loader
+              type="ThreeDots"
+              color="var(--primary_color)"
+              height={100}
+              width={100}
+              style={{
+                position: 'absolute',
+                right: 0,
+                height: '100vh',
+                width: '100%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                zIndex: '500',
+              }}
+            />
+          </div>
         </>
       )}
-      <div className="row" style={{ marginBottom: '37px' }}>
-        <div className={classes.pageTitle + ' col-md-8 nopaddingLeft nopaddingRight'}>
-          <h2>My Orders </h2>
+      <div className={classes.headerLine} style={{ marginBottom: '37px' }}>
+        <div className={classes.pageTitle}>
+          <h2> Orders </h2>
         </div>
 
-        <div className="col-md-4">
+        <div className="  ">
           <div className={classes.SortbyMenu}>
             <p className={classes.filter}>Filter by:</p>
             <Select
@@ -117,34 +121,38 @@ const location = useLocation();
        </div> */}
 
       {orders.length > 0 && (
-        <div className="row ">
-          <div className="col-md-4 nopaddingLeft nopaddingRight">
+        <div className={classes.headerRow}>
+          <div className=" ">
             <h4 className={classes.orderHistory}>Order History</h4>
           </div>
-          <div className="col-md-2  center nopaddingLeft nopaddingRight">
+          <div className={classes.orderDateBox}>
             <h4 className={classes.orderHistory}>Date</h4>
           </div>
-          <div className="col-md-2 center nopaddingLeft nopaddingRight">
+          <div className=" center  ">
             <h4 className={classes.orderHistory}>Price</h4>
           </div>
-          <div className="col-md-2 center center nopaddingLeft nopaddingRight">
+          <div className={classes.currentStatus}>
             <h4 className={classes.orderHistory}>Current Status</h4>
           </div>
-          <div className="col-md-2 center center nopaddingLeft nopaddingRight">
+          <div className={classes.changeStatusButton}>
             <h4 className={classes.orderHistory}>Change Status</h4>
           </div>
         </div>
       )}
 
-      <div className="row">
+      <div className="">
         {orders.length > 0 ? (
           orders?.map((order, index) => {
             const { order_details } = order;
             return (
               <div className={classes.transactionContainer} key={index}>
-                <div className={classes.orderShortDetails + ' nopadding col-md-4 '}>
+                <div className={classes.orderShortDetails}>
                   <div>
-                    <img className={classes.productImg} src={order_details[0].listing.images[0]} />
+                    <img
+                      className={classes.productImg}
+                      src={getThumbnailImage(order_details[0].listing.images[0])}
+                      alt="orderImage"
+                    />
                   </div>
 
                   <Link
@@ -163,21 +171,21 @@ const location = useLocation();
                     </div>
                   </Link>
                 </div>
-                <div className="col-md-2  nopadding">
+                <div className={classes.orderDateBox}>
                   <span className="center">
                     {changeDateFormat(order.created_at, 'DD/MM/YYYY')}{' '}
                   </span>
                 </div>
-                <div className="col-md-2 nopadding">
+                <div className=" ">
                   {' '}
                   <h4 className="center"> {order.list_total.formatted}</h4>
                 </div>
-                <div className="col-md-2 nopadding  center">
+                <div className={classes.currentStatus}>
                   <button className={'btnOutlineGreenStyle text-center '}>
                     {orderStatus(order.order_status)}
                   </button>
                 </div>
-                <div className=" col-md-2   nopadding center">
+                <div className={classes.changeStatusButton}>
                   <button className={'btnGreenStyle'}>Change Status</button>
                 </div>
               </div>

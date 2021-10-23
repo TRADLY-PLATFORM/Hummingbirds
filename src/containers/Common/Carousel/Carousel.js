@@ -1,21 +1,15 @@
-import React, { Component } from 'react';
-import { useState } from 'react';
+import React from 'react';
 
-import SvgImage from '../../../assets/images/leftimage.svg';
 import classes from './Carousel.module.css';
-import axios from '../../../axios';
 import { useEffect } from 'react';
-import * as actions from '../../../store/actions/index'
-
-// import { MDBCarousel, MDBCarouselInner, MDBCarouselItem, MDBRow, MDBCol, MDBCard, MDBCardImage,
-//     MDBCardBody, MDBCardTitle } from "mdbreact";
+import * as actions from '../../../store/actions/index';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
 import 'swiper/swiper.min.css';
 import 'swiper/components/pagination/pagination.min.css';
 import 'swiper/components/navigation/navigation.min.css';
- 
+
 // import Swiper core and required modules
 import SwiperCore, { Autoplay, Pagination, Navigation } from 'swiper/core';
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,21 +17,17 @@ import { useDispatch, useSelector } from 'react-redux';
 // install Swiper modules
 SwiperCore.use([Autoplay, Pagination, Navigation]);
 
-
 const Carousel = () => {
   // const [onboardingImage, setOnboardingImage] = useState(null);
   const onboardingImage = useSelector((state) => state.auth.onboarding_configs.intro_screens);
-  const dispatch = useDispatch( )
+  const dispatch = useDispatch();
   useEffect(() => {
- dispatch(actions.setOnboardingConfigsData())  }, []);
-  console.log(onboardingImage);
-
- 
-   
+    dispatch(actions.setOnboardingConfigsData());
+  }, [0]);
 
   return (
     <div>
-      <div id="myCarousel" className={classes.carousel  } >
+      <div id="myCarousel" className={classes.carousel}>
         <Swiper
           spaceBetween={30}
           centeredSlides={true}
@@ -48,31 +38,21 @@ const Carousel = () => {
           pagination={{
             clickable: true,
           }}
-           
           className="mySwiper"
         >
-         
-            {onboardingImage?.map((list, i) => {
-              
-              return (
-                <SwiperSlide key={i} className={classes.onboardingImage}>
-                  <div className={classes.itemImage}>
-                    <img
-                      src={list.image}
-                      alt="Chania"
-                      
-                    />
-                  </div>
-                  <div className={classes.carouselCaption}>
-                    <p className={classes.cardTitle}>{list.text}</p>
-                  </div>
-                </SwiperSlide>
-              );
-            })}
-          
+          {onboardingImage?.map((list, i) => {
+            return (
+              <SwiperSlide key={i} className={classes.onboardingImage}>
+                <div className={classes.itemImage}>
+                  <img src={list.image} alt="Chania" />
+                </div>
+                <div className={classes.carouselCaption}>
+                  <p className={classes.cardTitle}>{list.text}</p>
+                </div>
+              </SwiperSlide>
+            );
+          })}
         </Swiper>
-
-        
       </div>
     </div>
   );

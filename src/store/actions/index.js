@@ -2,6 +2,8 @@ export {
   auth,
   authVerification,
   logout,
+  password_recovery,
+  set_password,
   authCheckState,
   initCountries,
   setTenantConfig,
@@ -9,6 +11,10 @@ export {
   setGeneralConfigsData,
   setOnboardingConfigsData,
   setSeoConfigs,
+  setAccountsConfigs,
+  setListingsConfigs,
+  getUserDetails,
+  setPaymentsConfigs,
 } from './auth';
 
 export {
@@ -40,6 +46,7 @@ export {
   failedMessage,
   initCurrencies,
   initFiles,
+  editStore,
 } from './store';
 
 export { initGroupDetails, CreateGroup } from './group';
@@ -52,8 +59,12 @@ export {
   clickCheckout,
   getShippingMethod,
   addAddress,
+  changeAddress,
   getAddress,
   callEphemeralKey,
+  callStripeConnect,
+  callExpressLogin,
+  callCreateStripeAccount,
 } from './payment';
 
 export { getWishlist } from './wishList';

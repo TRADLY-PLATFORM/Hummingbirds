@@ -1,3 +1,15 @@
+.Backdrop {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .breadCrumb{
   border: none;
   outline: none;
@@ -8,6 +20,8 @@
     font-size: 17px;
   font-weight: 500;
   margin-top: 25px; 
+      margin-left: 40px;
+
 }
 
 .productDetailsBanner {
@@ -30,8 +44,7 @@
   display: grid;
   grid-template-columns: 600px 600px;
   grid-column-gap: 25px;
-  /* min-height: 600px; */
-}
+ }
 
 /* Image */
 
@@ -39,6 +52,7 @@
   background-color: #FEFEFE;
   width: 100%;
   height: 600px;
+  object-fit:cover;
 }
 
 /* main Info */
@@ -59,7 +73,14 @@
   line-height: 17px;
   color: var(--primary_color);
 }
+.soldoutButton{
+  color: white !important;
+  background-color: red !important;
+  padding: 5px 10px;
+  border-radius: 10px;
+}
 .productName {
+  width: 85%;
   margin-top: 9px;
   font-weight: 500;
   font-size: 30px;
@@ -98,7 +119,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 90px;
+  margin-top: 50px;
   margin-bottom: 44px;
 }
 .addToCart {
@@ -112,10 +133,11 @@
   font-weight: 600;
   font-size: 20px;
   line-height: 24px;
-  color: var(--primary_color);
+  color: var(--primary_color) !important;
   display: flex;
   justify-content: center;
   align-items: center;
+  text-decoration: none  !important;
 }
 
 .buyNow {
@@ -126,12 +148,13 @@
   font-weight: 600;
   font-size: 20px;
   line-height: 24px;
-  color: #fefefe;
+  color: #fefefe !important;
   display: flex;
   justify-content: center;
   align-items: center;
   background: linear-gradient(0deg, var(--primary_color) 0%, var(--primary_color) 100%);
   border-radius: 8px;
+  text-decoration: none !important;
  }
 
 
@@ -160,7 +183,7 @@ border-radius: 4px;
 padding: 16px;
 margin-top: 16px;
 display: grid;
-grid-template-columns: 7% 60% 33%;
+grid-template-columns: 7% 80% 13%;
  
 }
 .markerImage{
@@ -200,8 +223,14 @@ box-shadow: 0px 8px 28px rgba(0, 0, 0, 0.07);
 border-radius: 4px;
 margin-top: 16px;
 display: flex;
+justify-content: space-between;
 align-items: center;
 padding: 16px;
+}
+.storeNameRow{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .storeImage{
@@ -212,8 +241,7 @@ padding: 16px;
 }
 .storeName{
   margin: 0;
-  width: 300px;
-  font-weight: 500;
+   font-weight: 500;
 font-size: 14px;
 line-height: 17px; 
 color: #121212;
@@ -223,7 +251,7 @@ text-decoration: none !important;
 
 
 .followButton{
-margin-left: 147px;
+/* margin-left: 147px; */
 }
 
 
@@ -257,12 +285,12 @@ color: #4A4A4A;
 }
 
 .detailsBox{
-  min-height: 260px;
 margin-top: 25px;
  background: #FEFEFE;
 box-shadow: 0px 8px 28px rgba(0, 0, 0, 0.07);
 border-radius: 4px;
  padding: 24px;
+ min-height: 300px;
 }
 .DetailsLeft {
   font-size: 15px;
@@ -282,22 +310,103 @@ border-radius: 4px;
   margin-bottom: 15px;
   margin-top: 10px;
 }
+.attributeRow{
+  display: grid;
+  grid-template-columns: 50% 50%;
+} 
 
 @media only screen and (max-width: 1500px) {
 .productDetailsBox {
   /* position: absolute; */
-   width: 1005px;
+   width: 10025px;
 }
 .MainPart {
   display: grid;
   grid-template-columns: 500px 500px;
   grid-column-gap: 25px;
+  justify-content: center;
  }
  
  .productImage {
   background-color: #FEFEFE;
   width: 100%;
   height: 500px;
+}
+
+}
+@media only screen and (max-width: 1100px) {
+.productDetailsBox {
+  /* position: absolute; */
+   width: 825px;
+}
+.MainPart {
+  display: grid;
+  grid-template-columns: 400px 400px;
+  grid-column-gap: 25px;
+  justify-content: center;
+ }
+ 
+ .productImage {
+  background-color: #FEFEFE;
+  width: 400px !important;
+  height: 400px;
+}
+
+}
+@media only screen and (max-width: 900px) {
+.productDetailsBox {
+  /* position: absolute; */
+   width: 400px ;
+}
+.MainPart {
+  display: grid;
+  grid-template-columns: 400px ;
+  grid-row-gap: 25px;
+  justify-content: center;
+ }
+ .breadCrumb{
+  margin-left: 0;
+}
+ 
+ .productImage {
+  background-color: #FEFEFE;
+  width: 400px !important;
+  height: 400px;
+}
+.productName{
+  font-size: 24px;
+}
+
+.addToCart {
+  height:40px ;
+   font-weight: 600;
+  font-size: 16px;
+ }
+
+.buyNow {
+   height:40px ;
+   font-weight: 600;
+  font-size: 16px;
+ }
+
+}
+@media only screen and (max-width: 400px) {
+.productDetailsBox {
+  /* position: absolute; */
+   width: 100vw ;
+}
+
+.MainPart {
+  display: grid;
+  grid-template-columns: 100%;
+  grid-row-gap: 25px;
+  justify-content: center;
+ }
+ 
+ .productImage {
+  background-color: #FEFEFE;
+  width: 100vw !important;
+  height:  100%;
 }
 
 }

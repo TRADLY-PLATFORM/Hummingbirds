@@ -28,8 +28,7 @@ export const initProductDetails = (id,isLoading) => {
         .get('/products/v1/listings/' + id + '?locale=en')
         .then((response) => {
           if (response.data.status) {
-            console.log(response);
-            dispatch(setProductDetails(response.data.data));
+             dispatch(setProductDetails(response.data.data));
           } else {
             dispatch(fetchProductDetailsFailed());
           }
@@ -43,8 +42,7 @@ export const initProductDetails = (id,isLoading) => {
         .get('/products/v1/listings/' + id + '?locale=en')
         .then((response) => {
           if (response.data.status) {
-            console.log(response);
-            dispatch(setProductDetails(response.data.data));
+             dispatch(setProductDetails(response.data.data));
           } else {
             dispatch(fetchProductDetailsFailed());
           }
@@ -69,32 +67,36 @@ export const fetchListingsFailed = () => {
   };
 };
 
-export const startListings = () => {
+export const startListings = (data) => {
   return {
     type: actionTypes.INIT_LISTING,
+     setNull:data
   };
 };
 
-export const initListings = (count, filterValue, totalCountOfProducts) => {
+export const initListings = (count, filterValue, totalCountOfProducts, loading,page) => {
   return (dispatch) => {
-    dispatch(startListings());
-    axios
-      .get(
-        '/products/v1/listings?page=1&per_page=' +
-          (parseInt(count) + totalCountOfProducts) +
-          filterValue 
-      )
-      .then((response) => {
-        if (response.data.status) {
-          dispatch(setListings(response.data.data));
-        } else {
+    if (loading) {
+          dispatch(startListings('true'));
+    } else {
+       dispatch(startListings('false'));
+    }
+      axios
+        .get(
+          `/products/v1/listings?page=${page || 1}&per_page=${
+            parseInt(count) + totalCountOfProducts
+          }${filterValue}`
+        )
+        .then((response) => {
+          if (response.data.status) {
+            dispatch(setListings(response.data.data));
+          } else {
+            dispatch(fetchListingsFailed());
+          }
+        })
+        .catch((error) => {
           dispatch(fetchListingsFailed());
-        }
-      })
-      .catch((error) => {
-        dispatch(fetchListingsFailed());
-        
-      });
+        });
   };
 };
 
@@ -199,8 +201,7 @@ export const onProductLikeDisLike = (id, isLiked) => {
       axios
         .post('/products/v1/listings/' + id + '/likes')
         .then((response) => {
-          console.log('response', response);
-          if (response.data.status) {
+           if (response.data.status) {
             dispatch(setProductLikeDisLike('Product Liked Successfully'));
           } else {
             dispatch(fetchProductLikeDisLike());
@@ -213,8 +214,7 @@ export const onProductLikeDisLike = (id, isLiked) => {
       axios
         .delete('/products/v1/listings/' + id + '/likes')
         .then((response) => {
-          console.log('response', response);
-          if (response.data.status) {
+           if (response.data.status) {
             dispatch(setProductLikeDisLike('Product Liked Successfully'));
           } else {
             dispatch(fetchProductLikeDisLike());

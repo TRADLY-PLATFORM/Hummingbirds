@@ -109,21 +109,11 @@ export const changeStatus = (id) => {
 
 
 export const options = [
-  { value: 'Incomplete', label: 'Incomplete', id: 1 },
+  { value: 'All', label: 'All', id: 0 },
   { value: 'Confirmed', label: 'Confirmed', id: 2 },
   { value: 'In progress', label: 'In progress', id: 3 },
   { value: 'Shipped', label: 'Shipped', id: 4 },
-  { value: 'Customer unreachable', label: 'Customer unreachable', id: 5 },
-  { value: 'Out for delivery', label: 'Out for delivery', id: 6 },
-  { value: 'Not delivered, returned', label: 'Not delivered, returned', id: 7 },
-  { value: 'Not delivered, return confirmed', label: 'Not delivered, return confirmed', id: 8 },
-  { value: 'Delivered', label: 'Delivered', id: 9 },
-  { value: 'Delivery confirmed', label: 'Delivery confirmed', id: 10 },
-  { value: 'Return initiated', label: 'Return initiated', id: 11 },
-  { value: 'Return picked', label: 'Return picked', id: 12 },
-  { value: 'Return confirmed', label: 'Return confirmed', id: 13 },
-  { value: 'Return disputed', label: 'Return disputed', id: 14 },
-  { value: 'Cancel by seller', label: 'Cancel by seller', id: 15 },
+   { value: 'Delivered', label: 'Delivered', id: 9 },
+   { value: 'Cancel by seller', label: 'Cancel by seller', id: 15 },
   { value: 'Cancel by customer', label: 'Cancel by customer', id: 16 },
-  { value: 'Ready for pickup', label: 'Ready for pickup', id: 17 },
- ];
+  ];

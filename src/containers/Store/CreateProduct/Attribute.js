@@ -1,18 +1,15 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import classes from './Attribute.module.css';
 import Select from 'react-select';
 import groupAvatar from '../../../assets/images/uploadPlaceholder.svg';
-import imageToBase64 from 'image-to-base64/browser';
-import CreatableSelect from 'react-select/creatable';
+ import CreatableSelect from 'react-select/creatable';
 import uploadImageIcon from '../../../assets/images/store/upload@2x.png';
 import cancelImage from '../../../assets/images/store/cancel@2x.png';
 const Attribute = ({ attribute, attributeData, setAttributeData }) => {
-  // statte
-  const [multiValue, setMultiValue] = useState([]);
-  const [multiValueText, setMultiValueText] = useState('');
-  const [image, setImage] = useState(null);
-  const [base64, setBase64] = useState({});
-  const [file, setFile] = useState(null);
+  // state
+   const [image, setImage] = useState(null);
+   const [file, setFile] = useState(null);
 
   // functions
 
@@ -21,10 +18,27 @@ const Attribute = ({ attribute, attributeData, setAttributeData }) => {
     fileInput.click();
   };
 
-  const imageUpload = async (e) => {
+  const imageUpload = async (e, attribute_id) => {
     setImage(URL.createObjectURL(e.target.files[0]));
     setFile(e.target.files[0]);
- 
+
+    if (attributeData !== null) {
+      const check = attributeData?.find((attr) => attr.id === attribute_id);
+      if (check === undefined) {
+        setAttributeData([
+          ...attributeData,
+          { values: [e.target.files[0]], id: attribute_id, uploadFile: true },
+        ]);
+      } else {
+        const findOut = attributeData.filter((attr) => attr.id !== attribute_id);
+        setAttributeData([
+          ...findOut,
+          { values: [e.target.files[0]], id: attribute_id, uploadFile: true },
+        ]);
+      }
+    } else {
+      setAttributeData([{ values: [e.target.files[0]], id: attribute_id, uploadFile: true }]);
+    }
   };
 
   const handleChange = (newValue, actionMeta, attribute_id, attribute_field_type) => {
@@ -33,8 +47,7 @@ const Attribute = ({ attribute, attributeData, setAttributeData }) => {
     console.groupEnd();
     if (attribute_field_type === 1 || attribute_field_type === 3) {
       if (attributeData !== null) {
-        console.log('here');
-        const check = attributeData?.find((attr) => attr.id === attribute_id);
+         const check = attributeData?.find((attr) => attr.id === attribute_id);
         if (check === undefined) {
           if (attribute_field_type === 1) {
             setAttributeData([...attributeData, { values: [newValue.id], id: attribute_id }]);
@@ -50,8 +63,7 @@ const Attribute = ({ attribute, attributeData, setAttributeData }) => {
           }
         }
       } else {
-        console.log('here2');
-
+ 
         if (attribute_field_type === 1) {
           setAttributeData([{ values: [newValue.id], id: attribute_id }]);
         } else if (attribute_field_type === 3) {
@@ -145,19 +157,21 @@ const Attribute = ({ attribute, attributeData, setAttributeData }) => {
             <div className={classes.addgroup}>
               {attr.field_type === 1 && (
                 <div className="form-group mt-2 ">
+                  <label className={attr.optional ? '' : classes.required}>{attr.name}</label>
                   <Select
                     onChange={(newValue, actionMeta) =>
                       handleChange(newValue, actionMeta, attr.id, attr.field_type)
                     }
-                    placeholder={attr.name}
+                    placeholder={'Select your ' + attr.name}
                     options={options}
                   />
                 </div>
               )}
               {attr.field_type === 2 && (
                 <div className="form-group mt-2 ">
+                  <label className={attr.optional ? '' : classes.required}>{attr.name}</label>
                   <Select
-                    placeholder={attr.name}
+                    placeholder={'Select your ' + attr.name}
                     isMulti
                     name="colors"
                     options={options}
@@ -171,8 +185,9 @@ const Attribute = ({ attribute, attributeData, setAttributeData }) => {
               )}
               {attr.field_type === 3 && (
                 <div className="form-group mt-2 ">
+                  <label className={attr.optional ? '' : classes.required}>{attr.name}</label>
                   <CreatableSelect
-                    placeholder={attr.name}
+                    placeholder={'Type your ' + attr.name}
                     onChange={(newValue, actionMeta) =>
                       handleChange(newValue, actionMeta, attr.id, attr.field_type)
                     }
@@ -181,8 +196,9 @@ const Attribute = ({ attribute, attributeData, setAttributeData }) => {
               )}
               {attr.field_type === 4 && (
                 <div className="form-group mt-2 ">
+                  <label className={attr.optional ? '' : classes.required}>{attr.name}</label>
                   <CreatableSelect
-                    placeholder={attr.name}
+                    placeholder={'Type your ' + attr.name}
                     isMulti
                     onChange={(newValue, actionMeta) =>
                       handleChange(newValue, actionMeta, attr.id, attr.field_type)
@@ -202,7 +218,7 @@ const Attribute = ({ attribute, attributeData, setAttributeData }) => {
                           id="attachmentClick"
                           name="imageUpload"
                           accept="image/*"
-                          onChange={(e) => imageUpload(e)}
+                          onChange={(e) => imageUpload(e, attr.id)}
                         />
                       </div>
                       <button className={classes.photoUploadButton} onClick={imageUploadClick}>

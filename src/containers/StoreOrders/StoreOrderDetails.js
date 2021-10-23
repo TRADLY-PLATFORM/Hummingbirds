@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import classes from './StoreOrderDetails.module.css';
-import { Link, useParams, useLocation } from 'react-router-dom';
+import {  useParams, useLocation } from 'react-router-dom';
 
-import productImg from '../../assets/images/products/productImg.svg';
-// images
+ // images
 import locationMarker from '../../assets/images/products/locationMarker (1).svg';
 import directionImage from '../../assets/images/products/direction (1).svg';
 
@@ -15,6 +14,7 @@ import { changeStatus, orderStatus } from '../../shared/Status';
 import Modal from '../../components/UI/Modal/Modal';
 import Loader from 'react-loader-spinner';
 import PickupAddress from './PickupAddress';
+import { getThumbnailImage } from '../../shared/constants';
 
 const StoreOrderDetails = () => {
   const [statusModal, setStatusModal] = useState(false);
@@ -28,7 +28,7 @@ const StoreOrderDetails = () => {
   useEffect(() => {
     dispatch(actions.getOrderDetails(id, location.search));
     dispatch(actions.getAddress('pickup'));
-  }, [location]);
+  }, [dispatch, id, location]);
 
   // reducer
   const orderDetails = useSelector((state) => state.order.order_details);
@@ -74,28 +74,28 @@ const StoreOrderDetails = () => {
     }, 700);
     setOpenModal(false);
   };
-console.log('====================================');
-  console.log(orderDetails?.pickup_address);
-console.log('====================================');
+ 
   return (
     <div className={classes.orderDetalsBox}>
       {loading && (
         <>
-          <div className={classes.Backdrop}></div>
-          <Loader
+          <div className={classes.Backdrop}><Loader
             type="ThreeDots"
             color="var(--primary_color)"
             height={100}
             width={100}
             style={{
               position: 'absolute',
+              right: 0,
+              height: '100vh',
               width: '100%',
-              height: '100%',
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
+              zIndex: '500',
             }}
-          />
+          /></div>
+          
         </>
       )}
       {orderDetails !== null && (
@@ -113,7 +113,7 @@ console.log('====================================');
                 </div>
                 <div className={classes.receiptRow}>
                   <p>Timestamp</p>
-                  <p>{changeDateFormat(orderDetails.created_at, 'DD,MMM,YYYY')}</p>
+                  <p>{changeDateFormat(orderDetails.created_at, 'DD/MMM/YYYY')}</p>
                 </div>
                 <div className={classes.receiptRow} style={{ alignItems: 'start' }}>
                   <p>{orderDetails.shipping_method.name} Address</p>
@@ -139,7 +139,7 @@ console.log('====================================');
                         </p>
                       </p>
                     ) : (
-                      <div style={{marginTop:"17px"}}>
+                      <div style={{ marginTop: '17px' }}>
                         <button
                           className={classes.addAddressButton}
                           onClick={() => setOpenModal(true)}
@@ -165,30 +165,30 @@ console.log('====================================');
                     return (
                       <div key={index} className={classes.receiptRow}>
                         <p className="textBold">{item.listing.title}</p>
-                        <p className="textColor center">{item.list_price.formatted}</p>
+                        <p className="textColor  ">{item.list_price.formatted}</p>
                       </div>
                     );
                   })}
                   <div className={classes.receiptRow}>
                     <p>Delivery</p>
-                    <p className="center">{orderDetails.shipping_total.formatted}</p>
+                    <p className=" ">{orderDetails.shipping_total.formatted}</p>
                   </div>
                   <div className={classes.receiptRow}>
                     <p className="textBold">Total</p>
-                    <p className="textColor center">{orderDetails.grand_total.formatted}</p>
+                    <p className="textColor  ">{orderDetails.grand_total.formatted}</p>
                   </div>
                 </div>
               </div>
             </div>
             <div className={classes.receiptFooter}>
               <h4>{orderDetails.account.name}</h4>
-              <button
+              {/* <button
                 style={{ width: '160px', height: '36px' }}
                 className=" btnGreenStyle"
                 onClick={() => window.print()}
               >
                 Print
-              </button>
+              </button> */}
             </div>
           </div>
 
@@ -199,13 +199,13 @@ console.log('====================================');
                   return (
                     <div className={classes.productItem} key={Math.random() * 1000}>
                       <div className={classes.productImage}>
-                        <img src={item.listing.images[0]} alt="" />
+                        <img src={getThumbnailImage(item.listing.images[0])} alt="" />
                       </div>
                       <div className={classes.productDescription}>
                         <p>{item.listing.title}</p>
                         <p>
                           <span>Quantity : {item.quantity}</span>{' '}
-                          <span className="textColor" style={{ marginLeft: '40%' }}>
+                          <span className="textColor" style={{ float: 'right' }}>
                             {item.list_price.formatted}
                           </span>
                         </p>
@@ -312,12 +312,12 @@ console.log('====================================');
                     <p className={classes.timelineHeader}>Track Order</p>
                     <p className={classes.orderIdInTimeline}>Order Id - {orderDetails.id}</p>
                   </div>
-                  <div>
+                  {/* <div>
                     <p className={classes.AmmountInTimeline}>
                       <span>Amt:</span>{' '}
                       <span className="textColor">{orderDetails.grand_total.formatted}</span>
                     </p>
-                  </div>
+                  </div> */}
                 </div>
                 <div className={classes.timeline}>
                   {/* <div className={classes.progressBar}></div> */}
@@ -336,7 +336,7 @@ console.log('====================================');
                             <p style={{ color: ' #212121' }}> {orderStatus(item.status)}</p>
                           </div>
                           <div className={classes.statusTime}>
-                            <p>{changeDateFormat(item.created_at, 'DD,MM,YYYY')}</p>
+                            <p>{changeDateFormat(item.created_at, 'DD/MM/YYYY')}</p>
                             <p> {changeDateFormat(item.created_at, 'hh:mm:ss a')}</p>
                           </div>
                         </div>

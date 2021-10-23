@@ -33,8 +33,7 @@ export const addToCart = (cartItem, currency) => {
   return (dispatch) => {
     dispatch(startLoading());
 
-    console.log(JSON.stringify(cartItem));
-    var config = {
+     var config = {
       method: 'post',
       url: '/products/v1/cart',
       headers: {
@@ -47,14 +46,13 @@ export const addToCart = (cartItem, currency) => {
     axios(config)
       .then((response) => {
         if (response.data.status) {
-          console.log(response);
-              dispatch(setCartItem());
+               dispatch(setCartItem());
         } else {
           console.log('error', response);
         }
       })
       .catch((error) => {
-       dispatch(failedMessage('Multi seller cart not supported'));       
+       dispatch(failedMessage( error.response.data.error.message));       
  
       });
   };
@@ -102,7 +100,7 @@ export const getCartList = (currency,shippingMethodId) => {
 //   };
 // };
 
-export const deleteCart = (data,currency) => {
+export const deleteCart = (data,currency,shippingMethod) => {
   return (dispatch) => {
     dispatch(startLoading());
      var config = {
@@ -116,7 +114,7 @@ export const deleteCart = (data,currency) => {
 
     axios(config).then((response) => {
       if (response.data.status) {
-          dispatch(getCartList(currency,1));
+          dispatch(getCartList(currency, shippingMethod));
       } else {
         console.log('error', response);
       }

@@ -634,8 +634,14 @@ span.glyphicon.glyphicon-search.form-control-feedback {
   font-size: 25px;
   padding-right: 4px;
 }
+.pl-10{
+  padding-left: 10px;
+}
 
 .mr-10 {
+  margin-right: 10px;
+}
+.ml-10 {
   margin-right: 10px;
 }
 .mb1 {
@@ -661,13 +667,14 @@ span.glyphicon.glyphicon-search.form-control-feedback {
   /* Chrome/Opera/Safari */
 
   color: #4f4f4f !important;
+  font-size: 15px;
 }
 label {
   color: #959393;
 }
 
 .center{
-  display: flex;
+  display: flex !important;
   align-items: center;
   justify-content: center;
 }
@@ -695,3 +702,25 @@ label {
   font-weight: 500;
 }
  
+
+
+
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.textDecorationOff{
+  text-decoration: none;
+}
+.textDecorationOff:hover{
+  text-decoration: none;
+}

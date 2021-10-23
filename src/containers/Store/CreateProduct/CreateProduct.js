@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import classes from './AddProduct.module.css';
 
-import productImg from '../../../assets/images/products/productImg.svg';
 import addProductIcon from '../../../assets/images/products/addProductIcon.svg';
 import { Link, useParams, useHistory } from 'react-router-dom';
 import * as actions from '../../../store/actions/index';
@@ -10,35 +9,37 @@ import Attribute from './Attribute';
 import locationImage from '../../../assets/images/store/location.png';
 import locationListImage from '../../../assets/images/store/locationList.png';
 
-import closeImage from '../../../assets/images/store/close.png';
-import imageToBase64 from 'image-to-base64/browser';
+import closeImage from '../../../assets/images/store/close (1).svg';
 import { Slide, toast, ToastContainer } from 'react-toastify';
-import Backdrop from '../../../components/UI/Backdrop/Backdrop';
-import Spinner from '../../../components/UI/Spinner/Spinner';
-import Toast from '../../../components/UI/Toast/Toast';
-import Aux from '../../../hoc/Auxiliary/Auxiliary';
+// import Backdrop from '../../../components/UI/Backdrop/Backdrop';
+// import Spinner from '../../../components/UI/Spinner/Spinner';
 import Loader from 'react-loader-spinner';
 
+import Toast from '../../../components/UI/Toast/Toast';
+import Aux from '../../../hoc/Auxiliary/Auxiliary';
+import Select from 'react-select';
 
 const CreateProduct = () => {
   // state
   const [title, setTitle] = useState('');
   const [price, setPrice] = useState(0);
-  const [shippingCharge, setShippingCharge] = useState(0);
+  const [shippingCharge, setShippingCharge] = useState(null);
   const [description, setDescription] = useState('');
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [attributeData, setAttributeData] = useState(null);
   const [currency, setCurrency] = useState(null);
   const [product_address, setProduct_address] = useState('');
   const [coordinates, setCoordinates] = useState(null);
   const [imagePath, setImagePath] = useState([{ id: 'addIcon', path: addProductIcon }]);
-   const [files, setFiles] = useState([]);
-  const [fullFile,setFullFile]=useState([])
+  const [files, setFiles] = useState([]);
+  const [fullFile, setFullFile] = useState([]);
+  const [showError, setShowError] = useState(false);
+  // const [options, setOptions] = useState([{ value: 'dot', label: '...' }]);
 
   // Params
-  const { accountId } = useParams()
-  const history = useHistory()
+  const { accountId } = useParams();
+  const history = useHistory();
 
   // use Effect
   const dispatch = useDispatch();
@@ -50,7 +51,7 @@ const CreateProduct = () => {
     if (selectedCategory !== null) {
       dispatch(actions.initAttribute(selectedCategory, 'listings'));
     }
-  }, [selectedCategory]);
+  }, [dispatch, selectedCategory]);
 
   // reducer
   const categories = useSelector((state) => state.product.categoryLists);
@@ -58,14 +59,31 @@ const CreateProduct = () => {
   const currencies = useSelector((state) => state.store.currencies);
   const addresses = useSelector((state) => state.store.addresses);
   const loading = useSelector((state) => state.store.loading);
-   const errorMessage = useSelector((state) => state.store.message);
+  const error = useSelector((state) => state.store.error);
+  const errorMessage = useSelector((state) => state.store.message);
+  const listingsConfigs = useSelector((state) => state.auth.listings_configs);
 
-
+  //
+  let options;
+     if (categories.length > 0) {
+      options =categories.map((category) =>
+      {
+        return { value: category.id, label: category.name }; 
+         }
+      );
+  }
+ 
   // function
   //
   const handleImageClick = () => {
+    setShowError(false);
+
     let fileInput = document.getElementById('fileInput');
-    fileInput.click();
+    if (files.length !== parseInt(listingsConfigs.listing_pictures_count)) {
+      fileInput.click();
+    } else {
+      toast.error("You can't add more photo");
+    }
   };
 
   const imageUpload = async (e) => {
@@ -83,10 +101,7 @@ const CreateProduct = () => {
     } else {
       setFullFile([file]);
     }
-
-     
   };
- 
 
   //
   const handleChange = (e) => {
@@ -106,21 +121,19 @@ const CreateProduct = () => {
       if (value > 0) {
         setQuantity(value);
       }
-    } else if (name === "Shipping Charge") {
-       if (value > -1) {
-         setShippingCharge(value);
-       }
+    } else if (name === 'Shipping Charge') {
+      if (value > -1) {
+        setShippingCharge(value);
+      }
     }
+    setShowError(false);
   };
 
   //
-  const selectCategory = () => {
-    const selectedValue = document.getElementById('categories').value;
-    if (selectedValue === 'dot') {
-      setSelectedCategory(null);
-    } else {
-      setSelectedCategory(selectedValue);
-    }
+  const selectCategory = (newValue) => {
+     
+      setSelectedCategory(newValue.value);
+    
   };
   //
   const selectCurrency = () => {
@@ -156,38 +169,49 @@ const CreateProduct = () => {
 
   //
   const addProductClick = () => {
+    //  if (currency === null) {
+    //    setCurrency(currencies[0].id);
+    //  }
     if (title === '') {
       toast.error('Title is required');
-      return false
+      return false;
     }
     if (description === '') {
       toast.error('Description is required');
-            return false;
-
+      return false;
     }
     if (price === '') {
       toast.error('Price is required');
-            return false;
-
+      return false;
     }
-    if (currency === null) {
-      toast.error('Currency is required');
-            return false;
-
+    if (price < parseInt(listingsConfigs.listing_min_price)) {
+      toast.error(
+        'Minimum price cannot be less than ' + parseInt(listingsConfigs.listing_min_price)
+      );
+      return false;
     }
-    if (coordinates === null) {
-      toast.error('Address is required');
-            return false;
-
-    }
-    if (files === null) {
-        toast.error('Image is required');
+    if (listingsConfigs.listing_address_enabled) {
+       if (coordinates === null) {
+        toast.error('Address is required');
         return false;
+      }
+    }
+    if (listingsConfigs.enable_stock) {
+       if (quantity === null) {
+         toast.error('Stock quantity is required');
+         return false;
+       }
+    }
+     
+    if (files === null) {
+      toast.error('Image is required');
+      return false;
     }
     if (selectedCategory === null) {
-    toast.error('Category is required');
-    return false;
+      toast.error('Category is required');
+      return false;
     }
+    setShowError(true);
     dispatch(
       actions.initFiles(
         accountId,
@@ -198,26 +222,46 @@ const CreateProduct = () => {
         quantity,
         selectedCategory,
         attributeData,
-        currency,
+        currency || currencies[0].id,
         coordinates,
-         files,
+        files,
         fullFile,
         () => history.push(`/store`)
       )
     );
   };
 
- 
+  if (error && showError) {
+    toast.error(errorMessage);
+  }
 
   return (
     <Aux>
-         <Backdrop show={loading} />
-          <Spinner show={loading} />
+      {loading && (
+        <div className={classes.Backdrop}>
+          <Loader
+            type="ThreeDots"
+            color="var(--primary_color)"
+            height={100}
+            width={100}
+            style={{
+              position: 'absolute',
+              right: 0,
+              height: '100vh',
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              zIndex: '500',
+            }}
+          />
+        </div>
+      )}
       {errorMessage && <Toast message={errorMessage} type="error" />}
-      
+
       <ToastContainer
         autoClose={2000}
-        position="top-center"
+        position="bottom-right"
         transition={Slide}
         closeOnClick
         rtl={false}
@@ -239,7 +283,7 @@ const CreateProduct = () => {
               type="file"
               id="fileInput"
               name="imageUpload"
-              accept="image/*"
+              accept="image/png,image/jpg"
               onChange={(e) => imageUpload(e)}
             />
             {imagePath.map((image) => {
@@ -254,7 +298,9 @@ const CreateProduct = () => {
               }
             })}
           </div>
-          <p className={classes.productImgRule}>Max. 4 photos per product</p>
+          <p className={classes.productImgRule}>
+            Max. {listingsConfigs?.listing_pictures_count} photos per product
+          </p>
         </div>
 
         <div className={classes.productDetails}>
@@ -271,13 +317,16 @@ const CreateProduct = () => {
           </div>
           <div className="form-group mt-2">
             <label htmlFor="product-description">Product Description</label>
-            <input
+
+            <textarea
+              rows="4"
               id="product-description"
               className={classes.input}
               name="Product Description"
               type="text"
               placeholder="Product Description"
               onChange={(e) => handleChange(e)}
+              style={{ resize: 'none' }}
             />
           </div>
 
@@ -295,107 +344,110 @@ const CreateProduct = () => {
                 onChange={(e) => handleChange(e)}
               />
             </div>
-            <div className="form-group mt-2 ">
-              <label htmlFor="selling-price">Shipping Charge </label>
+            {listingsConfigs.show_shipping_charges && (
+              <div className="form-group mt-2 ">
+                <label htmlFor="selling-price">Shipping Charge </label>
 
-              <input
-                id="shipping-charge"
-                value={shippingCharge}
-                className={classes.input}
-                name="Shipping Charge"
-                type="number"
-                placeholder=""
-                onChange={(e) => handleChange(e)}
-              />
-            </div>
+                <input
+                  id="shipping-charge"
+                  className={classes.input}
+                  name="Shipping Charge"
+                  type="number"
+                  placeholder="Shipping Charge"
+                  onChange={(e) => handleChange(e)}
+                />
+              </div>
+            )}
             <div className="form-group mt-2">
-              <label htmlFor="currency">Shipping Charge </label>
+              <label htmlFor="currency">Currency</label>
               <select className={classes.input} name="" id="currency" onChange={selectCurrency}>
-                <option value="zero">Select currency</option>;
-                {currencies.map((currency) => {
-                  return <option value={currency.id}>{currency.code}</option>;
+                {currencies?.map((currency, index) => {
+                  return (
+                    <option value={currency.id} key={Math.random()}>
+                      {currency.code}
+                    </option>
+                  );
                 })}
               </select>
             </div>
           </div>
 
-          <div className="form-group mt-2">
-            <label htmlFor="stock-quantity">Stock Quantity</label>
-            <input
-              id="stock-quantity"
-              value={quantity}
-              className={classes.input}
-              name="Stock Quantity"
-              type="number"
-              placeholder="Stock Quantity"
-              onChange={(e) => handleChange(e)}
-            />
-          </div>
-          <div className="form-group mt-2" style={{ position: 'relative' }}>
-            <label htmlFor="address">Address</label>
-            <input
-              className={classes.input}
-              value={product_address}
-              name="product_address"
-              id="address"
-              onChange={(e) => handleAddressSearch(e)}
-              type="text"
-              placeholder="Store Address"
-            />
-            {product_address.length > 0 ? (
-              <img src={closeImage} className={classes.closeImage} onClick={closeSearch} alt="" />
-            ) : (
-              <img className={classes.locationImage} src={locationImage} alt="" />
-            )}
-            {product_address.length > 0 && coordinates == null && (
-              <div className={classes.searchResult}>
-                {addresses.length > 0 ? (
-                  <ul style={{ listStyle: 'none', paddingLeft: '0px' }}>
-                    {addresses.map((address, i) => {
-                      return (
-                        <li
-                          onClick={() => handleSelectAddress(address)}
-                          className={classes.addressList}
-                          key={i}
-                        >
-                          <div>
-                            <img
-                              className={classes.listLocationImage}
-                              src={locationListImage}
-                              alt=""
-                            />
-                          </div>
+          {listingsConfigs.enable_stock && (
+            <div className="form-group mt-2">
+              <label htmlFor="stock-quantity">Stock Quantity</label>
+              <input
+                id="stock-quantity"
+                
+                className={classes.input}
+                name="Stock Quantity"
+                type="number"
+                placeholder="Stock Quantity"
+                onChange={(e) => handleChange(e)}
+              />
+            </div>
+          )}
+          {listingsConfigs.listing_address_enabled && (
+            <div className="form-group mt-2" style={{ position: 'relative' }}>
+              <label htmlFor="address">Address</label>
+              <input
+                className={classes.input}
+                value={product_address}
+                name="product_address"
+                id="address"
+                onChange={(e) => handleAddressSearch(e)}
+                type="text"
+                placeholder="Store Address"
+              />
+              {product_address.length > 0 ? (
+                <img src={closeImage} className={classes.closeImage} onClick={closeSearch} alt="" />
+              ) : (
+                <img className={classes.locationImage} src={locationImage} alt="" />
+              )}
+              {product_address.length > 0 && coordinates == null && (
+                <div className={classes.searchResult}>
+                  {addresses.length > 0 ? (
+                    <ul style={{ listStyle: 'none', paddingLeft: '0px' }}>
+                      {addresses.map((address, i) => {
+                        return (
+                          <li
+                            onClick={() => handleSelectAddress(address)}
+                            className={classes.addressList}
+                            key={i}
+                          >
+                            <div>
+                              <img
+                                className={classes.listLocationImage}
+                                src={locationListImage}
+                                alt=""
+                              />
+                            </div>
 
-                          <p>{address.formatted_address}</p>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                ) : (
-                  <div
-                    style={{ marginTop: '2em' }}
-                    className="alert  alert-danger fade in alert-dismissible"
-                  >
-                    <strong>OOPS</strong>, No address with this name found
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
+                            <p>{address.formatted_address}</p>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  ) : (
+                    <div
+                      style={{ marginTop: '2em' }}
+                      className="alert  alert-danger fade in alert-dismissible"
+                    >
+                      <strong>OOPS</strong>, No address with this name found
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
 
           <div className="form-group mt-2">
             <label htmlFor="categories">Category</label>
-            <select
+            <Select
               name="category"
               id="categories"
-              className={classes.input}
-              onChange={selectCategory}
-            >
-              <option value="dot">... </option>
-              {categories?.map((category) => {
-                return <option value={category.id}>{category.name}</option>;
-              })}
-            </select>
+              onChange={(newValue) => selectCategory(newValue)}
+              options={options}
+            />
           </div>
         </div>
         {attribute && (

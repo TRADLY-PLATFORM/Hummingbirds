@@ -7,15 +7,20 @@ const initialState = {
   loading: false,
   error: false,
   disabled: false,
+  recoveryPassword:false,
   message: null,
   verify_id: null,
   countries: null,
   general_configs: {},
   onboarding_configs: {},
   seo_configs:{},
+  accounts_configs:{},
+  listings_configs:{},
+  payments_configs:null,
   authRedirectPath: '/',
   userData: {},
   tenantData: {},
+  userDetails:{}
 };
 
 const authStart = (state, action) => {
@@ -23,14 +28,22 @@ const authStart = (state, action) => {
 };
 
 const authSuccess = (state, action) => {
-  console.log(action.data);
-  return updateObject(state, {
+   return updateObject(state, {
     userData: action.data,
     loading: false,
     message: null,
     disabled: false,
-    error: null,
+    error: false,
     verify_id: null,
+  });
+};
+const passwordChangeSuccess = (state, action) => {
+   return updateObject(state, {
+    loading: false,
+    message: null,
+    error: false,
+    verify_id: null,
+    recoveryPassword:true,
   });
 };
 
@@ -80,6 +93,27 @@ const setSeoConfigs = (state, action) => {
     loading: false,
   });
 };
+const setAccountsConfigs = (state, action) => {
+  
+  return updateObject(state, {
+    accounts_configs: action.configs,
+    loading: false,
+  });
+};
+const setListingsConfigs = (state, action) => {
+  
+  return updateObject(state, {
+    listings_configs: action.configs,
+    loading: false,
+  });
+};
+const setPaymentsConfigs = (state, action) => {
+  
+  return updateObject(state, {
+    payments_configs: action.configs,
+    loading: false,
+  });
+};
 
 const fetchCountriesFailed = (state, action) => {
   return updateObject(state, {
@@ -113,11 +147,24 @@ const authVerify = (state, action) => {
 export const successTenantConfig = (state, action) => {
   return updateObject(state, {
     tenantData: action.data,
+    error: false,
+    message:null,
+  });
+};
+export const setUserDetails = (state, action) => {
+  return updateObject(state, {
+    loading: false,
+    error: false,
+    message: null,
+    userDetails: action.details,
   });
 };
 
 export const failedTenantConfig = (state, action) => {
-  return updateObject(state, { error: action.error });
+  return updateObject(state, {
+    error: true,
+    message:action.error
+  });
 };
 
 const authReducer = (state = initialState, action) => {
@@ -126,12 +173,16 @@ const authReducer = (state = initialState, action) => {
       return authStart(state, action);
     case actionTypes.AUTH_SUCCESS:
       return authSuccess(state, action);
+    case actionTypes.PASSWORD_RECOVERY:
+      return passwordChangeSuccess(state, action);
     case actionTypes.AUTH_FAIL:
       return authFail(state, action);
     case actionTypes.AUTH_LOGOUT:
       return authLogout(state, action);
     case actionTypes.AUTH_VERIFY:
       return authVerify(state, action);
+    case actionTypes.USER_DETAILS:
+      return setUserDetails(state, action);
     case actionTypes.INIT_COUNTRIES:
       return startCountries(state, action);
     case actionTypes.SET_COUNTRIES:
@@ -143,6 +194,12 @@ const authReducer = (state = initialState, action) => {
       return setOnboardingConfigs(state, action);
     case actionTypes.SEO_CONFIGS:
       return setSeoConfigs(state, action);
+    case actionTypes.ACCOUNTS_CONFIGS:
+      return setAccountsConfigs(state, action);
+    case actionTypes.LISTINGS_CONFIGS:
+      return setListingsConfigs(state, action);
+    case actionTypes.PAYMENTS_CONFIGS:
+      return setPaymentsConfigs(state, action);
 
     case actionTypes.FETCH_COUNTRIES_FAILED:
       return fetchCountriesFailed(state, action);

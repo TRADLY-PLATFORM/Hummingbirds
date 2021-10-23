@@ -54,8 +54,7 @@ export const initHomeCollections = () => {
         .get('/products/v1/home/')
         .then((response) => {
           if (response.data.status) {
-            console.log(response);
-            // categories
+             // categories
             let categories = response.data.data.categories;
             dispatch(setCategories( categories));
 
@@ -63,8 +62,7 @@ export const initHomeCollections = () => {
             let collections = response.data.data.collections;
               dispatch(setCollections({ collections }));
 
-            //  console.log(categories, collections);
-            // stores
+             // stores
             let stores = response.data.data.collections.find(
               (item, i) => item.scope_type === 1
             );
@@ -104,8 +102,7 @@ export const initPromoBanners = (size ) => {
       .then((response) => {
         if (response.data.status) {
           let promo_banners = response.data.data.promo_banners;
-          console.log(promo_banners);
-          dispatch(setBanners(response.data.data.promo_banners));
+           dispatch(setBanners(response.data.data.promo_banners));
         }
       })
       .catch((error) => {
@@ -137,8 +134,7 @@ export const initCategories = () => {
     axios('v1/categories?parent=0&type=listings')
       .then((response) => {
         if (response.data.status) {
-          console.log(response);
-
+ 
           dispatch(setCategories(response.data.data.categories));
         }
       })
@@ -156,8 +152,7 @@ export const initLatestProducts = () => {
         .get('/products/v1/home/')
         .then((response) => {
           if (response.data.status) {
-            console.log(response);
-            let products = response.data.data.collections.find((item, i) => item.scope_type === 4);
+             let products = response.data.data.collections.find((item, i) => item.scope_type === 4);
 
             dispatch(setLatestProducts(products));
 

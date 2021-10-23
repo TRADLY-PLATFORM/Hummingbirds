@@ -90,93 +90,122 @@ class Group extends Component {
         /////////////////////////////
 
     return (
+      <Aux>
+        {redirectUrl}
+        <Backdrop show={this.props.loading} />
+        <Spinner show={this.props.loading} />
+        <ToastContainer
+          autoClose={2000}
+          position="bottom-right"
+          transition={Slide}
+          closeOnClick
+          rtl={false}
+          pauseOnVisibilityChange
+          draggable
+          pauseOnHover
+        />
 
-         <Aux>
-                {redirectUrl}
-                <Backdrop show={this.props.loading} />
-                <Spinner show={this.props.loading} />  
-                <ToastContainer autoClose={2000} position="top-center" transition={Slide} closeOnClick rtl={false} pauseOnVisibilityChange draggable pauseOnHover/>
-
-            <div>
-             
-                <Link to="#">
-                <button className={classes.button}><i className="fa fa-arrow-left "></i> back to my group</button>
-                 </Link> 
-                 <br />
-             <div className={classes.mycontainer}>
-               <div className={classes.groupcard }>
+        <div>
+          <Link to="#">
+            <button className={classes.button}>
+              <i className="fa fa-arrow-left "></i> back to my group
+            </button>
+          </Link>
+          <br />
+          <div className={classes.mycontainer}>
+            <div className={classes.groupcard}>
               <div className="row">
-                  <div className="p-2">
-                    <img className={classes.groupAvatar} src={groupAvatar} alt="Group Avatar" />
-                  </div>
-                
-                  < div className = "p-2" >
-                    <Link to="#">
-                      <button className={classes.button}>
-                        Add your group photo
-                      </button>
-                    </Link>
-           
-                  </div>
+                <div className="p-2">
+                  <img className={classes.groupAvatar} src={groupAvatar} alt="Group Avatar" />
+                </div>
+
+                <div className="p-2">
+                  <Link to="#">
+                    <button className={classes.button}>Add your group photo</button>
+                  </Link>
+                </div>
               </div>
             </div>
 
-              <div className={classes.addgroup}>
-                        <div className="form-group mt-2 ">
-                            <input className={classes.input + " form-control input-lg "} name="name" value={this.state.name} onChange={this.handleChange} type="text" placeholder="Group Name"/>
-                        </div>
+            <div className={classes.addgroup}>
+              <div className="form-group mt-2 ">
+                <input
+                  className={classes.input + ' form-control input-lg '}
+                  name="name"
+                  value={this.state.name}
+                  onChange={this.handleChange}
+                  type="text"
+                  placeholder="Group Name"
+                />
+              </div>
 
-                        <div className="form-group mt-2 ">
-                            <input className={classes.input + " form-control input-lg "} name="web_address" value={this.state.web_address} onChange={this.handleChange} type="text" placeholder="Store Web Address"/>
-                        </div>
+              <div className="form-group mt-2 ">
+                <input
+                  className={classes.input + ' form-control input-lg '}
+                  name="web_address"
+                  value={this.state.web_address}
+                  onChange={this.handleChange}
+                  type="text"
+                  placeholder="Store Web Address"
+                />
+              </div>
 
-                        <div className="form-group mt-2">
-                            <input className={classes.input + " form-control input-lg "} name="location" value={this.state.location} onChange={this.handleChange} type="text" placeholder="Location"/>
-                        </div>                    
-                    </div>
-
-                    <div className={classes.groupType + " row "}><span>Group Type</span></div>
-                    <br />
-                    
-                    <div className="row ">
-                    <div className="col-lg-12 col-md-12 text-center">
-                        
-                            <div className="col-sm-3 col-md">
-                            <div className={classes.typeGroup}>
-                                <img src={TradllyGroup} alt="Tradlly" title="Tradlly"/>
-                                <p>Tradlly</p> 
-                            </div>
-                            </div>
-                            <div className="col-sm-3">
-                            <div className={classes.typeGroup}>
-                            <img src={UnionLogo} alt="Union" title="Union"/>
-                                <p>Union</p> 
-                            </div>
-                            </div>
-                            <div className="col-sm-3">
-                            <div className={classes.typeGroup}>
-                            <img src={FinanceLogo} alt="Tradlly" title="Tradlly"/>
-                                <p>Finance</p> 
-                            </div>
-                            </div>
-                            <div className="col-sm-3">
-                            <div className={classes.typeGroup}>
-                            <img src={AssociationLogo} alt="Association" title="AssociationLogo"/>
-                                <p>Association</p> 
-                            </div>
-                            </div>
-                            
-                        </div> 
-                    </div>
-                   
-                     <div className ="text-center"><button className={classes.btnGreenStyle} onClick={this.createGroup}>Create Group</button>
-                      </div>
-                      <br/>
-                
+              <div className="form-group mt-2">
+                <input
+                  className={classes.input + ' form-control input-lg '}
+                  name="location"
+                  value={this.state.location}
+                  onChange={this.handleChange}
+                  type="text"
+                  placeholder="Location"
+                />
+              </div>
             </div>
+
+            <div className={classes.groupType + ' row '}>
+              <span>Group Type</span>
             </div>
-        </Aux>
-        )
+            <br />
+
+            <div className="row ">
+              <div className="col-lg-12 col-md-12 text-center">
+                <div className="col-sm-3 col-md">
+                  <div className={classes.typeGroup}>
+                    <img src={TradllyGroup} alt="Tradlly" title="Tradlly" />
+                    <p>Tradlly</p>
+                  </div>
+                </div>
+                <div className="col-sm-3">
+                  <div className={classes.typeGroup}>
+                    <img src={UnionLogo} alt="Union" title="Union" />
+                    <p>Union</p>
+                  </div>
+                </div>
+                <div className="col-sm-3">
+                  <div className={classes.typeGroup}>
+                    <img src={FinanceLogo} alt="Tradlly" title="Tradlly" />
+                    <p>Finance</p>
+                  </div>
+                </div>
+                <div className="col-sm-3">
+                  <div className={classes.typeGroup}>
+                    <img src={AssociationLogo} alt="Association" title="AssociationLogo" />
+                    <p>Association</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="text-center">
+              <button className={classes.btnGreenStyle} onClick={this.createGroup}>
+                Create Group
+              </button>
+            </div>
+            <br />
+          </div>
+        </div>
+      </Aux>
+    );
     }
 }
 

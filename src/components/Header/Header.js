@@ -1,67 +1,54 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable react/prop-types */
+import React, { useEffect } from 'react';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
 import { Link, useLocation } from 'react-router-dom';
 import classes from './Header.module.css';
 import profileUser from '../../assets/images/header/profile-user.png';
 
-import { selectCategoryLists } from '../../store/selectors/product';
-import Listings from '../../containers/Listings/Listings';
-import axios from '../../axios';
-
+ 
 //import CartImage from '../../assets/images/header/cart.svg';
-import CartImage from '../../assets/images/header/active/cartIcon (1).svg';
-import NoProductImage from '../../assets/images/rsz_noimage.png';
-import NoIamgeLogo from '../../assets/images/home/store/noImage.svg';
-import downArrow from '../../assets/images/header/downArrow.png';
+ import downArrow from '../../assets/images/header/downArrow.png';
 
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from "../../store/actions/index"
 
 
-import { Search } from '../Seacrh/Search';
+import { Search } from '../Search/Search';
 import { selectUserId } from '../../store/selectors/auth';
 
 // import Skeleton from '../UI/Skeleton/Skeleton';
 
 const Header = (props) => {
- 
+  //
+  useEffect(() => {
+    dispatch(actions.initCurrencies());
+    dispatch(actions.getShippingMethod());
+  }, [0]);
 
   // reducer
-    const isAuthenticated = useSelector((state) => selectUserId(state));
+  const isAuthenticated = useSelector((state) => selectUserId(state));
   const cartList = useSelector((state) => state.cart.cart_list);
-  const { cart, cart_details } = cartList;
-    const currencies = useSelector((state) => state.store.currencies);
+  const { cart_details } = cartList;
+  const currencies = useSelector((state) => state.store.currencies);
+  const shipping_methods = useSelector((state) => state.payment.shipping_methods);
 
+  const dispatch = useDispatch();
+  const { pathname } = useLocation();
 
-
-  const dispatch = useDispatch()
-  const {pathname,url} = useLocation()
-  console.log('====================================');
-  console.log(pathname);
-  console.log('====================================');
- 
-  // 
-     useEffect(() => {
-      dispatch(actions.initCurrencies());
-    }, [0]);
-
-    useEffect(() => {
-      if (isAuthenticated && currencies.length > 0) {
-        dispatch(actions.getCartList(currencies[0],1));
-      }
-    }, [currencies || cartList]);
+  useEffect(() => {
+    if (isAuthenticated && currencies.length > 0) {
+      dispatch(actions.getCartList(currencies[0], shipping_methods[0].id));
+    }
+  }, [currencies || cartList]);
 
   const { userData } = props;
-   function getUserName() {
+  function getUserName() {
     return userData.get('first_name', 'Guest') + ' ' + userData.get('last_name', '');
   }
 
   function getUserImage() {
     return userData.get('profile_pic', '');
   }
-
- 
-
 
   const setPath = (pathname) => {
     dispatch(actions.setAuthRedirectPath(pathname, null));
@@ -92,15 +79,15 @@ const Header = (props) => {
 
             <div className={classes.dropdownMenu + ' user-menu dropdown-menu'}>
               {userData.get('id', '') === '' ? (
-                <Link className={classes.navLink} to="/sign-in" onClick={()=>setPath(pathname)}>
+                <Link className={classes.navLink} to="/sign-in" onClick={() => setPath(pathname)}>
                   <i className="fa fa-power-off mr-10"></i>Login
                 </Link>
               ) : (
                 <Aux>
+                  <Link className={classes.navLink} to="/profile">
+                    <i className="fa fa-user"></i> My Profile
+                  </Link>
                   {/* <Link className={classes.navLink} to="#">
-                      <i className="fa fa-user"></i> My Profile
-                    </Link>
-                    <Link className={classes.navLink} to="#">
                       <i className="fa fa-cog"></i> Settings
                     </Link> */}
                   <Link className={classes.navLink} to="/logout">
@@ -111,10 +98,11 @@ const Header = (props) => {
             </div>
           </div>
 
-          
-
           <div className={pathname === '/cart' ? classes.cartAreaActive : classes.cartArea}>
-            <Link  to={isAuthenticated?"/cart":"/sign-in"} onClick={!isAuthenticated &&(()=>setPath("/cart"))} >
+            <Link
+              to={isAuthenticated ? '/cart' : '/sign-in'}
+              onClick={!isAuthenticated && (() => setPath('/cart'))}
+            >
               <svg
                 width="22"
                 height="20"
@@ -126,7 +114,9 @@ const Header = (props) => {
               </svg>
 
               <span className={classes.cartText}>Cart</span>
-              {isAuthenticated && cart_details?.length>0 &&(<span className={classes.countCart}>{ cart_details?.length}</span>)}
+              {isAuthenticated && cart_details?.length > 0 && (
+                <span className={classes.countCart}>{cart_details?.length}</span>
+              )}
             </Link>
           </div>
         </div>
