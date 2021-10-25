@@ -222,6 +222,9 @@ const ProductDetail = () => {
       }
       return text;
    }
+   else {
+     return listing?.title;
+    }
   }
 
   // Seo description
@@ -232,7 +235,10 @@ const ProductDetail = () => {
          return text.replace('{listing_description}', listing?.description);
        }
        return text;
-    }
+     }
+     else {
+       return listing?.description;
+     }
    };
 
 
@@ -240,7 +246,7 @@ const ProductDetail = () => {
     <>
       {!loading && (
         <Helmet>
-          <title> {seoTitle(seo_configs.meta_listing_title)} </title>
+          <title> {`${seoTitle(seo_configs.meta_listing_title)}`} </title>
           <meta
             name="description"
             content={`${seoDescription(seo_configs.meta_listing_description)}`}

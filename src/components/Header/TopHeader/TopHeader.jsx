@@ -55,7 +55,7 @@ const TopHeader = () => {
 
   //
   useEffect(() => {
-    if (isAuthenticated && currencies.length > 0 && shipping_methods.length>0) {
+    if (isAuthenticated && currencies.length > 0 && shipping_methods.length > 0) {
       dispatch(actions.getCartList(currencies[0], shipping_methods[0].id));
     }
   }, [currencies, dispatch, isAuthenticated, shipping_methods]);
@@ -105,11 +105,9 @@ const TopHeader = () => {
   //
   const navButtonClick = () => {
     if (width > 400) {
-          document.getElementById('sideBar').style.width = '400px';
-
-    }else{
-          document.getElementById('sideBar').style.width = `${width}px`;
-
+      document.getElementById('sideBar').style.width = '400px';
+    } else {
+      document.getElementById('sideBar').style.width = `${width}px`;
     }
     setIsSiteNavOpen(true);
   };
@@ -118,6 +116,14 @@ const TopHeader = () => {
     document.getElementById('sideBar').style.width = '0px';
     setIsSiteNavOpen(false);
   }
+  function handleKeypress(e) {
+     if (e.key === 'Enter') {
+      document.getElementById('sideBar').style.width = '0px';
+      setIsSiteNavOpen(false);
+     }
+   
+  }
+
 
   return (
     <div className={classes.topHeaderBox}>
@@ -135,11 +141,7 @@ const TopHeader = () => {
                 <img
                   className="img-fluid"
                   src={onboardingConfigs.splash_image}
-                  style={
-                    width > 768
-                      ? { height: '50px' }
-                      : { height: '44px' }
-                  }
+                  style={width > 768 ? { height: '50px' } : { height: '44px' }}
                   alt={onboardingConfigs.app_name}
                   title={onboardingConfigs.app_name}
                 />
@@ -228,7 +230,6 @@ const TopHeader = () => {
           </div>
           <div className={classes.userArea + ' dropdown'}>
             <div
-               
               className="dropdown-toggle"
               data-toggle="dropdown"
               aria-haspopup="true"
@@ -302,7 +303,7 @@ const TopHeader = () => {
                   <img
                     className="img-fluid"
                     src={onboardingConfigs.splash_image}
-                    style={{ width: '95px', height: '50px' }}
+                    style={{ height: '50px' }}
                     alt={onboardingConfigs.app_name}
                     title={onboardingConfigs.app_name}
                   />
@@ -365,6 +366,14 @@ const TopHeader = () => {
                   <img style={{ width: '20px', height: '20px' }} src={closeMenu} alt="" />
                 </button>
               </div>
+            </div>
+            <div
+              className={classes.mobileSearchBar}
+              onKeyPress={(e) => {
+                handleKeypress(e);
+              }}
+            >
+              <Search />
             </div>
             <div>
               <div className={classes.mobilecategories}>
