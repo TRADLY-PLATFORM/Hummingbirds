@@ -34,7 +34,7 @@ const homeBanner = (props) => {
                 return (
                   <SwiperSlide key={index}>
                     <div className={classes.banner}>
-                      <img src={image.image_path} alt={image.reference} />
+                      <img src={image.image_path} alt={image.reference}  />
                     </div>
                   </SwiperSlide>
                 );

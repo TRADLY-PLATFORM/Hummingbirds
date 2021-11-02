@@ -2,7 +2,7 @@
   height: 100px;
   width: 100px;
   margin-right : 16px;
-  padding: 16px 4px;
+ 
   margin-bottom: 20px;
   background-color: #ffffff;
    border-radius: 10px;
@@ -11,7 +11,7 @@
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
     border: 1px solid transparent;
 
@@ -22,16 +22,15 @@
   }
 .wellCategory p {
   width: 92px;
-  height: 20px;
-  overflow: hidden;
-  margin: 0 auto;
+  min-height: 20px;
+   margin: 0 auto;
   display: flex;
   justify-content: center;
  align-items: center; 
   font-style: normal;
   font-weight: normal;
   font-size: 15px;
-  line-height: 10px;
+  line-height: 18px;
   color: var(--primary_color);
  }
 
@@ -44,17 +43,12 @@
   .wellCategory {
      height: 135px;
     width: 100%;
-    padding: 25px 4px;
-   }
+    }
  
   .wellCategory p {
     font-weight: 500;
-    font-size: 15px;
-    height: unset;
-    line-height: 14px;
-    overflow: hidden;
-    font-family: Montserrat;
-     display: flex;
+    font-size: 14px;
+      display: flex;
     align-items: center;
     justify-content: center;
   }

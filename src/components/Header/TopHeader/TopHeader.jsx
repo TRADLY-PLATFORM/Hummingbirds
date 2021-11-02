@@ -72,13 +72,11 @@ const TopHeader = () => {
         setCategoriesSet(categories);
       } else {
         var sliceLength;
-        if (width < 1500) {
-          sliceLength = 5;
+        if (width < 1100) {
+          sliceLength = 3;
         }
-        if (width < 1000) {
-          sliceLength = 4;
-        }
-        let updatedCategories = categories.slice(0, sliceLength || 9);
+        
+        let updatedCategories = categories.slice(0, sliceLength || 5);
         let moreCategory = {
           id: Math.random(),
           name: 'More',
@@ -281,9 +279,7 @@ const TopHeader = () => {
                     key={Math.random() * 300000}
                     className={classes.categoryBox}
                   >
-                    {category.name.length < 9
-                      ? category.name
-                      : category.name.substring(0, 6) + '..'}
+                    {category.name }
                   </Link>
                 </>
               );
