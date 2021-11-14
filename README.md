@@ -72,8 +72,15 @@ The preview of the project.
 
 * [React](https://reactjs.org/)
 * [Bootstrap3](https://getbootstrap.com/)
+* [Tradly Headless API](https://tradly.app)
  
 
+
+## Deploy on Vercel, Netlify
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/TRADLY-PLATFORM/Hummingbirds)
+
+[<img src="https://www.netlify.com/img/deploy/button.svg">](https://app.netlify.com/start/deploy?repository=https://github.com/TRADLY-PLATFORM/Hummingbirds)
 
 
 <!-- GETTING STARTED -->
