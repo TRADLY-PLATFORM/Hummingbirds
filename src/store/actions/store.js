@@ -885,20 +885,26 @@ export const initFiles = (
                         const listingData = {
                           listing: {
                             list_price: price,
-                            shipping_charges: shippingCharge,
                             description: description,
                             account_id: accountId,
                             currency_id: currency,
-                            stock: quantity,
-                            attributes: attributeData ,
+                             attributes: attributeData ,
                             title: title,
                             offer_percent: 0,
                             images: responseFiles.map((res) => res.fileUri),
                             category_id: [selectedCategory],
-                            coordinates: coordinates,
-                            type: 'listings',
+                             type: 'listings',
                           },
                         };
+                        if (coordinates !== null) {
+                           listingData['coordinates'] = coordinates;
+                        }
+                        if (quantity !== null) {
+                          listingData['stock'] = quantity;
+                        }
+                        if (shippingCharge !== null) {
+                          listingData['shipping_charges'] = shippingCharge;
+                        }
                       dispatch(createProduct(listingData, callBack));
                       } else {
                         let imageUploadConfig = {
@@ -938,20 +944,26 @@ export const initFiles = (
                                const listingData = {
                                  listing: {
                                    list_price: price,
-                                   shipping_charges: shippingCharge,
-                                   description: description,
+                                    description: description,
                                    account_id: accountId,
                                    currency_id: currency,
-                                   stock: quantity,
-                                   attributes: attributeUpdate,
+                                    attributes: attributeUpdate,
                                    title: title,
                                    offer_percent: 0,
                                    images: responseFiles.map((res) => res.fileUri),
                                    category_id: [selectedCategory],
-                                   coordinates: coordinates,
-                                   type: 'listings',
+                                    type: 'listings',
                                  },
                                };
+                               if (coordinates !== null) {
+                                 listingData['coordinates'] = coordinates;
+                               }
+                               if (quantity !== null) {
+                                 listingData['stock'] = quantity;
+                               }
+                               if (shippingCharge !== null) {
+                                 listingData['shipping_charges'] = shippingCharge;
+                               }
                                dispatch(createProduct(listingData, callBack));
                               })
                               .catch((error) => {
@@ -964,19 +976,25 @@ export const initFiles = (
                      const listingData = {
                        listing: {
                          list_price: price,
-                         shipping_charges: shippingCharge,
-                         description: description,
+                          description: description,
                          account_id: accountId,
                          currency_id: currency,
-                         stock: quantity,
-                          title: title,
+                           title: title,
                          offer_percent: 0,
                          images: responseFiles.map((res) => res.fileUri),
                          category_id: [selectedCategory],
-                         coordinates: coordinates,
-                         type: 'listings',
+                          type: 'listings',
                        },
                      };
+                     if (coordinates !== null) {
+                       listingData['coordinates'] = coordinates;
+                     }
+                     if (quantity !== null) {
+                       listingData['stock'] = quantity;
+                     }
+                     if (shippingCharge !== null) {
+                       listingData['shipping_charges'] = shippingCharge;
+                     }
                      dispatch(createProduct(listingData, callBack));
                     }
 

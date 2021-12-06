@@ -23,9 +23,9 @@ const CreateProduct = () => {
   // state
   const [title, setTitle] = useState('');
   const [price, setPrice] = useState(0);
-  const [shippingCharge, setShippingCharge] = useState(0);
+  const [shippingCharge, setShippingCharge] = useState(null);
   const [description, setDescription] = useState('');
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [attributeData, setAttributeData] = useState(null);
   const [currency, setCurrency] = useState(null);
@@ -190,11 +190,19 @@ const CreateProduct = () => {
       );
       return false;
     }
-
-    if (coordinates === null) {
-      toast.error('Address is required');
-      return false;
+    if (listingsConfigs.listing_address_enabled) {
+       if (coordinates === null) {
+        toast.error('Address is required');
+        return false;
+      }
     }
+    if (listingsConfigs.enable_stock) {
+       if (quantity === null) {
+         toast.error('Stock quantity is required');
+         return false;
+       }
+    }
+     
     if (files === null) {
       toast.error('Image is required');
       return false;
@@ -336,19 +344,20 @@ const CreateProduct = () => {
                 onChange={(e) => handleChange(e)}
               />
             </div>
-            <div className="form-group mt-2 ">
-              <label htmlFor="selling-price">Shipping Charge </label>
+            {listingsConfigs.show_shipping_charges && (
+              <div className="form-group mt-2 ">
+                <label htmlFor="selling-price">Shipping Charge </label>
 
-              <input
-                id="shipping-charge"
-                value={shippingCharge}
-                className={classes.input}
-                name="Shipping Charge"
-                type="number"
-                placeholder=""
-                onChange={(e) => handleChange(e)}
-              />
-            </div>
+                <input
+                  id="shipping-charge"
+                  className={classes.input}
+                  name="Shipping Charge"
+                  type="number"
+                  placeholder="Shipping Charge"
+                  onChange={(e) => handleChange(e)}
+                />
+              </div>
+            )}
             <div className="form-group mt-2">
               <label htmlFor="currency">Currency</label>
               <select className={classes.input} name="" id="currency" onChange={selectCurrency}>
@@ -363,69 +372,73 @@ const CreateProduct = () => {
             </div>
           </div>
 
-          <div className="form-group mt-2">
-            <label htmlFor="stock-quantity">Stock Quantity</label>
-            <input
-              id="stock-quantity"
-              value={quantity}
-              className={classes.input}
-              name="Stock Quantity"
-              type="number"
-              placeholder="Stock Quantity"
-              onChange={(e) => handleChange(e)}
-            />
-          </div>
-          <div className="form-group mt-2" style={{ position: 'relative' }}>
-            <label htmlFor="address">Address</label>
-            <input
-              className={classes.input}
-              value={product_address}
-              name="product_address"
-              id="address"
-              onChange={(e) => handleAddressSearch(e)}
-              type="text"
-              placeholder="Store Address"
-            />
-            {product_address.length > 0 ? (
-              <img src={closeImage} className={classes.closeImage} onClick={closeSearch} alt="" />
-            ) : (
-              <img className={classes.locationImage} src={locationImage} alt="" />
-            )}
-            {product_address.length > 0 && coordinates == null && (
-              <div className={classes.searchResult}>
-                {addresses.length > 0 ? (
-                  <ul style={{ listStyle: 'none', paddingLeft: '0px' }}>
-                    {addresses.map((address, i) => {
-                      return (
-                        <li
-                          onClick={() => handleSelectAddress(address)}
-                          className={classes.addressList}
-                          key={i}
-                        >
-                          <div>
-                            <img
-                              className={classes.listLocationImage}
-                              src={locationListImage}
-                              alt=""
-                            />
-                          </div>
+          {listingsConfigs.enable_stock && (
+            <div className="form-group mt-2">
+              <label htmlFor="stock-quantity">Stock Quantity</label>
+              <input
+                id="stock-quantity"
+                
+                className={classes.input}
+                name="Stock Quantity"
+                type="number"
+                placeholder="Stock Quantity"
+                onChange={(e) => handleChange(e)}
+              />
+            </div>
+          )}
+          {listingsConfigs.listing_address_enabled && (
+            <div className="form-group mt-2" style={{ position: 'relative' }}>
+              <label htmlFor="address">Address</label>
+              <input
+                className={classes.input}
+                value={product_address}
+                name="product_address"
+                id="address"
+                onChange={(e) => handleAddressSearch(e)}
+                type="text"
+                placeholder="Store Address"
+              />
+              {product_address.length > 0 ? (
+                <img src={closeImage} className={classes.closeImage} onClick={closeSearch} alt="" />
+              ) : (
+                <img className={classes.locationImage} src={locationImage} alt="" />
+              )}
+              {product_address.length > 0 && coordinates == null && (
+                <div className={classes.searchResult}>
+                  {addresses.length > 0 ? (
+                    <ul style={{ listStyle: 'none', paddingLeft: '0px' }}>
+                      {addresses.map((address, i) => {
+                        return (
+                          <li
+                            onClick={() => handleSelectAddress(address)}
+                            className={classes.addressList}
+                            key={i}
+                          >
+                            <div>
+                              <img
+                                className={classes.listLocationImage}
+                                src={locationListImage}
+                                alt=""
+                              />
+                            </div>
 
-                          <p>{address.formatted_address}</p>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                ) : (
-                  <div
-                    style={{ marginTop: '2em' }}
-                    className="alert  alert-danger fade in alert-dismissible"
-                  >
-                    <strong>OOPS</strong>, No address with this name found
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
+                            <p>{address.formatted_address}</p>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  ) : (
+                    <div
+                      style={{ marginTop: '2em' }}
+                      className="alert  alert-danger fade in alert-dismissible"
+                    >
+                      <strong>OOPS</strong>, No address with this name found
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
 
           <div className="form-group mt-2">
             <label htmlFor="categories">Category</label>

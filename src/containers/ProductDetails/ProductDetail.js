@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import classes from './productDetali.module.css';
+import classes from './productDetail.module.css';
 
 import * as actions from '../../store/actions/index';
 import { useLocation, useParams } from 'react-router';
 import Toast from '../../components/UI/Toast/Toast';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
-import Spinner from '../../components/UI/Spinner/Spinner';
-import Backdrop from '../../components/UI/Backdrop/Backdrop';
+// import Spinner from '../../components/UI/Spinner/Spinner';
+// import Backdrop from '../../components/UI/Backdrop/Backdrop';
 
 // images
 import starImage from '../../assets/images/products/Star.svg';
@@ -33,7 +33,8 @@ import { Slide, ToastContainer } from 'react-toastify';
 
 import Loader from 'react-loader-spinner';
 import useWindowSize from '../../components/Hooks/WindowSize/WindowSize';
-import { getThumbnailImage } from '../../shared/constants';
+import { getThumbnailImage, parseMarkdown } from '../../shared/constants';
+import ReactMarkdown from 'react-markdown';
 
 // install Swiper modules
 SwiperCore.use([Autoplay, Pagination, Navigation]);
@@ -60,6 +61,9 @@ const ProductDetail = () => {
   const currencies = useSelector((state) => state.store.currencies);
   const cartError = useSelector((state) => state.cart.error);
   const cartErrorMessage = useSelector((state) => state.cart.message);
+  const listingsConfigs = useSelector((state) => state.auth.listings_configs);
+  const seo_configs = useSelector((state) => state.auth.seo_configs);
+
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -209,13 +213,47 @@ const ProductDetail = () => {
   //
   // }
 
+  // seo title
+  const seoTitle = (text) => {
+   if(text){
+      const check = text.includes('{listing_title}');
+      if (check) {
+        return text.replace('{listing_title}', listing?.title);
+      }
+      return text;
+   }
+   else {
+     return listing?.title;
+    }
+  }
+
+  // Seo description
+   const seoDescription = (text) => {
+     if (text) {
+       const check = text.includes('{listing_description}');
+       if (check) {
+         return text.replace('{listing_description}', listing?.description);
+       }
+       return text;
+     }
+     else {
+       return listing?.description;
+     }
+   };
+
+
   return (
     <>
-      <Helmet>
-        <title> {listing?.title || 'N/A'}- Buy Online </title>
-        <meta name="description" content={`${listing?.description}`} />
-        <link rel="canonical" href={location.pathname} />
-      </Helmet>
+      {!loading && (
+        <Helmet>
+          <title> {`${seoTitle(seo_configs.meta_listing_title)}`} </title>
+          <meta
+            name="description"
+            content={`${seoDescription(seo_configs.meta_listing_description)}`}
+          />
+          <link rel="canonical" href={location.pathname} />
+        </Helmet>
+      )}
       <Aux>
         {/* <Backdrop show={loading} />
         <Spinner show={loading} /> */}
@@ -299,19 +337,23 @@ const ProductDetail = () => {
                   {listing?.description.length > 0 && (
                     <div className={classes.description}>
                       <h4 className={classes.descriptionHeader}>Description</h4>
-                      <p className={classes.descriptionBody}>{listing?.description}</p>
+                      <p className={classes.descriptionBody}>
+                        <ReactMarkdown>{listing?.description}</ReactMarkdown>
+                      </p>
                     </div>
                   )}
                 </div>
                 <div className={classes.MainPartInfo}>
                   <div className={classes.productHeaderPart}>
-                    <p className={classes.stockMessage}>
-                      {listing?.stock > 0 ? (
-                        `Only ${listing.stock} products in stock`
-                      ) : (
-                        <span className={classes.soldoutButton}>Sold out</span>
-                      )}
-                    </p>
+                    {listingsConfigs.enable_stock && (
+                      <p className={classes.stockMessage}>
+                        {listing?.stock > 0 ? (
+                          `Only ${listing.stock} products in stock`
+                        ) : (
+                          <span className={classes.soldoutButton}>Sold out</span>
+                        )}
+                      </p>
+                    )}
                     <h4 className={classes.productName}>{listing?.title}</h4>
                     <p className={classes.productName}>{listing?.list_price.formatted}</p>
                     <div className={classes.ratingInfo}>
@@ -396,25 +438,26 @@ const ProductDetail = () => {
                       </Link>
                     )}
                   </div>
-                  {listing?.location.formatted_address?.length > 0 && (
-                    <div className={classes.addressBox}>
-                      <div className={classes.markerImage}>
-                        <img src={locationMarker} alt="" />
+                  {listing?.location.formatted_address?.length > 0 &&
+                    listingsConfigs.listing_address_enabled && (
+                      <div className={classes.addressBox}>
+                        <div className={classes.markerImage}>
+                          <img src={locationMarker} alt="" />
+                        </div>
+                        <div>
+                          <p className={classes.shortAddress}>
+                            {listing?.location.city && `${listing?.location.city}`}
+                            {listing?.location.country && `${listing?.location.country}`}
+                          </p>
+                          <p className={classes.formattedAddress}>
+                            {listing?.location.formatted_address}
+                          </p>
+                        </div>
+                        <div className={classes.directionImage}>
+                          <img src={directionImage} alt="" />
+                        </div>
                       </div>
-                      <div>
-                        <p className={classes.shortAddress}>
-                          {listing?.location.city && `${listing?.location.city}`}
-                          {listing?.location.country && `${listing?.location.country}`}
-                        </p>
-                        <p className={classes.formattedAddress}>
-                          {listing?.location.formatted_address}
-                        </p>
-                      </div>
-                      <div className={classes.directionImage}>
-                        <img src={directionImage} alt="" />
-                      </div>
-                    </div>
-                  )}
+                    )}
                   <div className={classes.storeDetails}>
                     <div className={classes.storeNameRow}>
                       <img

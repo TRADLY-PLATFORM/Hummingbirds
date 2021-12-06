@@ -55,7 +55,7 @@ const TopHeader = () => {
 
   //
   useEffect(() => {
-    if (isAuthenticated && currencies.length > 0 && shipping_methods.length>0) {
+    if (isAuthenticated && currencies.length > 0 && shipping_methods.length > 0) {
       dispatch(actions.getCartList(currencies[0], shipping_methods[0].id));
     }
   }, [currencies, dispatch, isAuthenticated, shipping_methods]);
@@ -72,13 +72,11 @@ const TopHeader = () => {
         setCategoriesSet(categories);
       } else {
         var sliceLength;
-        if (width < 1500) {
-          sliceLength = 5;
+        if (width < 1100) {
+          sliceLength = 3;
         }
-        if (width < 1000) {
-          sliceLength = 4;
-        }
-        let updatedCategories = categories.slice(0, sliceLength || 9);
+        
+        let updatedCategories = categories.slice(0, sliceLength || 5);
         let moreCategory = {
           id: Math.random(),
           name: 'More',
@@ -105,11 +103,9 @@ const TopHeader = () => {
   //
   const navButtonClick = () => {
     if (width > 400) {
-          document.getElementById('sideBar').style.width = '400px';
-
-    }else{
-          document.getElementById('sideBar').style.width = `${width}px`;
-
+      document.getElementById('sideBar').style.width = '400px';
+    } else {
+      document.getElementById('sideBar').style.width = `${width}px`;
     }
     setIsSiteNavOpen(true);
   };
@@ -118,6 +114,14 @@ const TopHeader = () => {
     document.getElementById('sideBar').style.width = '0px';
     setIsSiteNavOpen(false);
   }
+  function handleKeypress(e) {
+     if (e.key === 'Enter') {
+      document.getElementById('sideBar').style.width = '0px';
+      setIsSiteNavOpen(false);
+     }
+   
+  }
+
 
   return (
     <div className={classes.topHeaderBox}>
@@ -135,11 +139,7 @@ const TopHeader = () => {
                 <img
                   className="img-fluid"
                   src={onboardingConfigs.splash_image}
-                  style={
-                    width > 768
-                      ? { height: '50px' }
-                      : { height: '44px' }
-                  }
+                  style={width > 768 ? { height: '50px' } : { height: '44px' }}
                   alt={onboardingConfigs.app_name}
                   title={onboardingConfigs.app_name}
                 />
@@ -228,7 +228,6 @@ const TopHeader = () => {
           </div>
           <div className={classes.userArea + ' dropdown'}>
             <div
-               
               className="dropdown-toggle"
               data-toggle="dropdown"
               aria-haspopup="true"
@@ -280,9 +279,7 @@ const TopHeader = () => {
                     key={Math.random() * 300000}
                     className={classes.categoryBox}
                   >
-                    {category.name.length < 9
-                      ? category.name
-                      : category.name.substring(0, 6) + '..'}
+                    {category.name }
                   </Link>
                 </>
               );
@@ -302,7 +299,7 @@ const TopHeader = () => {
                   <img
                     className="img-fluid"
                     src={onboardingConfigs.splash_image}
-                    style={{ width: '95px', height: '50px' }}
+                    style={{ height: '50px' }}
                     alt={onboardingConfigs.app_name}
                     title={onboardingConfigs.app_name}
                   />
@@ -365,6 +362,14 @@ const TopHeader = () => {
                   <img style={{ width: '20px', height: '20px' }} src={closeMenu} alt="" />
                 </button>
               </div>
+            </div>
+            <div
+              className={classes.mobileSearchBar}
+              onKeyPress={(e) => {
+                handleKeypress(e);
+              }}
+            >
+              <Search />
             </div>
             <div>
               <div className={classes.mobilecategories}>

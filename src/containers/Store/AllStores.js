@@ -41,6 +41,7 @@ const AllStores = () => {
 
   const stores = useSelector((state) => state.store.storesLists);
   const accountCategory = useSelector((state) => state.store.categories);
+  const seo_configs = useSelector((state) => state.auth.seo_configs);
 
  
   const postStoreFollow = (id, following) => {
@@ -95,8 +96,8 @@ const AllStores = () => {
   return (
     <Aux>
       <Helmet>
-        <title>Tradly Web - Stores </title>
-        <meta name="description" content=" All stores list . You can select a store" />
+        <title>{`${seo_configs.meta_title}`}</title>
+        <meta name="description" content={`${seo_configs.meta_description}`} />
         <link rel="canonical" href={location.pathname} />
       </Helmet>
       {followLoading && (
@@ -129,7 +130,7 @@ const AllStores = () => {
           {stores?.accounts?.map((store, i) => {
             let imagePath = AllenSollyLogo;
             if (store.images.length > 0) {
-              imagePath = getThumbnailImage(store.images[0]) ;
+              imagePath = getThumbnailImage(store.images[0]);
             }
 
             let description = store.description;
